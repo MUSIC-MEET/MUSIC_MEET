@@ -1,0 +1,12 @@
+.content {
+    display: flex;
+    flex-direction: row;
+}
+
+.nav {
+    width: 15vw;
+    min-width: 15rem;
+    max-width: 60rem;
+    height: 100vh;
+    border-right: 2px solid gainsboro;
+}
