@@ -1,0 +1,15 @@
+.menu-close {
+    color : red;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.nav-item:nth-child(1) {
+    align-self: flex-end;
+    margin: 1rem;
+}

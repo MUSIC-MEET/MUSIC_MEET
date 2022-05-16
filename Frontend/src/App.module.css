@@ -10,3 +10,9 @@
     height: 100vh;
     border-right: 2px solid gainsboro;
 }
+
+.menu-open {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+}

@@ -1,8 +1,8 @@
 import React from "react";
 import { screen, render, fireEvent } from "@testing-library/react";
 import Menu from "../../components/Menu/Menu";
-describe("<Menu />", () => {
-    
+
+describe("<Menu />", () => {    
     it("closeIcon 생성 체크", () => {
         render(<Menu />);
         const closeIcon = screen.getByTestId("CloseIcon");
