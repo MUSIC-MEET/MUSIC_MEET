@@ -5,7 +5,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ThemeContextProvider from "./store/ThemeContextProvider";
 import Content from "./components/UI/Content";
 import { css } from "@emotion/react";
-
+import "i18n";
 const rootStyle = css`
     display: flex;
     flex-direction: row;

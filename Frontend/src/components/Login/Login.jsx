@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
+import { useTranslation } from "react-i18next";
 
 function Login() {
-    return (
+    const { t } = useTranslation("menu");
+    return (    
         <div css={[style]}>
-            <span>{"로그인"}</span>
+            <span>{t("login")}</span>
         </div>
     );
 }
