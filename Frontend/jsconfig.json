@@ -2,7 +2,8 @@
 	"compilerOptions": {
 		"baseUrl": "./src",
 		"checkJs": true,
-		"jsx": "react"
+		"jsx": "react",
+		"types": ["@emotion/core"]
 	},
 	"typeAcquisition": {
 		"include": ["jest"]

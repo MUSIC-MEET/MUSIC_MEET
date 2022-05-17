@@ -1,23 +1,47 @@
+/** @jsxImportSource @emotion/react */
 import React, { useContext } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import classes from "./Menu.module.css";
-import styled from "styled-components";
+import { css } from "@emotion/react";   
 import ThemeContext from "../../store/ThemeContext";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
-const MenuNav = styled.nav`
-    background: ${props => props.background};
-    color: ${props => props.fontColor};
+import Login from "components/Login/Login";
+import { useTranslation } from "react-i18next";
+
+const navStyle = css`
+    width: 15vw;
+    min-width: 15rem;
+    max-width: 60rem;
+    height: 100vh;
+    border-right: 2px solid gainsboro;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center; 
+
+
+    & > svg {
+        color: red;
+        align-self: flex-end;
+        margin: 0.2rem;
+    }
+
+    & > :not(svg) {
+        width: 10rem;
+        height: 3rem;
+    }
 `;
 function Menu(props) {
     const ctx = useContext(ThemeContext);
     const { theme, setDarkTheme, setLightTheme } = ctx;
     const { background, fontColor } = ctx.themeStyle.menu;
-    const { className, onMenuClose } = props;
+    const { className, onMenuClose } = props;  
+    const { i18n, t } = useTranslation("menu");
     return (
-        <MenuNav background={background} fontColor={fontColor} className={`${className} ${classes.nav}`}>
+        <div 
+            css={[navStyle, css` background: ${background}; color: ${fontColor};`]}
+        >
             <CloseIcon 
-                className={`${classes["menu-close"]} ${classes["nav-item"]}`}
                 onClick={onMenuClose}
             />
             {
@@ -25,8 +49,18 @@ function Menu(props) {
                     <Brightness4Icon onClick={setLightTheme} />:
                     <NightsStayIcon onClick={setDarkTheme} />
             }
-        </MenuNav>
+            <Login />
+            <button onClick={() => i18n.changeLanguage("kr")}>KR</button>
+            <button onClick={() => i18n.changeLanguage("en")}>en</button>
+            <ul>
+                <li>{t("routes.menu1")}</li>
+                <li>{t("routes.menu2")}</li>
+                <li>{t("routes.menu3")}</li>
+                <li>{t("routes.menu4")}</li>
+            </ul>
+     
+            
+        </div>
     );
 }
-
 export default Menu;

@@ -1,9 +1,15 @@
+/** @jsxImportSource @emotion/react */
 import React, { useCallback, useState } from "react";
-import classes from "./App.module.css";
 import Menu from "./components/Menu/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import ThemeContextProvider from "./store/ThemeContextProvider";
 import Content from "./components/UI/Content";
+import { css } from "@emotion/react";
+import "i18n";
+const rootStyle = css`
+    display: flex;
+    flex-direction: row;
+`;
 function App() {
     const [menu, setMenu] = useState(true);
     const menuVisibleHandler = useCallback(() => {
@@ -11,15 +17,14 @@ function App() {
     },[]);
     return (
         <ThemeContextProvider>
-            <div className={classes.content}>
+            <div css={rootStyle}>
                 { menu && <Menu 
-                    className={classes.nav}
                     onMenuClose={menuVisibleHandler}
                 />}
                 <Content>
                     {
-                        !menu && <MenuIcon
-                            className={classes["menu-open"]}
+                        !menu && 
+                        <MenuIcon
                             onClick={menuVisibleHandler}
                         />
                     }
