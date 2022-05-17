@@ -2,7 +2,10 @@ import React from "react";
 
 const ThemeContext = React.createContext({
     theme: "light",
-    themeStyle: {},
+    themeStyle: {
+        menu: {},
+        contet: {}
+    },
     setDarkTheme: () => {},
     setLightTheme: () => {},
 

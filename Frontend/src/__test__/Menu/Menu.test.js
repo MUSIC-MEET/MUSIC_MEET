@@ -16,5 +16,9 @@ describe("<Menu />", () => {
         fireEvent.click(closeIcon);
         expect(onMenuClose).toHaveBeenCalled();
     });
-
+    
+    it("<Menu /> 컴포넌트에 <Login /> 컴포넌트가 생성 되었나 확인", () => {
+        render(<Menu/>);
+        expect(screen.getByText("로그인")).toBeInTheDocument();
+    });
 });

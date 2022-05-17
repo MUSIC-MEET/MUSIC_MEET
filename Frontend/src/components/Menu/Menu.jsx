@@ -6,6 +6,7 @@ import styled from "styled-components";
 import ThemeContext from "../../store/ThemeContext";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
+import Login from "components/Login/Login";
 
 const navStyle = css`
     width: 15vw;
@@ -17,10 +18,17 @@ const navStyle = css`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center; 
-    & > :nth-child(1) {
+
+
+    & > svg {
         color: red;
         align-self: flex-end;
-        margin: 1rem;
+        margin: 0.2rem;
+    }
+
+    & > :not(svg) {
+        width: 10rem;
+        height: 3rem;
     }
 `;
 function Menu(props) {
@@ -40,7 +48,8 @@ function Menu(props) {
                     <Brightness4Icon onClick={setLightTheme} />:
                     <NightsStayIcon onClick={setDarkTheme} />
             }
-            <p className={"item"}>test</p>
+            <Login />
+            dd
         </div>
     );
 }

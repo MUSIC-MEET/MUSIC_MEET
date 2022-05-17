@@ -43,7 +43,6 @@ function ThemeContextProvider(props) {
         setDarkTheme: setDarkTheme,
         setLightTheme: setLightTheme
     };
-    console.log(theme);
     return (
         <ThemeContext.Provider value={themeObj}>
             {props.children}

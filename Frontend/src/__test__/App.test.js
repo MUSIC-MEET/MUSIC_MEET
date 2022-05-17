@@ -22,5 +22,7 @@ describe("<App />", () => {
         expect(menuIcon).not.toBeInTheDocument();
         expect(screen.getByTestId("CloseIcon")).toBeInTheDocument();
         
-    }); 
+    });
+    
+   
 });
