@@ -7,10 +7,10 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
 import Login from "components/Login/Login";
 import { useTranslation } from "react-i18next";
+import Search from "components/Search/Search";
 
 const navStyle = css`
-    width: 15vw;
-    min-width: 15rem;
+    min-width: 19rem;
     max-width: 60rem;
     height: 100vh;
     border-right: 2px solid gainsboro;
@@ -27,8 +27,8 @@ const navStyle = css`
     }
 
     & > :not(svg) {
-        width: 10rem;
-        height: 3rem;
+        width: 15rem;
+        height: auto;
     }
 `;
 function Menu(props) {
@@ -50,6 +50,7 @@ function Menu(props) {
                     <NightsStayIcon onClick={setDarkTheme} />
             }
             <Login />
+            <Search />
             <button onClick={() => i18n.changeLanguage("kr")}>KR</button>
             <button onClick={() => i18n.changeLanguage("en")}>en</button>
             <ul>
@@ -58,7 +59,6 @@ function Menu(props) {
                 <li>{t("routes.menu3")}</li>
                 <li>{t("routes.menu4")}</li>
             </ul>
-     
             
         </div>
     );

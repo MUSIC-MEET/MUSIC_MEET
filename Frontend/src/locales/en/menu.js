@@ -6,5 +6,8 @@ export default {
         "menu2" : "menu2",
         "menu3" : "menu3",
         "menu4" : "menu4",
+    },
+    search: {
+        "placeholder" : "Search MUSIC MEET"
     }
 };

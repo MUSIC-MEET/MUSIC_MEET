@@ -6,5 +6,8 @@ export default {
         "menu2" : "메뉴2",
         "menu3" : "메뉴3",
         "menu4" : "메뉴4",
+    },
+    search: {
+        "placeholder" : "MUSIC MEET 검색"
     }
 };
