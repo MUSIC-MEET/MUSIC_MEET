@@ -4,7 +4,8 @@ import ThemeContext from "./ThemeContext";
 const DarkThemeInit = {
     menu: {
         background: "rgb(22,25,31)",
-        fontColor:  "white"
+        fontColor:  "white",
+        searchBackground: "rgb(31,31,31)",
     },
     content: {
         background: "rgb(16,18,23)",
@@ -15,7 +16,8 @@ const DarkThemeInit = {
 const LightThemeInit = {
     menu: {
         background: "rgb(250,249,250)",
-        fontColor:  "black"
+        fontColor:  "rgb(36,41,49)",
+        searchBackground: "rgb(255,255,255)",
     },
     content: {
         background: "rgb(255,255,255)",

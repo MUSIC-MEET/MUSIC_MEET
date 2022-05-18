@@ -23,6 +23,4 @@ describe("<App />", () => {
         expect(screen.getByTestId("CloseIcon")).toBeInTheDocument();
         
     });
-    
-   
 });
