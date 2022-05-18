@@ -16,7 +16,7 @@ const DarkThemeInit = {
 const LightThemeInit = {
     menu: {
         background: "rgb(250,249,250)",
-        fontColor:  "black",
+        fontColor:  "rgb(36,41,49)",
         searchBackground: "rgb(255,255,255)",
     },
     content: {

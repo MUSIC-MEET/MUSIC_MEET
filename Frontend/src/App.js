@@ -6,6 +6,8 @@ import ThemeContextProvider from "./store/ThemeContextProvider";
 import Content from "./components/UI/Content";
 import { css } from "@emotion/react";
 import "i18n";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 const rootStyle = css`
     display: flex;
     flex-direction: row;
@@ -16,22 +18,27 @@ function App() {
         setMenu((prevState) => !prevState);
     },[]);
     return (
-        <ThemeContextProvider>
-            <div css={rootStyle}>
-                { menu && <Menu 
-                    onMenuClose={menuVisibleHandler}
-                />}
-                <Content>
-                    {
-                        !menu && 
+        <BrowserRouter>
+            <ThemeContextProvider>
+                <div css={rootStyle}>
+                    { menu && <Menu 
+                        onMenuClose={menuVisibleHandler}
+                    />}
+                    <Content>
+                        {
+                            !menu && 
                         <MenuIcon
                             onClick={menuVisibleHandler}
                         />
-                    }
-                    dd
-                </Content>
-            </div>
-        </ThemeContextProvider>
+                        }
+                        <Routes>
+                            <Route path="/" element={<h2>hello</h2>} />
+                            <Route path="/tmp" element={<h2>hello</h2>} />
+                        </Routes>
+                    </Content>
+                </div>
+            </ThemeContextProvider>
+        </BrowserRouter>
     );
 }
 

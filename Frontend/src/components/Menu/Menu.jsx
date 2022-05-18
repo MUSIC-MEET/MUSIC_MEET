@@ -8,6 +8,7 @@ import NightsStayIcon from "@mui/icons-material/NightsStay";
 import Login from "components/Login/Login";
 import { useTranslation } from "react-i18next";
 import Search from "components/Search/Search";
+import RoutesMenu from "components/RoutesMenu/RoutesMenu";
 
 const navStyle = css`
     min-width: 19rem;
@@ -51,6 +52,7 @@ function Menu(props) {
             }
             <Login />
             <Search />
+            <RoutesMenu />
             <button onClick={() => i18n.changeLanguage("kr")}>KR</button>
             <button onClick={() => i18n.changeLanguage("en")}>en</button>
             <ul>
