@@ -10,6 +10,10 @@ const DarkThemeInit = {
     content: {
         background: "rgb(16,18,23)",
         fontColor:  "white"
+    },
+    modal: {
+        background: "rgb(16,18,23)",
+        fontColor: "white"
     }
 };
 
@@ -20,6 +24,10 @@ const LightThemeInit = {
         searchBackground: "rgb(255,255,255)",
     },
     content: {
+        background: "rgb(255,255,255)",
+        fontColor:  "black"
+    },
+    modal: {
         background: "rgb(255,255,255)",
         fontColor:  "black"
     }

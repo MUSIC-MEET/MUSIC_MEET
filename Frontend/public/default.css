@@ -144,3 +144,12 @@ table {
 body {
     font-family: "HallymMjo-Regular";
 }
+
+input {
+    border-style: none;
+    border: 1px solid;
+}
+
+input:focus {
+    outline: none;
+}
