@@ -4,7 +4,8 @@ const ThemeContext = React.createContext({
     theme: "light",
     themeStyle: {
         menu: {},
-        contet: {}
+        contet: {},
+        modal: {}
     },
     setDarkTheme: () => {},
     setLightTheme: () => {},
