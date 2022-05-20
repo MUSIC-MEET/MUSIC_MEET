@@ -32,7 +32,6 @@ function Search() {
     const { t } = useTranslation("menu");
     const ctx = useContext(ThemeContext);
     const { fontColor, searchBackground } = ctx.themeStyle.menu;
-    console.log(fontColor);
     return (
         <form css={style}>
             <input 
