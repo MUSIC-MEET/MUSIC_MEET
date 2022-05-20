@@ -54,6 +54,7 @@ function LoginForm(props) {
                         <CheckCircleOutlineIcon style={{ "cursor": "pointer" }} onClick={onChangeKeepLoginState} /> : 
                         <CheckCircleIcon style={{ "cursor": "pointer" }} onClick={onChangeKeepLoginState}/>}
                     <p 
+                        style={{ "cursor": "pointer" }}
                         onClick={onChangeKeepLoginState}
                     >
                         {t("keepLoginState")}</p>
@@ -85,7 +86,7 @@ const subMenuStyle = css`
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
-    div > .pw {
+    div > .pw::before {
         content: " · ";
     }
 
