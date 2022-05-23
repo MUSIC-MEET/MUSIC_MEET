@@ -21,12 +21,16 @@ public class Guide {
     @RequestMapping(method = RequestMethod.GET, path="/GuideClass") // method -> 데이터를 주고 받는 방식 설정, path -> 해당 클래스가 동작할 url
     // @RequestBody -> 바디에 오는 정보를 받아주는 어노테이션
     // front에서 날라온 정보가 GuideClass 타입의 gc 변수에 저장됨, 데이터 타입이랑 변수는 변경 가능
-    public String guideFunc(@RequestBody GuideClass gc)
+    public GuideClass guideFunc(@RequestBody GuideClass gc)
     {
+        System.out.println(gc.getId());
+        System.out.println(gc.getPw());
 
+        GuideClass gc2 = new GuideClass();
+        gc2.setId(gc.getId() + "아 되나?");
+        gc2.setPw(gc.getPw() + "아 되나?");
 
-
-        return "";
+        return gc2;
     }
 }
 
