@@ -7,6 +7,7 @@ import { useContext } from "react";
 import ThemeContext from "../../store/ThemeContext";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Title from "components/common/Title";
 
 function LoginForm(props) {
     const { keepLoginState, onChangeKeepLoginState, values, onChangeValues } = props;
@@ -17,7 +18,7 @@ function LoginForm(props) {
     const { borderColor } = ctx.themeStyle.input;
     return (
         <div css={[style]}>
-            <h1>{t("title")}</h1>
+            <Title>{t("title")}</Title>
             <form css={css`width: 20rem; margin: 2.5rem 0;`}>
                 <Input
                     input = {{
@@ -103,12 +104,10 @@ const style =  css`
     * {
         font-size: 1.2rem;
     }
-    & > h1 {
-        font-weight: bold;
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
 
+    & > h1 {
+        margin-top: 0.95rem;
+    }
     & > form {
         display:flex;
         flex-direction: column;
@@ -118,6 +117,7 @@ const style =  css`
     & > form > input {
         padding: 0.5rem;
         margin-bottom: 0.5rem;
+        font-size: 1rem;
     }
 
     & > form > button {

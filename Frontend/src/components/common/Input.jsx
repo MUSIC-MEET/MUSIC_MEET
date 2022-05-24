@@ -12,7 +12,7 @@ function Input(props) {
     const { fontColor } = ctx.themeStyle.content;
     const { w, h } = props;
     return (
-        <input css={[style,css`
+        <input className={props.className} css={[style,css`
             background: none;
             color: ${fontColor};
             border: 1px solid ${borderColor};

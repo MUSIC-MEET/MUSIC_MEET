@@ -14,7 +14,7 @@ const navStyle = css`
     min-width: 19rem;
     max-width: 60rem;
     height: 100vh;
-    border-right: 2px solid gainsboro;
+    border-right: 2px solid #555555;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -55,12 +55,6 @@ function Menu(props) {
             <RoutesMenu />
             <button onClick={() => i18n.changeLanguage("kr")}>KR</button>
             <button onClick={() => i18n.changeLanguage("en")}>en</button>
-            <ul>
-                <li>{t("routes.menu1")}</li>
-                <li>{t("routes.menu2")}</li>
-                <li>{t("routes.menu3")}</li>
-                <li>{t("routes.menu4")}</li>
-            </ul>
             
         </div>
     );

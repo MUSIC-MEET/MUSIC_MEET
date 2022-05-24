@@ -3,16 +3,19 @@ import ThemeContext from "./ThemeContext";
 
 const DarkThemeInit = {
     menu: {
-        background: "rgb(22,25,31)",
-        fontColor:  "white",
+        background: "rgb(22,22,22)",
+        fontColor:  "#CCCCCC",
         searchBackground: "rgb(31,31,31)",
+        login: {
+            fontColor: "white"
+        }
     },
     content: {
-        background: "rgb(16,18,23)",
+        background: "rgb(22,22,22)",
         fontColor:  "white"
     },
     modal: {
-        background: "rgb(16,18,23)",
+        background: "rgb(22,22,22)",
         fontColor: "white"
     },
     input: {
@@ -23,8 +26,11 @@ const DarkThemeInit = {
 const LightThemeInit = {
     menu: {
         background: "rgb(250,249,250)",
-        fontColor:  "rgb(36,41,49)",
+        fontColor:  "#222222",
         searchBackground: "rgb(255,255,255)",
+        login: {
+            fontColor: "black"
+        }
     },
     content: {
         background: "rgb(255,255,255)",
