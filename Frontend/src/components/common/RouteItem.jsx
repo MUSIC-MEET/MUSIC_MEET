@@ -8,7 +8,7 @@ const style = css`
     cursor: pointer;
     width: auto;
 `;
-function RouteMenuItem(props) {
+function RouteItem(props) {
     const { name, link } = props;
     const navigater = useNavigate();
 
@@ -22,4 +22,4 @@ function RouteMenuItem(props) {
     );
 }
 
-export default React.memo(RouteMenuItem);
+export default React.memo(RouteItem);

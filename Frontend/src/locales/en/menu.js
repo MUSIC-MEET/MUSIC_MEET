@@ -9,5 +9,8 @@ export default {
     },
     search: {
         "placeholder" : "Search MUSIC MEET"
+    },
+    subRoutes: {
+        "menu1" : "Settings"
     }
 };

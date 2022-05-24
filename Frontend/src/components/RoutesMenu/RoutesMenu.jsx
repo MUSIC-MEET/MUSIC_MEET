@@ -1,5 +1,5 @@
 import React from "react";
-import RouteMenuItem from "./RouteMenuItem";
+import RouteMenuItem from "../common/RouteItem";
 import { useTranslation } from "react-i18next";
 
 function RoutesMenu() {

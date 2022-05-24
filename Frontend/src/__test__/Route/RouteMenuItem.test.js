@@ -1,6 +1,6 @@
 import React from "react";
 import { screen, render, fireEvent } from "@testing-library/react";
-import RouteMenuItem from "../../components/RoutesMenu/RouteMenuItem";
+import RouteMenuItem from "../../components/common/RouteItem";
 
 import { BrowserRouter } from "react-router-dom";
 describe("<RouteMenuItem />", () => {
