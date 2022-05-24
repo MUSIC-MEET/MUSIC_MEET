@@ -47,6 +47,7 @@ function Login() {
                         onChangeKeepLoginState={changeKeepLoginStateHandler}
                         values={values}
                         onChangeValues={changeValuesHandler}
+                        onClose={onCloseLoginModal}
                     />
                 </Modal>
             }

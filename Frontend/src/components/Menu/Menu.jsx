@@ -9,7 +9,7 @@ import Login from "components/Login/Login";
 import { useTranslation } from "react-i18next";
 import Search from "components/Search/Search";
 import RoutesMenu from "components/RoutesMenu/RoutesMenu";
-
+import TranslateIcon from "@mui/icons-material/Translate";
 const navStyle = css`
     min-width: 19rem;
     max-width: 60rem;
@@ -55,7 +55,7 @@ function Menu(props) {
             <RoutesMenu />
             <button onClick={() => i18n.changeLanguage("kr")}>KR</button>
             <button onClick={() => i18n.changeLanguage("en")}>en</button>
-            
+            <TranslateIcon />
         </div>
     );
 }

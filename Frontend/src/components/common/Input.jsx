@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import React, { useContext, useEffect } from "react";
 import { css } from "@emotion/react";
+import React, { useContext, useEffect } from "react";
 import ThemeContext from "store/ThemeContext";
 
 function Input(props) {
@@ -27,5 +27,10 @@ function Input(props) {
 
 const style = css`
     padding: 0.5rem;
+
+    &:focus {
+        border: none;
+        border-bottom: 1px solid #FF5500;
+    }
 `;
 export default Input;

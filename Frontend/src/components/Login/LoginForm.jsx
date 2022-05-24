@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useCallback } from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
 import Input from "components/common/Input";
@@ -8,14 +8,22 @@ import ThemeContext from "../../store/ThemeContext";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Title from "components/common/Title";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm(props) {
-    const { keepLoginState, onChangeKeepLoginState, values, onChangeValues } = props;
+    const { keepLoginState, onChangeKeepLoginState, values, onChangeValues, onClose } = props;
     const { email, password } = values || "";
     const { t } = useTranslation("loginForm");
     const ctx = useContext(ThemeContext);
     const { background, fontColor } = ctx.themeStyle.modal;
     const { borderColor } = ctx.themeStyle.input;
+    const navigater = useNavigate();
+
+    const onClickSignUp = useCallback(() => {
+        navigater("/signup");
+        onClose();
+    },[navigater, onClose]);
+    
     return (
         <div css={[style]}>
             <Title>{t("title")}</Title>
@@ -66,7 +74,7 @@ function LoginForm(props) {
                 />
                 <div css={subMenuStyle}>
                     <div>
-                        <span>{t("signup")}</span>
+                        <span onClick={onClickSignUp}>{t("signup")}</span>
                     </div>
                 
                     <div>
