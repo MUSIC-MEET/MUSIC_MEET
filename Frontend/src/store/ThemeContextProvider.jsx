@@ -14,6 +14,9 @@ const DarkThemeInit = {
     modal: {
         background: "rgb(16,18,23)",
         fontColor: "white"
+    },
+    input: {
+        borderColor: "rgb(88,88,88)",
     }
 };
 
@@ -30,6 +33,9 @@ const LightThemeInit = {
     modal: {
         background: "rgb(255,255,255)",
         fontColor:  "black"
+    },
+    input: {
+        background: "rgb(255,255,255)",
     }
 };
 

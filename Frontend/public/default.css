@@ -135,14 +135,14 @@ table {
 }
 
 @font-face {
-    font-family: 'HallymMjo-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2204@1.0/HallymMjo-Regular.woff2') format('woff2');
-    font-weight: 400;
+    font-family: 'SpoqaHanSansNeo-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+    font-weight: normal;
     font-style: normal;
 }
 
 body {
-    font-family: "HallymMjo-Regular";
+    font-family: "SpoqaHanSansNeo-Regular";
 }
 
 input {

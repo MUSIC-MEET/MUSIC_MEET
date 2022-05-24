@@ -2,7 +2,7 @@
 import React from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
-import Input from "./Input";
+import Input from "components/common/Input";
 import { useContext } from "react";
 import ThemeContext from "../../store/ThemeContext";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -14,13 +14,12 @@ function LoginForm(props) {
     const { t } = useTranslation("loginForm");
     const ctx = useContext(ThemeContext);
     const { background, fontColor } = ctx.themeStyle.modal;
+    const { borderColor } = ctx.themeStyle.input;
     return (
         <div css={[style]}>
             <h1>{t("title")}</h1>
             <form css={css`width: 20rem; margin: 2.5rem 0;`}>
                 <Input
-                    background={background}
-                    fontColor={fontColor}
                     input = {{
                         value: email,
                         type: "email",
@@ -30,8 +29,6 @@ function LoginForm(props) {
                     }}
                 />
                 <Input 
-                    background={background}
-                    fontColor={fontColor}
                     input = {{
                         value: password,
                         type: "password",
@@ -63,6 +60,7 @@ function LoginForm(props) {
                     css={css`
                         background: ${background};
                         color: ${fontColor};
+                        border: 1px solid ${borderColor};
                     `}
                 />
                 <div css={subMenuStyle}>

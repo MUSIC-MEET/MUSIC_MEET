@@ -7,6 +7,8 @@ import Content from "./components/UI/Content";
 import { css } from "@emotion/react";
 import "i18n";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Register from "pages/Register/Index";
+
 
 const rootStyle = css`
     display: flex;
@@ -28,12 +30,13 @@ function App() {
                         {
                             !menu && 
                         <MenuIcon
+                            style={{ alignSelf : "flex-start" }}
                             onClick={menuVisibleHandler}
                         />
                         }
                         <Routes>
                             <Route path="/" element={<h2>hello</h2>} />
-                            <Route path="/tmp" element={<h2>hello</h2>} />
+                            <Route path="/register" element={<Register />} />
                         </Routes>
                     </Content>
                 </div>
