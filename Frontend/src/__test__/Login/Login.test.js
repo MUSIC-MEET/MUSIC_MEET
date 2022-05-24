@@ -15,8 +15,8 @@ describe("<Login />", () => {
     it("로그인 border top, bottom 생성 확인",()=> {
         render(<Login />);
         const parent = screen.getByText(text.login).closest("div");
-        expect(parent).toHaveStyle({ "border-top" : "3px solid gray" });
-        expect(parent).toHaveStyle({ "border-bottom" : "3px solid gray" });
+        expect(parent).toHaveStyle({ "border-top" : "3px solid #555555" });
+        expect(parent).toHaveStyle({ "border-bottom" : "3px solid #555555" });
     });
 
     it("로그인 글자에 cursor값 생성 확인",()=> {

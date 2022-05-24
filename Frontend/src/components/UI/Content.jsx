@@ -10,6 +10,9 @@ const divStyle = css`
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
 `;
 
 function Content(props) {

@@ -1,26 +1,34 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useCallback } from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
-import Input from "./Input";
+import Input from "components/common/Input";
 import { useContext } from "react";
 import ThemeContext from "../../store/ThemeContext";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Title from "components/common/Title";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm(props) {
-    const { keepLoginState, onChangeKeepLoginState, values, onChangeValues } = props;
+    const { keepLoginState, onChangeKeepLoginState, values, onChangeValues, onClose } = props;
     const { email, password } = values || "";
     const { t } = useTranslation("loginForm");
     const ctx = useContext(ThemeContext);
     const { background, fontColor } = ctx.themeStyle.modal;
+    const { borderColor } = ctx.themeStyle.input;
+    const navigater = useNavigate();
+
+    const onClickSignUp = useCallback(() => {
+        navigater("/signup");
+        onClose();
+    },[navigater, onClose]);
+    
     return (
         <div css={[style]}>
-            <h1>{t("title")}</h1>
+            <Title>{t("title")}</Title>
             <form css={css`width: 20rem; margin: 2.5rem 0;`}>
                 <Input
-                    background={background}
-                    fontColor={fontColor}
                     input = {{
                         value: email,
                         type: "email",
@@ -30,8 +38,6 @@ function LoginForm(props) {
                     }}
                 />
                 <Input 
-                    background={background}
-                    fontColor={fontColor}
                     input = {{
                         value: password,
                         type: "password",
@@ -63,11 +69,12 @@ function LoginForm(props) {
                     css={css`
                         background: ${background};
                         color: ${fontColor};
+                        border: 1px solid ${borderColor};
                     `}
                 />
                 <div css={subMenuStyle}>
                     <div>
-                        <span>{t("signup")}</span>
+                        <span onClick={onClickSignUp}>{t("signup")}</span>
                     </div>
                 
                     <div>
@@ -105,12 +112,10 @@ const style =  css`
     * {
         font-size: 1.2rem;
     }
-    & > h1 {
-        font-weight: bold;
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
 
+    & > h1 {
+        margin-top: 0.95rem;
+    }
     & > form {
         display:flex;
         flex-direction: column;
@@ -120,6 +125,7 @@ const style =  css`
     & > form > input {
         padding: 0.5rem;
         margin-bottom: 0.5rem;
+        font-size: 1rem;
     }
 
     & > form > button {

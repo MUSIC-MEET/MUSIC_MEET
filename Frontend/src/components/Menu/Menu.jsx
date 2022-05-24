@@ -9,12 +9,13 @@ import Login from "components/Login/Login";
 import { useTranslation } from "react-i18next";
 import Search from "components/Search/Search";
 import RoutesMenu from "components/RoutesMenu/RoutesMenu";
-
+import TranslateIcon from "@mui/icons-material/Translate";
+import SubMenu from "components/SubMenu/SubMenu";
 const navStyle = css`
     min-width: 19rem;
     max-width: 60rem;
     height: 100vh;
-    border-right: 2px solid gainsboro;
+    border-right: 2px solid #555555;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -53,15 +54,11 @@ function Menu(props) {
             <Login />
             <Search />
             <RoutesMenu />
+            <hr />
+            <SubMenu />
             <button onClick={() => i18n.changeLanguage("kr")}>KR</button>
             <button onClick={() => i18n.changeLanguage("en")}>en</button>
-            <ul>
-                <li>{t("routes.menu1")}</li>
-                <li>{t("routes.menu2")}</li>
-                <li>{t("routes.menu3")}</li>
-                <li>{t("routes.menu4")}</li>
-            </ul>
-            
+            <TranslateIcon />
         </div>
     );
 }

@@ -9,5 +9,8 @@ export default {
     },
     search: {
         "placeholder" : "MUSIC MEET 검색"
+    },
+    subRoutes: {
+        "menu1" : "환경설정"
     }
 };
