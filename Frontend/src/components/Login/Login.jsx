@@ -7,7 +7,7 @@ import LoginForm from "./LoginForm";
 import { useState } from "react";
 import ThemeContext from "store/ThemeContext";
 
-function Login() {
+function Login(props) {
     const { t } = useTranslation("menu");
     const ctx = useContext(ThemeContext);
     const [formShown, setformShown] = useState(false);
@@ -16,7 +16,6 @@ function Login() {
         email: "",
         password: ""
     });
-
     const changeKeepLoginStateHandler = useCallback(() => {
         setKeepLoginState((prevState) => !prevState);
     },[]);
@@ -48,6 +47,7 @@ function Login() {
                         values={values}
                         onChangeValues={changeValuesHandler}
                         onClose={onCloseLoginModal}
+                        navigator={props.navigator}
                     />
                 </Modal>
             }

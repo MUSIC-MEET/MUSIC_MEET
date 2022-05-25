@@ -1,10 +1,11 @@
 import React from "react";
-import RouteMenuItem from "../common/RouteItem";
+import RouteItem from "../common/RouteItem";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 function RoutesMenu() {
     const { t } = useTranslation("menu");
-    
+    const navigater = useNavigate();
     const ROUTES = [
         { name : t("routes.menu1"), link: "/tmp" },
         { name : t("routes.menu2"), link: "/tmp" },
@@ -14,10 +15,11 @@ function RoutesMenu() {
     return (
         <ul>
             {ROUTES.map((route,index) =>(
-                <RouteMenuItem 
+                <RouteItem 
                     name={route.name} 
                     link={route.link} 
                     key={index}
+                    navigater={navigater}
                 />
             ))}
         </ul>

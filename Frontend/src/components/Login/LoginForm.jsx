@@ -8,21 +8,26 @@ import ThemeContext from "../../store/ThemeContext";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Title from "components/common/Title";
-import { useNavigate } from "react-router-dom";
 
 function LoginForm(props) {
-    const { keepLoginState, onChangeKeepLoginState, values, onChangeValues, onClose } = props;
+    const { 
+        keepLoginState, 
+        onChangeKeepLoginState, 
+        values, 
+        onChangeValues, 
+        onClose, 
+        navigator
+    } = props;
     const { email, password } = values || "";
     const { t } = useTranslation("loginForm");
     const ctx = useContext(ThemeContext);
     const { background, fontColor } = ctx.themeStyle.modal;
     const { borderColor } = ctx.themeStyle.input;
-    const navigater = useNavigate();
 
     const onClickSignUp = useCallback(() => {
-        navigater("/signup");
+        navigator("/signup");
         onClose();
-    },[navigater, onClose]);
+    },[navigator, onClose]);
     
     return (
         <div css={[style]}>
