@@ -7,6 +7,18 @@ public class Account {
     private Boolean agree1;
     private Boolean agree2;
     private Boolean agree3;
+    private int state;
+    // 생성자
+    public Account(String id, String pw, String email, Boolean agree1, Boolean agree2, Boolean agree3, int state)
+    {
+        this.id = id;
+        this.pw = pw;
+        this.email = email;
+        this.agree1 = agree1;
+        this.agree2 = agree2;
+        this.agree3 = agree3;
+        this.state = state;
+    }
 
     @Override
     public String toString() {
@@ -17,6 +29,7 @@ public class Account {
                 ", agree1=" + agree1 +
                 ", agree2=" + agree2 +
                 ", agree3=" + agree3 +
+                ", state=" + state +
                 '}';
     }
 
@@ -66,5 +79,13 @@ public class Account {
 
     public void setAgree3(Boolean agree3) {
         this.agree3 = agree3;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }
