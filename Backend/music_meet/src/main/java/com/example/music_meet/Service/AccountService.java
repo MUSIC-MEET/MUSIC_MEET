@@ -1,8 +1,8 @@
 package com.example.music_meet.Service;
-
-//import java.sql.DriverManager;
 import java.sql.*;
+
 import com.example.music_meet.Model.Account;
+
 
 public class AccountService {
     String mysqlurl = "jdbc:mysql://localhost:3306/music_meet?serverTimezone=UTC&characterEncoding=UTF-8";
@@ -17,22 +17,25 @@ public class AccountService {
     //
     // 회원 추가
     //
-    public String createAccountFunc(String ID, String PW, String EMAIL, boolean AGREE1, boolean AGREE2, boolean AGREE3, int STATE)
+    public String createAccountFunc(Account re)
     {
-        String sql = "insert into account values(?,?,?,?,?,?,?)";
+        String sql = "insert into account values(?,?,?,?,?,?)";
 
         try {
+            //
+            // DB구간
+            //
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(mysqlurl,mysqlid,mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1, ID);
-            pstmt.setString(2, PW);
-            pstmt.setString(3, EMAIL);
-            pstmt.setBoolean(4, AGREE1);
-            pstmt.setBoolean(5, AGREE2);
-            pstmt.setBoolean(6, AGREE3);
-            pstmt.setInt(7, STATE);
+            pstmt.setString(1, re.getId());
+            pstmt.setString(2, re.getPw());
+            pstmt.setString(3, re.getEmail());
+            pstmt.setBoolean(4, re.getAgree1());
+            pstmt.setBoolean(5, re.getAgree2());
+            pstmt.setBoolean(6, re.getAgree3());
+            //pstmt.setInt(7, re.getState());
 
             rsInt = pstmt.executeUpdate();
 
@@ -58,7 +61,7 @@ public class AccountService {
     //
     public Account searchAccountFunc(String ID)
     {
-        String sql = "select * from account where id=" + ID;
+        String sql = "select * from account where id=?";
         String id = null;
         String pw = null;
         String email = null;
@@ -71,9 +74,9 @@ public class AccountService {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, ID);
 
             rs = pstmt.executeQuery();
-
             while (rs.next())
             {
                 id = rs.getString(1);
@@ -89,7 +92,6 @@ public class AccountService {
             System.out.println("Controller.CreateAccount -> searchAccountFunc에서 while문 밑의 예외처리로 빠짐");
             e.printStackTrace();
         } finally {
-
             try {
                 rs.close();
                 pstmt.close();

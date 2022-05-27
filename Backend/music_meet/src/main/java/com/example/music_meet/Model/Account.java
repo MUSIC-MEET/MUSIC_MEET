@@ -8,7 +8,10 @@ public class Account {
     private Boolean agree2;
     private Boolean agree3;
     private int state;
+
+    //
     // 생성자
+    //
     public Account(String id, String pw, String email, Boolean agree1, Boolean agree2, Boolean agree3, int state)
     {
         this.id = id;
