@@ -3,6 +3,9 @@ import java.sql.*;
 
 import com.example.music_meet.Model.Account;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 public class AccountService {
     String mysqlurl = "jdbc:mysql://localhost:3306/music_meet?serverTimezone=UTC&characterEncoding=UTF-8";
@@ -106,5 +109,48 @@ public class AccountService {
     }
 
 
+    public String loginFunc(String ID, String PW, HttpServletRequest request) {
+        String sql = "select * from member where id= " + request.getParameter("id") ;
+        String id = request.getParameter("id");
+        String pw = request.getParameter("pw");
+        String idck;
+        String pwck;
 
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                idck = rs.getString(1);
+                pwck = rs.getString(2);
+
+                if (idck.equals(id) && pwck.equals(pw)) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("id", rs.getString(1));
+                    session.setAttribute("email", rs.getString(3));
+
+                } else {
+                    System.out.println("로그인 실패");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println();
+            e.printStackTrace();
+        } finally {
+
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (Exception e) {
+                System.out.println();
+                e.printStackTrace();
+            }
+        } return "";
+    }
 }
+
+
