@@ -52,19 +52,24 @@ function Login(props) {
                 </Modal>
             }
             <span 
-                css={css`color: ${ctx.themeStyle.menu.login.fontColor}`}
+                css={css`color: ${ctx.themeStyle.menu.login.fontColor};`}
                 onClick={onOpenLoginModal}
             >{t("login")}</span>
+            <span 
+                css={css`color: ${ctx.themeStyle.menu.login.fontColor}; margin-top: 1rem;`}
+                onClick={onOpenLoginModal}
+            >{t("signup")}</span>
         </div>
     );
 }
 
 const style=css`
-
+    display: flex;
+    flex-direction: column;
     border-top: 3px solid #555555;
     border-bottom: 3px solid #555555;
     padding: 0.8rem 0;
-    span {
+    & > span {
         cursor: pointer;
     }
 `;
