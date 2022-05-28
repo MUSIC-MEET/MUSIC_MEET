@@ -1,6 +1,7 @@
 export default {
     mode: "en",
     login: "LOGIN",
+    signup: "SIGNUP",
     routes: {
         "menu1" : "Show Chart",
         "menu2" : "Music Together",
