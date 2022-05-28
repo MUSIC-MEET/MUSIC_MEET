@@ -8,6 +8,6 @@ export default {
     },
     id: "아이디",
     password: "비밀번호",
-    email: "이메일"
-
+    email: "이메일",
+    submit: "가입하기"
 };

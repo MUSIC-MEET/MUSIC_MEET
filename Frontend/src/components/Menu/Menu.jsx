@@ -1,19 +1,33 @@
 /** @jsxImportSource @emotion/react */
 import React, { useContext } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import { css } from "@emotion/react";   
 import ThemeContext from "../../store/ThemeContext";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import NightsStayIcon from "@mui/icons-material/NightsStay";
 import Login from "components/Login/Login";
-import { useTranslation } from "react-i18next";
 import Search from "components/Search/Search";
 import RoutesMenu from "components/RoutesMenu/RoutesMenu";
-import TranslateIcon from "@mui/icons-material/Translate";
-import SubMenu from "components/SubMenu/SubMenu";
+import { useNavigate } from "react-router-dom";
+
+import TopIcons from "./TopIcons";
+
+function Menu(props) {
+    const ctx = useContext(ThemeContext);
+    const { background, fontColor } = ctx.themeStyle.menu;
+    const { onMenuClose } = props;  
+    const navigator = useNavigate();
+    return (
+        <div 
+            css={[navStyle, css` background: ${background}; color: ${fontColor};`]}
+        >
+            <TopIcons onMenuClose={onMenuClose}/>
+            <Login navigator={navigator}/>
+            <Search />
+            <RoutesMenu />
+        </div>
+    );
+}
+
 const navStyle = css`
-    min-width: 19rem;
-    max-width: 60rem;
+    width: 17.5rem;
     height: 100vh;
     border-right: 2px solid #555555;
     display: flex;
@@ -21,45 +35,10 @@ const navStyle = css`
     justify-content: flex-start;
     align-items: center; 
 
-
-    & > svg {
-        color: red;
-        align-self: flex-end;
-        margin: 0.2rem;
-    }
-
-    & > :not(svg) {
-        width: 15rem;
+    & > * {
+        width: 11rem;
         height: auto;
     }
 `;
-function Menu(props) {
-    const ctx = useContext(ThemeContext);
-    const { theme, setDarkTheme, setLightTheme } = ctx;
-    const { background, fontColor } = ctx.themeStyle.menu;
-    const { className, onMenuClose } = props;  
-    const { i18n, t } = useTranslation("menu");
-    return (
-        <div 
-            css={[navStyle, css` background: ${background}; color: ${fontColor};`]}
-        >
-            <CloseIcon 
-                onClick={onMenuClose}
-            />
-            {
-                theme === "dark" ?
-                    <Brightness4Icon onClick={setLightTheme} />:
-                    <NightsStayIcon onClick={setDarkTheme} />
-            }
-            <Login />
-            <Search />
-            <RoutesMenu />
-            <hr />
-            <SubMenu />
-            <button onClick={() => i18n.changeLanguage("kr")}>KR</button>
-            <button onClick={() => i18n.changeLanguage("en")}>en</button>
-            <TranslateIcon />
-        </div>
-    );
-}
+
 export default Menu;

@@ -12,14 +12,14 @@ const divStyle = css`
     padding: 1rem;
     justify-content: flex-start;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
 `;
 
 function Content(props) {
     const ctx = useContext(ThemeContext);
     const { background, fontColor } = ctx.themeStyle.content;
     return (
-        <div css={[divStyle, css`background: ${background}; color: ${fontColor};`]}>
+        <div className={props.className}css={[divStyle, css`background: ${background}; color: ${fontColor};`]}>
             {props.children}
         </div>
     );
