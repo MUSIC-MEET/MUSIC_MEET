@@ -57,7 +57,7 @@ function Login(props) {
             >{t("login")}</span>
             <span 
                 css={css`color: ${ctx.themeStyle.menu.login.fontColor}; margin-top: 1rem;`}
-                onClick={onOpenLoginModal}
+                onClick={() => props.navigator("/signup")}
             >{t("signup")}</span>
         </div>
     );
