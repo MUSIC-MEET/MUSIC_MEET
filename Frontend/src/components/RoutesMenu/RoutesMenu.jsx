@@ -13,16 +13,18 @@ function RoutesMenu() {
         { name : t("routes.menu4"), link: "/tmp" },
     ];
     return (
-        <ul>
-            {ROUTES.map((route,index) =>(
-                <RouteItem 
-                    name={route.name} 
-                    link={route.link} 
-                    key={index}
-                    navigater={navigater}
-                />
-            ))}
-        </ul>
+        <nav>
+            <ul>
+                {ROUTES.map((route,index) =>(
+                    <RouteItem 
+                        name={route.name} 
+                        link={route.link} 
+                        key={index}
+                        navigater={navigater}
+                    />
+                ))}
+            </ul>
+        </nav>
     );
 }
 

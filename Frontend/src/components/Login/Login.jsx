@@ -60,8 +60,7 @@ function Login(props) {
 }
 
 const style=css`
-    width: 100%;
-    height: 100%;
+
     border-top: 3px solid #555555;
     border-bottom: 3px solid #555555;
     padding: 0.8rem 0;

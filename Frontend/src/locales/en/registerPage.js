@@ -8,5 +8,6 @@ export default {
     },
     id: "ID",
     password: "Password",
-    email: "E-mail"
+    email: "E-mail",
+    submit: "SignUp"
 };

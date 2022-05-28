@@ -8,6 +8,10 @@ const DarkThemeInit = {
         searchBackground: "rgb(31,31,31)",
         login: {
             fontColor: "white"
+        },
+        subMenu: {
+            borderColor: "rgb(88,88,88)",
+            background: "#222222"
         }
     },
     content: {
@@ -30,6 +34,10 @@ const LightThemeInit = {
         searchBackground: "rgb(255,255,255)",
         login: {
             fontColor: "black"
+        },
+        subMenu: {
+            borderColor: "#222222",
+            background: "rgb(250,249,250)"
         }
     },
     content: {

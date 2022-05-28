@@ -12,7 +12,7 @@ const divStyle = css`
     padding: 1rem;
     justify-content: flex-start;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
 `;
 
 function Content(props) {

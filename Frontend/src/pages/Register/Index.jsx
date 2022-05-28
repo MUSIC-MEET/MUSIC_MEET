@@ -5,6 +5,7 @@ import Content from "components/UI/Content";
 import { useTranslation } from "react-i18next";
 import Input from "../../components/common/Input";
 import { css } from "@emotion/react";
+import Submit from "components/common/Submit";
 const INITVALUES = {
     id: "",
     pw1: "",
@@ -86,7 +87,11 @@ function Index() {
                     />
                 </div>
 
-                <input type="submit" value="dd"/>
+                <Submit
+                    w={"25rem"}
+                    h={"2.5rem"}
+                    value={t("submit")}
+                />
             </form>
         </Content>
     );
