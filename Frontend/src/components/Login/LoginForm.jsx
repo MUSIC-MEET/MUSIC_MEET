@@ -3,8 +3,6 @@ import React, { useCallback } from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
 import Input from "components/common/Input";
-import { useContext } from "react";
-import ThemeContext from "../../store/ThemeContext";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Title from "components/common/Title";
@@ -21,9 +19,6 @@ function LoginForm(props) {
     } = props;
     const { email, password } = values || "";
     const { t } = useTranslation("loginForm");
-    const ctx = useContext(ThemeContext);
-    const { background, fontColor } = ctx.themeStyle.modal;
-    const { borderColor } = ctx.themeStyle.input;
 
     const onClickSignUp = useCallback(() => {
         navigator("/signup");
