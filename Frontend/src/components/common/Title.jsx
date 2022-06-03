@@ -21,6 +21,7 @@ function Title(props) {
 const style = css`
     font-weight: 700;
     font-size: 2.6rem;
+    margin-bottom: 50px;
 `;
 
 export default Title;

@@ -7,7 +7,7 @@ import LoginForm from "./LoginForm";
 import { useState } from "react";
 import ThemeContext from "store/ThemeContext";
 
-function Login() {
+function Login(props) {
     const { t } = useTranslation("menu");
     const ctx = useContext(ThemeContext);
     const [formShown, setformShown] = useState(false);
@@ -16,7 +16,6 @@ function Login() {
         email: "",
         password: ""
     });
-
     const changeKeepLoginStateHandler = useCallback(() => {
         setKeepLoginState((prevState) => !prevState);
     },[]);
@@ -48,24 +47,29 @@ function Login() {
                         values={values}
                         onChangeValues={changeValuesHandler}
                         onClose={onCloseLoginModal}
+                        navigator={props.navigator}
                     />
                 </Modal>
             }
             <span 
-                css={css`color: ${ctx.themeStyle.menu.login.fontColor}`}
+                css={css`color: ${ctx.themeStyle.menu.login.fontColor};`}
                 onClick={onOpenLoginModal}
             >{t("login")}</span>
+            <span 
+                css={css`color: ${ctx.themeStyle.menu.login.fontColor}; margin-top: 1rem;`}
+                onClick={() => props.navigator("/signup")}
+            >{t("signup")}</span>
         </div>
     );
 }
 
 const style=css`
-    width: 100%;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
     border-top: 3px solid #555555;
     border-bottom: 3px solid #555555;
     padding: 0.8rem 0;
-    span {
+    & > span {
         cursor: pointer;
     }
 `;

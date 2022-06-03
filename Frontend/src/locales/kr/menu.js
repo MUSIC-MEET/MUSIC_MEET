@@ -1,6 +1,7 @@
 export default {
     mode: "kr",
     login: "로그인",
+    signup: "회원가입",
     routes: {
         "menu1" : "차트 보기",
         "menu2" : "뮤직 투게더",
