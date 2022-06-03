@@ -1,156 +1,57 @@
 package com.example.music_meet.Service;
-import java.sql.*;
 
-import com.example.music_meet.Model.Account;
+import com.example.music_meet.DTO.AccountForm;
+import com.example.music_meet.Entity.Account;
+import com.example.music_meet.Repository.AccountRepository;
+import com.example.music_meet.validate.Validate;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 
 public class AccountService {
-    String mysqlurl = "jdbc:mysql://localhost:3306/music_meet?serverTimezone=UTC&characterEncoding=UTF-8";
-    String mysqlid = "root";
-    String mysqlpassword = "0000";
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    int rsInt = 0;
+
+    private AccountRepository accountRepository;
+    Validate validate = new Validate();
+
 
 
     //
     // 회원 추가
     //
-    public String createAccountFunc(Account re)
+    public String createAccountFunc(AccountForm re)
     {
-        String sql = "insert into account values(?,?,?,?,?,?)";
+        Optional<Account> checkid = accountRepository.findById(re.getId());
 
-        try {
-            //
-            // DB구간
-            //
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(mysqlurl,mysqlid,mysqlpassword);
-            pstmt = conn.prepareStatement(sql);
+        System.out.println(checkid);
 
-            pstmt.setString(1, re.getId());
-            pstmt.setString(2, re.getPw());
-            pstmt.setString(3, re.getEmail());
-            pstmt.setBoolean(4, re.getAgree1());
-            pstmt.setBoolean(5, re.getAgree2());
-            pstmt.setBoolean(6, re.getAgree3());
-            //pstmt.setInt(7, re.getState());
+        if (validate.isValidDate(re.getId(), re.getPw(), re.getEmail()) && !checkid.equals(re.getId()))
+        {
+            // 1. DTO -> Entity로 변환
+            Account account = re.toEntity();
 
-            rsInt = pstmt.executeUpdate();
+            // 2. Repository에게 Entity를 DB 안에 저장하게 함
+            Account accountsaved = accountRepository.save(account);
 
-            System.out.println(rsInt);
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }finally {
-            try {
-                if (pstmt != null && conn != null)
-                    pstmt.close();
-                conn.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            return "회원가입이 성공적임";
         }
-
-        return "";
+        else
+            return "회원가입 실패";
     }
+
+
 
 
     //
     // ID 조회
     //
-    public Account searchAccountFunc(String ID)
+    public String searchAccountFunc(String ID)
     {
-        String sql = "select * from account where id=?";
-        String id = null;
-        String pw = null;
-        String email = null;
-        boolean ag1 = false;
-        boolean ag2 = false;
-        boolean ag3 = false;
-        int state = 0;
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, ID);
-
-            rs = pstmt.executeQuery();
-            while (rs.next())
-            {
-                id = rs.getString(1);
-                pw = rs.getString(2);
-                email = rs.getString(3);
-                ag1=  rs.getBoolean(4);
-                ag2=  rs.getBoolean(5);
-                ag3 =  rs.getBoolean(6);
-                state= rs.getInt(7);
-            }
-
-        } catch (Exception e) {
-            System.out.println("Controller.CreateAccount -> searchAccountFunc에서 while문 밑의 예외처리로 빠짐");
-            e.printStackTrace();
-        } finally {
-            try {
-                rs.close();
-                pstmt.close();
-                conn.close();
-            } catch (Exception e) {
-                System.out.println("Controller.CreateAccount -> searchAccountFunc에서 finally 안에 있는 예외처리로 빠짐");
-                e.printStackTrace();
-            }
-        }
-        Account account = new Account(id,pw,email,ag1,ag2,ag3,state);
-        return account;
+        return "";
     }
 
 
-    public String loginFunc(String ID, String PW, HttpServletRequest request) {
-        String sql = "select * from member where id= " + request.getParameter("id") ;
-        String id = request.getParameter("id");
-        String pw = request.getParameter("pw");
-        String idck;
-        String pwck;
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
-            pstmt = conn.prepareStatement(sql);
-
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                idck = rs.getString(1);
-                pwck = rs.getString(2);
-
-                if (idck.equals(id) && pwck.equals(pw)) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("id", rs.getString(1));
-                    session.setAttribute("email", rs.getString(3));
-
-                } else {
-                    System.out.println("로그인 실패");
-                }
-            }
-        } catch (Exception e) {
-            System.out.println();
-            e.printStackTrace();
-        } finally {
-
-            try {
-                rs.close();
-                pstmt.close();
-                conn.close();
-            } catch (Exception e) {
-                System.out.println();
-                e.printStackTrace();
-            }
-        } return "";
-    }
 }
 
 
