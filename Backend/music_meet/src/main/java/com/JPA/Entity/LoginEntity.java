@@ -1,4 +1,4 @@
-package com.example.music_meet.Entity;
+package com.JPA.Entity;
 
 
 import lombok.AllArgsConstructor;

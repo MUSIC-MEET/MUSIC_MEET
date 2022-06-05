@@ -1,23 +1,26 @@
 package com.example.music_meet.Controller;
 
 
+import com.example.music_meet.DTO.User;
+import com.example.music_meet.Service.LoginService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 @Controller
 @CrossOrigin("*")
+@Slf4j
 public class LoginController {
 
-    @RequestMapping("/login/{userid}{uesrpw}")
-    public String loginFunc(@PathVariable("userid") String id, @PathVariable("userpw") String pw)
+    public LoginService loginService = new LoginService();
+
+    @RequestMapping(method = RequestMethod.POST, path = "/login")
+    public String loginFunc(@RequestBody User user)
     {
-        String str = loginFunc(id,pw);
+        System.out.println(user);
+        String str = loginService.loginFunc(user.getId(), user.getPw());
 
-        return "";
+        return str;
     }
-
-
-
 
 }
