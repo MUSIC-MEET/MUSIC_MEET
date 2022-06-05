@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import Input from "../../components/common/Input";
 import { css } from "@emotion/react";
 import Submit from "components/common/Submit";
+import RegisterForm from "./RegisterForm";
 const INITVALUES = {
     id: "",
     pw1: "",
@@ -17,7 +18,7 @@ function Index() {
     const { t } = useTranslation("registerPage");
     const [values, setValues] = useState(INITVALUES);
 
-    const onChangeValues = useCallback((e) => {
+    const changeValuesHandler = useCallback((e) => {
         setValues({
             ...values,
             [e.target.name]: e.target.value
@@ -26,73 +27,10 @@ function Index() {
     return (
         <Content>
             <Title>{t("title")}</Title>
-            <form css={[formStyle]}>
-                <div>
-                    <label htmlFor="id">{t("id")}</label>
-                    <Input 
-                        w={"25rem"}
-                        h={"2.5rem"}
-                        input = {{
-                            value: values.id,
-                            type: "text",
-                            placeholder: t("placeholder.id"),
-                            name: "id",
-                            id: "id",
-                            onChange: onChangeValues
-                        }}
-                    />
-                </div>
-                
-                <div>
-                    <label htmlFor="pw1">{t("password")}</label>
-                    <Input 
-                        w={"25rem"}
-                        h={"2.5rem"}
-                        input = {{
-                            value: values.pw1,
-                            type: "password",
-                            placeholder: t("placeholder.pw1"),
-                            name: "pw1",
-                            id: "pw1",
-                            onChange: onChangeValues
-                        }}
-                    />
-                    <Input 
-                        w={"25rem"}
-                        h={"2.5rem"}
-                        input = {{
-                            value: values.pw2,
-                            type: "password",
-                            placeholder: t("placeholder.pw2"),
-                            name: "pw2",
-                            onChange: onChangeValues
-                        }}
-                    />
-
-                </div>
-                
-                <div> 
-                    <label htmlFor="email">{t("email")}</label>
-                    <Input 
-                        w={"25rem"}
-                        h={"2.5rem"}
-                        input = {{
-                            value: values.email,
-                            type: "email",
-                            placeholder: t("placeholder.email"),
-                            name: "email",
-                            id: "email",
-                            onChange: onChangeValues
-                        }}
-                    />
-                </div>
-
-                <Submit
-                    w={"25rem"}
-                    h={"2.5rem"}
-                    value={t("submit")}
-                />
-            </form>
+            <RegisterForm 
+                values={values}
+                onChangeValues={changeValuesHandler}
+            />
         </Content>
     );
 }

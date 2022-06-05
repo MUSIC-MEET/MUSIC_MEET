@@ -5,9 +5,11 @@ export default {
         pw1: "영문, 숫자, 특수기호를 포함해 8~16",
         pw2: "비밀번호를 다시 입력해주세요.",
         email: "이메일을 입력해주세요",
+        nickname: "닉네임을 입력해주세요"
     },
     id: "아이디",
     password: "비밀번호",
     email: "이메일",
+    nickname: "닉네임",
     submit: "가입하기"
 };
