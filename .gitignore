@@ -1,6 +1,7 @@
 # Backed
-Backend/music_meet/.ide
-.ide
+Backend/music_meet/.idea
+.idea
+.vscode
 
 # Front 
 # dependencies

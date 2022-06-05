@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28799573-fba3-4ebe-b641-2f1800123f77" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Backend/music_meet/src/main/java/com/example/music_meet/Guide.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/music_meet/src/main/java/com/example/music_meet/Guide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/music_meet/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/music_meet/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/music_meet/src/main/java/com/example/music_meet/Controller/CreateAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/music_meet/src/main/java/com/example/music_meet/Controller/CreateAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/music_meet/src/main/java/com/example/music_meet/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/music_meet/src/main/java/com/example/music_meet/Controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/music_meet/src/main/java/com/example/music_meet/Service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/music_meet/src/main/java/com/example/music_meet/Service/AccountService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,13 +49,26 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/kj605/OneDrive/바탕 화면/MUSIC_MEET/Backend/music_meet",
+    "last_opened_file_path": "C:/Users/Admin/Desktop/rep_music_meet/Backend/music_meet",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
     "spring.configuration.checksum": "586d963507a9b5e9db1e04bcb49982cd"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" />
+      <module name="rep_music_meet" />
+      <option name="SPRING_BOOT_MAIN_CLASS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -63,6 +80,9 @@
       <workItem from="1653303145592" duration="2190000" />
       <workItem from="1653373174859" duration="260000" />
       <workItem from="1653373501509" duration="63000" />
+      <workItem from="1654399800774" duration="394000" />
+      <workItem from="1654400208161" duration="11000" />
+      <workItem from="1654400229274" duration="395000" />
     </task>
     <servers />
   </component>

@@ -12,5 +12,5 @@ trot int(5) default 0,
 etc int(5) default 0,
 
 FOREIGN KEY (id)
-REFERENCES accountForm(id)
+REFERENCES user(id)
 );
