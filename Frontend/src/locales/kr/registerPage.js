@@ -11,5 +11,23 @@ export default {
     password: "비밀번호",
     email: "이메일",
     nickname: "닉네임",
-    submit: "가입하기"
+    submit: "가입하기",
+    errors: {
+        id: {
+            duplicate: "사용중인 아이디",
+            invalid: "유효하지 않는 아이디"
+        },
+        nickname: {
+            duplicate: "사용중인 닉네임",
+            invalid: "유효하지 않는 닉네임"
+        },
+        pw: {
+            invalid: "유효하지않는 비밀번호",
+            valid: "유효한 비밀번호",
+            notMatchs: "일치하지 않는 비밀번호"
+        }, 
+        email: {
+            invalid: "유효하지않는 이메일"
+        }
+    }
 };

@@ -1,20 +1,29 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useCallback } from "react";
 import Input from "../../components/common/Input";
 import { css } from "@emotion/react";
 import Submit from "components/common/Submit";
 import { useTranslation } from "react-i18next";
-function RegisterForm({ values, onChangeValues }) {
+import Error from "components/common/Error";
+import Correct from "components/common/Correct";
+
+function SignUpForm({ values, onChangeValues, onRequest, error }) {
     const { t } = useTranslation("registerPage");
+    
+    const onSubmit = useCallback((event) => {
+        event.preventDefault();
+        onRequest();
+    },[onRequest]);
+    
     return (
-        <form css={[formStyle]} >
+        <form css={[formStyle]}  onSubmit={onSubmit}>
             <div>
                 <label htmlFor="id">{t("id")}</label>
                 <Input 
                     w={"25rem"}
                     h={"2.5rem"}
                     input = {{
-                        value: values.id,
+                        value: values.id || "",
                         type: "text",
                         placeholder: t("placeholder.id"),
                         name: "id",
@@ -22,6 +31,7 @@ function RegisterForm({ values, onChangeValues }) {
                         onChange: onChangeValues
                     }}
                 />
+                {error.id ==="invalid" && <Error>{t("errors.id.invalid")}</Error>}
             </div>
                 
             <div>
@@ -30,7 +40,7 @@ function RegisterForm({ values, onChangeValues }) {
                     w={"25rem"}
                     h={"2.5rem"}
                     input = {{
-                        value: values.nickname,
+                        value: values.nickname || "",
                         type: "text",
                         placeholder: t("placeholder.nickname"),
                         name: "nickname",
@@ -38,6 +48,7 @@ function RegisterForm({ values, onChangeValues }) {
                         onChange: onChangeValues
                     }}
                 />
+                {error.nickname === "invalid" && <Error>{t("errors.nickname.invalid")}</Error>}
             </div>        
 
 
@@ -47,7 +58,7 @@ function RegisterForm({ values, onChangeValues }) {
                     w={"25rem"}
                     h={"2.5rem"}
                     input = {{
-                        value: values.pw1,
+                        value: values.pw1 || "",
                         type: "password",
                         placeholder: t("placeholder.pw1"),
                         name: "pw1",
@@ -55,18 +66,20 @@ function RegisterForm({ values, onChangeValues }) {
                         onChange: onChangeValues
                     }}
                 />
+                {error.pw1 === "invalid" && <Error>{t("errors.pw.invalid")}</Error>}
+                {error.pw1 === "valid" && <Correct>{t("errors.pw.valid")}</Correct>}
                 <Input 
                     w={"25rem"}
                     h={"2.5rem"}
                     input = {{
-                        value: values.pw2,
+                        value: values.pw2 || "",
                         type: "password",
                         placeholder: t("placeholder.pw2"),
                         name: "pw2",
                         onChange: onChangeValues
                     }}
                 />
-
+                {error.pw2 == "notmatchs" && <Error>{t("errors.pw.notMatchs")}</Error>}
             </div>
                 
             <div> 
@@ -75,7 +88,7 @@ function RegisterForm({ values, onChangeValues }) {
                     w={"25rem"}
                     h={"2.5rem"}
                     input = {{
-                        value: values.email,
+                        value: values.email || "",
                         type: "email",
                         placeholder: t("placeholder.email"),
                         name: "email",
@@ -83,6 +96,7 @@ function RegisterForm({ values, onChangeValues }) {
                         onChange: onChangeValues
                     }}
                 />
+                {error.email === "invalid" && <Error>{t("errors.email.invalid")}</Error>}
             </div>
 
             <Submit
@@ -114,4 +128,4 @@ const formStyle = css`
     }
 `;
 
-export default RegisterForm;
+export default SignUpForm;

@@ -7,7 +7,7 @@ import Content from "./components/UI/Content";
 import { css } from "@emotion/react";
 import "i18n";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Register from "pages/Register/Index";
+import SignUp from "pages/SignUp/Index";
 
 
 const rootStyle = css`
@@ -37,7 +37,7 @@ function App() {
                     }
                     <Routes>
                         <Route path="/" element={<h2>hello</h2>} />
-                        <Route path="/signup" element={<Register />} />
+                        <Route path="/signup" element={<SignUp />} />
                     </Routes>
                 </Content>
             </div>
