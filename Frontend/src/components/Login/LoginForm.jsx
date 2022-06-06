@@ -3,11 +3,10 @@ import React, { useCallback } from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
 import Input from "components/common/Input";
-import { useContext } from "react";
-import ThemeContext from "../../store/ThemeContext";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Title from "components/common/Title";
+import Submit from "components/common/Submit";
 
 function LoginForm(props) {
     const { 
@@ -20,9 +19,6 @@ function LoginForm(props) {
     } = props;
     const { email, password } = values || "";
     const { t } = useTranslation("loginForm");
-    const ctx = useContext(ThemeContext);
-    const { background, fontColor } = ctx.themeStyle.modal;
-    const { borderColor } = ctx.themeStyle.input;
 
     const onClickSignUp = useCallback(() => {
         navigator("/signup");
@@ -70,13 +66,7 @@ function LoginForm(props) {
                     >
                         {t("keepLoginState")}</p>
                 </div>
-                <input type="submit" value={t("title")}
-                    css={css`
-                        background: ${background};
-                        color: ${fontColor};
-                        border: 1px solid ${borderColor};
-                    `}
-                />
+                <Submit type="submit" value={t("title")} />
                 <div css={subMenuStyle}>
                     <div>
                         <span onClick={onClickSignUp}>{t("signup")}</span>

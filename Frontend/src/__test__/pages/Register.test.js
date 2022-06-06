@@ -1,7 +1,7 @@
 import React from "react";
 import text from "../../locales/en/registerPage";
 import  "../../i18n";
-import  Register from "pages/Register/Index";
+import  Register from "pages/SignUp/Index";
 import { render, screen } from "@testing-library/react";
 
 describe("<Register />", () => {
