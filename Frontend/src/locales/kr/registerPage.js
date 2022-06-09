@@ -14,20 +14,23 @@ export default {
     submit: "가입하기",
     errors: {
         id: {
-            duplicate: "사용중인 아이디",
-            invalid: "유효하지 않는 아이디"
+            duplicate: "중복된 아이디",
+            invalid: "사용 불가능한 아이디",
+            valid: "사용가능한 아이디"
         },
         nickname: {
             duplicate: "사용중인 닉네임",
-            invalid: "유효하지 않는 닉네임"
+            invalid: "사용 불가능한 닉네임",
+            valid: "사용가능한 아이디"
         },
         pw: {
-            invalid: "유효하지않는 비밀번호",
-            valid: "유효한 비밀번호",
+            invalid: "사용 불가능한 비밀번호",
+            valid: "사용가능한 비밀번호",
             notMatchs: "일치하지 않는 비밀번호"
         }, 
         email: {
-            invalid: "유효하지않는 이메일"
+            invalid: "사용 불능ㅏㄴ 이메일",
+            valid: "사용가능한 이메일"
         }
     }
 };
