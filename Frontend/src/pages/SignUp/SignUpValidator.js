@@ -1,10 +1,10 @@
 function isId(str) {
-    const reg = /^[a-z]+[a-z0-9]{4,19}$/g;
+    const reg = /^[a-z]+[a-z0-9]{4,19}$/;
     return reg.test(str);
 }
 
 function isNick(str) {
-    const reg = /^[a-zA-Z-가-힣]+[a-zA-Z-가-힣0-9]{3,15}$/g;
+    const reg = /^[a-zA-Z-가-힣]+[a-zA-Z-가-힣0-9]{3,15}$/;
     return reg.test(str);
 }
 
@@ -29,16 +29,18 @@ function SignUpValidator({ id, pw1, pw2, email, nickname }) {
         clear: false,
     };
 
-    if(id.length !=0 && !isId(id) ) {
+    if( (id.length !==0 && !isId(id)) ) {
+        console.log("invalid");
         error.id = "invalid";
     } else if(isId(id)){
-        error.id = "";
+        console.log("valid");
+        error.id = "valid";
     }
 
     if(nickname.length !=0 && !isNick(nickname)) {
         error.nickname = "invalid";
     } else if(isNick(nickname)) {
-        error.nickname = "";
+        error.nickname = "valid";
     }
 
     if(pw1.length !=0 && !isPw(pw1)) {
@@ -49,13 +51,13 @@ function SignUpValidator({ id, pw1, pw2, email, nickname }) {
 
     if(pw1 !== pw2) {
         error.pw2 = "notmatchs";
-    } else {
-        error.pw2 = "";
+    } else if( pw2.length > 0 && isPw(pw2) && pw1 === pw2) {
+        error.pw2 = "valid";
     }
 
     if(email.length !=0 && !isEmail(email)) {
         error.email = "invalid";
-    } else {
+    } else if(email.length > 0 && isEmail(email)) {
         error.email = "valid";
     }
 

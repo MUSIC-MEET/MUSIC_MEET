@@ -6,6 +6,7 @@ import Submit from "components/common/Submit";
 import { useTranslation } from "react-i18next";
 import Error from "components/common/Error";
 import Correct from "components/common/Correct";
+import ValidResult from "pages/SignUp/ValidResult";
 
 function SignUpForm({ values, onChangeValues, onRequest, error }) {
     const { t } = useTranslation("registerPage");
@@ -14,7 +15,7 @@ function SignUpForm({ values, onChangeValues, onRequest, error }) {
         event.preventDefault();
         onRequest();
     },[onRequest]);
-    
+    const a = "errors";
     return (
         <form css={[formStyle]}  onSubmit={onSubmit}>
             <div>
@@ -31,7 +32,10 @@ function SignUpForm({ values, onChangeValues, onRequest, error }) {
                         onChange: onChangeValues
                     }}
                 />
-                {error.id ==="invalid" && <Error>{t("errors.id.invalid")}</Error>}
+                <ValidResult
+                    result={error.id}
+                    name={"id"}
+                />
             </div>
                 
             <div>
@@ -48,9 +52,11 @@ function SignUpForm({ values, onChangeValues, onRequest, error }) {
                         onChange: onChangeValues
                     }}
                 />
-                {error.nickname === "invalid" && <Error>{t("errors.nickname.invalid")}</Error>}
+                <ValidResult
+                    result={error.nickname}
+                    name={"nickname"}
+                />
             </div>        
-
 
             <div>
                 <label htmlFor="pw1">{t("password")}</label>
@@ -66,8 +72,10 @@ function SignUpForm({ values, onChangeValues, onRequest, error }) {
                         onChange: onChangeValues
                     }}
                 />
-                {error.pw1 === "invalid" && <Error>{t("errors.pw.invalid")}</Error>}
-                {error.pw1 === "valid" && <Correct>{t("errors.pw.valid")}</Correct>}
+                <ValidResult
+                    result={error.pw1}
+                    name={"pw"}
+                />
                 <Input 
                     w={"25rem"}
                     h={"2.5rem"}
@@ -79,7 +87,10 @@ function SignUpForm({ values, onChangeValues, onRequest, error }) {
                         onChange: onChangeValues
                     }}
                 />
-                {error.pw2 == "notmatchs" && <Error>{t("errors.pw.notMatchs")}</Error>}
+                <ValidResult
+                    result={error.pw2}
+                    name={"pw"}
+                />
             </div>
                 
             <div> 
@@ -96,7 +107,10 @@ function SignUpForm({ values, onChangeValues, onRequest, error }) {
                         onChange: onChangeValues
                     }}
                 />
-                {error.email === "invalid" && <Error>{t("errors.email.invalid")}</Error>}
+                <ValidResult
+                    result={error.email}
+                    name={"email"}
+                />
             </div>
 
             <Submit

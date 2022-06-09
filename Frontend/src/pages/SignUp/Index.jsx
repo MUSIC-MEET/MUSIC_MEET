@@ -45,9 +45,7 @@ function Index() {
             requestHandler();
     },[error.clear, requestHandler]);
 
-    if(error) {
-        //
-    }
+    
     
     return (
         <Content>
