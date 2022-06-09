@@ -15,19 +15,22 @@ export default {
     errors: {
         id: {
             duplicate: "This id is duplicated",
-            invalid: "Invalid id"
+            invalid: "Disabled id",
+            valid: "Available Id"
         },
         nickname: {
             duplicate: "This nickname is duplicated",
-            invalid: "Invalid nickname"
+            invalid: "Disabled Nickname",
+            valid: "Available Nickname"
         }, 
         pw: {
-            invalid: "Invalid password",
-            valid: "Valid password",
+            invalid: "Disabled Password",
+            valid: "Available Password",
             notMatchs: "Not matchs pw1, pw2"
         },
         email: {
-            invalid: "Invalid email"
+            invalid: "Disabled Email",
+            valid: "Available Email"
         }
     }
 };

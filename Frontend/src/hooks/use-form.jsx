@@ -1,21 +1,32 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function useForm(props) {
     const { initValues, validator } = props;
-    const [values, setValues] = useState(initValues);
-    const { error } = validator(values);
-    const valuesChangeHandler = useCallback((e) => {
+    const [ values, setValues] = useState(initValues);
+    const [ errors, setErrors] = useState({
+        ...initValues,
+        clear: false
+    });
+
+    useEffect(() => {
+
+    },[validator]);
+
+    const valuesChangeHandler = useCallback(async (e) => {
         const { name, value } = e.target;
-        setValues({
+        const newData = {
             ...values,
             [name] : value
-        });
-        validator(values);
-    },[validator, values]);
+        };
+        setValues(newData);
+        await validator({ name: name, values: newData, errors: { errors, setErrors } });
+    },[errors, validator, values]);
+
+    
     return {
         values,
         valuesChangeHandler,
-        error
+        error: errors
     };
 }
 
