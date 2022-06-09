@@ -3,7 +3,6 @@ import React, { useCallback } from "react";
 import Title from "components/common/Title";
 import Content from "components/UI/Content";
 import { useTranslation } from "react-i18next";
-import { css } from "@emotion/react";
 import SignUpForm from "./SignUpForm";
 import useAxios from "../../hooks/use-Axios";
 import useForm from "../../hooks/use-form";
@@ -22,6 +21,8 @@ function Index() {
     const { t } = useTranslation("registerPage");
     const { values, valuesChangeHandler, error } = useForm({ initValues, validator: SignUpValidator });
     const { id , pw1, email, nickname } = values || "";
+    
+    
     const { data, errors, isError, isLodding, fetchData } = useAxios({
         method: "POST",
         url: "/createuser",
@@ -35,7 +36,6 @@ function Index() {
             "Content-Type": "application/json"
         }
     });
-
     const requestHandler = useCallback(() => {
         fetchData();
     },[fetchData]);

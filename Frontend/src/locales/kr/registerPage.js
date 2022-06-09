@@ -21,7 +21,7 @@ export default {
         nickname: {
             duplicate: "사용중인 닉네임",
             invalid: "사용 불가능한 닉네임",
-            valid: "사용가능한 아이디"
+            valid: "사용가능한 닉네임"
         },
         pw: {
             invalid: "사용 불가능한 비밀번호",

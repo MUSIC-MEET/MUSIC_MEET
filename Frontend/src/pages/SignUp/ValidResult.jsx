@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 
 function ValidResult({ result, name }) { 
     const { t } = useTranslation("registerPage");
+    
+ 
     if(result === "valid") {
         return (
             <Correct>{t(`errors.${name}.valid`)}</Correct>
@@ -18,6 +20,11 @@ function ValidResult({ result, name }) {
     else if( result === "notmatchs") {
         return (
             <Error>{t(`errors.${name}.notMatchs`)}</Error>
+        );
+    } 
+    else if ( result === "duplicate") {
+        return (
+            <Error>{t(`errors.${name}.duplicate`)}</Error>
         );
     }
 }

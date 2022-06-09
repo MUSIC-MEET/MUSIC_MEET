@@ -22,7 +22,7 @@ function useAxios({ method, url, body, header }) {
             setData(res.data);
         }).catch((err) => {
             setIsError(true);
-            setError(err);
+            setError(err.response.data);
         });
         setIsLodding(false);
     },[body, header, method, url]);
@@ -34,7 +34,7 @@ function useAxios({ method, url, body, header }) {
         isError,
         isLodding,
         data,
-        error,
+        errors: error,
         fetchData
     };
 }

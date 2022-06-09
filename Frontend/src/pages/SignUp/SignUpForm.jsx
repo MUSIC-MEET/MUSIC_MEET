@@ -4,18 +4,18 @@ import Input from "../../components/common/Input";
 import { css } from "@emotion/react";
 import Submit from "components/common/Submit";
 import { useTranslation } from "react-i18next";
-import Error from "components/common/Error";
-import Correct from "components/common/Correct";
 import ValidResult from "pages/SignUp/ValidResult";
 
 function SignUpForm({ values, onChangeValues, onRequest, error }) {
     const { t } = useTranslation("registerPage");
     
+
     const onSubmit = useCallback((event) => {
         event.preventDefault();
         onRequest();
     },[onRequest]);
-    const a = "errors";
+    
+    
     return (
         <form css={[formStyle]}  onSubmit={onSubmit}>
             <div>
