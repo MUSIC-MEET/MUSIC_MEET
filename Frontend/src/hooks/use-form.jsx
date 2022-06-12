@@ -5,7 +5,6 @@ function useForm(props) {
     const [ values, setValues] = useState(initValues);
     const [ errors, setErrors] = useState({
         ...initValues,
-        clear: false
     });
 
     useEffect(() => {
