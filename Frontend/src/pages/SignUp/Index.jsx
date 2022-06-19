@@ -8,6 +8,8 @@ import useAxios from "../../hooks/use-Axios";
 import useForm from "../../hooks/use-form";
 import SignUpValidator from "./SignUpValidator";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import LoginModalShownState from "../../store/LoginModalShown";
 
 const initValues = {
     id: "",
@@ -20,6 +22,7 @@ const initValues = {
 function Index() {
     const { t } = useTranslation("registerPage");
     const { values, valuesChangeHandler, error } = useForm({ initValues, validator: SignUpValidator });
+    const setLoginModal = useSetRecoilState(LoginModalShownState);
     const { id , pw1, email, nickname } = values || "";
     const navigator = useNavigate();
     
@@ -40,11 +43,12 @@ function Index() {
         try {
             fetchData();
             navigator("/");
+            setLoginModal(true);
         } catch(e) {
             console.log(e);
         }
         
-    },[fetchData, navigator]);
+    },[fetchData, navigator, setLoginModal]);
     
     const clear = error.id === "valid" 
     && error.nickname === "valid" 
