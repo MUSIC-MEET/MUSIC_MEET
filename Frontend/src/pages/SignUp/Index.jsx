@@ -7,7 +7,7 @@ import SignUpForm from "./SignUpForm";
 import useAxios from "../../hooks/use-Axios";
 import useForm from "../../hooks/use-form";
 import SignUpValidator from "./SignUpValidator";
-
+import { useNavigate } from "react-router-dom";
 
 const initValues = {
     id: "",
@@ -21,9 +21,9 @@ function Index() {
     const { t } = useTranslation("registerPage");
     const { values, valuesChangeHandler, error } = useForm({ initValues, validator: SignUpValidator });
     const { id , pw1, email, nickname } = values || "";
+    const navigator = useNavigate();
     
-    
-    const { data, errors, isError, isLodding, fetchData } = useAxios({
+    const {  errors, isError, isLodding, fetchData } = useAxios({
         method: "POST",
         url: "/createuser",
         body: {
@@ -37,13 +37,27 @@ function Index() {
         }
     });
     const requestHandler = useCallback(() => {
-        fetchData();
-    },[fetchData]);
+        try {
+            fetchData();
+            navigator("/");
+        } catch(e) {
+            console.log(e);
+        }
+        
+    },[fetchData, navigator]);
     
+    const clear = error.id === "valid" 
+    && error.nickname === "valid" 
+    && error.pw1 === "valid" 
+    && error.pw2 === "valid" 
+    && error.email === "valid";
+
     const formSubmitHandler = useCallback(() => {
-        if(error.clear) 
+        if(clear) 
+        {
             requestHandler();
-    },[error.clear, requestHandler]);
+        }
+    },[clear, requestHandler]);
 
     
     
@@ -55,9 +69,10 @@ function Index() {
                 onChangeValues={valuesChangeHandler}
                 onRequest={formSubmitHandler}
                 error={error}
+                disabled={!clear}
             />
             {isLodding && <h2>Loddding</h2>}
-            {isError && <h2>Error</h2>}
+            {isError && <h2>{errors}</h2>}
         </Content>
     );
 }

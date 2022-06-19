@@ -1,7 +1,7 @@
 export default { 
     mode: "kr",
     title: "로그인",
-    email: "이메일",
+    id: "아이디",
     password: "패스워드",
     keepLoginState: "로그인 상태 유지",
     signup: "회원 가입",

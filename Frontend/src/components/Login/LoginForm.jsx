@@ -3,10 +3,10 @@ import React, { useCallback } from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
 import Input from "components/common/Input";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Title from "components/common/Title";
 import Submit from "components/common/Submit";
+import SubMenu from "./SubMenu";
+import LoginStateToggle from "./LoginStateToggle";
 
 function LoginForm(props) {
     const { 
@@ -15,9 +15,10 @@ function LoginForm(props) {
         values, 
         onChangeValues, 
         onClose, 
-        navigator
+        navigator,
+        onLogin
     } = props;
-    const { email, password } = values || "";
+    const { id, pw } = values || "";
     const { t } = useTranslation("loginForm");
 
     const onClickSignUp = useCallback(() => {
@@ -25,77 +26,55 @@ function LoginForm(props) {
         onClose();
     },[navigator, onClose]);
     
+    const onSubmit = useCallback((event) => {
+        event.preventDefault();
+        console.log("로그인버튼");
+        onLogin();
+    },[onLogin]);
+    const disabled = id.length === 0 || pw.length === 0;
     return (
-        <div css={[style]}>
+        <article css={[style]}>
             <Title>{t("title")}</Title>
-            <form css={css`width: 20rem; margin: 2.5rem 0;`}>
+            <form css={css`width: 20rem; margin: 2.5rem 0;`} onSubmit={onSubmit}>
                 <Input
                     input = {{
-                        value: email,
-                        type: "email",
-                        placeholder: t("email"),
-                        name: "email",
+                        value: id,
+                        type: "text",
+                        placeholder: t("id"),
+                        name: "id",
                         onChange: onChangeValues
                     }}
                 />
                 <Input 
                     input = {{
-                        value: password,
+                        value: pw,
                         type: "password",
                         placeholder: t("password"),
-                        name: "password",
+                        name: "pw",
                         onChange: onChangeValues
                     }}
                 />
-                <div css=
-                    {css`
-                        display: flex; 
-                        justify-content: flex-start; 
-                        align-items: center; 
-                        margin-bottom: 2rem;
-                        margin-top: 0.2rem;
-                        font-size: 0.8rem;
-                        label{ margin-left: 0.5rem; font-size:1rem;  cursor: pointer; }
-                    `}>
-                    {!keepLoginState ? 
-                        <CheckCircleOutlineIcon style={{ "cursor": "pointer" }} onClick={onChangeKeepLoginState} /> : 
-                        <CheckCircleIcon style={{ "cursor": "pointer" }} onClick={onChangeKeepLoginState}/>}
-                    <p 
-                        style={{ "cursor": "pointer" }}
-                        onClick={onChangeKeepLoginState}
-                    >
-                        {t("keepLoginState")}</p>
-                </div>
-                <Submit type="submit" value={t("title")} />
-                <div css={subMenuStyle}>
-                    <div>
-                        <span onClick={onClickSignUp}>{t("signup")}</span>
-                    </div>
-                
-                    <div>
-                        <span>{t("findId")}</span>
-                        <span className={"pw"}>{t("findPw")}</span>
-                    </div>
-                </div>
+                <LoginStateToggle 
+                    text={t("keepLoginState")}
+                    state={keepLoginState}
+                    onChangeState={onChangeKeepLoginState}
+                />
+                <Submit 
+                    type="submit" 
+                    value={t("title")}
+                    disabled={disabled}
+                />
+                <SubMenu 
+                    onClickSignUp={onClickSignUp}
+                    textSignUp={t("signup")}
+                    textFindId={t("findId")}
+                    textFindPw={t("findPw")}
+                />
             </form>
-
-        </div>
+        </article>
     );
 }
 
-const subMenuStyle = css`
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
-    div > .pw::before {
-        content: " · ";
-    }
-
-    span {
-        cursor: pointer;
-    }
-`;
 
 const style =  css`
     display: flex;
@@ -104,13 +83,8 @@ const style =  css`
     flex-direction: column;
     width: 100%;
     height: auto;
-    * {
-        font-size: 1.2rem;
-    }
+        
 
-    & > h1 {
-        margin-top: 0.95rem;
-    }
     & > form {
         display:flex;
         flex-direction: column;

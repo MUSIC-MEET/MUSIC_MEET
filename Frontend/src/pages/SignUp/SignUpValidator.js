@@ -90,9 +90,8 @@ async function SignUpValidator( props) {
         }
         
     }
-
+    
     if(props.name === "email") {
-        console.log("aA");
         if(email.length !=0 && !isEmail(email)) {
             setErrors({ ...errors, email: "invalid" });
         } else if(email.length > 0 && isEmail(email)) {
@@ -100,5 +99,4 @@ async function SignUpValidator( props) {
         }
     }
 }
-
 export default SignUpValidator;
