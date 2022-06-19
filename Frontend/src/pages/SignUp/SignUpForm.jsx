@@ -6,7 +6,7 @@ import Submit from "components/common/Submit";
 import { useTranslation } from "react-i18next";
 import ValidResult from "pages/SignUp/ValidResult";
 
-function SignUpForm({ values, onChangeValues, onRequest, error }) {
+function SignUpForm({ values, onChangeValues, onRequest, error, disabled }) {
     const { t } = useTranslation("registerPage");
     
 
@@ -117,6 +117,7 @@ function SignUpForm({ values, onChangeValues, onRequest, error }) {
                 w={"25rem"}
                 h={"2.5rem"}
                 value={t("submit")}
+                disabled={disabled}
             />
         </form>
     );

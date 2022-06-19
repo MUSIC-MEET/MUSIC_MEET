@@ -46,21 +46,18 @@ function Index() {
         
     },[fetchData, navigator]);
     
+    const clear = error.id === "valid" 
+    && error.nickname === "valid" 
+    && error.pw1 === "valid" 
+    && error.pw2 === "valid" 
+    && error.email === "valid";
+
     const formSubmitHandler = useCallback(() => {
-        if(error.id === "valid" 
-        && error.nickname === "valid" 
-        && error.pw1 === "valid" 
-        && error.pw2 === "valid" 
-        && error.email === "valid") 
+        if(clear) 
         {
-            console.log(error);
             requestHandler();
-            console.log("성공");
-        } else {
-            console.log(error);
-            console.log("실패");
         }
-    },[error, requestHandler]);
+    },[clear, requestHandler]);
 
     
     
@@ -72,6 +69,7 @@ function Index() {
                 onChangeValues={valuesChangeHandler}
                 onRequest={formSubmitHandler}
                 error={error}
+                disabled={!clear}
             />
             {isLodding && <h2>Loddding</h2>}
             {isError && <h2>{errors}</h2>}
