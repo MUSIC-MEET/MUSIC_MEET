@@ -1,7 +1,7 @@
 export default { 
     mode: "en",
     title: "LOGIN",
-    email: "Email",
+    id: "ID",
     password: "Password",
     keepLoginState: "Keep Login State",
     signup: "signup",

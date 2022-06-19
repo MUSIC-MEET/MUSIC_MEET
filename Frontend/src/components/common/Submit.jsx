@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import ThemeContext from "store/ThemeContext";
 
 function Submit(props) {
-    const { w, h, value } = props;
+    const { w, h, value, disabled } = props;
     const ctx = useContext(ThemeContext);
     const { borderColor } = ctx.themeStyle.input;
     const { fontColor } = ctx.themeStyle.content;
@@ -12,6 +12,7 @@ function Submit(props) {
         <input 
             type="submit" 
             value={value}
+            disabled={disabled?  true: false}
             css={
                 css`
                 border: 1px solid ${borderColor}; 
@@ -20,6 +21,10 @@ function Submit(props) {
                 height: ${h};
                 background: none;
                 cursor: pointer;
+                &:disabled {
+                    color: #b6b6b6;
+                    cursor: not-allowed;
+                }
                 `
             }
         />

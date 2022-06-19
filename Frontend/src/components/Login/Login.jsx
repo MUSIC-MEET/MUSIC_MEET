@@ -6,16 +6,15 @@ import Modal from "../UI/Modal";
 import LoginForm from "./LoginForm";
 import { useState } from "react";
 import ThemeContext from "store/ThemeContext";
+import { useRecoilState } from "recoil";
+import LoginFormState from "../../store/LoginForm";
 
 function Login(props) {
     const { t } = useTranslation("menu");
     const ctx = useContext(ThemeContext);
     const [formShown, setformShown] = useState(false);
     const [keepLoginState, setKeepLoginState] = useState(false);
-    const [values, setValues] = useState({
-        email: "",
-        password: ""
-    });
+    const [values, setValues] = useRecoilState(LoginFormState);
     const changeKeepLoginStateHandler = useCallback(() => {
         setKeepLoginState((prevState) => !prevState);
     },[]);
@@ -35,7 +34,12 @@ function Login(props) {
                 [e.target.name] : e.target.value
             };
         });
+    },[setValues]);
+
+    const loginHandler = useCallback(() => {
+
     },[]);
+
     return (    
         <div css={[style]}>
             {
@@ -48,6 +52,7 @@ function Login(props) {
                         onChangeValues={changeValuesHandler}
                         onClose={onCloseLoginModal}
                         navigator={props.navigator}
+                        onLogin={loginHandler}
                     />
                 </Modal>
             }

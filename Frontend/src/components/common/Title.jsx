@@ -24,4 +24,4 @@ const style = css`
     margin-bottom: 50px;
 `;
 
-export default Title;
+export default React.memo(Title);
