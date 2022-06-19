@@ -8,11 +8,12 @@ import { useState } from "react";
 import ThemeContext from "store/ThemeContext";
 import { useRecoilState } from "recoil";
 import LoginFormState from "../../store/LoginForm";
+import LoginModalShownState from "store/LoginModalShown";
 
 function Login(props) {
     const { t } = useTranslation("menu");
     const ctx = useContext(ThemeContext);
-    const [formShown, setformShown] = useState(false);
+    const [formShown, setformShown] = useRecoilState(LoginModalShownState);
     const [keepLoginState, setKeepLoginState] = useState(false);
     const [values, setValues] = useRecoilState(LoginFormState);
     const changeKeepLoginStateHandler = useCallback(() => {
@@ -21,11 +22,11 @@ function Login(props) {
 
     const onOpenLoginModal = useCallback(() => {
         setformShown(true);
-    },[]);
+    },[setformShown]);
 
     const onCloseLoginModal = useCallback(() => {
         setformShown(false);
-    },[]);
+    },[setformShown]);
 
     const changeValuesHandler = useCallback((e) => { 
         setValues((prevState) => {
