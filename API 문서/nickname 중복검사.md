@@ -1,5 +1,5 @@
 # nickname 중복 검사
-### API명 : `/searchnickname`
+### API명 : `/search/nickname/{usernickname}`
 
 ### method : GET
 

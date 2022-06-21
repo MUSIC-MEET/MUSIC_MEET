@@ -1,5 +1,5 @@
 # ID 중복 검사
-### API명 : `/searchid`
+### API명 : `/search/id/{userid}`
 
 ### method : GET
 
