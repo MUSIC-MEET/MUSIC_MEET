@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
-
 @Repository
 @Getter
 @Setter

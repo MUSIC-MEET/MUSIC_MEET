@@ -41,7 +41,8 @@ public class User {
     {
         if (this.email == null)
             return false;
-        String str3 = "\\w+@\\w+\\.\\w+(\\.\\w+)?"; // 이메일 (10~20자)
+        //String str3 = "\\w+@\\w+\\.\\w+(\\.\\w+)?"; // 이메일 (10~20자)
+        String str3 = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$"; // 이메일 (10~20자)
         boolean res3;
         if (10 <= this.email.length() && this.email.length() < 21)
         {

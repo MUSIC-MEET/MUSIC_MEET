@@ -17,10 +17,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc:2.1.7.RELEASE'
-	runtimeOnly 'mysql:mysql-connector-java'
+	runtimeOnly 'mysql:mysql-connector-java' // mysql
 	implementation 'org.springframework.session:spring-session-core'
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -28,8 +28,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.jsoup/jsoup
 	implementation 'org.jsoup:jsoup:1.10.3'
 
-	implementation 'net.bramp.ffmpeg:ffmpeg:0.7.0'
+	implementation 'net.bramp.ffmpeg:ffmpeg:0.7.0' // FFMPEG
 
+	implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링 시큐리티
 
 
 
