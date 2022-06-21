@@ -29,7 +29,7 @@ export default {
             notMatchs: "일치하지 않는 비밀번호"
         }, 
         email: {
-            invalid: "사용 불능한 이메일",
+            invalid: "사용 불가능한 이메일",
             valid: "사용가능한 이메일"
         }
     }

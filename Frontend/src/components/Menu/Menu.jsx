@@ -15,14 +15,14 @@ function Menu(props) {
     const { onMenuClose } = props;  
     const navigator = useNavigate();
     return (
-        <div 
+        <aside 
             css={[navStyle, css` background: ${background}; color: ${fontColor};`]}
         >
             <TopIcons onMenuClose={onMenuClose}/>
             <Login navigator={navigator}/>
             <Search />
             <RoutesMenu />
-        </div>
+        </aside>
     );
 }
 
