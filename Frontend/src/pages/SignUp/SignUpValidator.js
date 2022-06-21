@@ -33,7 +33,7 @@ async function SignUpValidator( props) {
                 id: "invalid"
             });
         } else if(isId(id)){
-            await axios.get(`/searchid/${id}`)
+            await axios.get(`/search/id/${id}`)
                 .then(() => {
                     setErrors({
                         ...errors,
@@ -74,7 +74,7 @@ async function SignUpValidator( props) {
                 nickname: "invalid"
             });
         } else if(isNick(nickname)) {
-            await axios.get(`/searchnickname/${nickname}`)
+            await axios.get(`/search/nickname/${nickname}`)
                 .then(() => {
                     setErrors({
                         ...errors,
