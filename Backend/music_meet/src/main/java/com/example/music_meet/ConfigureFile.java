@@ -12,7 +12,7 @@ public class ConfigureFile {
     public void setEncodeId()
     {
         // 패스워드 단방향 암호화
-        String id = "passwordEncoder";
+        //String id = "passwordEncoder";
     }
 
 

@@ -25,14 +25,7 @@ public class LoginService //extends WebSecurityConfigurerAdapter
         return "";
     }
 
-    /*@Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests() // 요청에 의한 보안 검사 시작
-                .anyRequest().authenticated() // 어떤 요청에도 보안 검사를 시작작                .and().formLogin();
-                .and()
-                .formLogin(); // 보안 검증은 forLogin 방식으로 하겠다.
 
-    }*/
 
 
 }
