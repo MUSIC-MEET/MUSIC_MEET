@@ -51,8 +51,12 @@ public class CreateUserController {
 
             }
 
-            else { // 중복이 안됨
+            else { // 중복이 안됨 ( 아이디 패스워드 정상)
                 //System.out.println("아이디, 닉네임 중복검사 통과");
+
+                //String pwdBycrypt = BCryptPasswordEncoder.encode(user.getPw());
+                //user.setPw(pwdBycrypt);
+
                 userService.createUserFunc(user);
                 return new ResponseEntity<>(null, HttpStatus.OK);
 
