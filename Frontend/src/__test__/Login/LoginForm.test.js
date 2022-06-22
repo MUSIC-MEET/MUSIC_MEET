@@ -5,9 +5,13 @@ import text from "../../locales/en/loginForm";
 import  "../../i18n";
 
 describe("<LoginForm />", () => {
+    const values = {
+        id: "",
+        pw: "",
+    };
     it("필수 텍스트들 생성 확인", () => {
-        render(<LoginForm />);
-        expect(screen.getByPlaceholderText(text.email)).toBeInTheDocument();
+        render(<LoginForm  values={values}/>);
+        expect(screen.getByPlaceholderText(text.id)).toBeInTheDocument();
         expect(screen.getByPlaceholderText(text.password)).toBeInTheDocument();
         expect(screen.getAllByText(text.title)[1]).toBeInTheDocument();
         expect(screen.getByText(text.keepLoginState)).toBeInTheDocument();
@@ -18,17 +22,25 @@ describe("<LoginForm />", () => {
 
     describe("로그인 상태 유지 체크 테스트", () => {
         it("비활성화 아이콘 생성 확인", () => {
-            render(<LoginForm keepLoginState={false}/>);
+            render(<LoginForm 
+                keepLoginState={false}
+                values={values}
+            />
+            );
             expect(screen.getByTestId("CheckCircleOutlineIcon")).toBeInTheDocument();
         });
         it("활성화 아이콘 생성 확인", () => {
-            render(<LoginForm keepLoginState={true}/>);
+            render(<LoginForm 
+                keepLoginState={true} 
+                values={values} 
+            />
+            );
             expect(screen.getByTestId("CheckCircleIcon")).toBeInTheDocument();
         });
 
         it("문구 클릭시 상태 변경 함수 호출 확인", () => {
             const onChangeKeepLoginState = jest.fn();
-            render(<LoginForm onChangeKeepLoginState={onChangeKeepLoginState}/>);
+            render(<LoginForm onChangeKeepLoginState={onChangeKeepLoginState} values={values} />);
             const targetText = screen.getByText(text.keepLoginState);
             fireEvent.click(targetText);
             expect(onChangeKeepLoginState).toHaveBeenCalled();
@@ -36,7 +48,7 @@ describe("<LoginForm />", () => {
 
         it("아이콘  클릭시 상태 변경 함수 호출 확인", () => {
             const onChangeKeepLoginState = jest.fn();
-            render(<LoginForm onChangeKeepLoginState={onChangeKeepLoginState}/>);
+            render(<LoginForm onChangeKeepLoginState={onChangeKeepLoginState} values={values} />);
             const targetIcon= screen.getByTestId("CheckCircleOutlineIcon");
             fireEvent.click(targetIcon);
             expect(onChangeKeepLoginState).toHaveBeenCalled();
