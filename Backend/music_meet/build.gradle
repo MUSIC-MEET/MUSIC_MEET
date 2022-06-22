@@ -32,6 +32,11 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링 시큐리티
 
+	// https://mvnrepository.com/artifact/commons-codec/commons-codec
+	implementation group: 'commons-codec', name: 'commons-codec', version: '1.10' // 양방향 암호화
+
+
+
 
 
 

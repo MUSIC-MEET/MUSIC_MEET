@@ -24,7 +24,6 @@ public class CreateUserController {
     @RequestMapping(method = RequestMethod.POST, path = "/createuser")
     public static ResponseEntity<Object> createAccountFunc(@RequestBody User user)
     {
-        System.out.println("create user 실행됨");
         SignupErrorForm signupErrorForm = new SignupErrorForm();
         UserService userService = new UserService();
 
@@ -39,12 +38,10 @@ public class CreateUserController {
                 signupErrorForm.setMsg("1");
                 if (idcheck == true) // 아이디 중복
                 {
-                    //System.out.println("idcheck = " + idcheck);
                     signupErrorForm.setCode("1");
                 }
                 else        // 닉네임 중복
                 {
-//                    System.out.println("nicknamecheck = " + nicknamecheck);
                     signupErrorForm.setCode("4");
                 }
                 return new ResponseEntity<>(signupErrorForm, HttpStatus.BAD_REQUEST);
@@ -52,14 +49,11 @@ public class CreateUserController {
             }
 
             else { // 중복이 안됨 ( 아이디 패스워드 정상)
-                //System.out.println("아이디, 닉네임 중복검사 통과");
 
-                //String pwdBycrypt = BCryptPasswordEncoder.encode(user.getPw());
-                //user.setPw(pwdBycrypt);
-
+                userService.encodingFunc(user);
                 userService.createUserFunc(user);
-                return new ResponseEntity<>(null, HttpStatus.OK);
 
+                return new ResponseEntity<>(null, HttpStatus.OK);
             }
         }
         else // 유효성 하지 않은 정보들
@@ -118,6 +112,23 @@ public class CreateUserController {
         // 이 함수의 반환타입을 String 으로 바꾸고 return "";하면 에러가 사라짐
 
     }
+
+
+
+
+
+
+    //
+    // 테스트
+    //
+    @RequestMapping(path = "/test", method = RequestMethod.POST)
+    public void testFunc(@RequestBody User user)
+    {
+
+    }
+
+
+
 }
 
 

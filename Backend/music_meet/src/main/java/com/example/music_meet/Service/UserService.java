@@ -1,12 +1,17 @@
 package com.example.music_meet.Service;
 
 import com.JPA.Repository.AccountRepository;
+import com.example.music_meet.AES256Util;
 import com.example.music_meet.DTO.User;
 import com.example.music_meet.validate.Validate;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 @Repository
@@ -14,6 +19,9 @@ import java.sql.*;
 @Setter
 public class UserService {
 
+
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // 암호화 객체
+    private AES256Util aes256Util;
     private String mysqlurl = "jdbc:mysql://localhost:3306/music_meet?serverTimezone=UTC&characterEncoding=UTF-8";
     private String mysqlid = "root";
     private String mysqlpassword = "0000";
@@ -29,11 +37,13 @@ public class UserService {
     java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 
 
+
     //
     // 아이디 중복 검사 (id가 DB에 있으면 true 리턴)
     //
     public boolean findIdFunc(User user)
     {
+
 
         sql = "select id from user where id = ?";
         boolean result = false;
@@ -119,6 +129,9 @@ public class UserService {
     public void createUserFunc(User user)
     {
 
+
+        user.setPw(passwordEncoder.encode(user.getPw())); // 비밀번호 단방향 암호화
+
         String sql = "insert into user values(?,?,?,?,?,?,?,?,?,?)";
         try {
             //
@@ -161,10 +174,47 @@ public class UserService {
     }
 
 
+    //
+    // 양방향 암호화 함수
+    //
+    public void encodingFunc(User user)
+    {
+        String str;
+        try
+        {
+            aes256Util = new AES256Util();
+            user.setEmail(aes256Util.encrypt(user.getEmail()));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        }
 
+    }
 
+    //
+    //  양방향 복호화 함수
+    //
+    public String decodingFunc(String before)
+    {
+        String str;
 
+        try {
+            aes256Util = new AES256Util();
+            str = aes256Util.decrypt(before);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        }
 
+        return str;
+
+    }
 
 }
 
