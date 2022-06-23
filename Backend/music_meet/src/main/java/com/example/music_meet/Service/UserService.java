@@ -79,6 +79,8 @@ public class UserService {
         return result;
     }
 
+
+
     //
     // 닉네임 중복 검사 (닉네임이 DB에 있으면 true 리턴)
     //
@@ -117,15 +119,18 @@ public class UserService {
         return result;
     }
 
+
+
     //
     // 회원가입 전용 이메일 인증
     //
     public void emailAuthFunc(User user)
     {
+        String encodingValue;
         String str = user.getId() + user.getNickname() + user.getEmail();
         try {
             aes256Util = new AES256Util();
-            System.out.println(aes256Util.encrypt(str));
+            encodingValue = aes256Util.encrypt(str);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
@@ -135,9 +140,9 @@ public class UserService {
         }
 
         MailService mailService = new MailService();
-        mailService.registerAuthSendMailFunc(user.getEmail());
+        mailService.registerAuthSendMailFunc(user.getEmail(), encodingValue);
 
-        String sql = "insert into user values(?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into emailauth(id,encoding_value) values(?,?)";
         try {
             //
             // DB구간
@@ -147,18 +152,11 @@ public class UserService {
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, user.getId());
-            pstmt.setString(2, user.getPw());
-            pstmt.setString(3, user.getEmail());
-            pstmt.setString(4, user.getNickname());
-            pstmt.setTimestamp(5, date); // CreatedAt
-            pstmt.setTimestamp(6, null); // UpdatedAt
-            pstmt.setTimestamp(7, null); // deletedAt
-            pstmt.setString(8, "0"); //Createdip
-            pstmt.setString(9, "0");//Updatedip
-            pstmt.setString(10, null); // deletedip
-            //pstmt.setInt(11, 0);     // 상태
+            pstmt.setString(2, encodingValue);
 
             rsInt = pstmt.executeUpdate();
+
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -171,10 +169,10 @@ public class UserService {
         //
         public void createUserFunc (User user)
         {
-
+            String email = user.getEmail();
             user.setPw(passwordEncoder.encode(user.getPw())); // 비밀번호 단방향 암호화
-
-            String sql = "insert into user values(?,?,?,?,?,?,?,?,?,?)";
+            encodingFunc(user);
+            String sql = "insert into user values(?,?,?,?,?,?,?,?,?,?,?)";
             try {
                 //
                 // DB구간
@@ -193,11 +191,12 @@ public class UserService {
                 pstmt.setString(8, "0"); //Createdip
                 pstmt.setString(9, "0");//Updatedip
                 pstmt.setString(10, null); // deletedip
-                //pstmt.setInt(11, 0);     // 상태
+                pstmt.setInt(11, 3);     // 이메일 미인증 상태
 
                 rsInt = pstmt.executeUpdate();
 
                 if (rsInt == 1) {
+                    user.setEmail(email);
                     emailAuthFunc(user);
                 }
 
