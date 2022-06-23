@@ -5,7 +5,7 @@ const text: FindPageTypes = {
         title: "아이디 찾기"
     },
     pw: {
-        title: "비밀번호 리셋"
+        title: "비밀번호 초기화"
     }
 };
 

@@ -1,21 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useContext } from "react";
-import ThemeContext from "../../store/ThemeContext";
+import React from "react";
 
-interface Props {
-    children: string;
-}
-function Title(props: Props) {
-    const ctx = useContext(ThemeContext);
-    const { background, fontColor }: any = ctx.themeStyle.content;
-    return (
-        <h1
-            css={[style, css`background: ${background}; color: ${fontColor};`]}
-        >
-            {props.children}
-        </h1>
-    );
+function Title(props: { children: string }) {
+    return (<h1 css={[style]}> {props.children}</h1 >);
 }
 
 const style = css`
