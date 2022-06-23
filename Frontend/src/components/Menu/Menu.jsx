@@ -6,7 +6,6 @@ import Login from "components/Login/Login";
 import Search from "components/Search/Search";
 import RoutesMenu from "components/RoutesMenu/RoutesMenu";
 import { useNavigate } from "react-router-dom";
-
 import TopIcons from "./TopIcons";
 
 function Menu(props) {

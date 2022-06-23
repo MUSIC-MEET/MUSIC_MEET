@@ -32,5 +32,9 @@ export default {
             invalid: "Disabled Email",
             valid: "Available Email"
         }
+    },
+    success: {
+        ment: "Click the link in the email to complete the sign up.",
+        go: "Go to MainPage"
     }
 };

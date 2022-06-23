@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useCallback, useState } from "react";
+import {  useState, useCallback } from "react";
 
 
 
@@ -8,9 +8,8 @@ function useAxios({ method, url, body, header }) {
     const [data, setData] = useState(null);
     const [isError, setIsError] = useState(false);
     const [error, setError] = useState(null);
-    
-    const fetchData = useCallback(() => {
-        setIsLodding(true);
+
+    const fetchData = useCallback(() => new Promise((resolve, reject) => {
         axios({
             method: method,
             url: url,
@@ -20,16 +19,15 @@ function useAxios({ method, url, body, header }) {
             }
         }).then((res) => {
             setData(res.data);
+            resolve(res.data);
         }).catch((err) => {
             setIsError(true);
             setError(err.response.data);
+            reject(err.response.data);
         });
         setIsLodding(false);
-    },[body, header, method, url]);
-
-
+    }),[body, header, method, url]);
     
-
     return { 
         isError,
         isLodding,
