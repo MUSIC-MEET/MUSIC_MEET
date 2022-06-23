@@ -4,6 +4,9 @@ import React, { useContext, useEffect } from "react";
 import ThemeContext from "store/ThemeContext";
 
 function Input(props) {
+    useEffect(() => {
+
+    },[]);
     const ctx = useContext(ThemeContext);
     const { borderColor } = ctx.themeStyle.input;
     const { fontColor } = ctx.themeStyle.content;
