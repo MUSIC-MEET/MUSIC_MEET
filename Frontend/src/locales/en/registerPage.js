@@ -34,8 +34,7 @@ export default {
         }
     },
     success: {
-        title: "Success SignUp",
-        ment: "Please check your email.",
+        ment: "Click the link in the email to complete the sign up.",
         go: "Go to MainPage"
     }
 };
