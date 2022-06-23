@@ -32,5 +32,10 @@ export default {
             invalid: "사용 불가능한 이메일",
             valid: "사용가능한 이메일"
         }
+    },
+    success: {
+        title: "회원가입 성공",
+        ment: "이메일을 확인해주세요.",
+        go: "메인페이지로 가기"
     }
 };
