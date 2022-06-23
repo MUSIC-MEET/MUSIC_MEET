@@ -51,13 +51,6 @@ public class CreateUserController {
 
             else { // 중복이 안됨 ( 아이디 패스워드 정상)
 
-
-
-
-
-
-
-                userService.encodingFunc(user);
                 userService.createUserFunc(user);
 
                 return new ResponseEntity<>(null, HttpStatus.OK);
