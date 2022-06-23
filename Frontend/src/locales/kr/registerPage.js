@@ -36,5 +36,16 @@ export default {
     success: {
         ment: "이메일에 발송된 링크를 눌러 회원가입을 완료해주세요.",
         go: "메인페이지로 가기"
+    },
+    emailauth: {
+        success: {
+            title: "인증완료",
+            description: "이메일 인증이 완료되었습니다.",
+            go: "로그인 하러 가기"
+        },
+        fail: {
+            title: "인증실패",
+            description: "이미 인증이 되었거나 잘못된 인증입니다."
+        }
     }
 };

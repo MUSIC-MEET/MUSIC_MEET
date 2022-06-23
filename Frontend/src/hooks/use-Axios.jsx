@@ -3,7 +3,9 @@ import {  useState, useCallback } from "react";
 
 
 
-function useAxios({ method, url, body, header }) {
+function useAxios(props) {
+    
+    const { method, url, body, header } = props;
     const [isLodding, setIsLodding] = useState(false);
     const [data, setData] = useState(null);
     const [isError, setIsError] = useState(false);

@@ -1,12 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import ThemeContext from "../../store/ThemeContext";
 
 function Title(props) {
-    useEffect(() => {
-
-    },[]);
     const ctx = useContext(ThemeContext);
     const { background, fontColor } = ctx.themeStyle.content;
     return (
