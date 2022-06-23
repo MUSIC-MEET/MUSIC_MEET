@@ -4,9 +4,6 @@ import React, { useContext, useEffect } from "react";
 import ThemeContext from "../../store/ThemeContext";
 
 function Title(props) {
-    useEffect(() => {
-
-    },[]);
     const ctx = useContext(ThemeContext);
     const { background, fontColor } = ctx.themeStyle.content;
     return (
