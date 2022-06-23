@@ -36,5 +36,16 @@ export default {
     success: {
         ment: "Click the link in the email to complete the sign up.",
         go: "Go to MainPage"
+    },
+    emailauth: {
+        success: {
+            title: "Success",
+            description: "Email authentication is completed.",
+            go: "Go to Login"
+        },
+        fail: {
+            title: "Fail",
+            description: "Already authenticated or wrong authentication."
+        }
     }
 };
