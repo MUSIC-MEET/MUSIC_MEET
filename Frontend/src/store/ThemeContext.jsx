@@ -8,12 +8,8 @@ const ThemeContext = React.createContext({
         modal: {},
         input: {},
     },
-    setDarkTheme: () => {
-        //
-    },
-    setLightTheme: () => {
-        //
-    },
+    setDarkTheme: () => {},
+    setLightTheme: () => {},
 
 });
 export default ThemeContext;
