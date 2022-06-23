@@ -37,13 +37,11 @@ function Index() {
         }
     });
     const requestHandler = useCallback(() => {
-        try {
-            fetchData().then(() => {
-                navigator("/signup/success");
-            });    
-        } catch(e) {
-            console.log(e);
-        } 
+        fetchData().then(() => {
+            navigator("/signup/success");
+        }).catch(() => {
+            console.log("error");
+        });   
         
     },[fetchData, navigator]);
     

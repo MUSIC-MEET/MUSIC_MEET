@@ -10,6 +10,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import SignUp from "./pages/SignUp/Index";
 import FindId from "./pages/FindId/Index";
 import Success from "./pages/SignUp/Success";
+import MailAuth from "./pages/auth/Index";
 const rootStyle = css`
     display: flex;
     flex-direction: row;
@@ -37,6 +38,7 @@ function App() {
                     }
                     <Routes>
                         <Route path="/" element={<h2>hello</h2>} />
+                        <Route path="/auth/:value" element={<MailAuth />} />
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="/signup/success" element={<Success />} />
                         <Route path="/find" element={<FindId />} />
