@@ -39,12 +39,21 @@ public class UserService {
 
     java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 
+    //
+    // 아이디 찾기
+    //
+    public boolean searchIdFunc(String email)
+    {
+
+
+        return true;
+    }
+
 
     //
     // 아이디 중복 검사 (id가 DB에 있으면 true 리턴)
     //
     public boolean findIdFunc(User user) {
-
 
         sql = "select id from user where id = ?";
         boolean result = false;

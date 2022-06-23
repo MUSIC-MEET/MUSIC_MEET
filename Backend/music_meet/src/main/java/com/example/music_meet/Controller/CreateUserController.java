@@ -69,7 +69,17 @@ public class CreateUserController {
 
     }
 
+    //
+    // 아이디 찾기
+    //
+    @RequestMapping(path = "/dsa", method = RequestMethod.POST)
+    public ResponseEntity<Object> findIdfunc(@RequestBody String email)
+    {
+        UserService userService = new UserService();
+        userService.searchIdFunc(email);
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     //
     // ID 조회
