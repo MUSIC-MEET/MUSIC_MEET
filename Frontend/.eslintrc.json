@@ -5,16 +5,23 @@
 		"node": true,
 		"jest": true
 	},
-	"extends": ["eslint:recommended", "plugin:react/recommended"],
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaFeatures": {
 			"js": true,
-			"jsx": true
+			"jsx": true,
+			"ts": true,
+			"tsx": true
 		},
 		"ecmaVersion": 2018,
 		"sourceType": "module"
 	},
-	"plugins": ["react", "react-hooks"],
+	"plugins": ["react", "react-hooks", "@typescript-eslint"],
 	"rules": {
 		"indent": ["error", 4],
 		// "linebreak-style": ["error", "unix"],
