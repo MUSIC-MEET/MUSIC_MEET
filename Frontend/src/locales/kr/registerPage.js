@@ -34,6 +34,7 @@ export default {
         }
     },
     success: {
+        title: "인증 필요",
         ment: "이메일에 발송된 링크를 눌러 회원가입을 완료해주세요.",
         go: "메인페이지로 가기"
     },

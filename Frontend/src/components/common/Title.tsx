@@ -3,9 +3,12 @@ import { css } from "@emotion/react";
 import React, { useContext } from "react";
 import ThemeContext from "../../store/ThemeContext";
 
-function Title(props) {
+interface Props {
+    children: string;
+}
+function Title(props: Props) {
     const ctx = useContext(ThemeContext);
-    const { background, fontColor } = ctx.themeStyle.content;
+    const { background, fontColor }: any = ctx.themeStyle.content;
     return (
         <h1
             css={[style, css`background: ${background}; color: ${fontColor};`]}
