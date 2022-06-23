@@ -2,6 +2,7 @@
 
 package com.example.music_meet.Controller;
 
+import com.example.music_meet.AES256Util;
 import com.example.music_meet.DTO.User;
 import com.example.music_meet.Error.SignupErrorForm;
 import com.example.music_meet.Service.UserService;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @Slf4j
 public class CreateUserController {
-
+    private AES256Util aes256Util;
 
     //
     // 회원가입
@@ -49,6 +50,12 @@ public class CreateUserController {
             }
 
             else { // 중복이 안됨 ( 아이디 패스워드 정상)
+
+
+
+
+
+
 
                 userService.encodingFunc(user);
                 userService.createUserFunc(user);
@@ -124,6 +131,8 @@ public class CreateUserController {
     @RequestMapping(path = "/test", method = RequestMethod.POST)
     public void testFunc(@RequestBody User user)
     {
+
+
 
     }
 
