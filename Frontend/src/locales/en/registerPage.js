@@ -34,6 +34,7 @@ export default {
         }
     },
     success: {
+        title: "Verification required",
         ment: "Click the link in the email to complete the sign up.",
         go: "Go to MainPage"
     },

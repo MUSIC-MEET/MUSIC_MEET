@@ -22,7 +22,7 @@ function Suceess(props: ResultProps & SucessProp) {
     const { title, description, go, onClickHandler } = props;
     return (
         <Content>
-            <Title>{title}</Title>
+            <Title>{`${title}`}</Title>
             <p>{description}</p>
             <p onClick={onClickHandler} css={css`margin-top: 0.5rem; cursor: pointer;`}>{go}</p>
         </Content>

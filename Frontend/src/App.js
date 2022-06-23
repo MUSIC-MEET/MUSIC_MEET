@@ -8,7 +8,7 @@ import { css } from "@emotion/react";
 import "./i18n";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import SignUp from "./pages/SignUp/Index";
-import FindId from "./pages/FindId/Index";
+import UserFind from "./pages/Find/Index";
 import Success from "./pages/SignUp/Success";
 import EmailAuth from "./pages/Auth/Index";
 const rootStyle = css`
@@ -43,7 +43,7 @@ function App() {
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="/signup/success" element={<Success />} />
                         <Route path="/auth/:value" element={<EmailAuth />} />
-                        <Route path="/find" element={<FindId />} />
+                        <Route path="/find/:type" element={<UserFind />} />
                     </Routes>
                     
                 </Content>
