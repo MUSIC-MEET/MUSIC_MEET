@@ -3,6 +3,7 @@ package com.example.music_meet.Service;
 import com.JPA.Repository.AccountRepository;
 import com.example.music_meet.AES256Util;
 import com.example.music_meet.DTO.User;
+import com.example.music_meet.SHA256;
 import com.example.music_meet.Utile.MailService;
 import com.example.music_meet.validate.Validate;
 import lombok.Getter;
@@ -22,7 +23,8 @@ public class UserService {
 
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // 암호화 객체
-    private AES256Util aes256Util;
+    private AES256Util aes256Util; // AES256 변수 (암호화, 복호화에 사용)
+    private SHA256 sha256; // SHA256 변수 (이메일 인증에 사용 암호문에 /가 안들어감)
     private String mysqlurl = "jdbc:mysql://localhost:3306/music_meet?serverTimezone=UTC&characterEncoding=UTF-8";
     private String mysqlid = "root";
     private String mysqlpassword = "0000";
@@ -128,17 +130,14 @@ public class UserService {
     {
         String encodingValue;
         String str = user.getId() + user.getNickname() + user.getEmail();
+        
         try {
-            aes256Util = new AES256Util();
-            encodingValue = aes256Util.encrypt(str);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            sha256 = new SHA256();
+            encodingValue = sha256.encrypt(str);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
-        } catch (GeneralSecurityException e) {
-            throw new RuntimeException(e);
         }
-
+        
         MailService mailService = new MailService();
         mailService.registerAuthSendMailFunc(user.getEmail(), encodingValue);
 
@@ -164,11 +163,45 @@ public class UserService {
         }
     }
 
-        //
-        // 회원 추가
-        //
-        public void createUserFunc (User user)
+    //
+    // 회원가입 전용 이메일 응답 처리
+    //
+    public void responseEmailAuthFunc(String value)
+    {
+        String sql = "select encoding_value from emailauth where encoding_value = ?";
+        try
         {
+            //
+            // DB구간
+            //
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, value);
+
+            rs = pstmt.executeQuery();
+
+            if (!rs.next())
+            {
+                throw new Exception("responseEmailAuthFunc 에서 rs가 null 값으로 예외처리에 빠짐");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    //
+    // 회원 추가
+    //
+    public void createUserFunc (User user)
+    {
             String email = user.getEmail();
             user.setPw(passwordEncoder.encode(user.getPw())); // 비밀번호 단방향 암호화
             encodingFunc(user);
@@ -218,12 +251,39 @@ public class UserService {
             System.out.println("계정 생성 정상 처리");
         }
 
-
-        //
-        // 양방향 암호화 함수
-        //
-        public void encodingFunc (User user)
+    //
+    // user의 state 상태를 바꿈
+    //
+    public void setUserState(String value)
+    {
+        String sql = "update user set state = 0 where id =(select id from emailauth where encoding_value = ?)";
+        try
         {
+            //
+            // DB구간
+            //
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, value);
+
+            rsInt = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    //
+    // AES256 양방향 암호화 함수
+    //
+    public void encodingFunc (User user)
+    {
             String str;
             try {
                 aes256Util = new AES256Util();
@@ -238,11 +298,11 @@ public class UserService {
 
         }
 
-        //
-        //  양방향 복호화 함수
-        //
-        public String decodingFunc (String before)
-        {
+    //
+    // AES256 양방향 복호화 함수
+    //
+    public String decodingFunc (String before)
+    {
             String str;
 
             try {
@@ -259,6 +319,7 @@ public class UserService {
             return str;
 
         }
+
 
 }
 
