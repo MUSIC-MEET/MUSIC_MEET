@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { useCallback, useState } from "react";
 import Menu from "./components/Menu/Menu";
 import MenuIcon from "@mui/icons-material/Menu";

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import Content from "components/UI/Content";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -10,17 +9,16 @@ import { css } from "@emotion/react";
 function Title(props: { children: string }) {
     return (<h1 css={[style]}> {props.children}</h1 >);
 }
-function Index() {
+const Index = () => {
     const { type } = useParams<{ type: string }>();
     const { t } = useTranslation("findPage");
-
-
     const title: string = type === "id" ? t("id.title") : t("pw.title");
     const render = type === "id" ? <Id /> : <Password />;
 
     useEffect(() => {
         //
     }, []);
+
     if (type !== "id" && type !== "pw") {
         return (
             <div>{"error"}</div>
@@ -35,7 +33,7 @@ function Index() {
         );
     }
 
-}
+};
 
 const style = css`
     font-weight: 700;

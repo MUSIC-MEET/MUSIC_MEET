@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { useCallback, useContext } from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";

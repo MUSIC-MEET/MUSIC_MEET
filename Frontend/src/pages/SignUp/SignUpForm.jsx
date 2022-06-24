@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { useCallback } from "react";
 import Input from "../../components/common/Input";
 import { css } from "@emotion/react";
