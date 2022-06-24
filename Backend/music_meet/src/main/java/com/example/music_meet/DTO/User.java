@@ -17,6 +17,9 @@ public class User {
     private String email;
     private String nickname;
 
+    //
+    // ID 유효성 검사
+    //
     private boolean isId()
     {
         if (this.id == null)
@@ -27,6 +30,9 @@ public class User {
         return res1;
     }
 
+    //
+    // PW 유효성 검사
+    //
     private boolean isPw()
     {
         if (this.pw == null)
@@ -37,6 +43,9 @@ public class User {
         return res2;
     }
 
+    //
+    // EMAIL 유효성 검사
+    //
     private boolean isEmail()
     {
         if (this.email == null)
@@ -54,6 +63,9 @@ public class User {
         return res3;
     }
 
+    //
+    // 닉네임 유효성 검사
+    //
     private boolean isNickname()
     {
         if (this.nickname == null)      return false;
@@ -68,7 +80,9 @@ public class User {
             return false;
     }
 
-
+    //
+    // id, pw, email, nickname 중에서 에러에 따라 리턴값을 달리 해주는 함수
+    //
     public String getErrorFunc()
     {
         if(!this.isId())     return "1";
@@ -77,6 +91,9 @@ public class User {
         else   return "4";
     }
 
+    //
+    // 유효성 종합 검사
+    //
     public boolean isSignUpUserFunc()
     {
         return isId() && isPw() && isEmail() && isNickname();
@@ -86,7 +103,6 @@ public class User {
     {
         this.id = id;
     }
-
 
 
 
