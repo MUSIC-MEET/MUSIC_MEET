@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { useContext } from "react";
 import { css } from "@emotion/react";
 import ThemeContext from "../../store/ThemeContext";
