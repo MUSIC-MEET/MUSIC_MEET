@@ -42,18 +42,59 @@ public class UserService {
     //
     // 아이디 찾기
     //
-    public boolean searchIdFunc(String email)
+    public String findIdFunc(String email)
     {
+        String id;
+        String sql = "select id from user where email = ?";
+        try
+        {
+            //
+            // DB구간
+            //
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            aes256Util = new AES256Util();
+            String value = aes256Util.encrypt(email);
+            pstmt.setString(1, value);
+
+            rs = pstmt.executeQuery();
 
 
-        return true;
+            if (!rs.next())
+            {
+                throw new Exception("findIdFunc 에서 rs가 null 값으로 예외처리에 빠짐");
+            }
+            else
+            {
+                id = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return id;
     }
-
 
     //
     // 아이디 중복 검사 (id가 DB에 있으면 true 리턴)
     //
-    public boolean findIdFunc(User user) {
+    public boolean isDuplicateIdFunc(User user)
+    {
 
         sql = "select id from user where id = ?";
         boolean result = false;
@@ -90,12 +131,11 @@ public class UserService {
         return result;
     }
 
-
-
     //
     // 닉네임 중복 검사 (닉네임이 DB에 있으면 true 리턴)
     //
-    public boolean findNicknameFunc(User user) {
+    public boolean isDuplicateNicknameFunc(User user)
+    {
         sql = "select nickname from user where nickname = ?";
         boolean result = false;
         try {
@@ -130,7 +170,59 @@ public class UserService {
         return result;
     }
 
+    //
+    // email 중복 검사 (닉네임이 DB에 있으면 true 리턴)
+    //
+    public boolean isDuplicateEmailFunc(User user)
+    {
+        String value= null;
+        try {
+            aes256Util = new AES256Util();
+            value = aes256Util.encrypt(user.getEmail());
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        }
 
+        sql = "select email from user where email = ?";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, value);
+
+            rs = pstmt.executeQuery();
+
+            if (!rs.next())
+            {
+                rs.close();
+                pstmt.close();
+                conn.close();
+                return false;
+            }
+            else
+            {
+                rs.close();
+                pstmt.close();
+                conn.close();
+                return true;
+            }
+
+            /*while (rs.next()) {
+
+
+            }*/
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     //
     // 회원가입 전용 이메일 인증
@@ -170,6 +262,14 @@ public class UserService {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        try {
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     //
@@ -203,7 +303,13 @@ public class UserService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
+        try {
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //
@@ -263,7 +369,7 @@ public class UserService {
     //
     // user의 state 상태를 바꿈
     //
-    public void setUserState(String value)
+    public void setUserStateFunc(String value)
     {
         String sql = "update user set state = 0 where id =(select id from emailauth where encoding_value = ?)";
         try
@@ -284,9 +390,46 @@ public class UserService {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
+        try {
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    //
+    // emailauth에서 인증이 끝난 데이터 삭제
+    //
+    public void deleteEmailAuthFunc(String value)
+    {
+        String sql = "delete from emailauth where encoding_value = ?";
+        try
+        {
+            //
+            // DB구간
+            //
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, value);
+
+            rsInt = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     //
     // AES256 양방향 암호화 함수

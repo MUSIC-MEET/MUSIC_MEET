@@ -19,7 +19,8 @@ public class EmailAuthController {
     {
         try {
             userService.responseEmailAuthFunc(value);
-            userService.setUserState(value);
+            userService.setUserStateFunc(value);
+            userService.deleteEmailAuthFunc(value);
 
             return new ResponseEntity<>(null, HttpStatus.OK);
         }catch (Exception e) {

@@ -39,4 +39,28 @@ public class MailService {
         javaMailSender.send(mimeMessage);
     }
 
+    //
+    // 아이디 찾기 전용 메일 보내는 함수
+    //
+    public void sendUserIdFunc(final String id, final String email)
+    {
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(MailConfig.class);
+        javaMailSender = (JavaMailSender) ctx.getBean("javaMailSender");
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg = "<p>회원님의 아이디는 <b style=\"color: red\">" + id + "</b> 입니다.</p>";                    // 메일 내용에 삽입될 부분
+        //mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
+        try {
+            helper.setTo(email); // 받는 사람
+            helper.setSubject("MUSIC_MEET 아이디 찾기 메일입니다."); // 메일 제목
+            helper.setText(htmlMsg, true); // 메일 내용
+            helper.setFrom("amusicmeet@gmail.com"); // 보내는 사람
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+        javaMailSender.send(mimeMessage);
+
+    }
 }
