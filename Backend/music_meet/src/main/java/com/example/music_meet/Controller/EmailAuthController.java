@@ -14,9 +14,13 @@ public class EmailAuthController {
 
     UserService userService = new UserService();
 
-    @RequestMapping(path = "/auth/{keyValue}")
-    public ResponseEntity<Object> EmailAuthFunc(@PathVariable("keyValue") String value)
+    //
+    // 이메일 인증 컨트롤러
+    //
+    @RequestMapping(path = "/auth/id/{keyValue}")
+    public ResponseEntity<Object> emailAuthForIdFunc(@PathVariable("keyValue") String value)
     {
+        System.out.println(value);
         try {
             userService.responseEmailAuthFunc(value);
             userService.setUserStateFunc(value);
@@ -28,6 +32,18 @@ public class EmailAuthController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    //
+    // 비밀번호 찾기 이메일 인증 컨트롤러
+    //
+    @RequestMapping(path = "/auth/pw/{keyValue}")
+    public ResponseEntity<Object> emailAuthForPwFunc(@PathVariable("keyValue") String value)
+    {
+        if (userService.responsePwEmailAuthFunc(value) == true)
+           return new ResponseEntity<>(null, HttpStatus.OK);
+        else
+           return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
 }
