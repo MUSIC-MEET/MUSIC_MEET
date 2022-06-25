@@ -27,12 +27,12 @@ async function SignUpValidator( props) {
     const { id, nickname, pw1, pw2, email } = props.values;
     const { errors, setErrors } = props.errors;
     if(props.name === "id") {
-        if( (id.length !=0 && !isId(id)) ) {
+        if( (id.length !=0 && !isId(id)) || id.length > 20 ) {
             setErrors({
                 ...errors,
                 id: "invalid"
             });
-        } else if(isId(id)){
+        } else if(isId(id) && (id.length >= 5 && id.length <= 20)) {
             await axios.get(`/search/id/${id}`)
                 .then(() => {
                     setErrors({
@@ -68,12 +68,12 @@ async function SignUpValidator( props) {
 
     if(props.name === "nickname") {
         
-        if(nickname.length !=0 && !isNick(nickname)) {
+        if((nickname.length !=0 && !isNick(nickname)) || nickname.length > 16) {
             setErrors({
                 ...errors,
                 nickname: "invalid"
             });
-        } else if(isNick(nickname)) {
+        } else if(isNick(nickname) && (nickname.length >= 3 && nickname.length <= 16)) {
             await axios.get(`/search/nickname/${nickname}`)
                 .then(() => {
                     setErrors({
@@ -92,9 +92,9 @@ async function SignUpValidator( props) {
     }
     
     if(props.name === "email") {
-        if(email.length !=0 && !isEmail(email)) {
+        if((email.length !=0 && !isEmail(email)) || email.length > 50) {
             setErrors({ ...errors, email: "invalid" });
-        } else if(email.length > 0 && isEmail(email)) {
+        } else if(isEmail(email) && (email.length >= 5 && email.length <= 50)) {
             await axios.get(`/search/email/${email}`)
                 .then(() => {
                     setErrors({
