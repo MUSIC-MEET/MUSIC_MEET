@@ -9,7 +9,6 @@ import { Skeleton } from "@mui/material";
 
 interface ContentProps {
     children: React.ReactNode;
-    title: string;
 }
 
 const Content = (props: ContentProps) => {
@@ -20,7 +19,7 @@ const Content = (props: ContentProps) => {
         </section>
     );
 };
-const Id = () => {
+function Id() {
     const { t } = useTranslation("findPage");
     const [email, setEmail] = useState<string>("");
     const { fetchData, status } = useAxios({
@@ -72,31 +71,25 @@ const Id = () => {
 
     if (status.isLoading) {
         return (
-            <Content title={t("id.title")}>
+            <Content>
                 <Skeleton variant="text" sx={{ bgcolor: "grey.500" }} width={430} height={30} />
             </Content>
         );
     }
 
     return (
-        <Content title={t("id.ment")}>
-            {status.isError && <p className="ment">{t("id.error")}</p>}
-            {status.isSucess && <p className="ment">{t("id.sucess")}</p>}
+        <Content>
+            {status.isError && <p>{t("id.error")}</p>}
+            {status.isSucess && <p>{t("id.sucess")}</p>}
         </Content>
     );
-};
+}
 
 const style = css`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    p {
-        margin-bottom: 1rem;
-    }
-    .ment {
-        margin-top: 1rem;
-    }
 `;
 
 export default Id;

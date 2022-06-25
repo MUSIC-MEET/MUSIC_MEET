@@ -7,7 +7,7 @@ import Password from "./Password";
 import { css } from "@emotion/react";
 
 function Title(props: { children: string }) {
-    return (<h1 css={[style]}> {props.children}</h1 >);
+    return (<h1 css={[style]}> {props.children}</h1>);
 }
 const Index = () => {
     const { type } = useParams<{ type: string }>();
@@ -26,8 +26,9 @@ const Index = () => {
     }
     if (type === "id" || type === "pw") {
         return (
-            <Content>
+            <Content css={css`p { margin-bottom: 1rem;}`}>
                 <Title>{title}</Title>
+                <p>{t("ment")}</p>
                 {render}
             </Content >
         );
@@ -38,7 +39,7 @@ const Index = () => {
 const style = css`
     font-weight: 700;
     font-size: 2.6rem;
-    margin-bottom: 50px;
+    margin-bottom: 50px;    
 `;
 
 export default Index;

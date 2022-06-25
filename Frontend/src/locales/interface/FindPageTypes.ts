@@ -1,8 +1,8 @@
 interface FindPageTypes {
+    ment: string;
     id: { 
         title: string;
-        placeholder: string;
-        ment: string;
+        placeholder: string;        
         submit: string;
         sucess: string;
         error: string;
