@@ -4,6 +4,7 @@ import { css } from "@emotion/react";
 import Submit from "components/common/Submit";
 import { useTranslation } from "react-i18next";
 import ValidResult from "pages/SignUp/ValidResult";
+import Form from "../../components/common/Form";
 
 function SignUpForm({ values, onChangeValues, onRequest, error, disabled }) {
     const { t } = useTranslation("registerPage");
@@ -16,7 +17,7 @@ function SignUpForm({ values, onChangeValues, onRequest, error, disabled }) {
     
     
     return (
-        <form css={[formStyle]}  onSubmit={onSubmit}>
+        <Form addCss={[formStyle]}  onSubmit={onSubmit} direction={"column"}>
             <div>
                 <label htmlFor="id">{t("id")}</label>
                 <Input 
@@ -118,7 +119,7 @@ function SignUpForm({ values, onChangeValues, onRequest, error, disabled }) {
                 value={t("submit")}
                 disabled={disabled}
             />
-        </form>
+        </Form>
     );
 }
 

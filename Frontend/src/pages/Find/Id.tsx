@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import useAxios from "hooks/use-Axios";
 import { Skeleton } from "@mui/material";
 import FindContentBox from "./FindContent";
+import Form from "components/common/Form";
 
 
 function Id() {
@@ -34,7 +35,7 @@ function Id() {
 
     if (init) {
         return (
-            <form onSubmit={onSubmit}>
+            <Form onSubmit={onSubmit} direction={"row"}>
                 <Input
                     type="email"
                     w={"25rem"}
@@ -53,7 +54,7 @@ function Id() {
                     value={t("id.submit")}
                     disabled={!email}
                 />
-            </form>
+            </Form>
         );
     }
 
