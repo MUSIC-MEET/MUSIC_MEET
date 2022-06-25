@@ -1,26 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Input from "components/common/Input";
-import { css } from "@emotion/react";
 import Submit from "components/common/Submit";
 import { useTranslation } from "react-i18next";
 import useAxios from "hooks/use-Axios";
 import { Skeleton } from "@mui/material";
+import FindContentBox from "./FindContent";
+import Form from "components/common/Form";
 
 
-interface ContentProps {
-    children: React.ReactNode;
-    title: string;
-}
-
-const Content = (props: ContentProps) => {
-    const { children } = props;
-    return (
-        <section css={style} >
-            {children}
-        </section>
-    );
-};
-const Id = () => {
+function Id() {
     const { t } = useTranslation("findPage");
     const [email, setEmail] = useState<string>("");
     const { fetchData, status } = useAxios({
@@ -47,7 +35,7 @@ const Id = () => {
 
     if (init) {
         return (
-            <form onSubmit={onSubmit}>
+            <Form onSubmit={onSubmit} direction={"row"}>
                 <Input
                     type="email"
                     w={"25rem"}
@@ -66,37 +54,23 @@ const Id = () => {
                     value={t("id.submit")}
                     disabled={!email}
                 />
-            </form>
+            </Form>
         );
     }
 
     if (status.isLoading) {
         return (
-            <Content title={t("id.title")}>
+            <FindContentBox>
                 <Skeleton variant="text" sx={{ bgcolor: "grey.500" }} width={430} height={30} />
-            </Content>
+            </FindContentBox>
         );
     }
 
     return (
-        <Content title={t("id.ment")}>
+        <FindContentBox>
             {status.isError && <p>{t("id.error")}</p>}
-            {status.isSucess && <p className="ment">{t("id.sucess")}</p>}
-        </Content>
+            {status.isSucess && <p>{t("id.sucess")}</p>}
+        </FindContentBox>
     );
-};
-
-const style = css`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    p {
-        margin-bottom: 1rem;
-    }
-    .ment {
-        margin-top: 1rem;
-    }
-`;
-
+}
 export default Id;

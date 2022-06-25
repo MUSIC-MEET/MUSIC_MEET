@@ -95,6 +95,19 @@ async function SignUpValidator( props) {
         if(email.length !=0 && !isEmail(email)) {
             setErrors({ ...errors, email: "invalid" });
         } else if(email.length > 0 && isEmail(email)) {
+            await axios.get(`/search/email/${email}`)
+                .then(() => {
+                    setErrors({
+                        ...errors,
+                        email: "valid"
+                    });
+                })
+                .catch(() => {
+                    setErrors({
+                        ...errors,
+                        email: "duplicate"
+                    });
+                });  
             setErrors({ ...errors, email: "valid" });
         }
     }

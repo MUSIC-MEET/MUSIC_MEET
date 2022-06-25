@@ -26,7 +26,7 @@ function Index() {
     const { id , pw1, email, nickname } = values || "";
     const navigator = useNavigate();
     
-    const { isError, isLodding, fetchData } = useAxios({
+    const { status, fetchData } = useAxios({
         method: "POST",
         url: "/createuser",
         body: {
@@ -76,8 +76,8 @@ function Index() {
                 error={error}
                 disabled={!clear}
             />
-            {isLodding && <h2>Loddding</h2>}
-            {isError && <h2>{errorMsg}</h2>}
+            {status.isLodding && <h2>Loddding</h2>}
+            {status.isError && <h2>{errorMsg}</h2>}
         </Content>
     );
 }
