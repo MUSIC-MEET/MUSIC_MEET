@@ -5,7 +5,9 @@ const text: FindPageTypes = {
         title: "Find ID",
         placeholder: "Enter your email address.",
         ment: "We will send your ID to your register email.",
-        submit: "Submit"
+        submit: "Submit",
+        sucess: "We have sent your ID to your email.",
+        error: "Server error."
     },
     pw: {
         title: "Reset Password",

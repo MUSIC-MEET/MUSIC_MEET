@@ -17,7 +17,7 @@ const Index = () => {
 
     useEffect(() => {
         //
-    }, []);
+    }, [type]);
 
     if (type !== "id" && type !== "pw") {
         return (
@@ -29,7 +29,7 @@ const Index = () => {
             <Content>
                 <Title>{title}</Title>
                 {render}
-            </Content>
+            </Content >
         );
     }
 

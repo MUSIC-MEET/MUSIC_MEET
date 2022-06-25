@@ -4,6 +4,8 @@ interface FindPageTypes {
         placeholder: string;
         ment: string;
         submit: string;
+        sucess: string;
+        error: string;
     },
     pw: {
         title: string;
