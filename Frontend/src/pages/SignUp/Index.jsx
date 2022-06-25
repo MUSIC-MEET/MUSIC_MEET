@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import Title from "components/common/Title";
 import Content from "components/UI/Content";
 import { useTranslation } from "react-i18next";
@@ -16,13 +16,17 @@ const initValues = {
     nickname: ""
 };
 
+const errorCode = ["server", "ID", "Password", "Email", "Nickname"];
+const errorDetail = ["error", "duplicate", "invalid"];
+
 function Index() {
     const { t } = useTranslation("registerPage");
     const { values, valuesChangeHandler, error } = useForm({ initValues, validator: SignUpValidator });
+    const [ errorMsg, setErrorMsg ] = useState("");
     const { id , pw1, email, nickname } = values || "";
     const navigator = useNavigate();
     
-    const {  errors, isError, isLodding, fetchData } = useAxios({
+    const { isError, isLodding, fetchData } = useAxios({
         method: "POST",
         url: "/createuser",
         body: {
@@ -36,13 +40,14 @@ function Index() {
         }
     });
     const requestHandler = useCallback(() => {
-        try {
-            fetchData().then(() => {
-                navigator("/signup/success");
-            });    
-        } catch(e) {
-            console.log(e);
-        } 
+        fetchData().then(() => {
+            navigator("/signup/success");
+        }).catch((e)=>{
+            const msg = e.msg ?? 0;
+            const code = e.code  ?? 0;
+            const newError = `${errorCode[parseInt(code)]} ${errorDetail[parseInt(msg)]}`;
+            setErrorMsg(newError);
+        });  
         
     },[fetchData, navigator]);
     
@@ -72,7 +77,7 @@ function Index() {
                 disabled={!clear}
             />
             {isLodding && <h2>Loddding</h2>}
-            {isError && <h2>{ errors || "Error"}</h2>}
+            {isError && <h2>{errorMsg}</h2>}
         </Content>
     );
 }

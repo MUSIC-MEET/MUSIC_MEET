@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Input from "components/common/Input";
 import { css } from "@emotion/react";
 import Submit from "components/common/Submit";
@@ -8,13 +8,16 @@ function Id() {
     const { t } = useTranslation("findPage");
     const [email, setEmail] = useState("");
     const { fetchData } = useAxios({
-        url: "/api/findid",
+        url: "/findid",
         method: "POST",
         body: {
-            email
+            email: email
         }
     });
-
+    const onChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setEmail(e.target.value);
+    }, []);
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         fetchData()
@@ -34,12 +37,13 @@ function Id() {
                     type="email"
                     w={"25rem"}
                     h={"2.5rem"}
-                    onChange={setEmail}
+
                     value={email}
                     input={{
                         id: "email",
                         placeholder: t("id.placeholder"),
-                        type: "email"
+                        type: "email",
+                        onChange: onChangeHandler
                     }}
                 />
                 <Submit
