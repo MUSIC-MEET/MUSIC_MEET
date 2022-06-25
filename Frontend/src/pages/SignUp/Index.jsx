@@ -7,6 +7,7 @@ import useAxios from "../../hooks/use-Axios.tsx";
 import useForm from "../../hooks/use-form";
 import SignUpValidator from "./SignUpValidator";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 
 const initValues = {
     id: "",
@@ -64,7 +65,14 @@ function Index() {
         }
     },[clear, requestHandler]);
 
-    
+    if(status.isLoading) {
+        return (
+            <Content>
+                <Title>{t("title")}</Title>
+                <Loading />
+            </Content>
+        );
+    }
     
     return (
         <Content>
@@ -76,7 +84,6 @@ function Index() {
                 error={error}
                 disabled={!clear}
             />
-            {status.isLodding && <h2>Loddding</h2>}
             {status.isError && <h2>{errorMsg}</h2>}
         </Content>
     );
