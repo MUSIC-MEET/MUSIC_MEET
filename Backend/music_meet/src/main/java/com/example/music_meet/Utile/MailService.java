@@ -63,4 +63,32 @@ public class MailService {
         javaMailSender.send(mimeMessage);
 
     }
+
+    //
+    // 비밀번호 찾기 전용 메일 보내는 함수
+    //
+    public void sendUserKeyFunc(String email, String str)
+    {
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(MailConfig.class);
+        javaMailSender = (JavaMailSender) ctx.getBean("javaMailSender");
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg = "<a href = http://localhost:3000/resetpw/{" + str + "}> 이곳을 눌러서 비밀번호를 변경해 주세요.</a>";                    // 메일 내용에 삽입될 부분
+        //mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
+        try {
+            helper.setTo(email); // 받는 사람
+            helper.setSubject("MUSIC_MEET 비밀번호 찾기 메일입니다."); // 메일 제목
+            helper.setText(htmlMsg, true); // 메일 내용
+            helper.setFrom("amusicmeet@gmail.com"); // 보내는 사람
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+        javaMailSender.send(mimeMessage);
+
+
+
+    }
+
+
 }

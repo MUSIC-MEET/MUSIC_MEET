@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.Date;
 
 @Repository
 @Getter
@@ -22,7 +23,7 @@ import java.sql.*;
 public class UserService {
 
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // 암호화 객체
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(); // 암호화 객체
     private AES256Util aes256Util; // AES256 변수 (암호화, 복호화에 사용)
     private SHA256 sha256; // SHA256 변수 (이메일 인증에 사용 암호문에 /가 안들어감)
     private String mysqlurl = "jdbc:mysql://localhost:3306/music_meet?serverTimezone=UTC&characterEncoding=UTF-8";
@@ -90,6 +91,7 @@ public class UserService {
         return id;
     }
 
+
     //
     // 아이디 중복 검사 (id가 DB에 있으면 true 리턴)
     //
@@ -107,7 +109,6 @@ public class UserService {
 
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                System.out.println(rs.getString(1));
                 result = true;
             }
 
@@ -130,6 +131,7 @@ public class UserService {
 
         return result;
     }
+
 
     //
     // 닉네임 중복 검사 (닉네임이 DB에 있으면 true 리턴)
@@ -229,8 +231,10 @@ public class UserService {
     //
     public void emailAuthFunc(User user)
     {
+        int a = 202007055 + 201607082 + 202007058 + 201607083 + 201807054;
+        String key = ""+a;
         String encodingValue;
-        String str = user.getId() + user.getNickname() + user.getEmail();
+        String str = user.getId() + user.getNickname() + user.getEmail() + key;
         
         try {
             sha256 = new SHA256();
@@ -318,7 +322,7 @@ public class UserService {
     public void createUserFunc (User user)
     {
             String email = user.getEmail();
-            user.setPw(passwordEncoder.encode(user.getPw())); // 비밀번호 단방향 암호화
+            user.setPw(bCryptPasswordEncoder.encode(user.getPw())); // 비밀번호 단방향 암호화
             encodingFunc(user);
             String sql = "insert into user values(?,?,?,?,?,?,?,?,?,?,?)";
             try {
@@ -398,6 +402,59 @@ public class UserService {
         }
     }
 
+    //
+    // user가 비밀번호를 찾을때 아이디와 이메일을 입력받아서 아이디와 이메일이 DB에 있는지 확인하는 함수
+    //
+    public String checkIdAndEmail(String id, String email)
+    {
+        User user = new User(id,"",email,"");
+        String value;
+
+        String sql = "select id from user where id = ? and email = ?";
+        try
+        {
+            aes256Util = new AES256Util();
+            value = aes256Util.encrypt(user.getId() + user.getEmail() + new Date().toString());
+            //
+            // DB구간
+            //
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, id);
+            pstmt.setString(2, aes256Util.encrypt(email));
+
+            rs = pstmt.executeQuery();
+
+            if (!rs.next())
+            {
+                throw new Exception("findIdFunc 에서 rs가 null 값으로 예외처리에 빠짐");
+            }
+            else
+            {
+                id = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return value;
+
+    }
+    
     //
     // emailauth에서 인증이 끝난 데이터 삭제
     //
