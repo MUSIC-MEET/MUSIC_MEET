@@ -47,8 +47,9 @@ function Index() {
     const setLoginModal = useSetRecoilState(LoginModalShownState);
     const { fetchData } = useAxios({
         method: "GET",
-        url: `/auth/${value}`
+        url: `/auth/id/${value}`
     });
+
     useEffect(() => {
         fetchData()
             .then(() => {
@@ -57,7 +58,7 @@ function Index() {
             .catch(() => {
                 setResult(false);
             });
-    }, [fetchData]);
+    }, []);
 
     const goLoginHandler = useCallback(() => {
         navigate("/");
