@@ -125,8 +125,6 @@ public class CreateUserController {
 
     }
 
-
-
     //
     // ID 조회
     //
@@ -183,6 +181,39 @@ public class CreateUserController {
         else
             return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    //
+    // new 비밀번호를 입력받아서 user테이블의 비밀번호를 수정하는 부분
+    //
+    @RequestMapping(path="/resetpw", method = RequestMethod.POST)
+    public ResponseEntity<Object> setUserPw(@RequestBody ResetPw resetPw)
+    {
+        UserService userService = new UserService();
+        User user = new User();
+
+        user.setPw(resetPw.getNewPw());
+        if (!user.isReSetPw())
+        {
+            userService.setUserPw(resetPw);
+            userService.deletepwAuthFunc(resetPw.getEncoding_value());
+
+
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+
+
+
+
+
+
+
+
+
 
     //
     // 테스트

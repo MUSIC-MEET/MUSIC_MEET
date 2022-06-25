@@ -13,5 +13,6 @@ public class ResetPw {
 
     String id;
     String email;
-    String key;
+    String newPw;
+    String encoding_value;
 }

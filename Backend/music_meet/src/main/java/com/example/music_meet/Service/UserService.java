@@ -2,6 +2,7 @@ package com.example.music_meet.Service;
 
 import com.JPA.Repository.AccountRepository;
 import com.example.music_meet.AES256Util;
+import com.example.music_meet.DTO.ResetPw;
 import com.example.music_meet.DTO.User;
 import com.example.music_meet.SHA256;
 import com.example.music_meet.Utile.MailService;
@@ -118,7 +119,8 @@ public class UserService {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        if (pstmt != null && conn != null) {
+        finally
+        {
             try {
                 rs.close();
                 pstmt.close();
@@ -160,13 +162,15 @@ public class UserService {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        if (pstmt != null && conn != null) {
-            try {
-                rs.close();
-                pstmt.close();
-                conn.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        finally {
+            if (pstmt != null && conn != null) {
+                try {
+                    rs.close();
+                    pstmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         return result;
@@ -200,29 +204,23 @@ public class UserService {
             rs = pstmt.executeQuery();
 
             if (!rs.next())
-            {
-                rs.close();
-                pstmt.close();
-                conn.close();
                 return false;
-            }
             else
-            {
-                rs.close();
-                pstmt.close();
-                conn.close();
                 return true;
-            }
-
-            /*while (rs.next()) {
-
-
-            }*/
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 
@@ -265,15 +263,14 @@ public class UserService {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
-
-        try {
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
     //
@@ -306,13 +303,14 @@ public class UserService {
             throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-        try {
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -393,12 +391,13 @@ public class UserService {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }
-        try {
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -409,12 +408,14 @@ public class UserService {
     {
         User user = new User(id,"",email,"");
         String value;
+        String endcoding_email;
 
         String sql = "select id from user where id = ? and email = ?";
         try
         {
             aes256Util = new AES256Util();
             value = aes256Util.encrypt(user.getId() + user.getEmail() + new Date().toString());
+            endcoding_email = aes256Util.encrypt(email);
             //
             // DB구간
             //
@@ -423,7 +424,7 @@ public class UserService {
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, id);
-            pstmt.setString(2, aes256Util.encrypt(email));
+            pstmt.setString(2, endcoding_email);
 
             rs = pstmt.executeQuery();
 
@@ -434,7 +435,24 @@ public class UserService {
             else
             {
                 id = rs.getString(1);
+
+
             }
+            sql = "insert into pwauth(id, email, encoding_value) values(?,?,?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id);
+            pstmt.setString(2, endcoding_email);
+            pstmt.setString(3, value);
+
+            rsInt = pstmt.executeUpdate();
+
+            if (rsInt == 1)
+            {
+
+            }
+            else
+                System.out.println("\"/auth/pw/{keyValue}\" URL의 checkIdAndEmail에서 문제 발생");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -478,15 +496,50 @@ public class UserService {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
-        try {
-            pstmt.close();
-            conn.close();
+    }
+
+    //
+    // pwauth에서 인증이 끝난 데이터 삭제
+    //
+    public void deletepwAuthFunc(String value)
+    {
+        String sql = "delete from pwauth where encoding_value = ?";
+        try
+        {
+            //
+            // DB구간
+            //
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, value);
+
+            rsInt = pstmt.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
+
 
     //
     // AES256 양방향 암호화 함수
@@ -529,7 +582,83 @@ public class UserService {
 
         }
 
+    //
+    // "/auth/pw/{keyValue}"에서 날라온 key 확인 후 boolean 리턴하는 함수
+    //
+    public boolean responsePwEmailAuthFunc(String value)
+    {
+        boolean result;
 
+        String sql = "select * from pwauth where encoding_value = ?";
+        try
+        {
+            //
+            // DB구간
+            //
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, value);
+
+            rs = pstmt.executeQuery();
+            if (!rs.next())
+            {
+                result = false;
+            }
+            else
+                result = true;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return result;
+    }
+
+    //
+    // 유효성 검사 통과한 새로운 비밀번호를 user테이블에 세팅해 줌
+    //
+    public void setUserPw(ResetPw resetPw)
+    {
+        String sql = "update user set pw = ? where id =(select id from pwauth where encoding_value = ?)";
+        try
+        {
+            //
+            // DB구간
+            //
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, bCryptPasswordEncoder.encode(resetPw.getNewPw()));
+            pstmt.setString(2, resetPw.getEncoding_value());
+
+            rsInt = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }
 
 

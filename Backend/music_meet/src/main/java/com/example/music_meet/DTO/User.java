@@ -104,6 +104,13 @@ public class User {
         this.id = id;
     }
 
+    //
+    // 비밀번호 유효성 검사
+    //
+    public boolean isReSetPw()
+    {
+        return isPw();
+    }
 
 
     @Override
