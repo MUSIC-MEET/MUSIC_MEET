@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import FindContentBox from "./FindContent";
 import useAxios from "hooks/use-Axios";
 import Input from "components/common/Input";
 import Form from "../../components/common/Form";
 import { css } from "@emotion/react";
+import Submit from "components/common/Submit";
+import { useTranslation } from "react-i18next";
+import { Skeleton } from "@mui/material";
 
 interface InfoProps {
     id: string;
@@ -11,6 +14,7 @@ interface InfoProps {
 }
 
 function Password() {
+    const { t } = useTranslation<"findPage">("findPage");
     const [info, setInfo] = useState<InfoProps>({
         id: "",
         email: ""
@@ -24,47 +28,85 @@ function Password() {
         }
     });
 
+    const onChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setInfo({
+            ...info,
+            [name]: value
+        });
+    }, [info]);
+    const onSumbitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        fetchData();
+        console.log(info);
+    }, [fetchData, info]);
+
     const init = !status.isError && !status.isLoading && !status.isSucess;
 
     if (init) {
         return (
             <FindContentBox>
-                <Form addCss={[formStyle]} onSubmit={() => {  /* */ }} direction={"column"}>
-                    <label htmlFor="id">ID</label>
+                <Form addCss={[formStyle]} onSubmit={onSumbitHandler} direction={"column"}>
+                    <label htmlFor="id">{t("pw.id.label")}</label>
                     <Input
-                        w={"25rem"}
-                        h={"2.5rem"}
                         input={{
                             type: "text",
                             value: info.id,
-                            id: "id"
-                        }}
+                            id: "id",
+                            name: "id",
+                            onChange: onChangeHandler,
+                            placeholder: t("pw.id.placeholder")
+                        }
+                        }
                     />
-                </Form>
-                <Form onSubmit={() => {  /* */ }} direction={"column"} >
-                    <label htmlFor="id">Email</label>
+                    <label htmlFor="email">{t("pw.email.label")}</label>
                     <Input
-                        w={"25rem"}
-                        h={"2.5rem"}
                         input={{
                             type: "email",
                             value: info.email,
-                            id: "email"
+                            id: "email",
+                            name: "email",
+                            onChange: onChangeHandler,
+                            placeholder: t("pw.email.placeholder")
                         }}
                     />
+                    <Submit
+                        value="전송"
+                        disabled={!info.id || !info.email}
+                    />
                 </Form>
-            </FindContentBox >
+            </FindContentBox>
         );
     }
+
+    if (status.isLoading) {
+        return (
+            <FindContentBox>
+                <Skeleton variant="text" sx={{ bgcolor: "grey.500" }} width={430} height={30} />
+            </FindContentBox>
+        );
+    }
+
     return (
         <FindContentBox>
-            <p>ddd</p>
+            {status.isSucess && <p>{t("pw.sucess")}</p>}
+            {status.isError && <p>{t("pw.error")}</p>}
         </FindContentBox>
     );
 }
 const formStyle = css`
     label {
+        margin-top: 1rem;
         margin-bottom: 0.5rem;
+    }
+
+    input {
+        width:25rem;
+        height: 2.5rem;
+    }
+
+    input[type="submit"] {
+        margin-top: 1rem;
     }
 `;
 

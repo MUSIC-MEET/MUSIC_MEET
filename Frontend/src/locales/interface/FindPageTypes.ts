@@ -9,7 +9,17 @@ interface FindPageTypes {
     },
     pw: {
         title: string;
-        placeholder: string;
+        id: {
+            label: string;
+            placeholder: string;
+        },
+        email: {
+            label: string;
+            placeholder: string
+        }
+        submit: string,
+        sucess: string,
+        error: string
     }
 }
 export default FindPageTypes;

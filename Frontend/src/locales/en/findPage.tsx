@@ -1,7 +1,7 @@
 import FindPageTypes from "locales/interface/FindPageTypes";
 
 const text: FindPageTypes = {
-    ment: "가입하실때 사용하셨던 값을 입력해주세요.",
+    ment: "Insert using Register information",
     id: {
         title: "Find ID",
         placeholder: "Enter your email address.",
@@ -11,7 +11,17 @@ const text: FindPageTypes = {
     },
     pw: {
         title: "Reset Password",
-        placeholder: "",
+        id: {
+            label: "ID",
+            placeholder: "Enter your ID."
+        },
+        email: {
+            label: "Email",
+            placeholder: "Enter your email."
+        },
+        submit: "Submit",
+        sucess: "Successfully sent a reset password link to your email.",
+        error: "Server Error"
     }
 };
 export default text;
