@@ -1,8 +1,11 @@
 import React from "react";
+import Content from "components/UI/Content";
 
 function Password() {
     return (
-        <div>Password</div>
+        <Content>
+            <p>ddd</p>
+        </Content>
     );
 }
 
