@@ -1,0 +1,8 @@
+CREATE TABLE `PwAuth` (
+    `num`    INT(10) AUTO_INCREMENT    NOT NULL PRIMARY KEY,
+    `id`    VARCHAR(20)    NOT NULL,
+	FOREIGN KEY  (id)
+	REFERENCES User(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    `email`    VARCHAR(100)    NOT NULL,
+    `encoding_value`    VARCHAR(100)    NULL
+);

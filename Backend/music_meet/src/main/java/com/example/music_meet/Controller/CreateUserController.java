@@ -3,6 +3,7 @@
 package com.example.music_meet.Controller;
 
 import com.example.music_meet.AES256Util;
+import com.example.music_meet.DTO.ResetPw;
 import com.example.music_meet.DTO.User;
 import com.example.music_meet.Error.SignupErrorForm;
 import com.example.music_meet.Service.UserService;
@@ -92,9 +93,39 @@ public class CreateUserController {
 
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
+    //
+    // 비밀번호 찾기
+    //
+    @RequestMapping(path = "findpw", method = RequestMethod.POST)
+    public ResponseEntity<Object> findPwfunc(@RequestBody ResetPw json)
+    {
+        UserService userService = new UserService();
+        final String id = json.getId();
+        final String email = json.getEmail();
+        String str;
+        try{
+            str = userService.checkIdAndEmail(id,email);
+            if (str ==null)
+                return new ResponseEntity<>(HttpStatus.OK);
+
+            MailService mailService = new MailService();
+            mailService.sendUserKeyFunc(email,str);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (Exception e){
+
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+    }
+
+
 
     //
     // ID 조회
@@ -138,6 +169,20 @@ public class CreateUserController {
 
     }
 
+    //
+    // email 조회
+    //
+    @RequestMapping("/search/email/{useremail}")
+    public ResponseEntity<Object> searchEmailFunc(@PathVariable("useremail") String email)
+    {
+        User user = new User("","",email,"");
+        UserService userService = new UserService();
+
+        if (userService.isDuplicateEmailFunc(user))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else
+            return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     //
     // 테스트

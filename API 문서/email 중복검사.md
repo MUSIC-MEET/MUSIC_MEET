@@ -1,12 +1,12 @@
 # ID 중복 검사
-### API명 : `/search/id/{userid}`
+### API명 : `/search/email/{email}`
 
 ### method : GET
 
-### comment : 아이디 중복검사
+### comment : 이메일 중복 검사
 
 ### request :
-양식에 맞게 보내면 됨
+이메일 양식에 맞게 보내면 됨
 
 ### return
 아이디 사용 가능 : 200 (HttpStatus.OK)

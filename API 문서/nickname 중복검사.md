@@ -6,11 +6,7 @@
 ### comment : 닉네임 중복검사
 
 ### request :
-~~~json
-{
-  "nickname" : "exnickname", // String  4~16자 
-}
-~~~
+양식에 맞게 보내면 됨
 
 ### return
 닉네임 사용 가능 : 200 (HttpStatus.OK)
