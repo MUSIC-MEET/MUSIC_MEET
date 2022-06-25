@@ -80,7 +80,7 @@ const Id = () => {
 
     return (
         <Content title={t("id.ment")}>
-            {status.isError && <p>{t("id.error")}</p>}
+            {status.isError && <p className="ment">{t("id.error")}</p>}
             {status.isSucess && <p className="ment">{t("id.sucess")}</p>}
         </Content>
     );
