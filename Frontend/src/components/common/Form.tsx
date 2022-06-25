@@ -5,7 +5,7 @@ interface FormProps {
     children: React.ReactNode;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     direction: string;
-    addCss?: [];
+    addCss?: [any];
 }
 function Form(props: FormProps) {
     const { onSubmit, children, direction, addCss } = props;

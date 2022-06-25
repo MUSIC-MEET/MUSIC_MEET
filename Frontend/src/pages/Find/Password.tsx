@@ -2,26 +2,25 @@ import React, { useState } from "react";
 import FindContentBox from "./FindContent";
 import useAxios from "hooks/use-Axios";
 import Input from "components/common/Input";
-import Form from "components/common/Form";
+import Form from "../../components/common/Form";
+import { css } from "@emotion/react";
 
 interface InfoProps {
     id: string;
-    pw: string;
+    email: string;
 }
 
 function Password() {
-
     const [info, setInfo] = useState<InfoProps>({
         id: "",
-        pw: ""
+        email: ""
     });
-
     const { fetchData, status } = useAxios({
         url: "/findpw",
         method: "POST",
         body: {
             id: info.id,
-            pw: info.pw
+            email: info.email
         }
     });
 
@@ -30,7 +29,7 @@ function Password() {
     if (init) {
         return (
             <FindContentBox>
-                <Form onSubmit={() => {  /* */ }} direction={"column"} >
+                <Form addCss={[formStyle]} onSubmit={() => {  /* */ }} direction={"column"}>
                     <label htmlFor="id">ID</label>
                     <Input
                         w={"25rem"}
@@ -39,6 +38,18 @@ function Password() {
                             type: "text",
                             value: info.id,
                             id: "id"
+                        }}
+                    />
+                </Form>
+                <Form onSubmit={() => {  /* */ }} direction={"column"} >
+                    <label htmlFor="id">Email</label>
+                    <Input
+                        w={"25rem"}
+                        h={"2.5rem"}
+                        input={{
+                            type: "email",
+                            value: info.email,
+                            id: "email"
                         }}
                     />
                 </Form>
@@ -51,5 +62,10 @@ function Password() {
         </FindContentBox>
     );
 }
+const formStyle = css`
+    label {
+        margin-bottom: 0.5rem;
+    }
+`;
 
 export default Password;
