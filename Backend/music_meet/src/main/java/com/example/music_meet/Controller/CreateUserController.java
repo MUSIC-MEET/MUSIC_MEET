@@ -135,7 +135,7 @@ public class CreateUserController {
         UserService userService = new UserService();
         User user = new User(id);
 
-        if (userService.isDuplicateIdFunc(user))
+        if (userService.isDuplicateIdFunc(user) || !user.publicIsID())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         else
@@ -156,7 +156,7 @@ public class CreateUserController {
         User user = new User();
         user.setNickname(nickname);
 
-        if (userService.isDuplicateNicknameFunc(user))
+        if (userService.isDuplicateNicknameFunc(user) || !user.publicIsNickname())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         else
@@ -176,7 +176,7 @@ public class CreateUserController {
         User user = new User("","",email,"");
         UserService userService = new UserService();
 
-        if (userService.isDuplicateEmailFunc(user))
+        if (userService.isDuplicateEmailFunc(user) || !user.publicIsEmail())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         else
             return new ResponseEntity<>(HttpStatus.OK);
@@ -192,7 +192,7 @@ public class CreateUserController {
         User user = new User();
 
         user.setPw(resetPw.getNewPw());
-        if (!user.isReSetPw())
+        if (!user.publicIsPw())
         {
             userService.setUserPw(resetPw);
             userService.deletepwAuthFunc(resetPw.getEncoding_value());

@@ -53,7 +53,7 @@ public class User {
         //String str3 = "\\w+@\\w+\\.\\w+(\\.\\w+)?"; // 이메일 (10~20자)
         String str3 = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$"; // 이메일 (10~20자)
         boolean res3;
-        if (10 <= this.email.length() && this.email.length() < 21)
+        if (10 <= this.email.length() && this.email.length() <= 50)
         {
             res3 = Pattern.matches(str3, this.email);
         }
@@ -70,9 +70,9 @@ public class User {
     {
         if (this.nickname == null)      return false;
 
-        String str4 = "^[a-zA-Z가-힣]{1}[a-zA-Z0-9가-힣]{1,9}$"; // 닉네임 검증식
+        String str4 = "^[a-zA-Z가-힣]{1}[a-zA-Z0-9가-힣]{3,16}$"; // 닉네임 검증식
 
-        if (2 <= this.nickname.length() && this.nickname.length() < 11)
+        if (2 <= this.nickname.length() && this.nickname.length() <= 16)
         {
             return Pattern.matches(str4, this.nickname);
         }
@@ -107,11 +107,34 @@ public class User {
     //
     // 비밀번호 유효성 검사
     //
-    public boolean isReSetPw()
+    public boolean publicIsPw()
     {
         return isPw();
     }
 
+    //
+    // 외부에서 사용할 아이디 중복 검사
+    //
+    public boolean publicIsID()
+    {
+        return isId();
+    }
+
+    //
+    // 외부에서 사용할 닉네임 중복 검사
+    //
+    public boolean publicIsNickname()
+    {
+        return isNickname();
+    }
+
+    //
+    // 외부에서 사용할 이메일 중복 검사
+    //
+    public boolean publicIsEmail()
+    {
+        return isEmail();
+    }
 
     @Override
     public String toString() {

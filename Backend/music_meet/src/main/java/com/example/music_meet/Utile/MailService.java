@@ -25,7 +25,7 @@ public class MailService {
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-        String htmlMsg = "<a href=http://localhost:3000/auth/" + encodingvalue + ">링크를 클릭하면 인증이 완료됩니다.</a>";                    // 메일 내용에 삽입될 부분
+        String htmlMsg = "<a href=http://localhost:3000/auth/id/" + encodingvalue + ">링크를 클릭하면 인증이 완료됩니다.</a>";                    // 메일 내용에 삽입될 부분
         //mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
         try {
             helper.setTo(email); // 받는 사람
@@ -73,7 +73,7 @@ public class MailService {
         javaMailSender = (JavaMailSender) ctx.getBean("javaMailSender");
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-        String htmlMsg = "<a href = http://localhost:3000/resetpw/{" + str + "}> 이곳을 눌러서 비밀번호를 변경해 주세요.</a>";                    // 메일 내용에 삽입될 부분
+        String htmlMsg = "<a href = http://localhost:3000/resetpw/" + str + "> 이곳을 눌러서 비밀번호를 변경해 주세요.</a>";                    // 메일 내용에 삽입될 부분
         //mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
         try {
             helper.setTo(email); // 받는 사람

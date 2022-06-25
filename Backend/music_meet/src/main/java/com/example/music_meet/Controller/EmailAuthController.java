@@ -20,6 +20,7 @@ public class EmailAuthController {
     @RequestMapping(path = "/auth/id/{keyValue}")
     public ResponseEntity<Object> emailAuthForIdFunc(@PathVariable("keyValue") String value)
     {
+        System.out.println(value);
         try {
             userService.responseEmailAuthFunc(value);
             userService.setUserStateFunc(value);
