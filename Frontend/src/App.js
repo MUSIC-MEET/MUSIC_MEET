@@ -10,6 +10,7 @@ import SignUp from "./pages/SignUp/Index";
 import UserFind from "./pages/Find/Index";
 import Success from "./pages/SignUp/Success";
 import EmailAuth from "./pages/Auth/Index";
+import User from "./pages/User/Index";
 const rootStyle = css`
     display: flex;
     flex-direction: row;
@@ -43,6 +44,7 @@ function App() {
                         <Route path="/signup/success" element={<Success />} />
                         <Route path="/auth/:type/:value" element={<EmailAuth />} />
                         <Route path="/find/:type" element={<UserFind />} />
+                        <Route path="/user/*" element={<User />} />
                     </Routes>
                     
                 </Content>

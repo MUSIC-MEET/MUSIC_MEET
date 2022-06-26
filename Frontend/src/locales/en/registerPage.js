@@ -26,7 +26,7 @@ export default {
         pw: {
             invalid: "Disabled Password",
             valid: "Available Password",
-            notMatchs: "Not matchs pw1, pw2"
+            notMatchs: "Not matchs two Password"
         },
         email: {
             invalid: "Disabled Email",
