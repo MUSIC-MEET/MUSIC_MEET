@@ -41,7 +41,7 @@ function App() {
                         <Route path="/" element={<h2>hello</h2>} />
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="/signup/success" element={<Success />} />
-                        <Route path="/auth/id/:value" element={<EmailAuth />} />
+                        <Route path="/auth/:type/:value" element={<EmailAuth />} />
                         <Route path="/find/:type" element={<UserFind />} />
                     </Routes>
                     

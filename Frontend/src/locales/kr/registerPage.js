@@ -41,7 +41,7 @@ export default {
     emailauth: {
         success: {
             title: "인증완료",
-            description: "이메일 인증이 완료되었습니다.",
+            description: "인증이 완료되었습니다.",
             go: "로그인 하러 가기"
         },
         fail: {

@@ -41,7 +41,7 @@ export default {
     emailauth: {
         success: {
             title: "Success",
-            description: "Email authentication is completed.",
+            description: "Authentication is completed.",
             go: "Go to Login"
         },
         fail: {
