@@ -192,13 +192,10 @@ public class CreateUserController {
         User user = new User();
 
         user.setPw(resetPw.getNewPw());
-        if (!user.publicIsPw())
+        if (user.publicIsPw())
         {
             userService.setUserPw(resetPw);
             userService.deletepwAuthFunc(resetPw.getEncoding_value());
-
-
-
             return new ResponseEntity<>(HttpStatus.OK);
         }
         else
