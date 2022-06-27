@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { css } from "@emotion/react";
+import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import  LoginModalShown  from "store/LoginModalShown";
 function SubMenu(props) {
     const { onClickSignUp, textSignUp, textFindId, textFindPw } = props;
+    const navigate = useNavigate();
+    const setLoginModalShown = useSetRecoilState(LoginModalShown);
+    const onClickHandler = useCallback((type) => {
+        navigate(`/find/${type}`);
+        setLoginModalShown(false);
+    },[navigate, setLoginModalShown]);
     return (
         <div css={subMenuStyle}>
             <div>
@@ -9,8 +18,12 @@ function SubMenu(props) {
             </div>
                 
             <div>
-                <span>{textFindId}</span>
-                <span className={"pw"}>{textFindPw}</span>
+                <span onClick={() => onClickHandler("id")}>{textFindId}</span>
+                <span
+                    onClick={() => onClickHandler("pw")}
+                    className={"pw"}>
+                    {textFindPw}
+                </span>
             </div>
         </div>
     );
