@@ -1,8 +1,8 @@
-package com.example.music_meet.Controller;
+package com.example.music_meet.controller;
 
 
-import com.example.music_meet.DTO.User;
-import com.example.music_meet.Service.LoginService;
+import com.example.music_meet.dto.User;
+import com.example.music_meet.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

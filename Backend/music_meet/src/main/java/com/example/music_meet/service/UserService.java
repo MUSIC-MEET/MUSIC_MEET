@@ -1,11 +1,10 @@
-package com.example.music_meet.Service;
+package com.example.music_meet.service;
 
 import com.JPA.Repository.AccountRepository;
 import com.example.music_meet.AES256Util;
-import com.example.music_meet.DTO.ResetPw;
-import com.example.music_meet.DTO.User;
+import com.example.music_meet.dto.ResetPw;
+import com.example.music_meet.dto.User;
 import com.example.music_meet.SHA256;
-import com.example.music_meet.Utile.MailService;
 import com.example.music_meet.validate.Validate;
 import lombok.Getter;
 import lombok.Setter;
