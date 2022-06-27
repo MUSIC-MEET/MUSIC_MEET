@@ -24,7 +24,7 @@ interface ResetPasswordValuesType {
 }
 const initValues: ResetPasswordValuesType = {
     pw1: "",
-    pw2: "'"
+    pw2: ""
 };
 function ResetPassWord() {
     const params = useParams<{ key: string }>();
@@ -38,8 +38,8 @@ function ResetPassWord() {
         url: `/resetpw`,
         method: "POST",
         body: {
-            password: values.ppw,
-            key
+            newPw: values.pw1,
+            encoding_value: key
         },
     });
 
@@ -58,7 +58,7 @@ function ResetPassWord() {
         navigate("/");
     }, [navigate, setLoginModalShown]);
 
-    const matchs = (values.password === values.rePassword);
+    const matchs = ((values.pw1 === values.pw2) && values.pw1.length > 0);
 
     const onSubmit = useCallback(() => {
         if (!matchs) return;
@@ -71,14 +71,14 @@ function ResetPassWord() {
             });
     }, [fetchData, matchs]);
 
-    // if (keyCheckStatus.isError) {
-    //     return (
-    //         <Content>
-    //             <Title>{t("title")}</Title>
-    //             <p>{t("keyError")}</p>
-    //         </Content>
-    //     );
-    // }
+    if (keyCheckStatus.isError) {
+        return (
+            <Content>
+                <Title>{t("title")}</Title>
+                <p>{t("keyError")}</p>
+            </Content>
+        );
+    }
 
     if (status.isLoading) {
         return (
@@ -126,6 +126,7 @@ function ResetPassWord() {
                         name: "pw1",
                         type: "password",
                         placeholder: t("form.password.placeholder"),
+                        value: values.pw1,
                         onChange: valuesChangeHandler
                     }}
                 />
@@ -143,6 +144,7 @@ function ResetPassWord() {
                         name: "pw2",
                         type: "password",
                         placeholder: t("form.rePassword.placeholder"),
+                        value: values.pw2,
                         onChange: valuesChangeHandler
                     }}
                 />
