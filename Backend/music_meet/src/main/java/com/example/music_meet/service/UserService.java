@@ -2,9 +2,9 @@ package com.example.music_meet.service;
 
 import com.JPA.Repository.AccountRepository;
 import com.example.music_meet.AES256Util;
+import com.example.music_meet.SHA256;
 import com.example.music_meet.dto.ResetPw;
 import com.example.music_meet.dto.User;
-import com.example.music_meet.SHA256;
 import com.example.music_meet.validate.Validate;
 import lombok.Getter;
 import lombok.Setter;
@@ -405,16 +405,19 @@ public class UserService {
     //
     public String checkIdAndEmail(String id, String email)
     {
-        User user = new User(id,"",email,"");
+
         String value;
         String endcoding_email;
 
         String sql = "select id from user where id = ? and email = ?";
         try
         {
+            System.out.println(id);
+            System.out.println(email);
             sha256 = new SHA256();
-            value = sha256.encrypt(user.getId() + user.getEmail() + new Date().toString());
-            endcoding_email = sha256.encrypt(email);
+            aes256Util = new AES256Util();
+            value = aes256Util.encrypt(email);
+            System.out.println(value);
             //
             // DB구간
             //
@@ -423,7 +426,7 @@ public class UserService {
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, id);
-            pstmt.setString(2, endcoding_email);
+            pstmt.setString(2, value);
 
             rs = pstmt.executeQuery();
 
@@ -434,22 +437,27 @@ public class UserService {
             else
             {
                 id = rs.getString(1);
-
-
             }
+
+
+            // DB에 있다
+            sql = "delete from pwauth where id = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, rs.getString(1));
+            pstmt.executeUpdate();
+
             sql = "insert into pwauth(id, email, encoding_value) values(?,?,?)";
+            endcoding_email = sha256.encrypt(id + email + new Date().toString());
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, id);
-            pstmt.setString(2, endcoding_email);
-            pstmt.setString(3, value);
+            pstmt.setString(2, value);
+            pstmt.setString(3, endcoding_email);
 
             rsInt = pstmt.executeUpdate();
 
-            if (rsInt == 1)
-            {
+            if (rsInt == 1) {
 
-            }
-            else
+            } else
                 System.out.println("\"/auth/pw/{keyValue}\" URL의 checkIdAndEmail에서 문제 발생");
 
         } catch (SQLException e) {
@@ -468,7 +476,7 @@ public class UserService {
                 throw new RuntimeException(e);
             }
         }
-        return value;
+        return endcoding_email;
 
     }
     
