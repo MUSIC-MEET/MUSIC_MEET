@@ -113,3 +113,5 @@ async function SignUpValidator( props) {
     }
 }
 export default SignUpValidator;
+
+export { isPw };
