@@ -13,7 +13,9 @@ interface ResetPasswordType {
         
     }
     sucess: string;
+    error: string;
     go: string;
+    keyError: string;
 }
 
 export default ResetPasswordType;

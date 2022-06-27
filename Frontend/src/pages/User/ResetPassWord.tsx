@@ -34,7 +34,6 @@ function ResetPassWord() {
     const navigate = useNavigate();
     const { values, valuesChangeHandler, error } =
         useForm({ initValues, validator: SignUpValidator });
-
     const { status, fetchData } = useAxios({
         url: `/resetpw`,
         method: "POST",
@@ -43,8 +42,15 @@ function ResetPassWord() {
             key
         },
     });
+
+    const { status: keyCheckStatus, fetchData: keyCheck } = useAxios({
+        method: "GET",
+        url: `/auth/pw/${key}`
+    });
+
     useEffect(() => {
         //
+        keyCheck();
     }, [key]);
 
     const goLoginHandler = useCallback(() => {
@@ -65,6 +71,15 @@ function ResetPassWord() {
             });
     }, [fetchData, matchs]);
 
+    // if (keyCheckStatus.isError) {
+    //     return (
+    //         <Content>
+    //             <Title>{t("title")}</Title>
+    //             <p>{t("keyError")}</p>
+    //         </Content>
+    //     );
+    // }
+
     if (status.isLoading) {
         return (
             <Content>
@@ -74,14 +89,20 @@ function ResetPassWord() {
         );
     }
 
-    if (!status.isSucess || status.isError) {
+    if (status.isSucess || status.isError) {
         return (
             <Content>
                 <Title>{t("title")}</Title>
-                {!status.isSucess &&
+                {status.isSucess &&
                     <React.Fragment>
                         <p>{t("sucess")}</p>
                         <a onClick={goLoginHandler} css={css`margin-top: 1rem; cursor: pointer;`}>{t("go")}</a>
+                    </React.Fragment>
+                }
+                {
+                    status.isError &&
+                    <React.Fragment>
+                        <p>{t("error")}</p>
                     </React.Fragment>
                 }
             </Content>

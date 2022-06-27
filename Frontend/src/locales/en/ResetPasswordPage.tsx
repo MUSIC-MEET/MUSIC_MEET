@@ -14,7 +14,9 @@ const text: ResetPasswordType = {
         submit: "Change Password",
     },
     sucess: "Password Changed Successfully.",
-    go: "Go to Login Page"
+    error: "Password Changed Failed.",
+    go: "Go to Login Page",
+    keyError: "Invalid Access."
 };
 
 export default text;
