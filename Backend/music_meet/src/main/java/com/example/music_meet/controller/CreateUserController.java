@@ -1,13 +1,13 @@
 // 회원가입 컨트롤러
 
-package com.example.music_meet.Controller;
+package com.example.music_meet.controller;
 
 import com.example.music_meet.AES256Util;
-import com.example.music_meet.DTO.ResetPw;
-import com.example.music_meet.DTO.User;
-import com.example.music_meet.Error.SignupErrorForm;
-import com.example.music_meet.Service.UserService;
-import com.example.music_meet.Utile.MailService;
+import com.example.music_meet.dto.ResetPw;
+import com.example.music_meet.dto.User;
+import com.example.music_meet.error.SignupErrorForm;
+import com.example.music_meet.service.UserService;
+import com.example.music_meet.service.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -100,7 +100,7 @@ public class CreateUserController {
     //
     // 비밀번호 찾기
     //
-    @RequestMapping(path = "findpw", method = RequestMethod.POST)
+    @RequestMapping(path = "/findpw", method = RequestMethod.POST)
     public ResponseEntity<Object> findPwfunc(@RequestBody ResetPw json)
     {
         UserService userService = new UserService();

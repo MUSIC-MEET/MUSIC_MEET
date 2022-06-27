@@ -1,6 +1,6 @@
-package com.example.music_meet.Controller;
+package com.example.music_meet.controller;
 
-import com.example.music_meet.Service.UserService;
+import com.example.music_meet.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

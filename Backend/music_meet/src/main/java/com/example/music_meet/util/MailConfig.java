@@ -1,4 +1,4 @@
-package com.example.music_meet.Utile;
+package com.example.music_meet.util;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

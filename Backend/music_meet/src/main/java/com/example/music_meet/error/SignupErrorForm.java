@@ -1,4 +1,4 @@
-package com.example.music_meet.Error;
+package com.example.music_meet.error;
 
 
 import lombok.Getter;

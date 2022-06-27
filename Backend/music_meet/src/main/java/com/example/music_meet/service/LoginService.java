@@ -1,4 +1,4 @@
-package com.example.music_meet.Service;
+package com.example.music_meet.service;
 
 import com.JPA.Entity.Account;
 import com.JPA.Repository.AccountRepository;

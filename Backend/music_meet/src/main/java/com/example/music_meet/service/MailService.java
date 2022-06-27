@@ -1,6 +1,7 @@
-package com.example.music_meet.Utile;
+package com.example.music_meet.service;
 
 
+import com.example.music_meet.util.MailConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -73,7 +74,7 @@ public class MailService {
         javaMailSender = (JavaMailSender) ctx.getBean("javaMailSender");
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-        String htmlMsg = "<a href = http://localhost:3000/resetpw/" + str + "> 이곳을 눌러서 비밀번호를 변경해 주세요.</a>";                    // 메일 내용에 삽입될 부분
+        String htmlMsg = "<a href = http://localhost:3000/user/resetpw/" + str + "> 이곳을 눌러서 비밀번호를 변경해 주세요.</a>";                    // 메일 내용에 삽입될 부분
         //mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
         try {
             helper.setTo(email); // 받는 사람

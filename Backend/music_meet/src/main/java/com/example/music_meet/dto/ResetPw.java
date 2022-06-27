@@ -1,4 +1,4 @@
-package com.example.music_meet.DTO;
+package com.example.music_meet.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
