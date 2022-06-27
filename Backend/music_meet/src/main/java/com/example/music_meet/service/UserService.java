@@ -412,9 +412,9 @@ public class UserService {
         String sql = "select id from user where id = ? and email = ?";
         try
         {
-            aes256Util = new AES256Util();
-            value = aes256Util.encrypt(user.getId() + user.getEmail() + new Date().toString());
-            endcoding_email = aes256Util.encrypt(email);
+            sha256 = new SHA256();
+            value = sha256.encrypt(user.getId() + user.getEmail() + new Date().toString());
+            endcoding_email = sha256.encrypt(email);
             //
             // DB구간
             //
