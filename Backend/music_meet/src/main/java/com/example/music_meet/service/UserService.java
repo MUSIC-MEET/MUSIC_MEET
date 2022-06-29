@@ -92,6 +92,7 @@ public class UserService {
     }
 
 
+
     //
     // 아이디 중복 검사 (id가 DB에 있으면 true 리턴)
     //
@@ -243,24 +244,42 @@ public class UserService {
         MailService mailService = new MailService();
         mailService.registerAuthSendMailFunc(user.getEmail(), encodingValue);
 
-        String sql = "insert into emailauth(id,encoding_value) values(?,?)";
+        sql = "select usernum from user where id = ? and pw = ?";
         try {
-            //
-            // DB구간
-            //
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1, user.getId());
+            pstmt.setString(1,user.getId());
+            pstmt.setString(2, user.getPw());
+
+            rs = pstmt.executeQuery();
+
+            if (!rs.next())
+            {
+                System.out.println("emailAuthFunc에서 에러로 빠짐");
+            }
+            else
+            {
+                user.setNum(rs.getInt(1));
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        sql= "insert into emailauth(usernum,encoding_value) values(?,?)";
+        try {
+            //
+            // DB구간
+            //
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, user.getNum());
             pstmt.setString(2, encodingValue);
 
             rsInt = pstmt.executeUpdate();
 
-
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }finally {
             try {
@@ -319,13 +338,17 @@ public class UserService {
     public void createUserFunc (User user)
     {
             String email = user.getEmail();
+
+
             user.setPw(bCryptPasswordEncoder.encode(user.getPw())); // 비밀번호 단방향 암호화
-            encodingFunc(user);
-            String sql = "insert into user values(?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "insert into user(id,pw,email,nickname,createdat,updatedat, deletedat, createdip,updatedip,deletedip, state) values(?,?,?,?,?,?,?,?,?,?,?)"; //   10개
             try {
                 //
                 // DB구간
                 //
+                aes256Util = new AES256Util();
+                user.setEmail(aes256Util.encrypt(user.getEmail()));
+
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
                 pstmt = conn.prepareStatement(sql);
@@ -334,7 +357,7 @@ public class UserService {
                 pstmt.setString(2, user.getPw());
                 pstmt.setString(3, user.getEmail());
                 pstmt.setString(4, user.getNickname());
-                pstmt.setTimestamp(5, date); // CreatedAt
+                pstmt.setTimestamp(5, date);    // CreatedAt
                 pstmt.setTimestamp(6, null); // UpdatedAt
                 pstmt.setTimestamp(7, null); // deletedAt
                 pstmt.setString(8, "0"); //Createdip
@@ -349,9 +372,14 @@ public class UserService {
                     emailAuthFunc(user);
                 }
 
-
             } catch (ClassNotFoundException | SQLException e) {
                 //e.printStackTrace();
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            } catch (GeneralSecurityException e) {
                 throw new RuntimeException(e);
             } finally {
                 try {
@@ -406,18 +434,17 @@ public class UserService {
     public String checkIdAndEmail(String id, String email)
     {
 
+        int userNum = 0;
         String value;
         String endcoding_email;
 
-        String sql = "select id from user where id = ? and email = ?";
+        String sql = "select usernum from user where id = ? and email = ?";
         try
         {
-            System.out.println(id);
-            System.out.println(email);
+
             sha256 = new SHA256();
             aes256Util = new AES256Util();
             value = aes256Util.encrypt(email);
-            System.out.println(value);
             //
             // DB구간
             //
@@ -427,7 +454,6 @@ public class UserService {
 
             pstmt.setString(1, id);
             pstmt.setString(2, value);
-
             rs = pstmt.executeQuery();
 
             if (!rs.next())
@@ -436,20 +462,20 @@ public class UserService {
             }
             else
             {
-                id = rs.getString(1);
+                userNum = rs.getInt(1);
             }
 
 
             // DB에 있다
-            sql = "delete from pwauth where id = ?";
+            sql = "delete from pwauth where usernum = ?";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, rs.getString(1));
+            pstmt.setInt(1, userNum);
             pstmt.executeUpdate();
 
-            sql = "insert into pwauth(id, email, encoding_value) values(?,?,?)";
+            sql = "insert into pwauth(usernum, email, encoding_value) values(?,?,?)";
             endcoding_email = sha256.encrypt(id + email + new Date().toString());
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id);
+            pstmt.setInt(1, userNum);
             pstmt.setString(2, value);
             pstmt.setString(3, endcoding_email);
 
@@ -546,48 +572,6 @@ public class UserService {
         }
 
     }
-
-
-    //
-    // AES256 양방향 암호화 함수
-    //
-    public void encodingFunc (User user)
-    {
-            String str;
-            try {
-                aes256Util = new AES256Util();
-                user.setEmail(aes256Util.encrypt(user.getEmail()));
-            } catch (UnsupportedEncodingException e) {
-                throw new RuntimeException(e);
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
-            } catch (GeneralSecurityException e) {
-                throw new RuntimeException(e);
-            }
-
-        }
-
-    //
-    // AES256 양방향 복호화 함수
-    //
-    public String decodingFunc (String before)
-    {
-            String str;
-
-            try {
-                aes256Util = new AES256Util();
-                str = aes256Util.decrypt(before);
-            } catch (UnsupportedEncodingException e) {
-                throw new RuntimeException(e);
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
-            } catch (GeneralSecurityException e) {
-                throw new RuntimeException(e);
-            }
-
-            return str;
-
-        }
 
     //
     // "/auth/pw/{keyValue}"에서 날라온 key 확인 후 boolean 리턴하는 함수

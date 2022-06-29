@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 @Getter
 @Setter
 public class User {
+    private int num;
     private String id;
     private String pw;
     private String email;
@@ -145,6 +146,7 @@ public class User {
                 ", nickname='" + nickname + '\'' +
                 '}';
     }
+
 
     // toEntity() 주석처리
     /*public Account toEntity(String id, String pw, String email, String nickname)

@@ -40,6 +40,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/javax.inject/javax.inject
 	implementation group: 'javax.inject', name: 'javax.inject', version: '1' // @inject 사용 javax 디펜던시
 
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1' // JWT 토큰 사용
 
 
 
