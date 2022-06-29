@@ -1,12 +1,20 @@
 import { atom } from "recoil";
 
-const LoginState = atom({
+interface TLoginState { 
+    isLogIn: boolean;
+    key: string,
+    nickname: string
+}
+
+const LoginState = atom<TLoginState>({
     key: "LoginState",
     default: {
-        isLogin: false,
+        isLogIn: false,
         key: "",
         nickname: "",
     },
 });
 
 export default LoginState;
+
+export { TLoginState };
