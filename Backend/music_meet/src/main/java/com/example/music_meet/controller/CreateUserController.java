@@ -109,17 +109,17 @@ public class CreateUserController {
         String str;
         try{
             str = userService.checkIdAndEmail(id,email);
-            if (str ==null)
+            if (str ==null) {
+                System.out.println("str == null 들어옴");
                 return new ResponseEntity<>(HttpStatus.OK);
-
+            }
             MailService mailService = new MailService();
             mailService.sendUserKeyFunc(email,str);
 
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e){
-
-
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
@@ -173,7 +173,7 @@ public class CreateUserController {
     @RequestMapping("/search/email/{useremail}")
     public ResponseEntity<Object> searchEmailFunc(@PathVariable("useremail") String email)
     {
-        User user = new User("","",email,"");
+        User user = new User(-2,"","",email,"");
         UserService userService = new UserService();
 
         if (userService.isDuplicateEmailFunc(user) || !user.publicIsEmail())

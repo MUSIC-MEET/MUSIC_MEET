@@ -1,4 +1,5 @@
 CREATE TABLE `User`  (
+	`num`	int(10) 	 NOT NULL AUTO_INCREMENT,
 	`id`	 VARCHAR(20)	 NOT NULL primary key,
 	`pw`	 VARCHAR(100)	 NOT NULL,
 	`email`	 VARCHAR(100)	 NOT NULL,
