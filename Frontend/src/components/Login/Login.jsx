@@ -5,16 +5,30 @@ import Modal from "../UI/Modal";
 import LoginForm from "./LoginForm";
 import { useState } from "react";
 import ThemeContext from "store/ThemeContext";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import LoginFormState from "../../store/LoginForm";
 import LoginModalShownState from "store/LoginModalShown";
+import  useAxios  from "hooks/use-Axios";
+import LoginState from "../../store/LoginState";
+
 
 function Login(props) {
     const { t } = useTranslation("menu");
     const ctx = useContext(ThemeContext);
     const [formShown, setformShown] = useRecoilState(LoginModalShownState);
     const [keepLoginState, setKeepLoginState] = useState(false);
-    const [values, setValues] = useRecoilState(LoginFormState);
+    const setLoginState = useSetRecoilState(LoginState);
+    const values = useRecoilValue(LoginFormState);
+
+    const { status, fetchData } = useAxios({
+        method: "POST",
+        url: "/user/login",
+        body: {
+            id: values.id,
+            pw: values.pw
+        }
+    });
+
     const changeKeepLoginStateHandler = useCallback(() => {
         setKeepLoginState((prevState) => !prevState);
     },[]);
@@ -27,18 +41,19 @@ function Login(props) {
         setformShown(false);
     },[setformShown]);
 
-    const changeValuesHandler = useCallback((e) => { 
-        setValues((prevState) => {
-            return { 
-                ...prevState,
-                [e.target.name] : e.target.value
-            };
-        });
-    },[setValues]);
+
 
     const loginHandler = useCallback(() => {
-        //
-    },[]);
+        fetchData().then((res) => {
+            if (res.status === 201) {
+                setLoginState({ isLogin: true, key: res.data.key, nickname: res.data.nickname });
+                if (keepLoginState) {
+                    localStorage.setItem("keepLogin", true);
+                }
+                onCloseLoginModal();
+            }
+        });
+    },[fetchData, keepLoginState, onCloseLoginModal, setLoginState]);
 
     return (    
         <div css={[style]}>
@@ -48,11 +63,10 @@ function Login(props) {
                     <LoginForm 
                         keepLoginState={keepLoginState}
                         onChangeKeepLoginState={changeKeepLoginStateHandler}
-                        values={values}
-                        onChangeValues={changeValuesHandler}
                         onClose={onCloseLoginModal}
                         navigator={props.navigator}
                         onLogin={loginHandler}
+                        isLoginFail={status.isError}
                     />
                 </Modal>
             }

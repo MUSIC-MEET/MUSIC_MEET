@@ -6,19 +6,31 @@ import Title from "components/common/Title";
 import Submit from "components/common/Submit";
 import SubMenu from "./SubMenu";
 import LoginStateToggle from "./LoginStateToggle";
+import LoginFormState from "../../store/LoginForm";
+import { useRecoilState } from "recoil";
 
 function LoginForm(props) {
     const { 
         keepLoginState, 
         onChangeKeepLoginState, 
-        values, 
-        onChangeValues, 
         onClose, 
         navigator,
-        onLogin
+        onLogin,
+        isLoginFail
     } = props;
+    const [values, setValues] = useRecoilState(LoginFormState);
     const { id, pw } = values || "";
     const { t } = useTranslation("loginForm");
+
+
+    const onChangeValues = useCallback((e) => {
+        setValues((prevState) => {
+            return {
+                ...prevState,
+                [e.target.name]: e.target.value
+            };
+        });
+    },[setValues]);
 
     const onClickSignUp = useCallback(() => {
         navigator("/signup");
@@ -30,6 +42,10 @@ function LoginForm(props) {
         console.log("로그인버튼");
         onLogin();
     },[onLogin]);
+
+
+
+
     const disabled = id.length === 0 || pw.length === 0;
     return (
         <article css={[style]}>
@@ -58,6 +74,7 @@ function LoginForm(props) {
                     state={keepLoginState}
                     onChangeState={onChangeKeepLoginState}
                 />
+                {isLoginFail && <p>실패</p>}
                 <Submit 
                     type="submit" 
                     value={t("title")}
