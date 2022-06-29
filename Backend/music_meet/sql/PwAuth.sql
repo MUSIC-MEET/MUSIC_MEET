@@ -1,8 +1,13 @@
 CREATE TABLE `PwAuth` (
-    `num`    INT(10) AUTO_INCREMENT    NOT NULL PRIMARY KEY,
-    `id`    VARCHAR(20)    NOT NULL,
-	FOREIGN KEY  (id)
-	REFERENCES User(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    `email`    VARCHAR(100)    NOT NULL,
-    `encoding_value`    VARCHAR(100)    NULL
+	`num`	INT(10)   AUTO_INCREMENT	  NOT NULL  primary key,
+	`usernum`	 INT(10)	  NOT NULL,
+	`email`	 VARCHAR(100)	 NULL,
+	`encoding_value`	 VARCHAR(100)	 NULL
+);
+
+ALTER TABLE `PwAuth` ADD CONSTRAINT `FK_User_TO_PwAuth_1` FOREIGN KEY (
+	`usernum`
+)
+REFERENCES `User` (
+	`usernum`
 );
