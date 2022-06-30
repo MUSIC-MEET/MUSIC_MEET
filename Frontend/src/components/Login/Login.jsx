@@ -14,10 +14,10 @@ import LoginMenu from "./LoginMenu";
 
 
 
-function addSession(res) {
-    sessionStorage.setItem("isLogIn", "true");
-    sessionStorage.setItem("token", res.token);
-    sessionStorage.setItem("nickname", res.nickname);
+function addStorage(res) {
+    localStorage.setItem("isLogIn", "true");
+    localStorage.setItem("token", res.token);
+    localStorage.setItem("nickname", res.nickname);
 }
 function Login(props) {
     const ctx = useContext(ThemeContext);
@@ -53,7 +53,7 @@ function Login(props) {
     const loginHandler = useCallback(async () => {
         await fetchData().then((res) => {
             setLoginState({ isLogIn: true, key: res.token, nickname: res.nickname });
-            addSession(res);
+            addStorage(res);
             if (keepLoginState) {
                 localStorage.setItem("keepLoginState", true);
             }

@@ -8,9 +8,10 @@ import { CircularProgress } from "@mui/material";
 import SignUpValidator from "pages/SignUp/SignUpValidator";
 import { css } from "@emotion/react";
 import useForm from "hooks/use-form";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import LoginModalShown from "store/LoginModalShown";
 import ResetPassWordForm from "./ResetPassWordForm";
+import LoginState from "store/LoginState";
 
 
 
@@ -30,6 +31,7 @@ function ResetPassWord() {
     const navigate = useNavigate();
     const { values, valuesChangeHandler, error } =
         useForm({ initValues, validator: SignUpValidator });
+    const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
     const { status, fetchData } = useAxios({
         url: `/resetpw`,
         method: "POST",
@@ -46,6 +48,9 @@ function ResetPassWord() {
 
     useEffect(() => {
         //
+        if (isLogIn) {
+            navigate("/");
+        }
         keyCheck();
     }, [key]);
 
