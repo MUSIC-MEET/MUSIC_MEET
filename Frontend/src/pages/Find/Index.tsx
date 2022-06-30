@@ -1,10 +1,12 @@
 import Content from "components/UI/Content";
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Id from "./Id";
 import Password from "./Password";
 import { css } from "@emotion/react";
+import { useRecoilValue } from "recoil";
+import LoginState from "store/LoginState";
 
 function Title(props: { children: string }) {
     return (<h1 css={[style]}> {props.children}</h1>);
@@ -14,10 +16,13 @@ const Index = () => {
     const { t } = useTranslation("findPage");
     const title: string = type === "id" ? t("id.title") : t("pw.title");
     const render = type === "id" ? <Id /> : <Password />;
-
+    const navigate = useNavigate();
+    const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
     useEffect(() => {
-        //
-    }, [type]);
+        if (isLogIn) {
+            navigate("/");
+        }
+    }, [isLogIn, navigate, type]);
 
     if (type !== "id" && type !== "pw") {
         return (

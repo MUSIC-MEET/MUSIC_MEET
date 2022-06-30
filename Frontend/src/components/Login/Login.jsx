@@ -1,6 +1,5 @@
 import React, { useCallback, useContext } from "react";
 import { css } from "@emotion/react";
-import { useTranslation } from "react-i18next";
 import Modal from "../UI/Modal";
 import LoginForm from "./LoginForm";
 import { useState } from "react";
@@ -10,13 +9,21 @@ import LoginFormState from "../../store/LoginForm";
 import LoginModalShownState from "store/LoginModalShown";
 import  useAxios  from "hooks/use-Axios";
 import LoginState from "../../store/LoginState";
+import NotLoginMenu from "./NotLoginMenu";
+import LoginMenu from "./LoginMenu";
 
 
+
+function addStorage(res) {
+    localStorage.setItem("isLogIn", "true");
+    localStorage.setItem("token", res.token);
+    localStorage.setItem("nickname", res.nickname);
+}
 function Login(props) {
-    const { t } = useTranslation("menu");
     const ctx = useContext(ThemeContext);
     const [formShown, setformShown] = useRecoilState(LoginModalShownState);
     const [keepLoginState, setKeepLoginState] = useState(false);
+    const { isLogIn } = useRecoilValue(LoginState);
     const setLoginState = useSetRecoilState(LoginState);
     const values = useRecoilValue(LoginFormState);
 
@@ -43,20 +50,19 @@ function Login(props) {
 
 
 
-    const loginHandler = useCallback(() => {
-        fetchData().then((res) => {
-            if (res.status === 201) {
-                setLoginState({ isLogin: true, key: res.data.key, nickname: res.data.nickname });
-                if (keepLoginState) {
-                    localStorage.setItem("keepLogin", true);
-                }
-                onCloseLoginModal();
+    const loginHandler = useCallback(async () => {
+        await fetchData().then((res) => {
+            setLoginState({ isLogIn: true, key: res.token, nickname: res.nickname });
+            addStorage(res);
+            if (keepLoginState) {
+                localStorage.setItem("keepLoginState", true);
             }
+            onCloseLoginModal();
         });
     },[fetchData, keepLoginState, onCloseLoginModal, setLoginState]);
 
     return (    
-        <div css={[style]}>
+        <article css={[style]}>
             {
                 formShown && 
                 <Modal onClose={onCloseLoginModal}>
@@ -70,21 +76,21 @@ function Login(props) {
                     />
                 </Modal>
             }
-            <span 
-                css={css`color: ${ctx.themeStyle.menu.login.fontColor};`}
-                onClick={onOpenLoginModal}
-            >{t("login")}</span>
-            <span 
-                css={css`color: ${ctx.themeStyle.menu.login.fontColor}; margin-top: 1rem;`}
-                onClick={() => props.navigator("/signup")}
-            >{t("signup")}</span>
-        </div>
+            {
+                isLogIn ?
+                    <LoginMenu />
+                    :
+                    <NotLoginMenu 
+                        onOpenLoginModal={onOpenLoginModal}
+                        fontColor={ctx.themeStyle.menu.login.fontColor}
+                        navigator={props.navigator}
+                    />
+            }
+        </article>
     );
 }
 
 const style=css`
-    display: flex;
-    flex-direction: column;
     border-top: 3px solid #555555;
     border-bottom: 3px solid #555555;
     padding: 0.8rem 0;
