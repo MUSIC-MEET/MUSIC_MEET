@@ -32,7 +32,7 @@ public class LoginService
         String result = null;
         Map<String,String> map = new HashMap<>();
 
-        sql = "select usernum,pw from user where id = ?";
+        sql = "select usernum,pw,nickname from user where id = ?";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -48,6 +48,7 @@ public class LoginService
             {
                 map.put("usernum",Integer.toString(rs.getInt(1)));
                 map.put("pw", rs.getString(2));
+                map.put("nickname", rs.getString(3));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
