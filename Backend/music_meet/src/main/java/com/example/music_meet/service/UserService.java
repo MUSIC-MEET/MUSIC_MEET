@@ -261,7 +261,7 @@ public class UserService {
             }
             else
             {
-                user.setNum(rs.getInt(1));
+                user.setUsernum(Integer.toString(rs.getInt(1)));
             }
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -274,7 +274,7 @@ public class UserService {
             // DB구간
             //
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, user.getNum());
+            pstmt.setInt(1, Integer.parseInt(user.getUsernum()));
             pstmt.setString(2, encodingValue);
 
             rsInt = pstmt.executeUpdate();

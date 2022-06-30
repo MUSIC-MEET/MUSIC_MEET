@@ -173,7 +173,7 @@ public class CreateUserController {
     @RequestMapping("/search/email/{useremail}")
     public ResponseEntity<Object> searchEmailFunc(@PathVariable("useremail") String email)
     {
-        User user = new User(-2,"","",email,"");
+        User user = new User(null,"","",email,"");
         UserService userService = new UserService();
 
         if (userService.isDuplicateEmailFunc(user) || !user.publicIsEmail())
@@ -201,13 +201,6 @@ public class CreateUserController {
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
-
-
-
-
-
-
 
 
 

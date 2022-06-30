@@ -29,6 +29,7 @@ public class LoginController
         Map<String,String> map = loginService.getUserPw(user);
         final String encodingPw = map.get("pw");
         final String userNum = map.get("usernum");
+        final String nickname = map.get("nickname");
 
         if (!bCryptPasswordEncoder.matches(user.getPw(), encodingPw))
         {
@@ -39,7 +40,7 @@ public class LoginController
         {
             Map<String,String> responseMap = new HashMap<>();
             responseMap.put("token", jwtConfig.generateJwtToken(userNum));
-            responseMap.put("nickname", "아직 구현 안함");
+            responseMap.put("nickname", nickname);
 
             return new ResponseEntity<>( responseMap, HttpStatus.CREATED );
         }

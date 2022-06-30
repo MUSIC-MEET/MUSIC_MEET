@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 @Getter
 @Setter
 public class User {
-    private int num;
+    private String usernum;
     private String id;
     private String pw;
     private String email;
