@@ -8,6 +8,7 @@ import SubMenu from "./SubMenu";
 import LoginStateToggle from "./LoginStateToggle";
 import LoginFormState from "../../store/LoginForm";
 import { useRecoilState } from "recoil";
+import Error from "../common/Error";
 
 function LoginForm(props) {
     const { 
@@ -74,7 +75,7 @@ function LoginForm(props) {
                     state={keepLoginState}
                     onChangeState={onChangeKeepLoginState}
                 />
-                {isLoginFail && <p>실패</p>}
+                {isLoginFail && <Error>{t("error")}</Error>}
                 <Submit 
                     type="submit" 
                     value={t("title")}

@@ -6,5 +6,6 @@ export default {
     keepLoginState: "Keep Login State",
     signup: "signup",
     findId: "Id",
-    findPw: "Password"
+    findPw: "Password",
+    error: "Login Failed",
 };
