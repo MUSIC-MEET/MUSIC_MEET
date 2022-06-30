@@ -12,6 +12,13 @@ import LoginState from "../../store/LoginState";
 import NotLoginMenu from "./NotLoginMenu";
 import LoginMenu from "./LoginMenu";
 
+
+
+function addSession(res) {
+    sessionStorage.setItem("isLogIn", "true");
+    sessionStorage.setItem("token", res.token);
+    sessionStorage.setItem("nickname", res.nickname);
+}
 function Login(props) {
     const ctx = useContext(ThemeContext);
     const [formShown, setformShown] = useRecoilState(LoginModalShownState);
@@ -46,8 +53,9 @@ function Login(props) {
     const loginHandler = useCallback(async () => {
         await fetchData().then((res) => {
             setLoginState({ isLogIn: true, key: res.token, nickname: res.nickname });
+            addSession(res);
             if (keepLoginState) {
-                localStorage.setItem("keepLogin", true);
+                localStorage.setItem("keepLoginState", true);
             }
             onCloseLoginModal();
         });
