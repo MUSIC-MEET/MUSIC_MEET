@@ -3,20 +3,16 @@ import Content from "components/UI/Content";
 import React, { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Form from "components/common/Form";
-import Input from "components/common/Input";
-import Submit from "components/common/Submit";
 import useAxios from "hooks/use-Axios";
 import { CircularProgress } from "@mui/material";
 import SignUpValidator from "pages/SignUp/SignUpValidator";
 import { css } from "@emotion/react";
-import ValidResult from "pages/SignUp/ValidResult";
 import useForm from "hooks/use-form";
 import { useSetRecoilState } from "recoil";
 import LoginModalShown from "store/LoginModalShown";
+import ResetPassWordForm from "./ResetPassWordForm";
 
-const WIDTH = "25rem";
-const HEIGHT = "2.5rem";
+
 
 interface ResetPasswordValuesType {
     pw1: string;
@@ -112,65 +108,15 @@ function ResetPassWord() {
     return (
         <Content>
             <Title>{t("title")}</Title>
-            <Form
-                addCss={[formStyle]}
-                direction="column"
+            <ResetPassWordForm
                 onSubmit={onSubmit}
-            >
-                <label htmlFor="password">{t("form.password.label")}</label>
-                <Input
-                    w={WIDTH}
-                    h={HEIGHT}
-                    input={{
-                        id: "password",
-                        name: "pw1",
-                        type: "password",
-                        placeholder: t("form.password.placeholder"),
-                        value: values.pw1,
-                        onChange: valuesChangeHandler
-                    }}
-                />
-                <ValidResult
-                    result={error.pw1}
-                    name={"pw"}
-                />
-
-                <label htmlFor="rePassword">{t("form.rePassword.label")}</label>
-                <Input
-                    w={WIDTH}
-                    h={HEIGHT}
-                    input={{
-                        id: "rePassword",
-                        name: "pw2",
-                        type: "password",
-                        placeholder: t("form.rePassword.placeholder"),
-                        value: values.pw2,
-                        onChange: valuesChangeHandler
-                    }}
-                />
-                <ValidResult
-                    result={error.pw2}
-                    name={"pw"}
-                />
-
-                <Submit
-                    w={WIDTH}
-                    h={HEIGHT}
-                    value={t("form.submit")}
-                    disabled={!matchs}
-                />
-            </Form>
+                values={values}
+                error={error}
+                valuesChangeHandler={valuesChangeHandler}
+                matchs={matchs}
+            />
         </Content >
     );
 }
 
-const formStyle = css`
-    label {
-        margin-top: 1rem;
-    }
-
-    input[type="submit"] {
-        margin-top: 2rem;
-    }
-`;
 export default React.memo(ResetPassWord);
