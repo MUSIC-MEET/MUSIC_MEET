@@ -3,6 +3,7 @@ export default {
     login: "LOGIN",
     signup: "SIGNUP",
     routes: {
+        "menu0" : "Main",
         "menu1" : "Show Chart",
         "menu2" : "Music Together",
         "menu3" : "Latest Album",
