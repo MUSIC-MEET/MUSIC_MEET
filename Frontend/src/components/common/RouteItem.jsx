@@ -9,12 +9,19 @@ const style = css`
 `;
 function RouteItem(props) {
     const navigator = useNavigate();
-    const { name, link } = props;
+    const { name, link, currentIndex, onClickRoute, clicked } = props;
     const navigaterHandler = useCallback(() => {
         navigator(link);
-    },[link, navigator]);
+        onClickRoute(currentIndex);
+    },[currentIndex, link, navigator, onClickRoute]);
     return (
-        <li css={style} onClick={navigaterHandler}>
+        <li css={[style, 
+            css`
+            color: ${clicked ? "red" : ""}; 
+            font-weight:  ${clicked ? "bold" : ""};
+            `]} 
+        onClick={navigaterHandler}
+        >
             <span>{name}</span>
         </li>
     );
