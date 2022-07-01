@@ -120,6 +120,9 @@ const style =  css`
     }
     
 
+    b {
+        text-align: center;
+    }
     
 `;
 export default LoginForm;

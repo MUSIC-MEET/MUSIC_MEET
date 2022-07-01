@@ -31,7 +31,6 @@ function ResetPassWord() {
     const navigate = useNavigate();
     const { values, valuesChangeHandler, error } =
         useForm({ initValues, validator: SignUpValidator });
-    const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
     const { status, fetchData } = useAxios({
         url: `/resetpw`,
         method: "POST",
@@ -48,9 +47,6 @@ function ResetPassWord() {
 
     useEffect(() => {
         //
-        if (isLogIn) {
-            navigate("/");
-        }
         keyCheck();
     }, [key]);
 
