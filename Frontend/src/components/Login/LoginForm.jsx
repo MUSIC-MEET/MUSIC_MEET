@@ -40,7 +40,6 @@ function LoginForm(props) {
     
     const onSubmit = useCallback((event) => {
         event.preventDefault();
-        console.log("로그인버튼");
         onLogin();
     },[onLogin]);
 

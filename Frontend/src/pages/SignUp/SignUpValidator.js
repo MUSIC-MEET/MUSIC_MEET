@@ -50,7 +50,6 @@ async function SignUpValidator( props) {
     }
 
     if(props.name === "pw1") {
-        console.log("qlalf");
         if(pw1.length !=0 && !isPw(pw1)) {
             setErrors({ ...errors, pw1: "invalid" });
         } else if(isPw(pw1)) {
