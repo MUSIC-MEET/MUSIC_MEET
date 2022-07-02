@@ -7,7 +7,7 @@ import useAxios from "../../hooks/use-Axios.tsx";
 import useForm from "../../hooks/use-form";
 import SignUpValidator from "./SignUpValidator";
 import { useNavigate } from "react-router-dom";
-import Loading from "./Loading";
+import Loading from "../../components/common/Loading";
 
 const initValues = {
     id: "",

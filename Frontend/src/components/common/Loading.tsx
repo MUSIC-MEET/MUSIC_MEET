@@ -1,4 +1,4 @@
-import { CircularProgress, Skeleton } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import React from "react";
 
 function Loading() {

@@ -43,7 +43,7 @@ function App() {
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="/signup/success" element={<Success />} />
                         <Route path="/auth/:type/:value" element={<EmailAuth />} />
-                        <Route path="/find/:type" element={<UserFind />} />
+                        <Route path="/find/*" element={<UserFind />} />
                         <Route path="/user/*" element={<User />} />
                     </Routes>
                     
