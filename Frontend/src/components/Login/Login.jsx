@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { css } from "@emotion/react";
 import Modal from "../UI/Modal";
 import LoginForm from "./LoginForm";
@@ -27,6 +27,9 @@ function Login(props) {
     const setLoginState = useSetRecoilState(LoginState);
     const values = useRecoilValue(LoginFormState);
 
+    useEffect(()=> {
+        //
+    },[isLogIn]);
     const { status, fetchData } = useAxios({
         method: "POST",
         url: "/user/login",
