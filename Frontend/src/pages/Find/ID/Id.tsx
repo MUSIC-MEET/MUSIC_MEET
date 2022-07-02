@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useAxios from "hooks/use-Axios";
-import { Skeleton } from "@mui/material";
 import Title from "components/common/Title";
 import FindIdForm from "./FindIdForm";
+import Loading from "../../../components/common/Loading";
 
 function Id() {
     const { t } = useTranslation("findPage");
@@ -43,9 +43,7 @@ function Id() {
                     email={email}
                 />
             }
-            {status.isLoading &&
-                <Skeleton variant="text" sx={{ bgcolor: "grey.500" }} width={430} height={30} />
-            }
+            {status.isLoading && <Loading />}
             {status.isError && <p>{t("id.error")}</p>}
             {status.isSucess && <p>{t("id.sucess")}</p>}
         </React.Fragment>

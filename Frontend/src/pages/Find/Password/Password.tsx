@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from "react";
 import useAxios from "hooks/use-Axios";
 import { useTranslation } from "react-i18next";
-import { Skeleton } from "@mui/material";
 import Title from "components/common/Title";
 import FindPasswordForm from "./FindPasswordForm";
+import Loading from "components/common/Loading";
 
 interface ValuesProps {
     id: string;
@@ -59,7 +59,7 @@ function Password() {
                     values={values}
                 />
             }
-            {status.isLoading && <Skeleton variant="text" sx={{ bgcolor: "grey.500" }} width={430} height={30} />}
+            {status.isLoading && <Loading />}
             {status.isSucess && <p>{t("pw.sucess")}</p>}
             {status.isError && <p>{t("pw.error")}</p>}
         </React.Fragment>
