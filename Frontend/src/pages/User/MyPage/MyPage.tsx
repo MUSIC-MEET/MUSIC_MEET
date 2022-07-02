@@ -1,8 +1,12 @@
 import React from "react";
+import Content from "components/UI/Content";
+import Title from "components/common/Title";
 
 function MyPage() {
     return (
-        <div>MyPage</div>
+        <Content>
+            <Title>{"aa"}</Title>
+        </Content>
     );
 }
 

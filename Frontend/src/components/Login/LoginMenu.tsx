@@ -13,9 +13,17 @@ function LoginMenu() {
     const onLogoutHandler = useCallback(() => {
         navigate("/user/logout");
     }, [navigate]);
+
+    const onMyPageHandler = useCallback(() => {
+        navigate("/user/mypage");
+    }, [navigate]);
     return (
         <section css={style}>
-            <span css={css`color: ${ctx.themeStyle.menu.login.fontColor}`}>{nickname}</span>
+            <span
+                onClick={onMyPageHandler}
+                css={css`color: ${ctx.themeStyle.menu.login.fontColor};`}
+            >
+                {nickname}</span>
             <LogoutIcon
                 onClick={onLogoutHandler}
                 css={css`color: ${ctx.themeStyle.menu.login.fontColor}`}
