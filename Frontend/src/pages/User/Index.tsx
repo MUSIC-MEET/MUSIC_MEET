@@ -8,6 +8,7 @@ function Index() {
         <div>
             <Routes>
                 <Route path="resetpw/:key" element={<ResetPassWord />} />
+                <Route path="resetpw" element={<ResetPassWord />} />
                 <Route path="mypage" element={<MyPage />} />
                 <Route path="logout" element={<Logout />} />
             </Routes>

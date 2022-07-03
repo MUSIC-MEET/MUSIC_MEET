@@ -1,15 +1,20 @@
 import Button from "components/common/Button";
-import React from "react";
+import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import EditBox, { EditBoxProps } from "./EditBox";
+import { useNavigate } from "react-router-dom";
 
 function ValuesEdit() {
     const { t } = useTranslation<"myPage">("myPage");
-
+    const navigate = useNavigate();
     const onSubmit = (e: React.FormEvent<HTMLElement>) => {
         //
         e.preventDefault();
     };
+
+    const changePasswordHandler = useCallback(() => {
+        navigate("/user/resetpw");
+    }, [navigate]);
 
     const editBox: EditBoxProps[] = [
         {
@@ -64,6 +69,7 @@ function ValuesEdit() {
                 w={"28.5rem"}
                 h={"3rem"}
                 value={t("edit.values.changePasswordButton")}
+                onClick={changePasswordHandler}
             />
         </React.Fragment>
     );

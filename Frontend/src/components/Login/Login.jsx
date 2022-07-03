@@ -11,6 +11,7 @@ import  useAxios  from "hooks/use-Axios";
 import LoginState from "../../store/LoginState";
 import NotLoginMenu from "./NotLoginMenu";
 import LoginMenu from "./LoginMenu";
+import { axios } from "axios";
 
 
 
@@ -57,6 +58,7 @@ function Login(props) {
         await fetchData().then((res) => {
             setLoginState({ isLogIn: true, key: res.token, nickname: res.nickname });
             addStorage(res);
+            // axios.defaults.headers.common["authorization"] = res.token;
             if (keepLoginState) {
                 localStorage.setItem("keepLoginState", true);
             }
