@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom, DefaultValue, selector } from "recoil";
 
 interface TLoginState { 
     isLogIn: boolean;
@@ -26,15 +26,21 @@ const LoginState = selector<TLoginState>({
             ) {
                 return {
                     isLogIn: true,
-                    key: localStorage.getItem("key") as string,
+                    key: localStorage.getItem("token") as string,
                     nickname: localStorage.getItem("nickname") as string,
                 };
             }
-        }
+        } 
+        
         return state;
     },
     set: ({ set }, newValue) => {
-        set(State, newValue);
+        set(State, newValue instanceof DefaultValue ? 
+            ({
+                isLogIn: false,
+                key: "",
+                nickname: ""
+            }) : newValue);
     }
 });
 

@@ -4,9 +4,9 @@ const ThemeContext = React.createContext({
     theme: "light",
     themeStyle: {
         menu: { login:{ fontColor: "" } },
-        content: {},
+        content: { fontColor: "" },
         modal: {},
-        input: {},
+        input: { borderColor : "" },
     },
     setDarkTheme: () => {
         //
