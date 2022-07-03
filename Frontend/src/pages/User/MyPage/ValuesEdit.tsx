@@ -43,7 +43,7 @@ function ValuesEdit() {
                 name: "email",
                 type: "email",
                 placeholder: t("edit.values.placeholder.email"),
-                disabled: "disabled"
+                disabled: ""
             },
             submit: t("edit.values.submit"),
             onSubmit: onSubmit
