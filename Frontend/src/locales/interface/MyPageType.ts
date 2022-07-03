@@ -6,6 +6,11 @@ interface MyPageType {
                 id: string;
                 nickname: string;
                 email: string;
+            },
+            placeholder: {
+                id: string;
+                nickname: string;
+                email: string;
             }
             changePasswordButton: string;
             submit: string;
