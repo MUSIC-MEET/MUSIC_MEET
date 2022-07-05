@@ -8,8 +8,9 @@ import useForm from "../../hooks/use-form";
 import SignUpValidator from "./SignUpValidator";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/common/Loading";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import  LoginState  from "store/LoginState";
+import CurrentPage from "../../store/CurrentPage";
 
 const initValues = {
     id: "",
@@ -29,6 +30,7 @@ function Index() {
     const { id , pw1, email, nickname } = values || "";
     const navigator = useNavigate();
     const { isLogIn } = useRecoilValue(LoginState);
+    const setCurrentPage = useSetRecoilState(CurrentPage);
     const { status, fetchData } = useAxios({
         method: "POST",
         url: "/createuser",
@@ -46,7 +48,8 @@ function Index() {
     useLayoutEffect(() => {
         if(isLogIn)
             navigator("/");
-    },[isLogIn, navigator]);
+        setCurrentPage(-1);
+    },[isLogIn, navigator, setCurrentPage]);
 
     const requestHandler = useCallback(() => {
         fetchData().then(() => {

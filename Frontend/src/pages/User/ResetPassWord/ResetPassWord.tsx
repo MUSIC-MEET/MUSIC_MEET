@@ -12,6 +12,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import LoginModalShown from "store/LoginModalShown";
 import ResetPassWordForm from "./ResetPassWordForm";
 import LoginState from "store/LoginState";
+import CurrentPage from "store/CurrentPage";
 
 
 
@@ -32,6 +33,7 @@ function ResetPassWord() {
     const { values, valuesChangeHandler, error } =
         useForm({ initValues, validator: SignUpValidator });
     const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
+    const setCurrentPage = useSetRecoilState(CurrentPage);
     const { status, fetchData } = useAxios({
         url: `/resetpw`,
         method: "POST",
@@ -47,10 +49,10 @@ function ResetPassWord() {
     });
 
     useEffect(() => {
-        //
+        setCurrentPage(-1);
         if (!isLogIn)
             keyCheck();
-    }, [key, isLogIn]);
+    }, [key, isLogIn, setCurrentPage]);
 
     const goLoginHandler = useCallback(() => {
         setLoginModalShown(true);
