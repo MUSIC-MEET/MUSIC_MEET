@@ -102,6 +102,7 @@ const style=css`
     & > span {
         cursor: pointer;
     }
+    margin-bottom: 0.8rem;
 `;
 
 export default Login;
