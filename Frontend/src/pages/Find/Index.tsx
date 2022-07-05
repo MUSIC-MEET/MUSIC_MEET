@@ -5,17 +5,20 @@ import { useTranslation } from "react-i18next";
 import Id from "./ID/Id";
 import Password from "./Password/Password";
 import { css } from "@emotion/react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import LoginState from "store/LoginState";
+import CurrentPage from "store/CurrentPage";
 
 const Index = () => {
     const navigate = useNavigate();
     const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
+    const setCurrentPage = useSetRecoilState(CurrentPage);
     useEffect(() => {
         if (isLogIn) {
             navigate("/");
         }
-    }, [isLogIn, navigate]);
+        setCurrentPage(-1);
+    }, [isLogIn, navigate, setCurrentPage]);
 
     return (
         <Content css={css`p { margin-bottom: 1rem;}`}>

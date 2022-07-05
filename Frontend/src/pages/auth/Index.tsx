@@ -8,6 +8,7 @@ import LoginModalShownState from "store/LoginModalShown";
 import Content from "components/UI/Content";
 import Title from "components/common/Title";
 import { css } from "@emotion/react";
+import CurrentPage from "store/CurrentPage";
 
 
 function Index() {
@@ -16,12 +17,14 @@ function Index() {
     const { t } = useTranslation("registerPage");
     const navigate = useNavigate();
     const setLoginModal = useSetRecoilState(LoginModalShownState);
+    const setCurrentPage = useSetRecoilState(CurrentPage);
     const { fetchData } = useAxios({
         method: "GET",
         url: `/auth/${type}/${value}`
     });
 
     useEffect(() => {
+        setCurrentPage(-1);
         fetchData()
             .then(() => {
                 setResult(true);
@@ -29,7 +32,7 @@ function Index() {
             .catch(() => {
                 setResult(false);
             });
-    }, [type, value]);
+    }, [type, value, setCurrentPage]);
 
     const goLoginHandler = useCallback(() => {
         navigate("/");

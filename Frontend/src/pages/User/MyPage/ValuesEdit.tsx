@@ -55,7 +55,7 @@ function ValuesEdit() {
         },
     ];
     return (
-        <React.Fragment>
+        <section>
             {editBox.map((box, index) => (
                 <EditBox
                     key={index}
@@ -71,7 +71,7 @@ function ValuesEdit() {
                 value={t("edit.values.changePasswordButton")}
                 onClick={changePasswordHandler}
             />
-        </React.Fragment>
+        </section>
     );
 }
 

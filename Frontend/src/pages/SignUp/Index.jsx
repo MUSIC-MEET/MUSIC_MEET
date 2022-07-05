@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useLayoutEffect } from "react";
 import Title from "components/common/Title";
 import Content from "components/UI/Content";
 import { useTranslation } from "react-i18next";
@@ -8,6 +8,9 @@ import useForm from "../../hooks/use-form";
 import SignUpValidator from "./SignUpValidator";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/common/Loading";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import  LoginState  from "store/LoginState";
+import CurrentPage from "../../store/CurrentPage";
 
 const initValues = {
     id: "",
@@ -26,7 +29,8 @@ function Index() {
     const [ errorMsg, setErrorMsg ] = useState("");
     const { id , pw1, email, nickname } = values || "";
     const navigator = useNavigate();
-    
+    const { isLogIn } = useRecoilValue(LoginState);
+    const setCurrentPage = useSetRecoilState(CurrentPage);
     const { status, fetchData } = useAxios({
         method: "POST",
         url: "/createuser",
@@ -40,6 +44,13 @@ function Index() {
             "Content-Type": "application/json"
         }
     });
+
+    useLayoutEffect(() => {
+        if(isLogIn)
+            navigator("/");
+        setCurrentPage(-1);
+    },[isLogIn, navigator, setCurrentPage]);
+
     const requestHandler = useCallback(() => {
         fetchData().then(() => {
             navigator("/signup/success");

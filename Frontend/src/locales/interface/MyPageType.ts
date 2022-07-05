@@ -14,6 +14,9 @@ interface MyPageType {
             }
             changePasswordButton: string;
             submit: string;
+        },
+        img: {
+            button: string;
         }
     }
 }

@@ -1,19 +1,15 @@
 import React from "react";
 import { css } from "@emotion/react";
 import ValuesEdit from "./ValuesEdit";
+import ImageEdit from "./ImageEdit";
 
 
 function UserEdit() {
 
     return (
         <article css={[articleStyle]}>
-            <section>
-                이미지
-            </section>
-            <section>
-                <ValuesEdit />
-            </section>
-
+            <ImageEdit />
+            <ValuesEdit />
         </article>
     );
 }
