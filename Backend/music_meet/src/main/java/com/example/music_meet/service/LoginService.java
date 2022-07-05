@@ -4,13 +4,14 @@ import com.example.music_meet.AES256Util;
 import com.example.music_meet.SHA256;
 import com.example.music_meet.dto.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
+@Component
 //@EnableWebSecurity // 웹 보안 활성화를 위한 어노테이션
 public class LoginService
 {

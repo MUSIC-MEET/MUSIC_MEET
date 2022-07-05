@@ -5,11 +5,17 @@ import com.example.music_meet.AES256Util;
 import com.example.music_meet.SHA256;
 import com.example.music_meet.dto.ResetPw;
 import com.example.music_meet.dto.User;
+import com.example.music_meet.service.MailService;
 import com.example.music_meet.validate.Validate;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -17,9 +23,12 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.Date;
 
-@Repository
+
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Component
 public class UserService {
 
 
@@ -36,9 +45,9 @@ public class UserService {
     private String sql;
 
     private AccountRepository accountRepository;
-    Validate validate = new Validate();
+    private Validate validate = new Validate();
 
-    java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+    private java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 
     //
     // 아이디 찾기

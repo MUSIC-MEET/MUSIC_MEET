@@ -9,29 +9,39 @@ import com.example.music_meet.error.SignupErrorForm;
 import com.example.music_meet.service.UserService;
 import com.example.music_meet.service.MailService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 
 @Controller
 @CrossOrigin("*")
 @Slf4j
-public class CreateUserController {
+public class CreateUserController
+{
+
     private AES256Util aes256Util;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private MailService mailService;
 
     //
     // 회원가입
     //
     @RequestMapping(method = RequestMethod.POST, path = "/createuser")
-    public static ResponseEntity<Object> createAccountFunc(@RequestBody User user)
+    public ResponseEntity<Object> createAccountFunc(@RequestBody User user)
     {
         SignupErrorForm signupErrorForm = new SignupErrorForm();
-        UserService userService = new UserService();
-
+        //UserService userService1 = new UserService();
         // 아이디 중복검사
         if (user.isSignUpUserFunc())
         {
@@ -84,8 +94,8 @@ public class CreateUserController {
     @RequestMapping(path = "/findid", method = RequestMethod.POST)
     public ResponseEntity<Object> findIdfunc(@RequestBody Map<String,String> jsonEmail)
     {
-        UserService userService = new UserService();
-        MailService mailService = new MailService();
+
+        //MailService mailService = new MailService();
         final String email = jsonEmail.get("email");
         try {
             String id = userService.findIdFunc(email);
@@ -103,7 +113,7 @@ public class CreateUserController {
     @RequestMapping(path = "/findpw", method = RequestMethod.POST)
     public ResponseEntity<Object> findPwfunc(@RequestBody ResetPw json)
     {
-        UserService userService = new UserService();
+        //UserService userService = new UserService();
         final String id = json.getId();
         final String email = json.getEmail();
         String str;
@@ -132,7 +142,7 @@ public class CreateUserController {
     public ResponseEntity<Object> searchIdFunc(@PathVariable("userid") String id)
     {
 
-        UserService userService = new UserService();
+        //UserService userService = new UserService();
         User user = new User(id);
 
         if (userService.isDuplicateIdFunc(user) || !user.publicIsID())
@@ -152,7 +162,7 @@ public class CreateUserController {
     public ResponseEntity<Object> searchNicknameFunc(@PathVariable("usernickname") String nickname)
     {
 
-        UserService userService = new UserService();
+        //UserService userService = new UserService();
         User user = new User();
         user.setNickname(nickname);
 
@@ -174,7 +184,7 @@ public class CreateUserController {
     public ResponseEntity<Object> searchEmailFunc(@PathVariable("useremail") String email)
     {
         User user = new User(null,"","",email,"");
-        UserService userService = new UserService();
+        //UserService userService = new UserService();
 
         if (userService.isDuplicateEmailFunc(user) || !user.publicIsEmail())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -188,7 +198,7 @@ public class CreateUserController {
     @RequestMapping(path="/resetpw", method = RequestMethod.POST)
     public ResponseEntity<Object> setUserPw(@RequestBody ResetPw resetPw)
     {
-        UserService userService = new UserService();
+        //UserService userService = new UserService();
         User user = new User();
 
         user.setPw(resetPw.getNewPw());
@@ -211,11 +221,10 @@ public class CreateUserController {
     @RequestMapping(path = "/test", method = RequestMethod.POST)
     public void testFunc(@RequestBody User user)
     {
-        UserService userService = new UserService();
+        // userService = new UserService();
 
 
     }
-
 
 
 }

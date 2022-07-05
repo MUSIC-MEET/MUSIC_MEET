@@ -1,27 +1,27 @@
 package com.example.music_meet.service;
 
 
-import com.example.music_meet.util.MailConfig;
+import com.example.music_meet.beanConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-@Service
+@Component
 public class MailService {
 
-    private JavaMailSender javaMailSender;
+    JavaMailSender javaMailSender;
 
     //
     //  회원가입 인증 함수
     //
     public void registerAuthSendMailFunc(String email, String encodingvalue) //
     {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(MailConfig.class);
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(beanConfig.class);
         javaMailSender = (JavaMailSender) ctx.getBean("javaMailSender");
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -45,7 +45,7 @@ public class MailService {
     //
     public void sendUserIdFunc(final String id, final String email)
     {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(MailConfig.class);
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(beanConfig.class);
         javaMailSender = (JavaMailSender) ctx.getBean("javaMailSender");
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -70,7 +70,7 @@ public class MailService {
     //
     public void sendUserKeyFunc(String email, String str)
     {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(MailConfig.class);
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(beanConfig.class);
         javaMailSender = (JavaMailSender) ctx.getBean("javaMailSender");
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
