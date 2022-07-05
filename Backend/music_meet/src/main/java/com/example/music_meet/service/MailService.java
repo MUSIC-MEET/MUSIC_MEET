@@ -1,20 +1,21 @@
 package com.example.music_meet.service;
 
 
-import com.example.music_meet.beanConfig;
+import com.example.music_meet.bean.beanConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-@Component
+@Service
 public class MailService {
 
-    JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;
 
     //
     //  회원가입 인증 함수

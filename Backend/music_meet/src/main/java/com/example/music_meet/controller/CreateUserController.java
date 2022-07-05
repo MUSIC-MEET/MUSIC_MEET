@@ -2,7 +2,8 @@
 
 package com.example.music_meet.controller;
 
-import com.example.music_meet.AES256Util;
+import com.example.music_meet.service.JwtService;
+import com.example.music_meet.service.LoginService;
 import com.example.music_meet.dto.ResetPw;
 import com.example.music_meet.dto.User;
 import com.example.music_meet.error.SignupErrorForm;
@@ -10,13 +11,11 @@ import com.example.music_meet.service.UserService;
 import com.example.music_meet.service.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 
@@ -26,13 +25,14 @@ import java.util.Map;
 public class CreateUserController
 {
 
-    private AES256Util aes256Util;
-
     @Autowired
     private UserService userService;
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private LoginService loginService;
 
     //
     // 회원가입
@@ -94,9 +94,8 @@ public class CreateUserController
     @RequestMapping(path = "/findid", method = RequestMethod.POST)
     public ResponseEntity<Object> findIdfunc(@RequestBody Map<String,String> jsonEmail)
     {
-
-        //MailService mailService = new MailService();
         final String email = jsonEmail.get("email");
+
         try {
             String id = userService.findIdFunc(email);
             mailService.sendUserIdFunc(id, email);
@@ -113,17 +112,15 @@ public class CreateUserController
     @RequestMapping(path = "/findpw", method = RequestMethod.POST)
     public ResponseEntity<Object> findPwfunc(@RequestBody ResetPw json)
     {
-        //UserService userService = new UserService();
         final String id = json.getId();
         final String email = json.getEmail();
         String str;
         try{
             str = userService.checkIdAndEmail(id,email);
-            if (str ==null) {
+            if (str == null) {
                 System.out.println("str == null 들어옴");
                 return new ResponseEntity<>(HttpStatus.OK);
             }
-            MailService mailService = new MailService();
             mailService.sendUserKeyFunc(email,str);
 
             return new ResponseEntity<>(HttpStatus.OK);
@@ -142,7 +139,6 @@ public class CreateUserController
     public ResponseEntity<Object> searchIdFunc(@PathVariable("userid") String id)
     {
 
-        //UserService userService = new UserService();
         User user = new User(id);
 
         if (userService.isDuplicateIdFunc(user) || !user.publicIsID())
@@ -151,8 +147,6 @@ public class CreateUserController
         else
             return new ResponseEntity<>(HttpStatus.OK);
 
-        // ERROR 11564 --- [nio-8080-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet] 에러가 뜬다면
-        // 이 함수의 반환타입을 String 으로 바꾸고 return "";하면 에러가 사라짐
     }
 
     //
@@ -162,7 +156,6 @@ public class CreateUserController
     public ResponseEntity<Object> searchNicknameFunc(@PathVariable("usernickname") String nickname)
     {
 
-        //UserService userService = new UserService();
         User user = new User();
         user.setNickname(nickname);
 
@@ -171,9 +164,6 @@ public class CreateUserController
 
         else
             return new ResponseEntity<>(HttpStatus.OK);
-
-        // ERROR 11564 --- [nio-8080-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet] 에러가 뜬다면
-        // 이 함수의 반환타입을 String 으로 바꾸고 return "";하면 에러가 사라짐
 
     }
 
@@ -184,7 +174,6 @@ public class CreateUserController
     public ResponseEntity<Object> searchEmailFunc(@PathVariable("useremail") String email)
     {
         User user = new User(null,"","",email,"");
-        //UserService userService = new UserService();
 
         if (userService.isDuplicateEmailFunc(user) || !user.publicIsEmail())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -198,7 +187,6 @@ public class CreateUserController
     @RequestMapping(path="/resetpw", method = RequestMethod.POST)
     public ResponseEntity<Object> setUserPw(@RequestBody ResetPw resetPw)
     {
-        //UserService userService = new UserService();
         User user = new User();
 
         user.setPw(resetPw.getNewPw());
@@ -219,11 +207,15 @@ public class CreateUserController
     // 테스트
     //
     @RequestMapping(path = "/test", method = RequestMethod.POST)
-    public void testFunc(@RequestBody User user)
+    public void testFunc(@RequestBody Map<String, String> token)
     {
-        // userService = new UserService();
+        final String jwt = token.get("jwtToken");
+        Map<String, String> map;
+        map = loginService.loginStateCheck(jwt);
 
 
+        JwtService jwtService = new JwtService();
+        jwtService.validateToken(jwt);
     }
 
 
