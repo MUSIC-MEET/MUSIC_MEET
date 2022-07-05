@@ -16,6 +16,9 @@ const text: MyPageType = {
             },
             changePasswordButton: "비밀번호 변경",
             submit: "변경",
+        },
+        img: {
+            button: "변경할 이미지를 선택해주세요."
         }
     }
 };
