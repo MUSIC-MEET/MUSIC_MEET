@@ -12,7 +12,8 @@ const DarkThemeInit = {
         subMenu: {
             borderColor: "rgb(88,88,88)",
             background: "#222222"
-        }
+        },
+        clicked: "rgb(255, 210, 0)"
     },
     content: {
         background: "rgb(22,22,22)",
@@ -38,7 +39,8 @@ const LightThemeInit = {
         subMenu: {
             borderColor: "#222222",
             background: "rgb(250,249,250)"
-        }
+        },
+        clicked: "rgb(93, 191, 185)"
     },
     content: {
         background: "rgb(255,255,255)",
