@@ -31,7 +31,6 @@ function EditBox(props: EditBoxProps) {
             <label htmlFor="id">{label}</label>
             <Wrap>
                 <Input
-
                     w={WIDTH}
                     input={{ ...input }}
                 />

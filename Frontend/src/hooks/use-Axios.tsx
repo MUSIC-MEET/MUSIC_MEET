@@ -1,5 +1,7 @@
 import axios from "axios";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import LoginState from "store/LoginState";
 import { statusType, InitStatus } from "utils/RequestStatus";
 
 interface useHooksProps {
@@ -17,6 +19,11 @@ function useAxios(props: useHooksProps) {
 
     const { method, url, body, header } = props;
     const [status, setStatus] = useState<statusType>(InitStatus);
+    const { key, isLogIn } = useRecoilValue(LoginState);
+
+    useEffect(() => {
+        //
+    }, [body, url, isLogIn, key]);
 
     const fetchData = useCallback(() => {
         return new Promise((resolve, reject) => {
@@ -26,7 +33,8 @@ function useAxios(props: useHooksProps) {
                 url: url,
                 data: body || null,
                 headers: header || {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "authorization": isLogIn ? key : ""
                 }
             }).then((res) => {
                 setStatus({ ...status, isSucess: true, isError: false });
@@ -37,7 +45,7 @@ function useAxios(props: useHooksProps) {
                 reject(err.response.data);
             });
         });
-    }, [body, header, method, status, url]);
+    }, [body, header, isLogIn, key, method, status, url]);
 
 
 
