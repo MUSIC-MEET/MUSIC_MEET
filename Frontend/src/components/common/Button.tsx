@@ -28,6 +28,9 @@ function Button(props: ButtonProps) {
                 color: #b6b6b6;
                 cursor: not-allowed;
             }
+            &:hover {
+                    background: rgba(88, 88, 88, 0.1);
+                }
             `
             }
             onClick={onClick}

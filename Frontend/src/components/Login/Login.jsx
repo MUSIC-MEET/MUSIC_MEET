@@ -7,7 +7,7 @@ import ThemeContext from "store/ThemeContext";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import LoginFormState from "../../store/LoginForm";
 import LoginModalShownState from "store/LoginModalShown";
-import  useAxios  from "hooks/use-Axios";
+import  useHttp  from "hooks/use-Http";
 import LoginState from "../../store/LoginState";
 import NotLoginMenu from "./NotLoginMenu";
 import LoginMenu from "./LoginMenu";
@@ -31,7 +31,7 @@ function Login(props) {
     useEffect(()=> {
         //
     },[isLogIn]);
-    const { status, fetchData } = useAxios({
+    const { status, fetchData } = useHttp({
         method: "POST",
         url: "/user/login",
         body: {
@@ -102,7 +102,7 @@ const style=css`
     & > span {
         cursor: pointer;
     }
-    margin-bottom: 0.8rem;
+    
 `;
 
 export default Login;

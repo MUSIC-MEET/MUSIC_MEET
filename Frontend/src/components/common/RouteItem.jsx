@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { css } from "@emotion/react";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import  ThemeContext  from "store/ThemeContext";
 const style = css`
     margin-bottom: 1rem;
     cursor: pointer;
@@ -9,6 +10,9 @@ const style = css`
 `;
 function RouteItem(props) {
     const navigator = useNavigate();
+    const ctx = useContext(ThemeContext);
+    const color= ctx.themeStyle.menu.clicked;
+    const hoverColor = ctx.themeStyle.menu.hover;
     const { name, link, currentIndex, onClickRoute, clicked } = props;
     const navigaterHandler = useCallback(() => {
         navigator(link);
@@ -17,8 +21,11 @@ function RouteItem(props) {
     return (
         <li css={[style, 
             css`
-            color: ${clicked ? "red" : ""}; 
+            color: ${clicked ? color : ""}; 
             font-weight:  ${clicked ? "bold" : ""};
+            &:hover {
+                color: ${hoverColor}
+            }
             `]} 
         onClick={navigaterHandler}
         >

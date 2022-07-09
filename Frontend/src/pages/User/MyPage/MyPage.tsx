@@ -1,10 +1,11 @@
-import React, { useLayoutEffect } from "react";
+import React, { Suspense, useLayoutEffect } from "react";
 import Content from "components/UI/Content";
 import Title from "components/common/Title";
 import { useTranslation } from "react-i18next";
 import UserEdit from "./UserEdit";
 import CurrentPage from "store/CurrentPage";
 import { useSetRecoilState } from "recoil";
+import Loading from "../../../components/common/Loading";
 
 function MyPage() {
     const { t } = useTranslation<"myPage">("myPage");
@@ -15,7 +16,10 @@ function MyPage() {
     return (
         <Content>
             <Title>{t("title")}</Title>
-            <UserEdit />
+            <Suspense fallback={<Loading />}>
+                <UserEdit />
+            </Suspense>
+
         </Content>
     );
 }

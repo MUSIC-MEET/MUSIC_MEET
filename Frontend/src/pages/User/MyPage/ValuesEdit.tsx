@@ -1,12 +1,34 @@
 import Button from "components/common/Button";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import EditBox, { EditBoxProps } from "./EditBox";
 import { useNavigate } from "react-router-dom";
+import useForm from "hooks/use-form";
+import SignUpValidator from "pages/SignUp/SignUpValidator";
+import useHttp from "hooks/use-Http";
+import { useRecoilValue } from "recoil";
+import LoginState from "store/LoginState";
+
+
+interface ValuesProps {
+    email: string;
+    nickname: string;
+}
+
+const InitValues: ValuesProps = {
+    email: "",
+    nickname: ""
+};
 
 function ValuesEdit() {
     const { t } = useTranslation<"myPage">("myPage");
     const navigate = useNavigate();
+
+    const { values, valuesChangeHandler, error } = useForm({
+        initValues: InitValues,
+        validate: SignUpValidator
+    });
+
     const onSubmit = (e: React.FormEvent<HTMLElement>) => {
         //
         e.preventDefault();

@@ -3,7 +3,7 @@ import Content from "components/UI/Content";
 import React, { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import useAxios from "hooks/use-Axios";
+import useAxios from "hooks/use-Http";
 import { CircularProgress } from "@mui/material";
 import SignUpValidator from "pages/SignUp/SignUpValidator";
 import { css } from "@emotion/react";

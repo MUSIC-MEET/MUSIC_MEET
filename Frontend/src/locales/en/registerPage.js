@@ -30,7 +30,8 @@ export default {
         },
         email: {
             invalid: "Disabled Email",
-            valid: "Available Email"
+            valid: "Available Email",
+            duplicate: "This email is duplicated"
         }
     },
     success: {
