@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import useAxios from "hooks/use-Axios";
+import useHttp from "hooks/use-Http";
 import Title from "components/common/Title";
 import FindIdForm from "./FindIdForm";
 import Loading from "../../../components/common/Loading";
@@ -8,7 +8,7 @@ import Loading from "../../../components/common/Loading";
 function Id() {
     const { t } = useTranslation("findPage");
     const [email, setEmail] = useState<string>("");
-    const { fetchData, status } = useAxios({
+    const { fetchData, status } = useHttp({
         url: "/findid",
         method: "POST",
         body: {

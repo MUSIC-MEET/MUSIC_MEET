@@ -15,7 +15,7 @@ interface useHooksProps {
     } | null
 }
 
-function useAxios(props: useHooksProps) {
+function useHttp(props: useHooksProps) {
 
     const { method, url, body, header } = props;
     const [status, setStatus] = useState<statusType>(InitStatus);
@@ -55,4 +55,4 @@ function useAxios(props: useHooksProps) {
     };
 }
 
-export default useAxios;
+export default useHttp;

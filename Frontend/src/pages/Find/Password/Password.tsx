@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import useAxios from "hooks/use-Axios";
+import useHttp from "hooks/use-Http";
 import { useTranslation } from "react-i18next";
 import Title from "components/common/Title";
 import FindPasswordForm from "./FindPasswordForm";
@@ -16,7 +16,7 @@ function Password() {
         id: "",
         email: ""
     });
-    const { fetchData, status } = useAxios({
+    const { fetchData, status } = useHttp({
         url: "/findpw",
         method: "POST",
         body: {

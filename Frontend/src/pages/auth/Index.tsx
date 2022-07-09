@@ -1,4 +1,4 @@
-import useAxios from "hooks/use-Axios";
+import useHttp from "hooks/use-Http";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -18,7 +18,7 @@ function Index() {
     const navigate = useNavigate();
     const setLoginModal = useSetRecoilState(LoginModalShownState);
     const setCurrentPage = useSetRecoilState(CurrentPage);
-    const { fetchData } = useAxios({
+    const { fetchData } = useHttp({
         method: "GET",
         url: `/auth/${type}/${value}`
     });

@@ -5,7 +5,7 @@ import EditBox, { EditBoxProps } from "./EditBox";
 import { useNavigate } from "react-router-dom";
 import useForm from "hooks/use-form";
 import SignUpValidator from "pages/SignUp/SignUpValidator";
-import useAxios from "hooks/use-Axios";
+import useHttp from "hooks/use-Http";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
 
@@ -24,7 +24,7 @@ function ValuesEdit() {
     const { t } = useTranslation<"myPage">("myPage");
     const navigate = useNavigate();
 
-    const { fetchData: getUserInfo, status } = useAxios({
+    const { fetchData: getUserInfo, status } = useHttp({
         url: "/user/me",
         method: "GET",
     });

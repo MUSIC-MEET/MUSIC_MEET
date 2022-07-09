@@ -3,7 +3,7 @@ import Title from "components/common/Title";
 import Content from "components/UI/Content";
 import { useTranslation } from "react-i18next";
 import SignUpForm from "./SignUpForm";
-import useAxios from "../../hooks/use-Axios.tsx";
+import useHttp from "../../hooks/use-Http.tsx";
 import useForm from "../../hooks/use-form";
 import SignUpValidator from "./SignUpValidator";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +31,7 @@ function Index() {
     const navigator = useNavigate();
     const { isLogIn } = useRecoilValue(LoginState);
     const setCurrentPage = useSetRecoilState(CurrentPage);
-    const { status, fetchData } = useAxios({
+    const { status, fetchData } = useHttp({
         method: "POST",
         url: "/createuser",
         body: {
