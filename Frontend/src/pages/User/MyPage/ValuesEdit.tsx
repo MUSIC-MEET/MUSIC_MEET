@@ -24,23 +24,6 @@ function ValuesEdit() {
     const { t } = useTranslation<"myPage">("myPage");
     const navigate = useNavigate();
 
-    const { fetchData: getUserInfo, status } = useHttp({
-        url: "/user/me",
-        method: "GET",
-    });
-    useEffect(() => {
-        //
-        getUserInfo()
-            .then(() => {
-                //
-            })
-            .catch(() => {
-                //
-            });
-        console.log("ValuesEdit");
-    }, []);
-
-
     const { values, valuesChangeHandler, error } = useForm({
         initValues: InitValues,
         validate: SignUpValidator

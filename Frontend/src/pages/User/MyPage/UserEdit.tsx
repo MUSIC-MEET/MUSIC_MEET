@@ -2,9 +2,13 @@ import React from "react";
 import { css } from "@emotion/react";
 import ValuesEdit from "./ValuesEdit";
 import ImageEdit from "./ImageEdit";
+import { useRecoilValue } from "recoil";
+import MyInfo from "store/MyInfo";
 
 
 function UserEdit() {
+
+    const myInfo = useRecoilValue(MyInfo);
 
     return (
         <article css={[articleStyle]}>
