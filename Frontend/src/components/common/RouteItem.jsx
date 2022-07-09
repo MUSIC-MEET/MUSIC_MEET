@@ -12,6 +12,7 @@ function RouteItem(props) {
     const navigator = useNavigate();
     const ctx = useContext(ThemeContext);
     const color= ctx.themeStyle.menu.clicked;
+    const hoverColor = ctx.themeStyle.menu.hover;
     const { name, link, currentIndex, onClickRoute, clicked } = props;
     const navigaterHandler = useCallback(() => {
         navigator(link);
@@ -22,6 +23,9 @@ function RouteItem(props) {
             css`
             color: ${clicked ? color : ""}; 
             font-weight:  ${clicked ? "bold" : ""};
+            &:hover {
+                color: ${hoverColor}
+            }
             `]} 
         onClick={navigaterHandler}
         >
