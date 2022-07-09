@@ -107,7 +107,6 @@ async function SignUpValidator( props) {
                         email: "duplicate"
                     });
                 });  
-            setErrors({ ...errors, email: "valid" });
         }
     }
 }

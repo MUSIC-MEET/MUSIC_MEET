@@ -30,7 +30,8 @@ export default {
         }, 
         email: {
             invalid: "사용 불가능한 이메일",
-            valid: "사용가능한 이메일"
+            valid: "사용가능한 이메일",
+            duplicate: "중복된 이메일"
         }
     },
     success: {
