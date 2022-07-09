@@ -4,8 +4,7 @@ import { css } from "@emotion/react";
 import ThemeContext from "../../store/ThemeContext";
 import SearchIcon from "@mui/icons-material/Search";
 const style = css`
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     & > input {
         width: 100%;
         height: 100%;
