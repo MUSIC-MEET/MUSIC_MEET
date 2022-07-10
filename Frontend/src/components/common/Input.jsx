@@ -29,4 +29,4 @@ const style = css`
         border-bottom: 1px solid #FF5500;
     }
 `;
-export default Input;
+export default React.memo(Input);

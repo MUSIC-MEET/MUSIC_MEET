@@ -7,6 +7,7 @@ const ThemeContext = React.createContext({
         content: { fontColor: "" },
         modal: {},
         input: { borderColor : "" },
+        secondFont: { fontColor : "" },
     },
     setDarkTheme: () => {
         //
