@@ -143,4 +143,4 @@ const formStyle = css`
     }
 `;
 
-export default SignUpForm;
+export default React.memo(SignUpForm);
