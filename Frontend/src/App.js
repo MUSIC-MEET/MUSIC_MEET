@@ -11,6 +11,8 @@ import UserFind from "./pages/Find/Index";
 import Success from "./pages/SignUp/Success";
 import EmailAuth from "./pages/Auth/Index";
 import User from "./pages/User/Index";
+import LiveChart from "./pages/LiveChart/Index";
+
 const rootStyle = css`
     display: flex;
     flex-direction: row;
@@ -45,6 +47,7 @@ function App() {
                         <Route path="/auth/:type/:value" element={<EmailAuth />} />
                         <Route path="/find/*" element={<UserFind />} />
                         <Route path="/user/*" element={<User />} />
+                        <Route path="/livechart/*" element={<LiveChart />} />
                     </Routes>
                     
                 </Content>

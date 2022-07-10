@@ -14,7 +14,7 @@ function RoutesMenu() {
     },[setCurrentPage]);
     const ROUTES = [
         { name : t("routes.menu0"), link: "/" },
-        { name : t("routes.menu1"), link: "/tmp" },
+        { name : t("routes.menu1"), link: "/livechart" },
         { name : t("routes.menu2"), link: "/tmp" },
         { name : t("routes.menu3"), link: "/tmp" },
         { name : t("routes.menu4"), link: "/tmp" },

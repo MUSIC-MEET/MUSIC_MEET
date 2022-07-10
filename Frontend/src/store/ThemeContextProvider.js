@@ -26,6 +26,9 @@ const DarkThemeInit = {
     },
     input: {
         borderColor: "rgb(88,88,88)",
+    },
+    secondFont: {
+        fontColor: "#CCCCCC"
     }
 };
 
@@ -54,6 +57,9 @@ const LightThemeInit = {
     },
     input: {
         background: "rgb(255,255,255)",
+    },
+    secondFont: {
+        fontColor: "#222222"
     }
 };
 
