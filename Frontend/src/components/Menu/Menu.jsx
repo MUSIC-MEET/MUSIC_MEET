@@ -35,9 +35,10 @@ const navStyle = css`
 
     & > * {
         width: 11rem;
-        height: auto;
-        margin-bottom: 1.5rem;
+        min-height: auto;
     }
+
+    
 `;
 
 export default Menu;
