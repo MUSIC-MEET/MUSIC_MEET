@@ -31,4 +31,4 @@ function LoginStateToggle(props) {
     );
 }
 
-export default LoginStateToggle;
+export default React.memo(LoginStateToggle);

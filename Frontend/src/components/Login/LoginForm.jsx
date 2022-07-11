@@ -14,8 +14,6 @@ function LoginForm(props) {
     const { 
         keepLoginState, 
         onChangeKeepLoginState, 
-        onClose, 
-        navigator,
         onLogin,
         isLoginFail
     } = props;
@@ -33,10 +31,6 @@ function LoginForm(props) {
         });
     },[setValues]);
 
-    const onClickSignUp = useCallback(() => {
-        navigator("/signup");
-        onClose();
-    },[navigator, onClose]);
     
     const onSubmit = useCallback((event) => {
         event.preventDefault();
@@ -81,10 +75,6 @@ function LoginForm(props) {
                     disabled={disabled}
                 />
                 <SubMenu 
-                    onClickSignUp={onClickSignUp}
-                    textSignUp={t("signup")}
-                    textFindId={t("findId")}
-                    textFindPw={t("findPw")}
                 />
             </form>
         </article>
@@ -124,4 +114,4 @@ const style =  css`
     }
     
 `;
-export default LoginForm;
+export default React.memo(LoginForm);
