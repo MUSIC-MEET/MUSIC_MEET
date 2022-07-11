@@ -9,17 +9,23 @@ import com.example.music_meet.service.JwtService;
 import com.example.music_meet.service.LoginService;
 import com.example.music_meet.service.MailService;
 import com.example.music_meet.service.UserService;
+import com.example.music_meet.util.AES256Util;
 import com.example.music_meet.util.CustomAnnotationConfig;
+import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +47,9 @@ public class CreateUserController
 
     @Autowired
     private JwtService jwtService;
+
+
+    private AES256Util aes256Util;
 
 
     //
@@ -208,7 +217,7 @@ public class CreateUserController
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     //
     //  마이페이지에 아이디, 비밀번호, 닉네임 출력해주는 컨트롤러
     //
@@ -216,8 +225,6 @@ public class CreateUserController
     @RequestMapping(path="/user/myinfo", method = RequestMethod.GET)
     public ResponseEntity<Object> callUserInfo()
     {
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~여기부터 컨트롤러~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorization = request.getHeader("authorization");
 
@@ -240,7 +247,64 @@ public class CreateUserController
         }
     }
 
+    //
+    // 이메일 바꾸는 API
+    //
+    @CustomAnnotationConfig.jwtCheck
+    @RequestMapping(path="/user/change/email", method = RequestMethod.PUT)
+    public ResponseEntity<Object> changeEmail(@RequestBody final String email)
+    {
+        final String encodingEmail;
+        try {
+            encodingEmail = aes256Util.encrypt(email);
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
 
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        final String authorization = request.getHeader("authorization");
+
+
+
+
+        // 이메일 중복 검사
+        try {
+            userService.findEmailFunc(authorization);
+            //mailService.registerAuthSendMailFunc();
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+
+        // userMap 이용해서 디비에서 바꾸는
+        userService.changeUserEmail(authorization , encodingEmail);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+
+
+
+
+
+
+
+    //
+    // 마이페이지에서 이미지 변경하는 컨트롤러 (좀 더 알아보고 구현 예정)
+    //
+    @CustomAnnotationConfig.jwtCheck
+    @RequestMapping(path="/user/change/image", method = RequestMethod.GET)
+    public ResponseEntity<Object> changeUserImage(@RequestBody JsonObject jsonObject)
+    {
+        jsonObject.get("image");
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     //
     // 테스트
     //
