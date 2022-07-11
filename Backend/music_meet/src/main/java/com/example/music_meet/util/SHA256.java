@@ -1,8 +1,13 @@
-package com.example.music_meet;
+package com.example.music_meet.util;
+
+import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
+//
+//  암호화, 복호화 가능한 알고리즘
+//
+@Component
 public class SHA256 {
 
     private String bytesToHex(byte[] bytes) {

@@ -1,44 +1,64 @@
 package com.example.music_meet.service;
 
-import com.JPA.Repository.AccountRepository;
-import com.example.music_meet.AES256Util;
-import com.example.music_meet.SHA256;
+import com.example.music_meet.util.AES256Util;
+import com.example.music_meet.util.SHA256;
 import com.example.music_meet.dto.ResetPw;
 import com.example.music_meet.dto.User;
 import com.example.music_meet.validate.Validate;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-@Repository
+
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Service
 public class UserService {
 
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(); // 암호화 객체
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;// 암호화 객체
+
     private AES256Util aes256Util; // AES256 변수 (암호화, 복호화에 사용)
+    @Autowired
     private SHA256 sha256; // SHA256 변수 (이메일 인증에 사용 암호문에 /가 안들어감)
-    private String mysqlurl = "jdbc:mysql://localhost:3306/music_meet?serverTimezone=UTC&characterEncoding=UTF-8";
-    private String mysqlid = "root";
-    private String mysqlpassword = "0000";
+
+    @Value("${spring.datasource.url}")
+    private String mysqlurl;
+    @Value("${spring.datasource.username}")
+    private String mysqlid;
+    @Value("${spring.datasource.password}")
+    private String mysqlpassword;
+    @Value("${spring.datasource.driver-class-name}")
+    private String classForName;
+
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
     private int rsInt = 0;
     private String sql;
 
-    private AccountRepository accountRepository;
-    Validate validate = new Validate();
+    @Autowired
+    private Validate validate;
 
-    java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+    @Autowired
+    private java.sql.Timestamp date;
 
     //
     // 아이디 찾기
@@ -52,7 +72,7 @@ public class UserService {
             //
             // DB구간
             //
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
@@ -91,18 +111,64 @@ public class UserService {
         return id;
     }
 
+    //
+    // 이메일 찾기
+    //
+    public String findEmailFunc(final String userNum)
+    {
+        String sql = "select email from user where usernum = ?";
+        String encoding_email;
+        String decoding_email;
+        try
+        {
+            aes256Util = new AES256Util();
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
 
+            pstmt.setInt(1,Integer.parseInt(userNum));
+            rs = pstmt.executeQuery();
+
+            if (!rs.next())
+            {
+                throw new Exception("findIdFunc 에서 rs가 null 값으로 예외처리에 빠짐");
+            }
+            else
+            {
+                encoding_email = rs.getString(1);
+                decoding_email = aes256Util.decrypt(encoding_email);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return decoding_email;
+    }
 
     //
     // 아이디 중복 검사 (id가 DB에 있으면 true 리턴)
     //
     public boolean isDuplicateIdFunc(User user)
     {
-
         sql = "select id from user where id = ?";
         boolean result = false;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
@@ -112,7 +178,6 @@ public class UserService {
             while (rs.next()) {
                 result = true;
             }
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -130,7 +195,6 @@ public class UserService {
             }
         }
 
-
         return result;
     }
 
@@ -143,7 +207,7 @@ public class UserService {
         sql = "select nickname from user where nickname = ?";
         boolean result = false;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
@@ -195,7 +259,7 @@ public class UserService {
 
         sql = "select email from user where email = ?";
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
@@ -246,7 +310,7 @@ public class UserService {
 
         sql = "select usernum from user where id = ? and pw = ?";
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
@@ -302,7 +366,7 @@ public class UserService {
             //
             // DB구간
             //
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
@@ -349,7 +413,7 @@ public class UserService {
                 aes256Util = new AES256Util();
                 user.setEmail(aes256Util.encrypt(user.getEmail()));
 
-                Class.forName("com.mysql.cj.jdbc.Driver");
+                Class.forName(classForName);
                 conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
                 pstmt = conn.prepareStatement(sql);
 
@@ -406,7 +470,7 @@ public class UserService {
             //
             // DB구간
             //
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
 
             pstmt = conn.prepareStatement(sql);
@@ -448,7 +512,7 @@ public class UserService {
             //
             // DB구간
             //
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
@@ -517,7 +581,7 @@ public class UserService {
             //
             // DB구간
             //
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
 
             pstmt = conn.prepareStatement(sql);
@@ -550,7 +614,7 @@ public class UserService {
             //
             // DB구간
             //
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
 
             pstmt = conn.prepareStatement(sql);
@@ -586,7 +650,7 @@ public class UserService {
             //
             // DB구간
             //
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
 
             pstmt = conn.prepareStatement(sql);
@@ -622,13 +686,13 @@ public class UserService {
     //
     public void setUserPw(ResetPw resetPw)
     {
-        String sql = "update user set pw = ? where id =(select id from pwauth where encoding_value = ?)";
+        sql = "update user set pw = ? where id =(select id from pwauth where encoding_value = ?)";
         try
         {
             //
             // DB구간
             //
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
 
             pstmt = conn.prepareStatement(sql);
@@ -650,6 +714,52 @@ public class UserService {
             }
         }
     }
+
+    //
+    // userNum을 매개변수로 아이디, 이메일, 닉네임을 조회하는 함수
+    // CreateUserController.callUserInfo에서 사용중
+    public Map<String, String> findUserInfo(String userNum)
+    {
+        sql = "select id, email, nickname from user where usernum = ?";
+        Map<String, String> map = new HashMap<>();
+        try {
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, Integer.parseInt(userNum));
+            rs = pstmt.executeQuery();
+            if (!rs.next())
+            {
+                System.out.println("findUserInfo에서 userNum으로 아이디, 닉네임, 이메일 조회 실패");
+                map.put("id", null);
+                map.put("email", null);
+                map.put("nickname", null);
+            }
+            else
+            {
+                map.put("id", rs.getString(1));
+                map.put("email", rs.getString(2));
+                map.put("nickname", rs.getString(3));
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("findUserInfo에서 예외처리로 빠짐");
+        }
+        finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return map;
+    }
+
+
 }
 
 

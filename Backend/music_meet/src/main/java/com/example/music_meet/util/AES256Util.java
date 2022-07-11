@@ -1,6 +1,10 @@
-package com.example.music_meet;
+package com.example.music_meet.util;
 
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -11,10 +15,15 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
 
- //양방향 암호화 알고리즘인 AES256 암호화를 지원하는 클래스
-
+//양방향 암호화 알고리즘인 AES256 암호화를 지원하는 클래스
+@PropertySource("classpath:application.properties")
 public class AES256Util {
-    private String iv = "12340000000000001";
+
+
+    // 키
+    //@Value("${jwt.token.key}")
+    private String iv = "1009035332sinabro";
+
     private Key keySpec;
 
     /*  16자리의 키값을 입력하여 객체를 생성한다.

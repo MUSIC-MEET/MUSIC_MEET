@@ -1,11 +1,12 @@
 package com.example.music_meet.service;
 
 
-import com.example.music_meet.util.MailConfig;
+import com.example.music_meet.bean.beanConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -21,7 +22,7 @@ public class MailService {
     //
     public void registerAuthSendMailFunc(String email, String encodingvalue) //
     {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(MailConfig.class);
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(beanConfig.class);
         javaMailSender = (JavaMailSender) ctx.getBean("javaMailSender");
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -45,7 +46,7 @@ public class MailService {
     //
     public void sendUserIdFunc(final String id, final String email)
     {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(MailConfig.class);
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(beanConfig.class);
         javaMailSender = (JavaMailSender) ctx.getBean("javaMailSender");
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -70,7 +71,7 @@ public class MailService {
     //
     public void sendUserKeyFunc(String email, String str)
     {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(MailConfig.class);
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(beanConfig.class);
         javaMailSender = (JavaMailSender) ctx.getBean("javaMailSender");
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");

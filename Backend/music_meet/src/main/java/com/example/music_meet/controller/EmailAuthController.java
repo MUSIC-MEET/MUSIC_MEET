@@ -1,6 +1,7 @@
 package com.example.music_meet.controller;
 
 import com.example.music_meet.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin("*")
 public class EmailAuthController {
 
-    UserService userService = new UserService();
+    @Autowired
+    private UserService userService;
 
     //
     // 이메일 인증 컨트롤러
@@ -27,7 +29,7 @@ public class EmailAuthController {
 
             return new ResponseEntity<>(null, HttpStatus.OK);
         }catch (Exception e) {
-            System.out.println("EmailAuthController -> EmailAuthFunc에서 예외처리로 빠짐");
+            System.out.println("EmailAuthController -> emailAuthForIdFunc에서 예외처리로 빠짐");
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 

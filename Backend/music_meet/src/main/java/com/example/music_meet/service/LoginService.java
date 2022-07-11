@@ -1,25 +1,48 @@
 package com.example.music_meet.service;
 
-import com.example.music_meet.AES256Util;
-import com.example.music_meet.SHA256;
+import com.example.music_meet.util.AES256Util;
+import com.example.music_meet.util.CustomAnnotationConfig;
+import com.example.music_meet.util.SHA256;
 import com.example.music_meet.dto.User;
+//import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import com.example.music_meet.util.CustomAnnotationConfig.*;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
+@Service
 //@EnableWebSecurity // 웹 보안 활성화를 위한 어노테이션
 public class LoginService
 {
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(); // 암호화 객체
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder; // 암호화 객체
+
     private AES256Util aes256Util; // AES256 변수 (암호화, 복호화에 사용)
-    private SHA256 sha256 = new SHA256(); // SHA256 변수 (이메일 인증에 사용 암호문에 /가 안들어감)
-    private String mysqlurl = "jdbc:mysql://localhost:3306/music_meet?serverTimezone=UTC&characterEncoding=UTF-8";
-    private String mysqlid = "root";
-    private String mysqlpassword = "0000";
+    @Autowired
+    private SHA256 sha256; // SHA256 변수 (이메일 인증에 사용 암호문에 /가 안들어감)
+
+    @Value("${jwt.token.key}")
+    private String jwtSecurityKey; // jwt 키
+    
+    @Value("${spring.datasource.url}")
+    private String mysqlurl;
+    @Value("${spring.datasource.username}")
+    private String mysqlid;
+    @Value("${spring.datasource.password}")
+    private String mysqlpassword;
+
+    @Value("${spring.datasource.driver-class-name}")
+    private String classForName;
+
+
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
@@ -46,9 +69,9 @@ public class LoginService
                 System.out.println("getUserPw()에서 rs가 없음");
             else
             {
-                map.put("usernum",Integer.toString(rs.getInt(1)));
+                map.put("userNum",Integer.toString(rs.getInt(1)));
                 map.put("pw", rs.getString(2));
-                map.put("nickname", rs.getString(3));
+                map.put("nickName", rs.getString(3));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -68,4 +91,10 @@ public class LoginService
 
         return map;
     }
+
+
+
+
+
+
 }
