@@ -6,31 +6,18 @@ const MyInfo = selector({
     key: "getMyInfo",
     get: async ({ get }) => {
         const { key }  = get(LoginState);
-
-        // suspense test 
-        return new Promise<any>(resolve => {
-            setTimeout(() => {
-                console.log("fetched user");
-                resolve({
-                    //
-                });
-            }, 3000);
-        });
-
-        // real code 
         const axios = customAxios();
-        return new Promise<any>((resolve, reject) => {
-            axios({
-                method: "GET",
-                url: "/user/me",
-                headers: {
-                    authorization: key
-                }
-            })
-                .then((res) => {
-                    resolve(res.data);
-                });
-        });
+        const data = await axios({
+            method: "GET",
+            url: "/user/myinfo",
+            headers: {
+                authorization: key
+            }
+        })
+            .then((res) => {
+                return res.data;
+            });
+        return data;
     }
 });
 
