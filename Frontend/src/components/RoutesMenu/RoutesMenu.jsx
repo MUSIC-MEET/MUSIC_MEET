@@ -39,4 +39,4 @@ function RoutesMenu() {
     );
 }
 
-export default RoutesMenu;
+export default React.memo(RoutesMenu);
