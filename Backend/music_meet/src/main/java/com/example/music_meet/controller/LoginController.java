@@ -30,15 +30,18 @@ public class LoginController
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    //
+    //
+    //
     @RequestMapping(method = RequestMethod.POST, path = "/user/login")
     public ResponseEntity<Object> loginFunc(@RequestBody User user)
     {
         Map<String,String> map = loginService.getUserPw(user);
         final String encodingPw = map.get("pw");
-        final String userNum = map.get("usernum");
-        final String nickname = map.get("nickname");
+        final String userNum = map.get("userNum");
+        final String nickname = map.get("nickName");
 
-        if (!bCryptPasswordEncoder.matches(user.getPw(), encodingPw))
+        if (!bCryptPasswordEncoder.matches(user.getPw(), encodingPw)) // 로그인 실패
         {
             System.out.println("로그인 실패");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -46,7 +49,7 @@ public class LoginController
         else
         {
             Map<String,String> responseMap = new HashMap<>();
-            responseMap.put("token", jwtService.generateJwtToken(userNum));
+            responseMap.put("token", jwtService.generateJwtToken(userNum)); // 토큰 생성
             responseMap.put("nickname", nickname);
 
             return new ResponseEntity<>( responseMap, HttpStatus.CREATED );

@@ -17,7 +17,6 @@ public class JwtService
     //@Value("${jwt.token.key}")
     private String jwtSecurityKey = "1009035332sinabro"; // jwt 키
 
-    
 
     @Value("${jwt.token.key}")
     private String securityKey; // jwt 키
@@ -53,10 +52,9 @@ public class JwtService
     
 
     // 토큰 유효성 검사
-    public boolean validateToken(String jwt) {
+    public void validateToken(String jwt) {
         try {
             Claims claims = Jwts.parser().setSigningKey(jwtSecurityKey).parseClaimsJws(jwt).getBody();
-            return true;
         } catch ( io.jsonwebtoken.SignatureException | MalformedJwtException e) {
             System.out.println("잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
@@ -66,9 +64,32 @@ public class JwtService
         } catch (IllegalArgumentException e) {
             System.out.println("JWT 토큰이 잘못되었습니다.");
         }
-        return false;
     }
 
+    //
+    //  JWT에서 정보를 얻어내는 함수
+    //
+    public Map<String,String> getClaimsFromJwt(String jwt) {
+        Map<String, String> map = new HashMap<>();
+
+        if (jwt == null) {
+            System.out.println("JwtService -> getClaimsFromJwt()에서 토큰 == null");
+            System.out.println("토큰이 null임");
+            return map;
+        }
+        try {
+            //String userNum = claims.getBody().get("userNum", String.class);
+            Claims claims = Jwts.parser().setSigningKey(jwtSecurityKey).parseClaimsJws(jwt).getBody();
+            String userNum = claims.get("userNum",String.class);
+            map.put("userNum", userNum);
+            return map;
+        } catch (Exception err) {
+            err.printStackTrace();
+            System.out.println("JwtService -> getClaimsFromJwt()에서 예외처리로 빠짐");
+            return map;
+
+        }
+    }
 
 
 }
