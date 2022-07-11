@@ -45,14 +45,7 @@ public class AES256Util {
         this.keySpec = keySpec;
     }
 
-    /*
-     * AES256 으로 암호화 한다.
-     * @param str 암호화할 문자열
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws GeneralSecurityException
-     * @throws UnsupportedEncodingException
-     */
+    // 암호화
     public String encrypt(String str) throws NoSuchAlgorithmException,
             GeneralSecurityException, UnsupportedEncodingException
     {
@@ -66,14 +59,6 @@ public class AES256Util {
 
     /*복호화*/
 
-    /*
-     * AES256으로 암호화된 txt 를 복호화한다.
-     * @param str 복호화할 문자열
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws GeneralSecurityException
-     * @throws UnsupportedEncodingException
-     */
     public String decrypt(String str) throws NoSuchAlgorithmException,
             GeneralSecurityException, UnsupportedEncodingException
     {

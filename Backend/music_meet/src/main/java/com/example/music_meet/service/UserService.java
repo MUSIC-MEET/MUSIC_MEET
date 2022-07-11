@@ -759,7 +759,39 @@ public class UserService {
         return map;
     }
 
+    //
+    // 아이디를 매개변수로 이메일 변경
+    // CreateUserController.changeEmail에서 사용중
+    public void changeUserEmail(final String userNum, final String newEmail)
+    {
 
+        sql = "update user set email = ? where usernum = ?";
+        try {
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, newEmail);
+            pstmt.setInt(2, Integer.parseInt(userNum));
+            rsInt = pstmt.executeUpdate();
+        }
+        catch (Exception e)
+        {
+            System.out.println("changeUserEmail()에서 예외처리로 빠짐");
+        }
+        finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
+
+    }
 }
 
 
