@@ -11,7 +11,7 @@ const Backdrop = (props) => {
     return <div {...props} css={backropStyle}></div>;
 };
 
-const ModalOverlay = (props) => {
+const ModalOverlay =  (props) => {
     const ctx = useContext(ThemeContext);
     const { background, fontColor } = ctx.themeStyle.modal;
     return(
@@ -74,4 +74,4 @@ const modalOverlayStyle = css`
     }
 `;
 
-export default Modal;
+export default React.memo(Modal);

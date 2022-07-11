@@ -44,4 +44,4 @@ const UpdateTimeText = styled.p`
     color: ${props => props.color};
 `;
 
-export default TopText;
+export default React.memo(TopText);
