@@ -2,20 +2,25 @@
 
 package com.example.music_meet.controller;
 
-import com.example.music_meet.service.JwtService;
-import com.example.music_meet.service.LoginService;
 import com.example.music_meet.dto.ResetPw;
 import com.example.music_meet.dto.User;
 import com.example.music_meet.error.SignupErrorForm;
-import com.example.music_meet.service.UserService;
+import com.example.music_meet.service.JwtService;
+import com.example.music_meet.service.LoginService;
 import com.example.music_meet.service.MailService;
+import com.example.music_meet.service.UserService;
+import com.example.music_meet.util.CustomAnnotationConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -33,6 +38,10 @@ public class CreateUserController
 
     @Autowired
     private LoginService loginService;
+
+    @Autowired
+    private JwtService jwtService;
+
 
     //
     // 회원가입
@@ -199,23 +208,46 @@ public class CreateUserController
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    
+    //
+    //  마이페이지에 아이디, 비밀번호, 닉네임 출력해주는 컨트롤러
+    //
+    @CustomAnnotationConfig.jwtCheck
+    @RequestMapping(path="/user/myinfo", method = RequestMethod.GET)
+    public ResponseEntity<Object> callUserInfo()
+    {
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~여기부터 컨트롤러~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        final String authorization = request.getHeader("authorization");
 
+        Map<String,String> userMap;
+        userMap = jwtService.getClaimsFromJwt(authorization);
+        userMap.putAll(userService.findUserInfo(userMap.get("userNum")));
+
+        if (userMap.get("id") == null)
+        {
+            System.out.println(userMap);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        else
+        {
+            final String email = userService.findEmailFunc(userMap.get("userNum"));
+            userMap.remove("userNum");
+            userMap.put("email",email);
+            System.out.println(userMap);
+            return new ResponseEntity<>(userMap,HttpStatus.OK);
+        }
+    }
 
 
     //
     // 테스트
     //
-    @RequestMapping(path = "/test", method = RequestMethod.POST)
+    @RequestMapping(path = "/testtttttt", method = RequestMethod.POST)
     public void testFunc(@RequestBody Map<String, String> token)
     {
-        final String jwt = token.get("jwtToken");
-        Map<String, String> map;
-        map = loginService.loginStateCheck(jwt);
 
-
-        JwtService jwtService = new JwtService();
-        jwtService.validateToken(jwt);
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.music_meet.service;
 
 import com.example.music_meet.util.AES256Util;
+import com.example.music_meet.util.CustomAnnotationConfig;
 import com.example.music_meet.util.SHA256;
 import com.example.music_meet.dto.User;
 //import io.jsonwebtoken.*;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.example.music_meet.util.CustomAnnotationConfig.*;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -67,9 +69,9 @@ public class LoginService
                 System.out.println("getUserPw()에서 rs가 없음");
             else
             {
-                map.put("usernum",Integer.toString(rs.getInt(1)));
+                map.put("userNum",Integer.toString(rs.getInt(1)));
                 map.put("pw", rs.getString(2));
-                map.put("nickname", rs.getString(3));
+                map.put("nickName", rs.getString(3));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -90,29 +92,9 @@ public class LoginService
         return map;
     }
 
-    public Map<String,String> loginStateCheck(String jwt) {
-        Map<String, String> map = new HashMap<>();
-        
-        if (jwt == null) {
-            System.out.println("LoginService -> loginStateCheck()에서 토큰 == null");
-            System.out.println("토큰이 null임");
-            map.put("error", "1");
 
-            return map;
-        }
-        try {
-            //String userNum = claims.getBody().get("userNum", String.class);
-            Claims claims = Jwts.parser().setSigningKey(jwtSecurityKey).parseClaimsJws(jwt).getBody();
-            String userNum = claims.get("userNum",String.class);
-            map.put("userNum", userNum);
-            return map;
-        } catch (Exception err) {
-            err.printStackTrace();
-            map.put("error", "1");
-            System.out.println("LoginService -> loginStateCheck()에서 예외처리로 빠짐");
-            return map;
 
-        }
-    }
+
+
 
 }

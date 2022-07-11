@@ -20,6 +20,8 @@ import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Getter
@@ -109,7 +111,54 @@ public class UserService {
         return id;
     }
 
+    //
+    // 이메일 찾기
+    //
+    public String findEmailFunc(final String userNum)
+    {
+        String sql = "select email from user where usernum = ?";
+        String encoding_email;
+        String decoding_email;
+        try
+        {
+            aes256Util = new AES256Util();
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
 
+            pstmt.setInt(1,Integer.parseInt(userNum));
+            rs = pstmt.executeQuery();
+
+            if (!rs.next())
+            {
+                throw new Exception("findIdFunc 에서 rs가 null 값으로 예외처리에 빠짐");
+            }
+            else
+            {
+                encoding_email = rs.getString(1);
+                decoding_email = aes256Util.decrypt(encoding_email);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return decoding_email;
+    }
 
     //
     // 아이디 중복 검사 (id가 DB에 있으면 true 리턴)
@@ -637,7 +686,7 @@ public class UserService {
     //
     public void setUserPw(ResetPw resetPw)
     {
-        String sql = "update user set pw = ? where id =(select id from pwauth where encoding_value = ?)";
+        sql = "update user set pw = ? where id =(select id from pwauth where encoding_value = ?)";
         try
         {
             //
@@ -665,6 +714,52 @@ public class UserService {
             }
         }
     }
+
+    //
+    // userNum을 매개변수로 아이디, 이메일, 닉네임을 조회하는 함수
+    // CreateUserController.callUserInfo에서 사용중
+    public Map<String, String> findUserInfo(String userNum)
+    {
+        sql = "select id, email, nickname from user where usernum = ?";
+        Map<String, String> map = new HashMap<>();
+        try {
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, Integer.parseInt(userNum));
+            rs = pstmt.executeQuery();
+            if (!rs.next())
+            {
+                System.out.println("findUserInfo에서 userNum으로 아이디, 닉네임, 이메일 조회 실패");
+                map.put("id", null);
+                map.put("email", null);
+                map.put("nickname", null);
+            }
+            else
+            {
+                map.put("id", rs.getString(1));
+                map.put("email", rs.getString(2));
+                map.put("nickname", rs.getString(3));
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("findUserInfo에서 예외처리로 빠짐");
+        }
+        finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return map;
+    }
+
+
 }
 
 
