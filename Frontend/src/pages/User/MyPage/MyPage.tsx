@@ -19,7 +19,6 @@ function MyPage() {
             <Suspense fallback={<Loading />}>
                 <UserEdit />
             </Suspense>
-
         </Content>
     );
 }
