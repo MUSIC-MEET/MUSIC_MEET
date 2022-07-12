@@ -12,6 +12,7 @@ import Success from "./pages/SignUp/Success";
 import EmailAuth from "./pages/Auth/Index";
 import User from "./pages/User/Index";
 import LiveChart from "./pages/LiveChart/Index";
+import GuestRoute from "./components/common/GuestRoute";
 
 const rootStyle = css`
     display: flex;
@@ -42,8 +43,13 @@ function App() {
                     
                     <Routes>
                         <Route path="/" element={<h2>hello</h2>} />
-                        <Route path="/signup" element={<SignUp />} />
-                        <Route path="/signup/success" element={<Success />} />
+                        <Route 
+                            path="/signup/*"
+                            element={
+                                <GuestRoute RouteComponent={SignUp}
+                                />
+                            } 
+                        />
                         <Route path="/auth/:type/:value" element={<EmailAuth />} />
                         <Route path="/find/*" element={<UserFind />} />
                         <Route path="/user/*" element={<User />} />
