@@ -14,7 +14,6 @@ function MyPage() {
     const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
     const navigator = useNavigate();
     const setCurrentPage = useSetRecoilState(CurrentPage);
-    console.log(isLogIn);
     useLayoutEffect(() => {
         if (!isLogIn) navigator("/");
         setCurrentPage(-1);

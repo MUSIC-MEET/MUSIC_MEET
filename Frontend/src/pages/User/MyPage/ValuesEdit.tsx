@@ -5,20 +5,7 @@ import EditBox, { EditBoxProps } from "./EditBox";
 import { useNavigate } from "react-router-dom";
 import useForm from "hooks/use-form";
 import SignUpValidator from "pages/SignUp/SignUpValidator";
-import useHttp from "hooks/use-Http";
-import { useRecoilValue } from "recoil";
-import LoginState from "store/LoginState";
 
-
-interface ValuesProps {
-    email: string;
-    nickname: string;
-}
-
-const InitValues: ValuesProps = {
-    email: "",
-    nickname: ""
-};
 
 interface Props {
     myInfo: {
@@ -32,11 +19,12 @@ function ValuesEdit(props: Props) {
     const { t } = useTranslation<"myPage">("myPage");
     const navigate = useNavigate();
 
-    const { id, nickname, email } = myInfo;
     const { values, valuesChangeHandler, error } = useForm({
-        initValues: InitValues,
-        validate: SignUpValidator
+        initValues: myInfo,
+        validator: SignUpValidator
     });
+
+    const { email, nickname } = values;
 
     const onSubmit = (e: React.FormEvent<HTMLElement>) => {
         //
@@ -53,11 +41,13 @@ function ValuesEdit(props: Props) {
             input: {
                 id: "id",
                 name: "id",
-                value: id,
+                value: myInfo.id,
                 type: "text",
                 placeholder: t("edit.values.placeholder.id"),
-                disabled: "disabled"
+                disabled: "disabled",
+                onChange: valuesChangeHandler,
             },
+            error: error.id,
             submit: t("edit.values.submit"),
             onSubmit: onSubmit
         },
@@ -69,8 +59,11 @@ function ValuesEdit(props: Props) {
                 value: nickname,
                 type: "text",
                 placeholder: t("edit.values.placeholder.nickname"),
-                disabled: ""
+                disabled: "",
+                onChange: valuesChangeHandler,
+
             },
+            error: error.nickname,
             submit: t("edit.values.submit"),
             onSubmit: onSubmit
         },
@@ -82,8 +75,10 @@ function ValuesEdit(props: Props) {
                 value: email,
                 type: "email",
                 placeholder: t("edit.values.placeholder.email"),
-                disabled: ""
+                disabled: "",
+                onChange: valuesChangeHandler,
             },
+            error: error.email,
             submit: t("edit.values.submit"),
             onSubmit: onSubmit
         },
@@ -97,6 +92,7 @@ function ValuesEdit(props: Props) {
                     input={box.input}
                     submit={box.submit}
                     onSubmit={box.onSubmit}
+                    error={box.error}
                 />
             ))}
             <Button

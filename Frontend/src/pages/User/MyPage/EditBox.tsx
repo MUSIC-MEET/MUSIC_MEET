@@ -4,6 +4,7 @@ import Form from "components/common/Form";
 import Input from "components/common/Input";
 import Submit from "components/common/Submit";
 import React from "react";
+import ValidResult from "pages/SignUp/ValidResult";
 
 
 
@@ -20,13 +21,15 @@ interface EditBoxProps {
         value: string;
         placeholder: string;
         disabled: string;
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     }
+    error: string;
     submit: string;
     onSubmit: (e: React.FormEvent<HTMLElement>) => void;
 }
 
 function EditBox(props: EditBoxProps) {
-    const { label, input, submit, onSubmit } = props;
+    const { label, input, submit, onSubmit, error } = props;
     return (
         <Form addCss={[formStyle]} direction="column" onSubmit={onSubmit}>
             <label htmlFor="id">{label}</label>
@@ -39,8 +42,13 @@ function EditBox(props: EditBoxProps) {
                     value={submit}
                     w={SUBMIT_WIDTH}
                     h={HEIGHT}
+                    disabled={error !== "valid"}
                 />
             </Wrap>
+            <ValidResult
+                result={error}
+                name={input.name}
+            />
         </Form>
     );
 }
@@ -63,6 +71,10 @@ const Wrap = styled.div`
     display: flex;
     justify-content: center;
     align-items: space-between;
+
+    & {
+        margin-bottom: 0.8rem;
+    }
 `;
 export default EditBox;
 export { EditBoxProps };
