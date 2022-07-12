@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
 import Content from "../UI/Content";
@@ -8,7 +9,11 @@ interface GuestRouteProps {
 }
 
 function Alert() {
-    return <Content>로그인 상태에서 이용하실수 없습니다.</Content>;
+    const { t } = useTranslation<"guestRoute">("guestRoute");
+    useEffect(() => {
+        //
+    }, [t]);
+    return <Content>{t("ment")}</Content>;
 }
 
 function GuestRoute(props: GuestRouteProps) {
