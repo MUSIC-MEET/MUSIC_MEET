@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 //
 //  암호화, 복호화 가능한 알고리즘
-//
+//  이메일 인증 링크 만들때 사용
 @Component
 public class SHA256 {
 

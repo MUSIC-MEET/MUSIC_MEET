@@ -114,11 +114,10 @@ public class UserService {
     //
     // 이메일 찾기
     //
-    public String findEmailFunc(final String userNum)
+    public String findEmailFunc(final String Email)
     {
-        String sql = "select email from user where usernum = ?";
-        String encoding_email;
-        String decoding_email;
+        String sql = "select email from user where email = ?";
+        String decoding_email = null;
         try
         {
             aes256Util = new AES256Util();
@@ -129,7 +128,7 @@ public class UserService {
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
-            pstmt.setInt(1,Integer.parseInt(userNum));
+            pstmt.setString(1,Email);
             rs = pstmt.executeQuery();
 
             if (!rs.next())
@@ -138,8 +137,7 @@ public class UserService {
             }
             else
             {
-                encoding_email = rs.getString(1);
-                decoding_email = aes256Util.decrypt(encoding_email);
+                decoding_email = aes256Util.decrypt(rs.getString(1));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -293,8 +291,8 @@ public class UserService {
     //
     public void emailAuthFunc(User user)
     {
-        int a = 202007055 + 201607082 + 202007058 + 201607083 + 201807054;
-        String key = ""+a;
+        //int a = 202007055 + 201607082 + 202007058 + 201607083 + 201807054;
+        String key = "1009035332a";
         String encodingValue;
         String str = user.getId() + user.getNickname() + user.getEmail() + key;
         
