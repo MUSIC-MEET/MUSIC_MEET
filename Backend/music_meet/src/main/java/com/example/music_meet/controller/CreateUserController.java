@@ -212,7 +212,7 @@ public class CreateUserController
         {
             userService.setUserPw(resetPw);
             userService.deletepwAuthFunc(resetPw.getEncoding_value());
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -234,7 +234,6 @@ public class CreateUserController
 
         if (userMap.get("id") == null)
         {
-            System.out.println(userMap);
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         else
@@ -242,7 +241,6 @@ public class CreateUserController
             final String email = userService.findEmailFunc(userMap.get("userNum"));
             userMap.remove("userNum");
             userMap.put("email",email);
-            System.out.println(userMap);
             return new ResponseEntity<>(userMap,HttpStatus.OK);
         }
     }
@@ -251,7 +249,7 @@ public class CreateUserController
     // 이메일 바꾸는 API
     //
     @CustomAnnotationConfig.jwtCheck
-    @RequestMapping(path="/user/change/email", method = RequestMethod.PUT)
+    @RequestMapping(path="/user/email", method = RequestMethod.PUT)
     public ResponseEntity<Object> changeEmail(@RequestBody final String email)
     {
         final String encodingEmail;
@@ -265,18 +263,24 @@ public class CreateUserController
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorization = request.getHeader("authorization");
-
-
-
-
+        Map<String, String> userMap;
         // 이메일 중복 검사
         try {
-            userService.findEmailFunc(authorization);
+            userMap = userService.findUserInfo(authorization);
+            String findEmail = userService.findEmailFunc(email);
+
+            if (!(userMap.get("email") == null) && !(findEmail == null))
+            {
+
+
+            }
+
             //mailService.registerAuthSendMailFunc();
         }catch (Exception e)
         {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+        // 메일 발송
 
 
 
@@ -286,7 +290,9 @@ public class CreateUserController
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
+    //
+    //
+    //
 
 
 
