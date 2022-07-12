@@ -9,11 +9,13 @@ import MyInfo from "store/MyInfo";
 function UserEdit() {
 
     const myInfo = useRecoilValue(MyInfo);
-    console.log(myInfo);
+
     return (
         <article css={[articleStyle]}>
             <ImageEdit />
-            <ValuesEdit />
+            <ValuesEdit
+                myInfo={myInfo}
+            />
         </article>
     );
 }
