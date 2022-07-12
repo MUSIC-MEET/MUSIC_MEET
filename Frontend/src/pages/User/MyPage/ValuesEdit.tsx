@@ -20,10 +20,19 @@ const InitValues: ValuesProps = {
     nickname: ""
 };
 
-function ValuesEdit() {
+interface Props {
+    myInfo: {
+        id: string;
+        nickname: string;
+        email: string;
+    }
+}
+function ValuesEdit(props: Props) {
+    const { myInfo } = props;
     const { t } = useTranslation<"myPage">("myPage");
     const navigate = useNavigate();
 
+    const { id, nickname, email } = myInfo;
     const { values, valuesChangeHandler, error } = useForm({
         initValues: InitValues,
         validate: SignUpValidator
@@ -44,6 +53,7 @@ function ValuesEdit() {
             input: {
                 id: "id",
                 name: "id",
+                value: id,
                 type: "text",
                 placeholder: t("edit.values.placeholder.id"),
                 disabled: "disabled"
@@ -56,6 +66,7 @@ function ValuesEdit() {
             input: {
                 id: "nickname",
                 name: "nickname",
+                value: nickname,
                 type: "text",
                 placeholder: t("edit.values.placeholder.nickname"),
                 disabled: ""
@@ -68,6 +79,7 @@ function ValuesEdit() {
             input: {
                 id: "email",
                 name: "email",
+                value: email,
                 type: "email",
                 placeholder: t("edit.values.placeholder.email"),
                 disabled: ""

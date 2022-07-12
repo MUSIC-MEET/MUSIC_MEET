@@ -17,6 +17,7 @@ interface EditBoxProps {
         id: string;
         name: string;
         type: string;
+        value: string;
         placeholder: string;
         disabled: string;
     }
