@@ -33,4 +33,4 @@ function Submit(props) {
     );
 }
 
-export default Submit;
+export default React.memo(Submit);
