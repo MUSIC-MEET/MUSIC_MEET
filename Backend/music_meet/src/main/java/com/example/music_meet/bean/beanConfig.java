@@ -1,6 +1,7 @@
 package com.example.music_meet.bean;
 
 import com.JPA.Repository.AccountRepository;
+import com.example.music_meet.service.InterceptorService;
 import com.example.music_meet.service.UserService;
 import com.example.music_meet.validate.Validate;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
@@ -19,7 +22,14 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:application.properties")
-public class beanConfig {
+public class beanConfig implements WebMvcConfigurer
+{
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new InterceptorService())
+                .addPathPatterns("/*") // 해당 경로에 접근하기 전에 인터셉터가 가로챈다.
+                .excludePathPatterns("/boards"); // 해당 경로는 인터셉터가 가로채지 않는다.
+    }
 
     @Value("${spring.mail.host}")
     private String mailHost;
