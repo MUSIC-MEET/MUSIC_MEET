@@ -5,7 +5,7 @@ import EditBox, { EditBoxProps } from "./EditBox";
 import { useNavigate } from "react-router-dom";
 import useForm from "hooks/use-form";
 import SignUpValidator from "pages/SignUp/SignUpValidator";
-
+import ChangeEmailRequest from "utils/RequestApis/MyPage/ChangeEmail";
 
 interface Props {
     myInfo: {
@@ -30,6 +30,17 @@ function ValuesEdit(props: Props) {
         //
         e.preventDefault();
     };
+
+    const emailChangeButtonClickHandler = useCallback(async (e: React.FormEvent<HTMLElement>) => {
+        e.preventDefault();
+        await ChangeEmailRequest(email)
+            .then((res: any) => {
+                console.log(res.response.status);
+            })
+            .catch((err: any) => {
+                console.log(err.response.status);
+            });
+    }, [email]);
 
     const changePasswordHandler = useCallback(() => {
         navigate("/user/resetpw");
@@ -80,7 +91,7 @@ function ValuesEdit(props: Props) {
             },
             error: error.email,
             submit: t("edit.values.submit"),
-            onSubmit: onSubmit
+            onSubmit: emailChangeButtonClickHandler
         },
     ];
     return (
