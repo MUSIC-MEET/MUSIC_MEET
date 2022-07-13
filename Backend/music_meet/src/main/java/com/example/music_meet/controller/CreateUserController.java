@@ -225,8 +225,13 @@ public class CreateUserController
     @RequestMapping(path="/user/myinfo", method = RequestMethod.GET)
     public ResponseEntity<Object> callUserInfo()
     {
+
+
+        System.out.println("컨트롤러 실행");
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorization = request.getHeader("authorization");
+
+        System.out.println(request.getAttribute("auth"));
 
         Map<String,String> userMap;
         userMap = jwtService.getClaimsFromJwt(authorization);
@@ -289,10 +294,6 @@ public class CreateUserController
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    //
-    //
-    //
 
 
 
