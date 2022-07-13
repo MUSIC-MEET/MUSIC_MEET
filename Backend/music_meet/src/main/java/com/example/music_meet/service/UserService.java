@@ -114,9 +114,9 @@ public class UserService {
     //
     // 이메일 찾기
     //
-    public String findEmailFunc(final String Email)
+    public String findEmailFunc(final String userNum)
     {
-        String sql = "select email from user where email = ?";
+        String sql = "select email from user where userNum = ?";
         String decoding_email = null;
         try
         {
@@ -128,7 +128,7 @@ public class UserService {
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1,Email);
+            pstmt.setInt(1, Integer.parseInt(userNum));
             rs = pstmt.executeQuery();
 
             if (!rs.next())

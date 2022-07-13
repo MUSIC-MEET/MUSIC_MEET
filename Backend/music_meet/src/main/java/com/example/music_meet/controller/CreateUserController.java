@@ -198,7 +198,7 @@ public class CreateUserController
         else
             return new ResponseEntity<>(HttpStatus.OK);
     }
-ㄱ
+
     //
     // new 비밀번호를 입력받아서 user테이블의 비밀번호를 수정하는 부분
     //
@@ -221,7 +221,7 @@ public class CreateUserController
     //
     //  마이페이지에 아이디, 비밀번호, 닉네임 출력해주는 컨트롤러
     //
-    @CustomAnnotationConfig.jwtCheck
+    //@CustomAnnotationConfig.jwtCheck
     @RequestMapping(path="/user/myinfo", method = RequestMethod.GET)
     public ResponseEntity<Object> callUserInfo()
     {
@@ -248,7 +248,7 @@ public class CreateUserController
     //
     // 이메일 바꾸는 API
     //
-    @CustomAnnotationConfig.jwtCheck
+    //@CustomAnnotationConfig.jwtCheck
     @RequestMapping(path="/user/email", method = RequestMethod.PUT)
     public ResponseEntity<Object> changeEmail(@RequestBody final String email)
     {
