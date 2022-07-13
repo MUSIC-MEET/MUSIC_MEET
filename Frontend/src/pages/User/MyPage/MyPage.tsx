@@ -7,7 +7,7 @@ import CurrentPage from "store/CurrentPage";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import Loading from "../../../components/common/Loading";
 import LoginState from "store/LoginState";
-import ErrorBoundary from "./ErrorBoundary";
+import ErrorBoundary from "components/common/ErrorBoundary";
 
 function MyPage() {
     const { t } = useTranslation<"myPage">("myPage");
@@ -15,7 +15,7 @@ function MyPage() {
     const setCurrentPage = useSetRecoilState(CurrentPage);
     useLayoutEffect(() => {
         setCurrentPage(-1);
-    }, [isLogIn, navigator, setCurrentPage]);
+    }, [isLogIn, setCurrentPage]);
     return (
         <Content>
             <Title>{t("title")}</Title>

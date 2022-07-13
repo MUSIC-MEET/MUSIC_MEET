@@ -8,7 +8,6 @@ import "./i18n";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import SignUp from "./pages/SignUp/Index";
 import UserFind from "./pages/Find/Index";
-import Success from "./pages/SignUp/Success";
 import EmailAuth from "./pages/Auth/Index";
 import User from "./pages/User/Index";
 import LiveChart from "./pages/LiveChart/Index";
@@ -40,7 +39,7 @@ function App() {
                             onClick={menuVisibleHandler}
                         />
                     }
-                    
+                 
                     <Routes>
                         <Route path="/" element={<h2>hello</h2>} />
                         <Route 
@@ -56,7 +55,7 @@ function App() {
                         <Route path="/livechart/*" element={<LiveChart />} />
                         <Route path="/unauthorization" element={<h2>unauthorization</h2>} />
                     </Routes>
-                    
+                
                 </Content>
             </div>
         </ThemeContextProvider>
