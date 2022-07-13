@@ -16,6 +16,12 @@ const text: MyPageType = {
             },
             changePasswordButton: "Change Password",
             submit: "Edit",
+
+            AlertModal: {
+                title: "Change Success",
+                content: "Change Success.  \nPlease Login Again",
+                button: "OK"
+            }
         },
         img: {
             button: "Select Change Image"

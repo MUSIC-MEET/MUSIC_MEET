@@ -14,6 +14,12 @@ interface MyPageType {
             }
             changePasswordButton: string;
             submit: string;
+
+            AlertModal: {
+                title: string;
+                content: string;
+                button: string;
+            }
         },
         img: {
             button: string;
