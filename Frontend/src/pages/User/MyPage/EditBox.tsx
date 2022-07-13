@@ -76,5 +76,5 @@ const Wrap = styled.div`
         margin-bottom: 0.8rem;
     }
 `;
-export default EditBox;
+export default React.memo(EditBox);
 export { EditBoxProps };
