@@ -54,6 +54,7 @@ function App() {
                         <Route path="/find/*" element={<UserFind />} />
                         <Route path="/user/*" element={<User />} />
                         <Route path="/livechart/*" element={<LiveChart />} />
+                        <Route path="/unauthorization" element={<h2>unauthorization</h2>} />
                     </Routes>
                     
                 </Content>

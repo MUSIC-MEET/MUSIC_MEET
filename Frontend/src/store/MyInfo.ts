@@ -16,6 +16,11 @@ const MyInfo = selector({
         })
             .then((res) => {
                 return res.data;
+            })
+            .catch((err) => {
+                if(err.response.status === 401) {
+                    throw "401";
+                }
             });
         return data;
     }
