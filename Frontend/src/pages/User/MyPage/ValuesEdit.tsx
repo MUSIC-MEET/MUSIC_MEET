@@ -61,7 +61,7 @@ function ValuesEdit(props: Props) {
         ChangeEmailRequest(email)
             .then((res: any) => {
                 if (res.response.status === 204) {
-                    resetLoginState(); // 모달을 닫고 재로그인 안할수도 있기때문에 해줘야함 
+                    setIsOpenModal(true);
                 }
             })
             .catch((err: any) => {
