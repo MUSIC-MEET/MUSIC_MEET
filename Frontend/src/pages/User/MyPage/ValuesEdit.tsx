@@ -10,6 +10,7 @@ import ChangeNicknameRequest from "utils/RequestApis/MyPage/ChangeNickname";
 import AlertModal from "components/AlertModal/AlertModal";
 import { useResetRecoilState } from "recoil";
 import LoginState from "store/LoginState";
+import { AxiosResponse } from "axios";
 
 interface Props {
     myInfo: {
@@ -46,12 +47,12 @@ function ValuesEdit(props: Props) {
         e.preventDefault();
         ChangeNicknameRequest(nickname)
             .then((res: any) => {
-                if (res.response.status === 204) {
+                if (res.status === 204) {
                     setIsOpenModal(true);
                 }
             })
             .catch((err: any) => {
-                if (err.response.status === 401) {
+                if (err.status === 401) {
                     throw "401";
                 }
             });
@@ -62,12 +63,12 @@ function ValuesEdit(props: Props) {
         e.preventDefault();
         ChangeEmailRequest(email)
             .then((res: any) => {
-                if (res.response.status === 204) {
+                if (res.status === 204) {
                     setIsOpenModal(true);
                 }
             })
             .catch((err: any) => {
-                if (err.response.status === 401) {
+                if (err.status === 401) {
                     throw "401";
                 }
             });
@@ -133,6 +134,7 @@ function ValuesEdit(props: Props) {
                     content={t("edit.values.AlertModal.content")}
                     button={t("edit.values.AlertModal.button")}
                     onClose={changeSuccess}
+                    buttonClick={changeSuccess}
                 />}
             {editBox.map((box, index) => (
                 <EditBox
