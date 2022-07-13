@@ -51,7 +51,9 @@ function ValuesEdit(props: Props) {
                 }
             })
             .catch((err: any) => {
-                //
+                if (err.response.status === 401) {
+                    throw "401";
+                }
             });
     }, [nickname]);
 
@@ -65,9 +67,11 @@ function ValuesEdit(props: Props) {
                 }
             })
             .catch((err: any) => {
-                //
+                if (err.response.status === 401) {
+                    throw "401";
+                }
             });
-    }, [email, resetLoginState]);
+    }, [email]);
 
     const changePasswordHandler = useCallback(() => {
         navigate("/user/resetpw");
