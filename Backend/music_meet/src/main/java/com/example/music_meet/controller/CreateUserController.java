@@ -14,6 +14,7 @@ import com.example.music_meet.util.CustomAnnotationConfig;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,8 @@ import java.util.Map;
 @Slf4j
 public class CreateUserController
 {
-
+    @Value("${email.key}")
+    private String emailKey;
     @Autowired
     private UserService userService;
 
@@ -225,13 +227,8 @@ public class CreateUserController
     @RequestMapping(path="/user/myinfo", method = RequestMethod.GET)
     public ResponseEntity<Object> callUserInfo()
     {
-
-
-        System.out.println("컨트롤러 실행");
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorization = request.getHeader("authorization");
-
-        System.out.println(request.getAttribute("auth"));
 
         Map<String,String> userMap;
         userMap = jwtService.getClaimsFromJwt(authorization);
@@ -243,7 +240,11 @@ public class CreateUserController
         }
         else
         {
-            final String email = userService.findEmailFunc(userMap.get("userNum"));
+            Map<String,String> findEmailFuncRequestMap = new HashMap<>();
+            findEmailFuncRequestMap.put("userNum",userMap.get("userNum"));
+            findEmailFuncRequestMap.put("email",null);
+
+            final String email = userService.findEmailFunc(findEmailFuncRequestMap);
             userMap.remove("userNum");
             userMap.put("email",email);
             return new ResponseEntity<>(userMap,HttpStatus.OK);
@@ -255,47 +256,67 @@ public class CreateUserController
     //
     //@CustomAnnotationConfig.jwtCheck
     @RequestMapping(path="/user/email", method = RequestMethod.PUT)
-    public ResponseEntity<Object> changeEmail(@RequestBody final String email)
+    public ResponseEntity<Object> changeEmail(@RequestBody Map<String,String> requestValue)
     {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final String newEmail = requestValue.get("email");
         final String encodingEmail;
+
+
+        final String userNum = (String)request.getAttribute("userNum");
+
+        Map<String, String> userMap = new HashMap<>();
+        userMap.putAll( userService.findUserInfo(userNum));
+
+
+        final String id = userMap.get("id");
+        final String email = userMap.get("email");
+        final String nickname = userMap.get("nickname");
+
+
         try {
-            encodingEmail = aes256Util.encrypt(email);
+            aes256Util = new AES256Util();
+            encodingEmail = aes256Util.encrypt(newEmail);
         } catch (GeneralSecurityException e) {
             throw new RuntimeException(e);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
 
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        final String authorization = request.getHeader("authorization");
-        Map<String, String> userMap;
-        // 이메일 중복 검사
+        userMap = null;
+
+
         try {
-            userMap = userService.findUserInfo(authorization);
-            String findEmail = userService.findEmailFunc(email);
 
-            if (!(userMap.get("email") == null) && !(findEmail == null))
-            {
+            Map<String,String> findEmailFuncRequestMap = new HashMap<>();
+            findEmailFuncRequestMap.put("userNum",null);
+            findEmailFuncRequestMap.put("email",email);
 
+            // 이메일 중복검사(다른 사용자가 사용하면 안되고, 현재 이메일이면 안됨)
+            userService.findEmailFunc(findEmailFuncRequestMap);
 
-            }
+            // 메일 보내고 emailauth 테이블에 추가하는 함수 호출
+            userService.emailAuthFunc(new User(userNum, id,null, newEmail, nickname));
 
-            //mailService.registerAuthSendMailFunc();
+            // 해당 유저의 state를 3번으로 교체
+            userService.setUserStateValue(userNum,3);
+
         }catch (Exception e)
         {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        // 메일 발송
 
 
-
-        // userMap 이용해서 디비에서 바꾸는
-        userService.changeUserEmail(authorization , encodingEmail);
+        // userMap 이용해서 디비에서 바꾸는 부분
+        userService.changeUserEmail(userNum , encodingEmail);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
 
 
 

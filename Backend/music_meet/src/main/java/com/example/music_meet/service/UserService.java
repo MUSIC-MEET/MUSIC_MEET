@@ -114,47 +114,100 @@ public class UserService {
     //
     // 이메일 찾기
     //
-    public String findEmailFunc(final String userNum)
+    public String findEmailFunc(final Map<String, String> requestMap)
     {
-        String sql = "select email from user where userNum = ?";
         String decoding_email = null;
-        try
+
+        if (requestMap.get("userNum") == null)
         {
-            aes256Util = new AES256Util();
-            //
-            // DB구간
-            //
-            Class.forName(classForName);
-            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
-            pstmt = conn.prepareStatement(sql);
+            String sql = "select email from user where email = ?";
 
-            pstmt.setInt(1, Integer.parseInt(userNum));
-            rs = pstmt.executeQuery();
+            try
+            {
+                aes256Util = new AES256Util();
+                //
+                // DB구간
+                //
+                Class.forName(classForName);
+                conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+                pstmt = conn.prepareStatement(sql);
 
-            if (!rs.next())
-            {
-                throw new Exception("findIdFunc 에서 rs가 null 값으로 예외처리에 빠짐");
-            }
-            else
-            {
-                decoding_email = aes256Util.decrypt(rs.getString(1));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        finally {
-            try {
-                rs.close();
-                pstmt.close();
-                conn.close();
+                pstmt.setString(1, requestMap.get("email"));
+                rs = pstmt.executeQuery();
+
+                if (rs.next())
+                {
+                    decoding_email = aes256Util.decrypt(rs.getString(1));
+                }
+                else
+                {
+                    //throw new Exception("findEmailFunc 에서 중복된 이메일 확인되에 예외처리로 빠짐");
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
+            finally {
+                try {
+                    rs.close();
+                    pstmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
         }
+        else
+        {
+            String sql = "select email from user where userNum = ?";
+
+            try
+            {
+                aes256Util = new AES256Util();
+                //
+                // DB구간
+                //
+                Class.forName(classForName);
+                conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+                pstmt = conn.prepareStatement(sql);
+
+                pstmt.setInt(1, Integer.parseInt(requestMap.get("userNum")));
+                rs = pstmt.executeQuery();
+
+                if (rs.next())
+                {
+                    decoding_email = aes256Util.decrypt(rs.getString(1));
+
+                }
+                else
+                {
+                    //throw new Exception("findEmailFunc 에서 중복된 이메일 확인되에 예외처리로 빠짐");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            finally {
+                try {
+                    rs.close();
+                    pstmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+
+
+
         return decoding_email;
     }
 
@@ -291,7 +344,6 @@ public class UserService {
     //
     public void emailAuthFunc(User user)
     {
-        //int a = 202007055 + 201607082 + 202007058 + 201607083 + 201807054;
         String key = "1009035332a";
         String encodingValue;
         String str = user.getId() + user.getNickname() + user.getEmail() + key;
@@ -319,7 +371,7 @@ public class UserService {
 
             if (!rs.next())
             {
-                System.out.println("emailAuthFunc에서 에러로 빠짐");
+                System.out.println("emailAuthFunc에서 에러로 빠짐, 만약 changeEmail (이메일 바꾸는 API)가 호출될시 에러가 아닌 정상 작동임");
             }
             else
             {
@@ -489,6 +541,7 @@ public class UserService {
             }
         }
     }
+
 
     //
     // user가 비밀번호를 찾을때 아이디와 이메일을 입력받아서 아이디와 이메일이 DB에 있는지 확인하는 함수
@@ -718,7 +771,7 @@ public class UserService {
     // CreateUserController.callUserInfo에서 사용중
     public Map<String, String> findUserInfo(String userNum)
     {
-        sql = "select id, email, nickname from user where usernum = ?";
+        sql = "select usernum, id, email, nickname from user where usernum = ?";
         Map<String, String> map = new HashMap<>();
         try {
             Class.forName(classForName);
@@ -730,15 +783,17 @@ public class UserService {
             if (!rs.next())
             {
                 System.out.println("findUserInfo에서 userNum으로 아이디, 닉네임, 이메일 조회 실패");
+                map.put("userNum", null);
                 map.put("id", null);
                 map.put("email", null);
                 map.put("nickname", null);
             }
             else
             {
-                map.put("id", rs.getString(1));
-                map.put("email", rs.getString(2));
-                map.put("nickname", rs.getString(3));
+                map.put("userNum", Integer.toString(rs.getInt(1)));
+                map.put("id", rs.getString(2));
+                map.put("email", rs.getString(3));
+                map.put("nickname", rs.getString(4));
             }
         }
         catch (Exception e)
@@ -790,6 +845,40 @@ public class UserService {
 
 
     }
+
+    public void setUserStateValue(String userNum, int state)
+    {
+        sql = "update user set state = ? where usernum = ?";
+        try {
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, state);
+            pstmt.setInt(2, Integer.parseInt(userNum));
+
+            rsInt = pstmt.executeUpdate();
+        }
+        catch (Exception e)
+        {
+            System.out.println("setUserStateValue()에서 예외처리로 빠짐");
+        }
+        finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
+    }
+
+    //
+    // 유저의 state를 바꾸는 함수
+    //
 }
 
 
