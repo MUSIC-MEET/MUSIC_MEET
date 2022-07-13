@@ -34,7 +34,6 @@ function useHttp(props: useHooksProps) {
                 data: body || null,
                 headers: header || {
                     "Content-Type": "application/json",
-                    "authorization": isLogIn ? key : ""
                 }
             }).then((res) => {
                 setStatus({ ...status, isSucess: true, isError: false });
@@ -45,7 +44,7 @@ function useHttp(props: useHooksProps) {
                 reject(err.response.data);
             });
         });
-    }, [body, header, isLogIn, key, method, status, url]);
+    }, [body, header, method, status, url]);
 
 
 

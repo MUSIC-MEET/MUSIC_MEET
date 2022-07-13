@@ -16,6 +16,12 @@ const text: MyPageType = {
             },
             changePasswordButton: "비밀번호 변경",
             submit: "변경",
+
+            AlertModal: {
+                title: "변경 성공",
+                content: "변경에 성공하였습니다.  \n다시 로그인해주세요.",
+                button: "확인"
+            }
         },
         img: {
             button: "변경할 이미지를 선택해주세요."
