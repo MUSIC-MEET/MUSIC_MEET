@@ -14,12 +14,12 @@ const ChangeEmailRequest = (email: string) => {
                 email: email
             }
         })
-            .then((res) => 
-                resolve(res)
-            )
-            .catch((err) => 
-                reject(err)
-            );
+            .then((res) => {
+                return resolve(res);
+            })
+            .catch((err) => { 
+                return reject(err);
+            });
     });
 };
 
