@@ -35,6 +35,11 @@ const LoginState = selector<TLoginState>({
         return state;
     },
     set: ({ set }, newValue) => {
+        if(newValue && DefaultValue) {
+            localStorage.removeItem("isLogIn");
+            localStorage.removeItem("token");
+            localStorage.removeItem("nickname");
+        }
         set(State, newValue instanceof DefaultValue ? 
             ({
                 isLogIn: false,
