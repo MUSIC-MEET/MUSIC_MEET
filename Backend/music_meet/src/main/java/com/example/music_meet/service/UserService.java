@@ -340,7 +340,7 @@ public class UserService {
     }
 
     //
-    // 회원가입 전용 이메일 인증
+    // 이메일 인증
     //
     public void emailAuthFunc(User user)
     {
@@ -381,6 +381,22 @@ public class UserService {
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
+
+        // ==================================== 여러번 보낼시 이전 링크 삭제 ==========================================
+        sql = "delete from emailauth where encoding_value = ?";
+        try {
+            //
+            // DB구간
+            //
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, encodingValue);
+
+            rsInt = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        // =============================================================================================================
 
         sql= "insert into emailauth(usernum,encoding_value) values(?,?)";
         try {
