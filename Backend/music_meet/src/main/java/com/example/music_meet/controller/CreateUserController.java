@@ -318,6 +318,32 @@ public class CreateUserController
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    //
+    //  닉네임 바꾸는 API
+    //
+    @RequestMapping(path = "/user/nickname", method = RequestMethod.PUT)
+    public ResponseEntity changeNickname(@RequestBody Map<String, String> requestNewNickname)
+    {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        final String userNum = (String) request.getAttribute("userNum");
+        final String newNickname = requestNewNickname.get("nickname");
+
+        // 닉네임 중복검사
+        if (userService.isDuplicateNicknameFunc(new User(null, null,null,null, newNickname)) == true) // 중복임
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        // 닉네임 변경
+        if(userService.setUserNickname(userNum, newNickname) == false)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // 변경 실패
+        else
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 변경 성공
+    }
 
 
 
