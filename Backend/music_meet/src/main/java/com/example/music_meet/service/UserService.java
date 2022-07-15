@@ -892,6 +892,38 @@ public class UserService {
 
     }
 
+
+    public boolean setUserNickname(String userNum, String newNickname)
+    {
+        boolean result = false;
+        sql = "update user set nickname = ? where usernum = ?";
+        try
+        {
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, newNickname);
+            pstmt.setString(2,userNum);
+
+            rsInt = pstmt.executeUpdate();
+
+            result = true;
+        }catch (Exception e)
+        {
+            System.out.println("UserService.setUserNickname에서 오류 발생");
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
     //
     // 유저의 state를 바꾸는 함수
     //
