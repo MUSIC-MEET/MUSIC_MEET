@@ -1,15 +1,16 @@
 import Button from "components/common/Button";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import EditBox, { EditBoxProps } from "./EditBox";
 import { useNavigate } from "react-router-dom";
 import useForm from "hooks/use-form";
 import SignUpValidator from "pages/SignUp/SignUpValidator";
-import ChangeEmailRequest from "utils/RequestApis/MyPage/ChangeEmail";
-import ChangeNicknameRequest from "utils/RequestApis/MyPage/ChangeNickname";
+import changeMail from "utils/RequestApis/MyPage/ChangeEmail";
+import changeNickname from "utils/RequestApis/MyPage/ChangeNickname";
 import AlertModal from "components/AlertModal/AlertModal";
 import { useResetRecoilState } from "recoil";
 import LoginState from "store/LoginState";
+import { useQuery } from "react-query";
 import { AxiosResponse } from "axios";
 
 interface Props {
@@ -25,6 +26,16 @@ function ValuesEdit(props: Props) {
     const navigate = useNavigate();
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
     const resetLoginState = useResetRecoilState(LoginState);
+
+    const { refetch: requestMailChange } = useQuery("/user/email", () => changeMail(email), {
+        enabled: false,
+        suspense: true
+    });
+
+    const { refetch: requestNicknameChange } = useQuery("/user/nickname", () => changeNickname(nickname), {
+        enabled: false,
+        suspense: true
+    });
 
     const { values, valuesChangeHandler, error } = useForm({
         initValues: myInfo,
@@ -45,34 +56,30 @@ function ValuesEdit(props: Props) {
 
     const nicknameChangeButtonClickHandler = useCallback((e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
-        ChangeNicknameRequest(nickname)
-            .then((res: any) => {
-                if (res.status === 204) {
-                    setIsOpenModal(true);
-                }
-            })
-            .catch((err: any) => {
-                if (err.status === 401) {
-                    throw "401";
-                }
-            });
-    }, [nickname]);
+        requestNicknameChange<AxiosResponse>().then((res) => {
+            if (res?.data?.status === 204) {
+                setIsOpenModal(true);
+            }
+        }).catch((err: AxiosResponse) => {
+            if (err.data.status === 401) {
+                throw "401";
+            }
+        });
+    }, [requestNicknameChange]);
 
 
     const emailChangeButtonClickHandler = useCallback((e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
-        ChangeEmailRequest(email)
-            .then((res: any) => {
-                if (res.status === 204) {
-                    setIsOpenModal(true);
-                }
-            })
-            .catch((err: any) => {
-                if (err.status === 401) {
-                    throw "401";
-                }
-            });
-    }, [email]);
+        requestMailChange<AxiosResponse>().then((res) => {
+            if (res?.data?.status === 204) {
+                setIsOpenModal(true);
+            }
+        }).catch((err: AxiosResponse) => {
+            if (err.data.status === 401) {
+                throw "401";
+            }
+        });
+    }, [requestMailChange]);
 
     const changePasswordHandler = useCallback(() => {
         navigate("/user/resetpw");
