@@ -1,26 +1,19 @@
 import customAxios from "../../customAxios";
+import { AxiosResponse } from "axios";
 
-const ChangeEmailRequest = (email: string) => {
-    const token = localStorage.getItem("token");
+const changeMail = (email: string): Promise<AxiosResponse> => {
     const axios = customAxios();
-    return new Promise((resolve, reject) => {
-        axios({
-            method: "put",
-            url: "/user/email",
-            headers: {
-                authorization: `${token}`,
-            },
-            data: {
-                email: email
-            }
-        })
-            .then((res) => {
-                return resolve(res);
-            })
-            .catch((err) => { 
-                return reject(err);
-            });
+    const token = localStorage.getItem("token");
+    return axios({
+        method: "put",
+        url: "/user/email",
+        headers: {
+            authorization: `${token}`,
+        },
+        data: {
+            email
+        }
     });
 };
 
-export default ChangeEmailRequest;
+export default changeMail;

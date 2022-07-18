@@ -1,26 +1,19 @@
+import { AxiosResponse } from "axios";
 import customAxios from "../../customAxios";
 
-const ChangeNicknameRequest = (nickname: string) => {
-    const token = localStorage.getItem("token");
+const chnageNickname = (nickname: string): Promise<AxiosResponse> => {
     const axios = customAxios();
-    return new Promise((resolve, reject) => {
-        axios({
-            method: "put",
-            url: "/user/nickname",
-            headers: {
-                authorization: `${token}`,
-            },
-            data: {
-                nickname
-            }
-        })
-            .then((res) => 
-                resolve(res)
-            )
-            .catch((err) => 
-                reject(err)
-            );
+    const token = localStorage.getItem("token");
+    return axios({
+        method: "put",
+        url: "/user/nickname",
+        headers: {
+            authorization: `${token}`,
+        },
+        data: {
+            nickname
+        }
     });
 };
 
-export default ChangeNicknameRequest;
+export default chnageNickname;

@@ -17,11 +17,18 @@ const text: MyPageType = {
             changePasswordButton: "Change Password",
             submit: "Edit",
 
-            AlertModal: {
+            NicknameAlertModal: {
                 title: "Change Success",
-                content: "Change Success.  \nPlease Login Again",
+                content: "Nickname Change Success.  \nPlease Login Again",
                 button: "OK"
-            }
+            },
+
+            EmailAlertModal: {
+                title: "Change Success",
+                content: "Email Change Success.  \nPlease Check your Email and after Login Again",
+                button: "OK"
+            },
+
         },
         img: {
             button: "Select Change Image"
