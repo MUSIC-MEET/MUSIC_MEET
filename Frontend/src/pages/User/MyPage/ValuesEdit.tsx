@@ -20,28 +20,34 @@ interface Props {
         email: string;
     }
 }
+
+interface AlertModal {
+    isOpen: boolean;
+    title: string;
+    content: string;
+    button: string;
+    after: () => void;
+}
+
 function ValuesEdit(props: Props) {
     const { myInfo } = props;
     const { t } = useTranslation<"myPage">("myPage");
     const navigate = useNavigate();
-    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+    const [isOpenNicknameModal, setIsOpenNicknameModal] = useState<boolean>(false);
+    const [isOpenEmailModal, setIsOpenEmailModal] = useState<boolean>(false);
     const resetLoginState = useResetRecoilState(LoginState);
-
     const { refetch: requestMailChange } = useQuery("/user/email", () => changeMail(email), {
         enabled: false,
         suspense: true
     });
-
     const { refetch: requestNicknameChange } = useQuery("/user/nickname", () => changeNickname(nickname), {
         enabled: false,
         suspense: true
     });
-
     const { values, valuesChangeHandler, error } = useForm({
         initValues: myInfo,
         validator: SignUpValidator
     });
-
     const { email, nickname } = values;
 
     const onSubmit = (e: React.FormEvent<HTMLElement>) => {
@@ -50,7 +56,8 @@ function ValuesEdit(props: Props) {
     };
 
     const changeSuccess = useCallback(() => {
-        setIsOpenModal(false);
+        setIsOpenNicknameModal(false);
+        setIsOpenEmailModal(false);
         resetLoginState(); // 모달을 닫고 재로그인 안할수도 있기때문에 해줘야함
     }, [resetLoginState]);
 
@@ -58,7 +65,7 @@ function ValuesEdit(props: Props) {
         e.preventDefault();
         requestNicknameChange<AxiosResponse>().then((res) => {
             if (res?.data?.status === 204) {
-                setIsOpenModal(true);
+                setIsOpenNicknameModal(true);
             }
         }).catch((err: AxiosResponse) => {
             if (err.data.status === 401) {
@@ -67,12 +74,11 @@ function ValuesEdit(props: Props) {
         });
     }, [requestNicknameChange]);
 
-
     const emailChangeButtonClickHandler = useCallback((e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
         requestMailChange<AxiosResponse>().then((res) => {
             if (res?.data?.status === 204) {
-                setIsOpenModal(true);
+                setIsOpenEmailModal(true);
             }
         }).catch((err: AxiosResponse) => {
             if (err.data.status === 401) {
@@ -133,16 +139,39 @@ function ValuesEdit(props: Props) {
             onSubmit: emailChangeButtonClickHandler
         },
     ];
+
+    const AlertModals: AlertModal[] = [
+        {
+            isOpen: isOpenNicknameModal,
+            title: t("edit.values.NicknameAlertModal.title"),
+            content: t("edit.values.NicknameAlertModal.content"),
+            button: t("edit.values.NicknameAlertModal.button"),
+            after: changeSuccess
+        },
+        {
+            isOpen: isOpenEmailModal,
+            title: t("edit.values.EmailAlertModal.title"),
+            content: t("edit.values.EmailAlertModal.content"),
+            button: t("edit.values.EmailAlertModal.button"),
+            after: changeSuccess
+        }
+    ];
+
     return (
         <section>
-            {isOpenModal &&
-                <AlertModal
-                    title={t("edit.values.AlertModal.title")}
-                    content={t("edit.values.AlertModal.content")}
-                    button={t("edit.values.AlertModal.button")}
-                    onClose={changeSuccess}
-                    buttonClick={changeSuccess}
-                />}
+            {AlertModals.map((modal, index) => (
+                (
+                    modal.isOpen &&
+                    <AlertModal
+                        title={modal.title}
+                        content={modal.content}
+                        button={modal.button}
+                        onClose={modal.after}
+                        buttonClick={modal.after}
+                        key={index}
+                    />
+                )
+            ))}
             {editBox.map((box, index) => (
                 <EditBox
                     key={index}
@@ -162,6 +191,5 @@ function ValuesEdit(props: Props) {
         </section>
     );
 }
-
 
 export default ValuesEdit;

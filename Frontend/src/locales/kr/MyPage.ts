@@ -17,9 +17,15 @@ const text: MyPageType = {
             changePasswordButton: "비밀번호 변경",
             submit: "변경",
 
-            AlertModal: {
+            NicknameAlertModal: {
                 title: "변경 성공",
-                content: "변경에 성공하였습니다.  \n다시 로그인해주세요.",
+                content: "닉네임 변경에 성공하였습니다.  \n다시 로그인해주세요.",
+                button: "확인"
+            },
+
+            EmailAlertModal: {
+                title: "변경 성공",
+                content: "이메일 변경에 성공하였습니다.  \n이메일을 확인 해주신 후 다시 로그인해주세요.",
                 button: "확인"
             }
         },

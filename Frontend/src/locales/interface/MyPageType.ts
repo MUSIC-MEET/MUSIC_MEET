@@ -15,7 +15,13 @@ interface MyPageType {
             changePasswordButton: string;
             submit: string;
 
-            AlertModal: {
+            NicknameAlertModal: {
+                title: string;
+                content: string;
+                button: string;
+            },
+
+            EmailAlertModal: {
                 title: string;
                 content: string;
                 button: string;
