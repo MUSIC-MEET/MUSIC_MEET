@@ -14,11 +14,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Multipart;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -924,9 +929,52 @@ public class UserService {
         return result;
     }
 
-    //
-    // 유저의 state를 바꾸는 함수
-    //
+    public void savedUserImage(MultipartFile image)
+    {
+        LocalDate localDate = LocalDate.now();
+        final String path = System.getProperty("user.dir") + "\\src\\main\\resources\\UserImages";
+
+        String fileName = localDate + "_" + image.getOriginalFilename();
+        File savedFile = new File(path, fileName);
+
+        try {
+            image.transferTo(savedFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public void changeUserImnagePath(String userNum,String path)
+    {
+        sql = "update user set userimage = ? where usernum = ?";
+        try {
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, path);
+            pstmt.setInt(2, Integer.parseInt(userNum));
+            rsInt = pstmt.executeUpdate();
+        }
+        catch (Exception e)
+        {
+            System.out.println("changeUserImnage()에서 예외처리로 빠짐");
+        }
+        finally
+        {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
 }
 
 
