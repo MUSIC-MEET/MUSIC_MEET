@@ -25,15 +25,30 @@ function addStorage(res) {
 function Login(props) {
     const ctx = useContext(ThemeContext);
     const [formShown, setformShown] = useRecoilState(LoginModalShownState);
+    const [errorStatus, setErrorStatus] = useState("");
     const [keepLoginState, setKeepLoginState] = useState(false);
     const { isLogIn } = useRecoilValue(LoginState);
     const setLoginState = useSetRecoilState(LoginState);
     const values = useRecoilValue(LoginFormState);
-    const { isError, refetch } = useQuery(
+    const { refetch } = useQuery(
         "/user/login", () => LoginRequest({ values }), 
         { 
+            onSettled: (res) => {
+                const { token, nickname } = res.data;
+                setLoginState({ isLogIn: true, key: token, nickname: nickname });
+                addStorage(res);
+                if (keepLoginState) {
+                    localStorage.setItem("keepLoginState", true);
+                }
+                onCloseLoginModal();
+            },
+            onError: (err) => {
+                setErrorStatus(err.response.status);
+                console.log(err.response.status);
+            },
             enabled: false, 
-            suspense: true 
+            suspense: false,
+            retry: 0
         }
     );
     useEffect(()=> {
@@ -54,19 +69,8 @@ function Login(props) {
 
 
     const loginHandler = useCallback(() => {
-        refetch().then((res) => {
-            setLoginState({ isLogIn: true, key: res.token, nickname: res.nickname });
-            addStorage(res);
-            // axios.defaults.headers.common["authorization"] = res.token;
-            if (keepLoginState) {
-                localStorage.setItem("keepLoginState", true);
-            }
-            onCloseLoginModal();
-        }).catch((err) => {
-            console.log("error", err);
-            console.log(isError);
-        });
-    },[isError, keepLoginState, onCloseLoginModal, refetch, setLoginState]);
+        refetch();
+    },[refetch]);
 
     return (    
         <article css={[style]}>
@@ -79,7 +83,7 @@ function Login(props) {
                         onClose={onCloseLoginModal}
                         navigator={props.navigator}
                         onLogin={loginHandler}
-                        isLoginFail={isError}
+                        errorStatus={errorStatus}
                     />
                 </Modal>
             }

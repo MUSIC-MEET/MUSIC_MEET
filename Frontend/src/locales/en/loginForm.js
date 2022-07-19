@@ -7,5 +7,8 @@ export default {
     signup: "signup",
     findId: "Id",
     findPw: "Password",
-    error: "Login Failed",
+    error: {
+        notmatch: "Login failed",
+        email: "Please complete email authentication",
+    }
 };

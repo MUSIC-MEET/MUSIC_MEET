@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
 import Input from "components/common/Input";
@@ -15,11 +15,15 @@ function LoginForm(props) {
         keepLoginState, 
         onChangeKeepLoginState, 
         onLogin,
-        isLoginFail
+        errorStatus
     } = props;
     const [values, setValues] = useRecoilState(LoginFormState);
     const { id, pw } = values || "";
     const { t } = useTranslation("loginForm");
+
+    useEffect(() => {
+        //
+    },[errorStatus]);
 
 
     const onChangeValues = useCallback((e) => {
@@ -68,7 +72,8 @@ function LoginForm(props) {
                     state={keepLoginState}
                     onChangeState={onChangeKeepLoginState}
                 />
-                {isLoginFail && <Error>{t("error")}</Error>}
+                {errorStatus===400 && <Error>{t("error.notmatch")}</Error>}
+                {errorStatus===401 && <Error>{t("error.email")}</Error>}
                 <Submit 
                     type="submit" 
                     value={t("title")}
