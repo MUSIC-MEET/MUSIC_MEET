@@ -40,19 +40,27 @@ public class LoginController
         final String encodingPw = map.get("pw");
         final String userNum = map.get("userNum");
         final String nickname = map.get("nickName");
+        final String userState = map.get("userState");
 
-        if (!bCryptPasswordEncoder.matches(user.getPw(), encodingPw)) // 로그인 실패
-        {
-            System.out.println("로그인 실패");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        else
+        if (bCryptPasswordEncoder.matches(user.getPw(), encodingPw) && userState.equals("0"))     // 로그인 성공
         {
             Map<String,String> responseMap = new HashMap<>();
-            responseMap.put("token", jwtService.generateJwtToken(userNum)); // 토큰 생성
+            responseMap.put("token", jwtService.generateJwtToken(userNum));                       // 토큰 생성
             responseMap.put("nickname", nickname);
 
             return new ResponseEntity<>( responseMap, HttpStatus.CREATED );
         }
+        else                                                                                      // 로그인 실패
+        {
+            if (bCryptPasswordEncoder.matches(user.getPw(), encodingPw) && userState.equals("3")) // 이메일 미인증 상태
+            {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED );
+            }
+            else                                                                                  // 나머지 이메일 인증 실패
+            {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+
     }
 }

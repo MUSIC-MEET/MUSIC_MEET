@@ -75,5 +75,6 @@ public class beanConfig implements WebMvcConfigurer
 
     @Bean
     public java.sql.Timestamp date(){return new java.sql.Timestamp(new java.util.Date().getTime());}
+    
 
 }

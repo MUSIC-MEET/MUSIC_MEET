@@ -22,11 +22,17 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 
+import javax.mail.Multipart;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +55,9 @@ public class CreateUserController
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private java.sql.Timestamp date;
 
 
     private AES256Util aes256Util;
@@ -230,16 +239,22 @@ public class CreateUserController
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final String authorization = request.getHeader("authorization");
 
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+
         Map<String,String> userMap;
         userMap = jwtService.getClaimsFromJwt(authorization);
         userMap.putAll(userService.findUserInfo(userMap.get("userNum")));
 
-        if (userMap.get("id") == null)
-        {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        else
-        {
+        //if (userMap.get("id") == null)
+        //{
+         //   return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        //}
+        //else
+        //{
             Map<String,String> findEmailFuncRequestMap = new HashMap<>();
             findEmailFuncRequestMap.put("userNum",userMap.get("userNum"));
             findEmailFuncRequestMap.put("email",null);
@@ -248,7 +263,7 @@ public class CreateUserController
             userMap.remove("userNum");
             userMap.put("email",email);
             return new ResponseEntity<>(userMap,HttpStatus.OK);
-        }
+        //}
     }
 
     //
@@ -351,14 +366,42 @@ public class CreateUserController
     //
     // 마이페이지에서 이미지 변경하는 컨트롤러 (좀 더 알아보고 구현 예정)
     //
-    @CustomAnnotationConfig.jwtCheck
-    @RequestMapping(path="/user/change/image", method = RequestMethod.GET)
-    public ResponseEntity<Object> changeUserImage(@RequestBody JsonObject jsonObject)
+    @RequestMapping(path="/user/image", method = RequestMethod.PUT)
+    public ResponseEntity<Object> changeUserImage(@RequestBody MultipartFile image)
     {
-        jsonObject.get("image");
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final String userNum = (String) request.getAttribute("userNum");
+        final String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "userimages";
+        final String filePath = path + File.separator + image.getOriginalFilename();
+
+        System.out.println(path);
+        System.out.println(filePath);
+
+        // 서버 컴퓨터에 이미지 저장
+        userService.savedUserImage(image);
+        // DB에 해당 유저의 이미지 경로 수정
+        userService.changeUserImnagePath(userNum,path);
+
+
+
+
+
+        return new ResponseEntity<>(filePath , HttpStatus.OK);
     }
+
+
+
+
+
+
+
+
+
     //
     // 테스트
     //
