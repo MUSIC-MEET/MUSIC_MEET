@@ -12,6 +12,8 @@ import LoginState from "../../store/LoginState";
 import NotLoginMenu from "./NotLoginMenu";
 import LoginMenu from "./LoginMenu";
 import { axios } from "axios";
+import { useQuery } from "react-query";
+import LoginRequest from "../../utils/RequestApis/Login/LoginRequest";
 
 
 
@@ -27,18 +29,16 @@ function Login(props) {
     const { isLogIn } = useRecoilValue(LoginState);
     const setLoginState = useSetRecoilState(LoginState);
     const values = useRecoilValue(LoginFormState);
-
+    const { isError, refetch } = useQuery(
+        "/user/login", () => LoginRequest({ values }), 
+        { 
+            enabled: false, 
+            suspense: true 
+        }
+    );
     useEffect(()=> {
         //
     },[isLogIn]);
-    const { status, fetchData } = useHttp({
-        method: "POST",
-        url: "/user/login",
-        body: {
-            id: values.id,
-            pw: values.pw
-        }
-    });
 
     const changeKeepLoginStateHandler = useCallback(() => {
         setKeepLoginState((prevState) => !prevState);
@@ -53,9 +53,8 @@ function Login(props) {
     },[setformShown]);
 
 
-
-    const loginHandler = useCallback(async () => {
-        await fetchData().then((res) => {
+    const loginHandler = useCallback(() => {
+        refetch().then((res) => {
             setLoginState({ isLogIn: true, key: res.token, nickname: res.nickname });
             addStorage(res);
             // axios.defaults.headers.common["authorization"] = res.token;
@@ -63,8 +62,11 @@ function Login(props) {
                 localStorage.setItem("keepLoginState", true);
             }
             onCloseLoginModal();
+        }).catch((err) => {
+            console.log("error", err);
+            console.log(isError);
         });
-    },[fetchData, keepLoginState, onCloseLoginModal, setLoginState]);
+    },[isError, keepLoginState, onCloseLoginModal, refetch, setLoginState]);
 
     return (    
         <article css={[style]}>
@@ -77,10 +79,11 @@ function Login(props) {
                         onClose={onCloseLoginModal}
                         navigator={props.navigator}
                         onLogin={loginHandler}
-                        isLoginFail={status.isError}
+                        isLoginFail={isError}
                     />
                 </Modal>
             }
+            {/* 로그인 여부에 따라 메뉴 로그인란에 다르게 보이기*/}
             {
                 isLogIn ?
                     <LoginMenu />
