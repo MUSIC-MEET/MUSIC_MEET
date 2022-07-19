@@ -1,3 +1,5 @@
+package com.example.music_meet.bot;
+
 public class Song implements ISong{
     private String title;
     private String singer;
