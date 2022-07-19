@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 
 import javax.mail.Multipart;
+import javax.print.attribute.standard.Media;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -361,16 +364,18 @@ public class CreateUserController
     }
 
 
-
+//
+    //MediaType.MULTIPART_FORM_DATA_VALUE
 
     //
     // 마이페이지에서 이미지 변경하는 컨트롤러 (좀 더 알아보고 구현 예정)
     //
-    @RequestMapping(path="/user/image", method = RequestMethod.PUT)
-    public ResponseEntity<Object> changeUserImage(@RequestBody MultipartFile image)
+    @RequestMapping(path="/user/image", method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> changeUserImage(@RequestPart(required=true, value="file") MultipartFile image)
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
+        System.out.println(image);
         if (request.getAttribute("userNum") == null)
         {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -378,6 +383,7 @@ public class CreateUserController
         final String userNum = (String) request.getAttribute("userNum");
         final String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "userimages";
         final String filePath = path + File.separator + image.getOriginalFilename();
+
 
         System.out.println(path);
         System.out.println(filePath);

@@ -62,3 +62,23 @@ ALTER TABLE `PwAuth` ADD CONSTRAINT `FK_User_TO_PwAuth_1` FOREIGN KEY (
 REFERENCES `User` (
 	`usernum`
 );
+
+
+
+CREATE TABLE `ChartSite` (
+	`sitecode`	INT(1)	NOT NULL PRIMARY KEY ,
+	`sitename`	VARCHAR(10)	NULL
+);
+insert into chartSite values(1, '멜론');
+insert into chartSite values(2, '지니');
+insert into chartSite values(3, '바이브');
+
+
+create table `Chart` (
+	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
+	`time`	 datetime	 NULL,
+	`title`	 VARCHAR(30)	 NULL,
+	`singer`	 VARCHAR(20)	 NULL,
+	`img_src`	 VARCHAR(100)	 NULL,
+	`sitecode`	 INT(1)	 NOT NULL
+);
