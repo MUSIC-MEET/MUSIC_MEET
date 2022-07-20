@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { css } from "@emotion/react";
 import ValuesEdit from "./ValuesEdit";
 import ImageEdit from "./ImageEdit";
 import { useRecoilValue } from "recoil";
 import MyInfo from "store/MyInfo";
+import { useQuery } from "react-query";
+import getMyInfo from "../../../utils/RequestApis/MyPage/getMyInfo";
 
 
 function UserEdit() {
-
-    const myInfo = useRecoilValue(MyInfo);
-
+    const { data } = useQuery("/user/myinfo", () => getMyInfo(),
+        {
+            retry: 0,
+            useErrorBoundary: true,
+            cacheTime: 0,
+            staleTime: 0,
+            onError: (err: any) => {
+                if (err.response.status === 401) {
+                    throw "401";
+                }
+            }
+        }
+    );
+    const myInfo = data.data;
+    useEffect(() => {
+        //
+    }, [myInfo]);
     return (
         <article css={[articleStyle]}>
             <ImageEdit />

@@ -8,7 +8,12 @@ class ErrorBoundary extends React.Component {
     }
 
     static getDerivedStateFromError(error) {
-        return { hasError: true, errorCode: error };
+    
+        if(error == "401" || error.code === "ERR_BAD_REQUEST") {
+            console.log(typeof error);
+            return { hasError: true, errorCode: "401" };
+        }
+        
     }
     
 
