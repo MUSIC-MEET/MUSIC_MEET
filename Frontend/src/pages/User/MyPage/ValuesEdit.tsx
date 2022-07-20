@@ -38,11 +38,13 @@ function ValuesEdit(props: Props) {
     const resetLoginState = useResetRecoilState(LoginState);
     const { refetch: requestMailChange } = useQuery("/user/email", () => changeMail(email), {
         enabled: false,
-        suspense: true
+        suspense: true,
+        retry: 0
     });
     const { refetch: requestNicknameChange } = useQuery("/user/nickname", () => changeNickname(nickname), {
         enabled: false,
-        suspense: true
+        suspense: true,
+        retry: 0
     });
     const { values, valuesChangeHandler, error } = useForm({
         initValues: myInfo,
