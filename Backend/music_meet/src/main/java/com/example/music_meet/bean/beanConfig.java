@@ -4,6 +4,8 @@ import com.JPA.Repository.AccountRepository;
 import com.example.music_meet.service.InterceptorService;
 import com.example.music_meet.service.UserService;
 import com.example.music_meet.validate.Validate;
+import lombok.Getter;
+import lombok.Setter;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +25,8 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:application.properties")
+@Getter
+@Setter
 public class beanConfig implements WebMvcConfigurer
 {
     @Override
@@ -31,6 +35,18 @@ public class beanConfig implements WebMvcConfigurer
         .excludePathPatterns("/boards"); // 해당 경로는 인터셉터가 가로채지 않는다.
 
     }
+
+    @Value("${spring.datasource.url}")
+    private String mysqlurl;
+
+    @Value("${spring.datasource.username}")
+    private String mysqlid;
+
+    @Value("${spring.datasource.password}")
+    private String mysqlpassword;
+
+    @Value("${spring.datasource.driver-class-name}")
+    private String classForName;
 
     @Value("${spring.mail.host}")
     private String mailHost;
@@ -75,6 +91,18 @@ public class beanConfig implements WebMvcConfigurer
 
     @Bean
     public java.sql.Timestamp date(){return new java.sql.Timestamp(new java.util.Date().getTime());}
-    
+
+    @Bean
+    public String classForName(){return this.classForName; }
+
+    @Bean
+    public String mysqlurl(){return this.mysqlurl; }
+
+    @Bean
+    public String mysqlid(){return this.mysqlid; }
+
+    @Bean
+    public String mysqlpassword(){return this.mysqlpassword; }
+
 
 }

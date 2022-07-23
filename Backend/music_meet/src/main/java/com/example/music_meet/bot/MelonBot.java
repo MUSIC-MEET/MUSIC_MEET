@@ -28,10 +28,12 @@ public class MelonBot implements Bot{
         songsEle.addAll(song2);
         int rank = 1;
         for(Element ele : songsEle) {
+            final int site = 1;
             final String title = ele.select("div.ellipsis > span:nth-child(1)").text();
             final String singer = ele.select("div.ellipsis > span:nth-child(2) ").text();
             final String imgSrc = ele.select("img").attr("src");
             Song song = new Song();
+            song.setSite(site);
             song.setRank(rank++);
             song.setTitle(title);
             song.setSinger(singer);

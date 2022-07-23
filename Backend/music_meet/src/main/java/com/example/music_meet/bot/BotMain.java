@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-
 @Component
 public class BotMain {
     @Scheduled(fixedRate = 1000 * 60 * 30)
@@ -13,7 +12,7 @@ public class BotMain {
         BotController botController = new BotController();
         botController.addBot(new MelonBot());
         botController.addBot(new GeineBot());
-        botController.addBot(new VibeBot());
+        //botController.addBot(new VibeBot());
         botController.start();
     }
 }
