@@ -20,10 +20,12 @@ public class GeineBot implements Bot{
             ArrayList<Element> list = doc.getElementsByClass("list");
             for( Element ele : list ) {
                 if(ele.hasAttr("songid")){
+                    final int site = 2;
                     final String title = ele.select("td.info > a:nth-child(1)").text();
                     final String singer = ele.select("td.info > a:nth-child(2)").text();
                     final String imgSrc = ele.select(".cover").text();
                     Song song = new Song();
+                    song.setSite(site);
                     song.setRank(rank++);
                     song.setTitle(title);
                     song.setSinger(singer);

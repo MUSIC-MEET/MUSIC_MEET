@@ -5,6 +5,7 @@ public class Song implements ISong{
     private String singer;
     private String imgSrc;
     private int rank;
+    private int site;
 
     public String getTitle() {
         return title;
@@ -38,8 +39,13 @@ public class Song implements ISong{
         this.rank = rank;
     }
 
+    public void setSite(int site) { this.site = site;}
+
+    public int getSite() {return this.site; }
+
     @Override
     public void print() {
+        System.out.println("사이트 : " + this.site);
         System.out.println("순위 : " + this.rank);
         System.out.println("제목 : " + this.title);
         System.out.println("가수 : " +  this.singer);
