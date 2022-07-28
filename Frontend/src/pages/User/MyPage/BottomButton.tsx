@@ -7,6 +7,11 @@ import { useNavigate } from "react-router-dom";
 function BottomButton() {
     const { t } = useTranslation<"myPage">("myPage");
     const navigate = useNavigate();
+
+    const deleteAccoutHanlder = useCallback(() => {
+        navigate("/user/delete");
+    }, [navigate]);
+
     const changePasswordHandler = useCallback(() => {
         navigate("/user/resetpw");
     }, [navigate]);
@@ -25,7 +30,7 @@ function BottomButton() {
                 w={WIDTH}
                 h={HEIGHT}
                 value={t("edit.values.deleteButton")}
-                onClick={changePasswordHandler}
+                onClick={deleteAccoutHanlder}
             />
         </Wrap>
     );
