@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
-//@PropertySource("classpath:application.properties", )
 public class MusicMeetApplication {
 
 	public static void main(String[] args) {

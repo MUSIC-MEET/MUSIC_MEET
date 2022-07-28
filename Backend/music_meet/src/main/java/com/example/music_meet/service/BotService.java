@@ -16,24 +16,24 @@ import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Service
 public class BotService {
 
-    //@Autowired
+    @Autowired
     private String classForName = "com.mysql.cj.jdbc.Driver";
 
-    //@Autowired
-    private String mysqlurl = "jdbc:mysql://localhost:3306/music_meet?serverTimezone=UTC&characterEncoding=UTF-8";
+    @Autowired
+    private String mysqlurl = "jdbc:mysql://localhost:3306/music_meet?serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
 
-    //@Autowired
-    private String mysqlid ="root";
+    @Autowired
+    private String mysqlid = "root";
 
-    //@Autowired
+    @Autowired
     private String mysqlpassword = "0000";
 
 
@@ -44,12 +44,8 @@ public class BotService {
     private String sql;
 
     @Autowired
-    private java.sql.Timestamp date;
-
-
+    private java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
     private String table;
-
-
 
 
     public void insertDB(ArrayList<Song> songs) {
@@ -57,7 +53,6 @@ public class BotService {
         // 데이터가 날라오는데 어느 사이트에서 날라오는 데이터인지 식별이 안됨
         // 얘 호출하는 곳에서 String 타입으로 사이트 이름 가져올것
         try {
-
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
 
@@ -115,10 +110,6 @@ public class BotService {
 
     public void deleteDB(int siteCode)
     {
-        /*System.out.println(classForName);
-        System.out.println(mysqlurl);
-        System.out.println(mysqlid);
-        System.out.println(mysqlpassword);*/
 
         try {
             switch (siteCode)

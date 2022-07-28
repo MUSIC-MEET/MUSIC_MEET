@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -61,6 +62,9 @@ public class CreateUserController
 
     @Autowired
     private java.sql.Timestamp date;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;// 암호화 객체
 
 
     private AES256Util aes256Util;
@@ -235,7 +239,6 @@ public class CreateUserController
     //
     //  마이페이지에 아이디, 비밀번호, 닉네임 출력해주는 컨트롤러
     //
-    //@CustomAnnotationConfig.jwtCheck
     @RequestMapping(path="/user/myinfo", method = RequestMethod.GET)
     public ResponseEntity<Object> callUserInfo()
     {
@@ -247,32 +250,24 @@ public class CreateUserController
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-
         Map<String,String> userMap;
         userMap = jwtService.getClaimsFromJwt(authorization);
         userMap.putAll(userService.findUserInfo(userMap.get("userNum")));
 
-        //if (userMap.get("id") == null)
-        //{
-         //   return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        //}
-        //else
-        //{
-            Map<String,String> findEmailFuncRequestMap = new HashMap<>();
-            findEmailFuncRequestMap.put("userNum",userMap.get("userNum"));
-            findEmailFuncRequestMap.put("email",null);
+        Map<String,String> findEmailFuncRequestMap = new HashMap<>();
+        findEmailFuncRequestMap.put("userNum",userMap.get("userNum"));
+        findEmailFuncRequestMap.put("email",null);
 
-            final String email = userService.findEmailFunc(findEmailFuncRequestMap);
-            userMap.remove("userNum");
-            userMap.put("email",email);
-            return new ResponseEntity<>(userMap,HttpStatus.OK);
-        //}
+        final String email = userService.findEmailFunc(findEmailFuncRequestMap);
+        userMap.remove("userNum");
+        userMap.put("email",email);
+
+        return new ResponseEntity<>(userMap,HttpStatus.OK);
     }
 
     //
     // 이메일 바꾸는 API
     //
-    //@CustomAnnotationConfig.jwtCheck
     @RequestMapping(path="/user/email", method = RequestMethod.PUT)
     public ResponseEntity<Object> changeEmail(@RequestBody Map<String,String> requestValue)
     {
@@ -284,17 +279,14 @@ public class CreateUserController
         final String newEmail = requestValue.get("email");
         final String encodingEmail;
 
-
         final String userNum = (String)request.getAttribute("userNum");
 
         Map<String, String> userMap = new HashMap<>();
         userMap.putAll( userService.findUserInfo(userNum));
 
-
         final String id = userMap.get("id");
         final String email = userMap.get("email");
         final String nickname = userMap.get("nickname");
-
 
         try {
             aes256Util = new AES256Util();
@@ -304,9 +296,6 @@ public class CreateUserController
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-
-        userMap = null;
-
 
         try {
 
@@ -328,7 +317,6 @@ public class CreateUserController
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
 
         // userMap 이용해서 디비에서 바꾸는 부분
         userService.changeUserEmail(userNum , encodingEmail);
@@ -361,11 +349,8 @@ public class CreateUserController
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // 변경 실패
         else
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 변경 성공
+
     }
-
-
-//
-    //MediaType.MULTIPART_FORM_DATA_VALUE
 
     //
     // 마이페이지에서 이미지 변경하는 컨트롤러 (좀 더 알아보고 구현 예정)
@@ -393,27 +378,36 @@ public class CreateUserController
         // DB에 해당 유저의 이미지 경로 수정
         userService.changeUserImnagePath(userNum,path);
 
-
-
-
-
         return new ResponseEntity<>(filePath , HttpStatus.OK);
     }
 
 
-
-
-
-
-
-
-
     //
-    // 테스트
+    // 회원탈퇴 API
     //
-    @RequestMapping(path = "/testtttttt", method = RequestMethod.POST)
-    public void testFunc(@RequestBody Map<String, String> token)
+    @RequestMapping(path = "/user/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> testFunc(@RequestBody Map<String, String> password)
     {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        final String userNum = (String) request.getAttribute("userNum");
+        final String pw = password.get("password");
+        String findPw = userService.findPassWord(userNum);
+
+        if (bCryptPasswordEncoder.matches(pw,findPw))
+        {
+            userService.setUserStateValue(userNum, 1);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
     }
 

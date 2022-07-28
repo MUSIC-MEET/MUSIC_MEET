@@ -217,6 +217,49 @@ public class UserService {
     }
 
     //
+    // 비밀번호 찾기
+    // userNum과 비밀번호를 인수로 해당 userNum의 pw를 리턴함
+    public String findPassWord(String userNum)
+    {
+        sql = "select pw from user where usernum = ?";
+
+        String findPw = null;
+
+        try {
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, Integer.parseInt(userNum));
+            rs = pstmt.executeQuery();
+            if (!rs.next())
+            {
+                System.out.println("findUserInfo에서 userNum으로 아이디, 닉네임, 이메일 조회 실패");
+            }
+            else
+            {
+                findPw = rs.getString(1);
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("findUserInfo에서 예외처리로 빠짐");
+        }
+        finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return findPw;
+    }
+
+
+    //
     // 아이디 중복 검사 (id가 DB에 있으면 true 리턴)
     //
     public boolean isDuplicateIdFunc(User user)
@@ -942,7 +985,6 @@ public class UserService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
 
     }
 
