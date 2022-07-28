@@ -88,7 +88,7 @@ public class JwtService
             map.put("userNum", userNum);
             return map;
         } catch (Exception err) {
-            err.printStackTrace();
+            //err.printStackTrace();
             System.out.println("JwtService -> getClaimsFromJwt()에서 예외처리로 빠짐");
             return map;
 
