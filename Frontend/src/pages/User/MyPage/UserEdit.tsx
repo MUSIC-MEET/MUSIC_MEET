@@ -37,14 +37,14 @@ const articleStyle = css`
     min-height: 20vh;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     section {
         display: flex;
-        flex: 1;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    
     }
 `;
 

@@ -15,6 +15,7 @@ const text: MyPageType = {
                 email: "변경할 이메일을 입력해주세요"
             },
             changePasswordButton: "비밀번호 변경",
+            deleteButton: "회원 탈퇴",
             submit: "변경",
 
             NicknameAlertModal: {

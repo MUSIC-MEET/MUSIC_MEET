@@ -15,6 +15,7 @@ const text: MyPageType = {
                 email: "Enter Change Email"
             },
             changePasswordButton: "Change Password",
+            deleteButton: "Delete Account",
             submit: "Edit",
 
             NicknameAlertModal: {

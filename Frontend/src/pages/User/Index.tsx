@@ -2,8 +2,11 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Logout from "./Logout/Logout";
 import MyPage from "./MyPage/MyPage";
+import Delete from "./Delete/Delete";
+
 import ResetPassWord from "./ResetPassWord/ResetPassWord";
 import PrivateRoute from "components/common/PrivateRoute";
+
 function Index() {
     return (
         <div>
@@ -16,6 +19,10 @@ function Index() {
                     }
                 />
                 <Route path="logout" element={<Logout />} />
+                <Route path="delete" element={
+                    <PrivateRoute RouteComponent={Delete} />
+                }
+                />
             </Routes>
         </div>
     );
