@@ -1,20 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { css } from "@emotion/react";
 import ValuesEdit from "./ValuesEdit";
 import ImageEdit from "./ImageEdit";
-import { useRecoilValue } from "recoil";
-import MyInfo from "store/MyInfo";
 import { useQuery } from "react-query";
 import getMyInfo from "../../../utils/RequestApis/MyPage/getMyInfo";
-
+import { useRecoilValue } from "recoil";
+import LoginState from "store/LoginState";
 
 function UserEdit() {
-    const { data } = useQuery("/user/myinfo", () => getMyInfo(),
+    const token = useRecoilValue(LoginState);
+    const { data } = useQuery(["/user/myinfo", token], () => getMyInfo(),
         {
-            retry: 0,
+            suspense: true,
             useErrorBoundary: true,
-            cacheTime: 0,
-            staleTime: 0,
+            retry: 1,
             onError: (err: any) => {
                 if (err.response.status === 401) {
                     throw "401";
@@ -23,9 +22,6 @@ function UserEdit() {
         }
     );
     const myInfo = data.data;
-    useEffect(() => {
-        //
-    }, [myInfo]);
     return (
         <article css={[articleStyle]}>
             <ImageEdit />
@@ -52,4 +48,4 @@ const articleStyle = css`
     }
 `;
 
-export default UserEdit;
+export default React.memo(UserEdit);
