@@ -11,16 +11,19 @@ function ImageEdit() {
     const imgRef = React.createRef<HTMLInputElement>();
     const [isSelected, setIsSelected] = useState<boolean>(false);
     const [imgSrc, setImgSrc] = useState<string>("");
-    const [newImg, setNewImg] = useState<FileList | null>(null);
-    const { mutate } = useMutation(chnageImage);
+    const [newImg, setNewImg] = useState<File | null>(null);
+    const { mutate } = useMutation(chnageImage, {
+        retry: 0
+    });
 
     const fileSelectHandler = useCallback(() => {
         imgRef.current?.click();
     }, [imgRef]);
 
-    const onChangeHandler = useCallback((e: any) => {
-        setNewImg(e.target.files);
-        const preview = URL.createObjectURL(e.target.files[0]);
+    const onChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files![0];
+        setNewImg(file);
+        const preview = URL.createObjectURL(file);
         setImgSrc(preview);
         setIsSelected(true);
     }, []);
