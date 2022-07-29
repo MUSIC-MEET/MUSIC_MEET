@@ -5,6 +5,7 @@ import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 import chnageImage from "utils/RequestApis/MyPage/ChangeImage";
+import ButtonWrapper from "./ButtonWrapper";
 
 function ImageEdit() {
     const { t } = useTranslation<"myPage">("myPage");
@@ -33,18 +34,32 @@ function ImageEdit() {
         mutate(newImg);
     }, [mutate, newImg]);
 
+    const onCancelHandler = useCallback(() => {
+        setNewImg(null);
+        setImgSrc("");
+        setIsSelected(false);
+    }, []);
     return (
         <section>
             <img src={imgSrc} css={[imgStyle]} />
-            <form onSubmit={onSubmitHandler}>
+            <form css={formStyle} onSubmit={onSubmitHandler}>
                 <input ref={imgRef} type="file" hidden onChange={onChangeHandler} />
                 {
                     isSelected &&
-                    <Submit
-                        value={"이미지 변경하기"}
-                        w={"20rem"}
-                        h={"3rem"}
-                    />
+                    <ButtonWrapper>
+                        <Submit
+                            w={"8rem"}
+                            h={"3rem"}
+                            value={"이미지 변경하기"}
+                        />
+
+                        <Button
+                            w={"8rem"}
+                            h={"3rem"}
+                            value={"취소"}
+                            onClick={onCancelHandler}
+                        />
+                    </ButtonWrapper>
                 }
             </form>
             {
@@ -60,7 +75,9 @@ function ImageEdit() {
     );
 }
 
-
+const formStyle = css`
+    min-width: 20rem;
+`;
 const imgStyle = css`
 width: 240px;
 height: 240px;
