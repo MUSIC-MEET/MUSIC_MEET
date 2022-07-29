@@ -8,3 +8,4 @@ export { default as myPage } from "./MyPage";
 export { default as guestRoute } from "./GuestRoute";
 export { default as privateRoute } from "./PrivateRoute";
 export { default as unAuthorization } from "./UnAuthorization";
+export { default as deleteAccountPage } from "./DeleteAccountPage";
