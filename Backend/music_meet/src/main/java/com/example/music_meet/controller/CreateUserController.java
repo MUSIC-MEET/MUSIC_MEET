@@ -385,7 +385,7 @@ public class CreateUserController
     //
     // 회원탈퇴 API
     //
-    @RequestMapping(path = "/user/delete", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/user", method = RequestMethod.DELETE)
     public ResponseEntity<Object> testFunc(@RequestBody Map<String, String> password)
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
