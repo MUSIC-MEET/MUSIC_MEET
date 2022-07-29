@@ -3,37 +3,36 @@ import Button from "components/common/Button";
 import Submit from "components/common/Submit";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "react-query";
+import { useMutation } from "react-query";
 import chnageImage from "utils/RequestApis/MyPage/ChangeImage";
 
 function ImageEdit() {
     const { t } = useTranslation<"myPage">("myPage");
     const imgRef = React.createRef<HTMLInputElement>();
     const [isSelected, setIsSelected] = useState<boolean>(false);
-    const [img, setImg] = useState<string>("");
-    const { refetch } = useQuery("/user/image", () => chnageImage(img), { enabled: false, suspense: true });
+    const [imgSrc, setImgSrc] = useState<string>("");
+    const [newImg, setNewImg] = useState<FileList | null>(null);
+    const { mutate } = useMutation(chnageImage);
 
     const fileSelectHandler = useCallback(() => {
         imgRef.current?.click();
     }, [imgRef]);
 
-    const onChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("이미지 변경");
-        setImg(e.target.value);
-        console.log(e.target.value);
+    const onChangeHandler = useCallback((e: any) => {
+        setNewImg(e.target.files);
+        const preview = URL.createObjectURL(e.target.files[0]);
+        setImgSrc(preview);
         setIsSelected(true);
     }, []);
 
     const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        refetch();
-    }, [refetch]);
+        mutate(newImg);
+    }, [mutate, newImg]);
 
     return (
         <section>
-            <div css={[imgStyle]}>
-
-            </div>
+            <img src={imgSrc} css={[imgStyle]} />
             <form onSubmit={onSubmitHandler}>
                 <input ref={imgRef} type="file" hidden onChange={onChangeHandler} />
                 {
