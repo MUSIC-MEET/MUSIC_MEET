@@ -33,10 +33,10 @@ function Login(props) {
     const { refetch } = useQuery(
         "/user/login", () => LoginRequest({ values }), 
         { 
-            onSettled: (res) => {
+            onSuccess: (res) => {
                 const { token, nickname } = res.data;
                 setLoginState({ isLogIn: true, key: token, nickname: nickname });
-                addStorage(res);
+                addStorage(res.data);
                 if (keepLoginState) {
                     localStorage.setItem("keepLoginState", true);
                 }

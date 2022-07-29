@@ -1,20 +1,19 @@
 import { AxiosResponse } from "axios";
 import customAxios from "../../customAxios";
 
-const changeIamge = (image: string): Promise<AxiosResponse> => {
+const deleteAccount = (password: string): Promise<AxiosResponse> => {
     const axios = customAxios();
     const token = localStorage.getItem("token");
     return axios({
-        method: "put",
-        url: "/user/image",
+        method: "DELETE",
+        url: "/user",
         headers: {
             authorization: `${token}`,
-            "Content-type" : "multipart/form-data"
         },
         data: {
-            image
+            password
         }
     });
 };
 
-export default changeIamge;
+export default deleteAccount;

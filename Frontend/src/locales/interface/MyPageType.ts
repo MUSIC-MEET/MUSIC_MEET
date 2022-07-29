@@ -13,6 +13,7 @@ interface MyPageType {
                 email: string;
             }
             changePasswordButton: string;
+            deleteButton: string;
             submit: string;
 
             NicknameAlertModal: {
