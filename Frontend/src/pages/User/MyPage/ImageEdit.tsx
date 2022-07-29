@@ -3,46 +3,63 @@ import Button from "components/common/Button";
 import Submit from "components/common/Submit";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "react-query";
+import { useMutation } from "react-query";
 import chnageImage from "utils/RequestApis/MyPage/ChangeImage";
+import ButtonWrapper from "./ButtonWrapper";
 
 function ImageEdit() {
     const { t } = useTranslation<"myPage">("myPage");
     const imgRef = React.createRef<HTMLInputElement>();
     const [isSelected, setIsSelected] = useState<boolean>(false);
-    const [img, setImg] = useState<string>("");
-    const { refetch } = useQuery("/user/image", () => chnageImage(img), { enabled: false, suspense: true });
+    const [imgSrc, setImgSrc] = useState<string>("");
+    const [newImg, setNewImg] = useState<File | null>(null);
+    const { mutate } = useMutation(chnageImage, {
+        retry: 0
+    });
 
     const fileSelectHandler = useCallback(() => {
         imgRef.current?.click();
     }, [imgRef]);
 
     const onChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("이미지 변경");
-        setImg(e.target.value);
-        console.log(e.target.value);
+        const file = e.target.files![0];
+        setNewImg(file);
+        const preview = URL.createObjectURL(file);
+        setImgSrc(preview);
         setIsSelected(true);
     }, []);
 
     const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        refetch();
-    }, [refetch]);
+        mutate(newImg);
+    }, [mutate, newImg]);
 
+    const onCancelHandler = useCallback(() => {
+        setNewImg(null);
+        setImgSrc("");
+        setIsSelected(false);
+    }, []);
     return (
         <section>
-            <div css={[imgStyle]}>
-
-            </div>
-            <form onSubmit={onSubmitHandler}>
+            <img src={imgSrc} css={[imgStyle]} />
+            <form css={formStyle} onSubmit={onSubmitHandler}>
                 <input ref={imgRef} type="file" hidden onChange={onChangeHandler} />
                 {
                     isSelected &&
-                    <Submit
-                        value={"이미지 변경하기"}
-                        w={"20rem"}
-                        h={"3rem"}
-                    />
+                    <ButtonWrapper>
+                        <Submit
+                            w={"8rem"}
+                            h={"3rem"}
+                            value={"이미지 변경하기"}
+                        />
+
+                        <Button
+                            w={"8rem"}
+                            h={"3rem"}
+                            value={"취소"}
+                            onClick={onCancelHandler}
+                        />
+                    </ButtonWrapper>
                 }
             </form>
             {
@@ -58,7 +75,9 @@ function ImageEdit() {
     );
 }
 
-
+const formStyle = css`
+    min-width: 20rem;
+`;
 const imgStyle = css`
 width: 240px;
 height: 240px;

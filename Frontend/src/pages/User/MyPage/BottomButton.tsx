@@ -3,6 +3,7 @@ import Button from "components/common/Button";
 import React, { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import ButtonWrapper from "./ButtonWrapper";
 
 function BottomButton() {
     const { t } = useTranslation<"myPage">("myPage");
@@ -19,7 +20,7 @@ function BottomButton() {
     const WIDTH = useMemo(() => "13rem", []);
     const HEIGHT = useMemo(() => "3rem", []);
     return (
-        <Wrap>
+        <ButtonWrapper>
             <Button
                 w={WIDTH}
                 h={HEIGHT}
@@ -32,7 +33,7 @@ function BottomButton() {
                 value={t("edit.values.deleteButton")}
                 onClick={deleteAccoutHanlder}
             />
-        </Wrap>
+        </ButtonWrapper>
     );
 }
 
