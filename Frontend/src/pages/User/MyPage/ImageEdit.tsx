@@ -84,7 +84,7 @@ const imgStyle = css`
     border: 1px solid gray;
     border-radius: 50%;
     margin-bottom: 1.2rem;
-    object-fit: fill;
+    object-fit: contain;
 `;
 
 export default React.memo(ImageEdit);
