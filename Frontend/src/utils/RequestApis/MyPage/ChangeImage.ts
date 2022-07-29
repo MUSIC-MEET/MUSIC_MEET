@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import customAxios from "../../customAxios";
 
-const chnageImage= (image: string): Promise<AxiosResponse> => {
+const changeIamge = (image: string): Promise<AxiosResponse> => {
     const axios = customAxios();
     const token = localStorage.getItem("token");
     return axios({
@@ -17,4 +17,4 @@ const chnageImage= (image: string): Promise<AxiosResponse> => {
     });
 };
 
-export default chnageImage;
+export default changeIamge;

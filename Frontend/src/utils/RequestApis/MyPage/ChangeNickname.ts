@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import customAxios from "../../customAxios";
 
-const chnageNickname = (nickname: string): Promise<AxiosResponse> => {
+const changeNickname = (nickname: string): Promise<AxiosResponse> => {
     const axios = customAxios();
     const token = localStorage.getItem("token");
     return axios({
@@ -16,4 +16,4 @@ const chnageNickname = (nickname: string): Promise<AxiosResponse> => {
     });
 };
 
-export default chnageNickname;
+export default changeNickname;
