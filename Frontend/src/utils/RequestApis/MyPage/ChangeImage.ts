@@ -9,10 +9,10 @@ const changeIamge = (image: File | null): Promise<AxiosResponse> => {
         url: "/user/image",
         headers: {
             authorization: `${token}`,
-            "Content-type" : "multipart/form-data"
+            "Content-Type": "multipart/form-data",
         },
         data: {
-            image
+            image: image
         }
     });
 };
