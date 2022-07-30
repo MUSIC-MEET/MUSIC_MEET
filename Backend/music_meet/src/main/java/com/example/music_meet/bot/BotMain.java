@@ -12,7 +12,7 @@ public class BotMain {
         BotController botController = new BotController();
         botController.addBot(new MelonBot());
         botController.addBot(new GeineBot());
-        //botController.addBot(new VibeBot());
+        botController.addBot(new BugsBot());
         botController.start();
     }
 }
