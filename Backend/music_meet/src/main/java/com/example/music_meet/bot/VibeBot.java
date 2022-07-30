@@ -2,6 +2,8 @@ package com.example.music_meet.bot;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +16,19 @@ public class VibeBot implements  Bot{
 
     private void parse() throws IOException {
         Document doc = Jsoup.connect("https://vibe.naver.com/chart/total").get();
-//        Element ele = ele.getElementById()
+        Elements ele = doc.getElementsByClass("tracklist");
+
+        ArrayList<Element> Top100List;
+
+        /*for (Element ele : Top100List)
+        {
+
+
+        }*/
+
+
+
+
     }
     @Override
     public void start() throws IOException {
