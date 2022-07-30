@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 function Delete() {
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isFail, setIsFail] = useState(false);
     const navigator = useNavigate();
     const { t } = useTranslation<"deleteAccountPage">("deleteAccountPage");
     const { mutate } = useMutation(deleteAccount, {
@@ -21,8 +22,8 @@ function Delete() {
         },
 
         onError: ({ response }: { response: AxiosResponse }) => {
-            if (response.status === 400) {
-                console.log("fail");
+            if (response.status === 401) {
+                setIsFail(true);
             }
         }
 
@@ -53,6 +54,7 @@ function Delete() {
                 onSubmit={onSubmit}
                 onChange={onChange}
                 value={password}
+                isFail={isFail}
             />
         </Content>
     );

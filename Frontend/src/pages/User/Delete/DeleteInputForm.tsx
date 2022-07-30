@@ -4,14 +4,15 @@ import Input from "components/common/Input";
 import Submit from "components/common/Submit";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
-
+import Error from "components/common/Error";
 interface DeleteInputFormProps {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     value: string;
+    isFail: boolean;
 }
 
-function DeleteInputForm({ onSubmit, onChange, value }: DeleteInputFormProps) {
+function DeleteInputForm({ onSubmit, onChange, value, isFail }: DeleteInputFormProps) {
     const { t } = useTranslation<"deleteAccountPage">("deleteAccountPage");
     return (
         <Form
@@ -32,6 +33,10 @@ function DeleteInputForm({ onSubmit, onChange, value }: DeleteInputFormProps) {
                     placeholder: t("placeholder")
                 }}
             />
+            {
+                isFail &&
+                <Error>{t("error")}</Error>
+            }
             <Submit
                 w={"25rem"}
                 h={"2.5rem"}
@@ -48,7 +53,11 @@ const formStyle = css`
         margin-bottom: 0.5rem;
     }
     & > input[type="submit"] {
-        margin-top: 1rem;
+        margin-top: 0.4rem;
+    }
+
+    & > b {
+        margin-top: 0.7rem;
     }
 `;
 
