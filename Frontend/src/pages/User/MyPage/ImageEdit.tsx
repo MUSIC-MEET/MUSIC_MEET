@@ -79,11 +79,12 @@ const formStyle = css`
     min-width: 20rem;
 `;
 const imgStyle = css`
-width: 240px;
-height: 240px;
-border: 1px solid gray;
-border-radius: 50%;
-margin-bottom: 1.2rem;
+    width: 240px;
+    height: 240px;
+    border: 1px solid gray;
+    border-radius: 50%;
+    margin-bottom: 1.2rem;
+    object-fit: contain;
 `;
 
 export default React.memo(ImageEdit);
