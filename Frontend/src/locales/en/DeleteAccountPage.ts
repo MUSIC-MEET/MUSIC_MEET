@@ -5,6 +5,7 @@ const text: DeleteAccountPageTypes = {
     label: "Password",
     placeholder: "Enter your password",
     submit: "Delete Account",
+    error: "Password is incorrect",
     modal: {
         title: "Success",
         content: "Your account has been deleted.",
