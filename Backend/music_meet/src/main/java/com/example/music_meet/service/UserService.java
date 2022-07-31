@@ -1,5 +1,6 @@
 package com.example.music_meet.service;
 
+import com.example.music_meet.bot.Song;
 import com.example.music_meet.util.AES256Util;
 import com.example.music_meet.util.SHA256;
 import com.example.music_meet.dto.ResetPw;
@@ -24,6 +25,7 @@ import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -799,9 +801,20 @@ public class UserService {
     //
     // 유효성 검사 통과한 새로운 비밀번호를 user테이블에 세팅해 줌
     //
-    public void setUserPw(ResetPw resetPw)
+    public void setUserPw(String newPw, String value, int state)
     {
-        sql = "update user set pw = ? where id =(select id from pwauth where encoding_value = ?)";
+        if (state == 1) // 비로그인
+        {
+            sql = "update user set pw = ? where usernum = (select usernum from pwauth where encoding_value = ?)";
+        }
+        else if (state == 2)
+        {
+            sql = "update user set pw = ? where usernum = ?";
+        }
+        else
+        {
+
+        }
         try
         {
             //
@@ -811,8 +824,8 @@ public class UserService {
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, bCryptPasswordEncoder.encode(resetPw.getNewPw()));
-            pstmt.setString(2, resetPw.getEncoding_value());
+            pstmt.setString(1, bCryptPasswordEncoder.encode(newPw));
+            pstmt.setString(2, value);
 
             rsInt = pstmt.executeUpdate();
 
@@ -1017,6 +1030,74 @@ public class UserService {
 
     }
 
+
+
+
+
+
+    //
+    // 차트 테스트
+    //
+    public ArrayList<Song> getChart(String siteCode)
+    {
+        final int site = Integer.parseInt(siteCode);
+        int rank = 0;
+        String title, singer, img_src = null;
+        ArrayList<Song> chart = new ArrayList<>();
+
+        try {
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+
+            switch (site)
+            {
+                case 1:
+                    sql = "select rank,title, singer, img_src from melonchart";
+                    break;
+                case 2:
+                    sql = "select rank,title, singer, img_src from geinechart";
+                    break;
+                case 3:
+                    sql = "select rank,title, singer, img_src from bugschart";
+                    break;
+                default:
+                    break;
+            }
+
+            while (rs.next())
+            {
+                pstmt = conn.prepareStatement(sql);
+                pstmt.executeUpdate();
+
+                rank = rs.getInt(1);
+                title = rs.getString(2);
+                singer = rs.getString(3);
+                img_src = rs.getString(4);
+
+                Song song = new Song();
+                song.setRank(rank);
+                song.setTitle(title);
+                song.setSinger(singer);
+                song.setImgSrc(img_src);
+                song.setSite(site);
+
+                chart.add(song);
+            }
+
+        } catch (Exception e) {
+            System.out.println("BotService.insertDB()에서 예외처리로 빠짐");
+            e.printStackTrace();
+        } finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return chart;
+
+    }
 }
 
 

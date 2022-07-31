@@ -43,6 +43,7 @@ public class Song implements ISong{
 
     public int getSite() {return this.site; }
 
+
     @Override
     public void print() {
         System.out.println("사이트 : " + this.site);
