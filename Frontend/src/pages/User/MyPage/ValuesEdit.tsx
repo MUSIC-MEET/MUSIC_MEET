@@ -34,7 +34,7 @@ function ValuesEdit(props: Props) {
     const [isOpenNicknameModal, setIsOpenNicknameModal] = useState<boolean>(false);
     const [isOpenEmailModal, setIsOpenEmailModal] = useState<boolean>(false);
     const resetLoginState = useResetRecoilState(LoginState);
-    const { mutate: requestMailChange } = useMutation(changeMail, {
+    const { mutate: requestMailChange, isLoading } = useMutation(changeMail, {
         retry: 0,
         useErrorBoundary: true,
         onSuccess: (response: AxiosResponse) => {
@@ -55,6 +55,7 @@ function ValuesEdit(props: Props) {
         useErrorBoundary: true,
         mutationKey: "changeNickname",
     });
+
     const { values, valuesChangeHandler, error } = useForm({
         initValues: myInfo,
         validator: SignUpValidator
@@ -79,8 +80,10 @@ function ValuesEdit(props: Props) {
 
     const emailChangeButtonClickHandler = useCallback((e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
+        console.log(isLoading);
+        if (isLoading) return;
         requestMailChange(email);
-    }, [email, requestMailChange]);
+    }, [email, isLoading, requestMailChange]);
 
     const editBox: EditBoxProps[] = [
         {
