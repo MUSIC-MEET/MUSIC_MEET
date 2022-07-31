@@ -21,7 +21,7 @@ function SubMenu() {
     return (
         <div css={subMenuStyle}>
             <div>
-                <span onClick={() => onClickHandler("/singup")}>{signup}</span>
+                <span onClick={() => onClickHandler("/signup")}>{signup}</span>
             </div>
                 
             <div>

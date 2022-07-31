@@ -41,6 +41,7 @@ function ImageEdit() {
         setImgSrc("");
         setIsSelected(false);
     }, []);
+
     return (
         <section>
             <img src={imgSrc} css={[imgStyle]} />
