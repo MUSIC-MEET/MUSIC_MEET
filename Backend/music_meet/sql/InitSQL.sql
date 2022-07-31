@@ -71,7 +71,7 @@ CREATE TABLE `ChartSite` (
 );
 insert into chartSite values(1, '멜론');
 insert into chartSite values(2, '지니');
-insert into chartSite values(3, '바이브');
+insert into chartSite values(3, '벅스');
 
 
 create table `melonChart` (
@@ -105,7 +105,7 @@ REFERENCES `ChartSite` (
 );
 
 
-create table `vibeChart` (
+create table `bugsChart` (
 	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
 	`time`	 datetime	 NULL,
 	`title`	 VARCHAR(70)	 NULL,
@@ -113,7 +113,7 @@ create table `vibeChart` (
 	`img_src`	 VARCHAR(200)	 NULL,
 	`sitecode`	 INT(1)	 NOT NULL
 );
-ALTER TABLE `vibeChart` ADD CONSTRAINT `FK_ChartSite_TO_vibeChart_1` FOREIGN KEY (
+ALTER TABLE `bugsChart` ADD CONSTRAINT `FK_ChartSite_TO_bugsChart_1` FOREIGN KEY (
 	`sitecode`
 )
 REFERENCES `ChartSite` (

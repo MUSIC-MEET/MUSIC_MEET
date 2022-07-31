@@ -2,6 +2,7 @@
 
 package com.example.music_meet.controller;
 
+import com.example.music_meet.bot.Song;
 import com.example.music_meet.dto.ResetPw;
 import com.example.music_meet.dto.User;
 import com.example.music_meet.error.SignupErrorForm;
@@ -35,7 +36,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -220,20 +224,48 @@ public class CreateUserController
     //
     // new 비밀번호를 입력받아서 user테이블의 비밀번호를 수정하는 부분
     //
-    @RequestMapping(path="/resetpw", method = RequestMethod.POST)
-    public ResponseEntity<Object> setUserPw(@RequestBody ResetPw resetPw)
+    @RequestMapping(path="/password", method = RequestMethod.PATCH)
+    public ResponseEntity<Object> setUserPw(@RequestBody Map<String,String> resetPw)
     {
-        User user = new User();
+        int state = 0;
+        final String newPw = resetPw.get("newPw");
+        String value = null;
 
-        user.setPw(resetPw.getNewPw());
-        if (user.publicIsPw())
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
         {
-            userService.setUserPw(resetPw);
-            userService.deletepwAuthFunc(resetPw.getEncoding_value());
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            state = 1;
+            value = resetPw.get("encoding_value");
         }
         else
+        {
+            state = 2;
+            value = (String) request.getAttribute("userNum");
+        }
+
+
+
+        User user = new User();
+        user.setPw(newPw);
+
+        if (user.publicIsPw())
+        {
+            if (state == 1)
+            {
+                userService.setUserPw(newPw, value,state);
+                userService.deletepwAuthFunc(value);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            else
+            {
+                userService.setUserPw(newPw, value, state);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }
+        else{
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     //
@@ -356,29 +388,29 @@ public class CreateUserController
     // 마이페이지에서 이미지 변경하는 컨트롤러 (좀 더 알아보고 구현 예정)
     //
     @RequestMapping(path="/user/image", method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> changeUserImage(@RequestPart(required=true, value="file") MultipartFile image)
+    public ResponseEntity<Object> changeUserImage(@RequestParam(required=true, value="picture") Multipart image)
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        System.out.println();
 
-        System.out.println(image);
         if (request.getAttribute("userNum") == null)
         {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         final String userNum = (String) request.getAttribute("userNum");
         final String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "userimages";
-        final String filePath = path + File.separator + image.getOriginalFilename();
+        final String filePath = path + File.separator + image;//.getOriginalFilename();
 
-
+        System.out.println(image.getContentType());
         System.out.println(path);
         System.out.println(filePath);
 
         // 서버 컴퓨터에 이미지 저장
-        userService.savedUserImage(image);
+        userService.savedUserImage((MultipartFile) image);
         // DB에 해당 유저의 이미지 경로 수정
         userService.changeUserImnagePath(userNum,path);
 
-        return new ResponseEntity<>(filePath , HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
@@ -386,7 +418,7 @@ public class CreateUserController
     // 회원탈퇴 API
     //
     @RequestMapping(path = "/user", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> testFunc(@RequestBody Map<String, String> password)
+    public ResponseEntity<Object> userExit(@RequestBody Map<String, String> password)
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
@@ -410,6 +442,18 @@ public class CreateUserController
         }
 
     }
+
+
+
+    @RequestMapping(path = "/test", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> testFunc(@RequestBody Map<String, String> site)
+    {
+
+
+        return new ResponseEntity<>(userService.getChart(site.get("sitecode")),HttpStatus.OK);
+    }
+
+
 
 
 }

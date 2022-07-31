@@ -67,7 +67,7 @@ public class BotService {
                         sql = "insert into geinechart values (?,?,?,?,?,?)";
                         break;
                     case 3:
-                        sql = "insert into vibechart values (?,?,?,?,?,?)";
+                        sql = "insert into bugschart values (?,?,?,?,?,?)";
                         break;
                     default:
                         break;
@@ -121,7 +121,7 @@ public class BotService {
                     sql = "delete from geinechart";
                     break;
                 case 3:
-                    sql = "delete from vibechart";
+                    sql = "delete from bugschart";
                     break;
                 default:
                     break;

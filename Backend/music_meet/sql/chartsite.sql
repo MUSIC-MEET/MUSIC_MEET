@@ -4,4 +4,4 @@ CREATE TABLE `ChartSite` (
 );
 insert into chartSite values(1, '멜론');
 insert into chartSite values(2, '지니');
-insert into chartSite values(3, '바이브');
+insert into chartSite values(3, '벅스');
