@@ -6,16 +6,19 @@ const changePassword = async ({ key, password }: { key?: string | null, password
     if(token) {
         return axios({
             method: "PATCH",
-            url: `/password`,
+            url: `/user/password`,
             headers: {
                 authorization: `${token}`,
+            },
+            data: {
+                newPw: password
             }
         });
     }
     else {
         return axios({
             method: "PATCH",
-            url: `/password`,
+            url: `/user/password`,
             data: {
                 encoding_key: key,
                 newPw: password
