@@ -6,7 +6,7 @@ const changePassword = async ({ key, password }: { key?: string | null, password
     if(token) {
         return axios({
             method: "PATCH",
-            url: `/resetpw`,
+            url: `/password`,
             headers: {
                 authorization: `${token}`,
             }
@@ -15,7 +15,7 @@ const changePassword = async ({ key, password }: { key?: string | null, password
     else {
         return axios({
             method: "PATCH",
-            url: `/resetpw`,
+            url: `/password`,
             data: {
                 encoding_key: key,
                 newPw: password
