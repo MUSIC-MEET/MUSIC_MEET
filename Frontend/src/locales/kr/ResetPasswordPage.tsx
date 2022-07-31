@@ -15,7 +15,7 @@ const text: ResetPasswordType = {
     },
     sucess: "비밀번호 변경이 완료되었습니다.",
     error: "비밀번호 변경에 실패하였습니다.",
-    go: "로그인 하로 가기",
+    go: "로그인 하러 가기",
     keyError: "유효하지 않는 접근입니다."
 };
 
