@@ -62,7 +62,13 @@
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
     "eslint": "^8.18.0",
-    "eslint-react": "^0.0.4"
+    "eslint-react": "^0.0.4",
+    "install": "^0.13.0",
+    "msw": "^0.44.2",
+    "npm": "^8.15.1"
   },
-  "homepage": "/"
+  "homepage": "/",
+  "msw": {
+    "workerDirectory": "public"
+  }
 }
