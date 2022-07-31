@@ -224,7 +224,7 @@ public class CreateUserController
     //
     // new 비밀번호를 입력받아서 user테이블의 비밀번호를 수정하는 부분
     //
-    @RequestMapping(path="/password", method = RequestMethod.PATCH)
+    @RequestMapping(path="/user/password", method = RequestMethod.PATCH)
     public ResponseEntity<Object> setUserPw(@RequestBody Map<String,String> resetPw)
     {
         int state = 0;
@@ -445,8 +445,8 @@ public class CreateUserController
 
 
 
-    @RequestMapping(path = "/test", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> testFunc(@RequestBody Map<String, String> site)
+    @RequestMapping(path = "/livechart", method = RequestMethod.GET)
+    public ResponseEntity<Object> callChart(@RequestBody Map<String, String> site)
     {
 
 

@@ -1063,12 +1063,11 @@ public class UserService {
                 default:
                     break;
             }
-
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             while (rs.next())
             {
-                pstmt = conn.prepareStatement(sql);
-                pstmt.executeUpdate();
-
+                //System.out.println("들어오나?? ");
                 rank = rs.getInt(1);
                 title = rs.getString(2);
                 singer = rs.getString(3);
@@ -1089,6 +1088,7 @@ public class UserService {
             e.printStackTrace();
         } finally {
             try {
+                rs.close();
                 pstmt.close();
                 conn.close();
             } catch (SQLException e) {
