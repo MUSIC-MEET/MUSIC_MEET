@@ -20,7 +20,7 @@ const changePassword = async ({ key, password }: { key?: string | null, password
             method: "PATCH",
             url: `/user/password`,
             data: {
-                encoding_key: key,
+                encoding_value: key,
                 newPw: password
             }
         });

@@ -83,6 +83,7 @@ function ResetPassWordForm(props: ResetPasswordFormProps) {
 const formStyle = css`
     label {
         margin-top: 1rem;
+        margin-bottom: 0.5rem;
     }
 
     input[type="submit"] {
