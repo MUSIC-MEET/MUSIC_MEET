@@ -1,6 +1,5 @@
 import UnAuthorization from "pages/Unauthorization/UnAuthorization";
 import React from "react";
-import { Navigate } from "react-router-dom";
 class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
@@ -8,7 +7,7 @@ class ErrorBoundary extends React.Component {
     }
 
     static getDerivedStateFromError(error) {
-    
+        console.log(error);
         if(error == "401" || error.code === "ERR_BAD_REQUEST") {
             console.log(typeof error);
             return { hasError: true, errorCode: "401" };

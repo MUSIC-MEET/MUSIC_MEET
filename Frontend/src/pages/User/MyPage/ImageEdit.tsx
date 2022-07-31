@@ -12,7 +12,7 @@ function ImageEdit() {
     const imgRef = React.createRef<HTMLInputElement>();
     const [isSelected, setIsSelected] = useState<boolean>(false);
     const [imgSrc, setImgSrc] = useState<string>("");
-    const [newImg, setNewImg] = useState<File | null>(null);
+    const [newImg, setNewImg] = useState<Blob | string>("");
     const { mutate } = useMutation(chnageImage, {
         retry: 0
     });
@@ -31,14 +31,17 @@ function ImageEdit() {
 
     const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        mutate(newImg);
+        const formData = new FormData();
+        formData.append("image", newImg);
+        mutate(formData);
     }, [mutate, newImg]);
 
     const onCancelHandler = useCallback(() => {
-        setNewImg(null);
+        setNewImg("");
         setImgSrc("");
         setIsSelected(false);
     }, []);
+
     return (
         <section>
             <img src={imgSrc} css={[imgStyle]} />

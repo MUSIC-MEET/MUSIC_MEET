@@ -7,11 +7,9 @@ import ThemeContext from "store/ThemeContext";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import LoginFormState from "../../store/LoginForm";
 import LoginModalShownState from "store/LoginModalShown";
-import  useHttp  from "hooks/use-Http";
 import LoginState from "../../store/LoginState";
 import NotLoginMenu from "./NotLoginMenu";
 import LoginMenu from "./LoginMenu";
-import { axios } from "axios";
 import { useQuery } from "react-query";
 import LoginRequest from "../../utils/RequestApis/Login/LoginRequest";
 
@@ -48,7 +46,8 @@ function Login(props) {
             },
             enabled: false, 
             suspense: false,
-            retry: 0
+            retry: 0,
+            useErrorBoundary: false,
         }
     );
     useEffect(()=> {

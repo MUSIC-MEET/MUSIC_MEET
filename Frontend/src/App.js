@@ -13,6 +13,7 @@ import User from "./pages/User/Index";
 import LiveChart from "./pages/LiveChart/Index";
 import GuestRoute from "./components/common/GuestRoute";
 import { QueryClientProvider, QueryClient }  from "react-query";
+import { ErrorBoundary } from "components/common/ErrorBoundary";
 const rootStyle = css`
     display: flex;
     flex-direction: row;
@@ -22,6 +23,7 @@ const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             suspense: true,
+            useErrorBoundary: true,
             retry: 0,
         },
     },
