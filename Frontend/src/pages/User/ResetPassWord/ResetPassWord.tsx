@@ -13,6 +13,8 @@ import LoginModalShown from "store/LoginModalShown";
 import ResetPassWordForm from "./ResetPassWordForm";
 import LoginState from "store/LoginState";
 import CurrentPage from "store/CurrentPage";
+import { useQuery } from "react-query";
+import authKeyCheck from "../../../utils/RequestApis/ResetPassword/AuthKeycheck";
 
 
 
@@ -34,6 +36,7 @@ function ResetPassWord() {
         useForm({ initValues, validator: SignUpValidator });
     const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
     const setCurrentPage = useSetRecoilState(CurrentPage);
+
     const { status, fetchData } = useAxios({
         url: `/resetpw`,
         method: "POST",
@@ -43,16 +46,22 @@ function ResetPassWord() {
         },
     });
 
-    const { status: keyCheckStatus, fetchData: keyCheck } = useAxios({
-        method: "GET",
-        url: `/auth/pw/${key}`
+    // const { status: keyCheckStatus, fetchData: keyCheck } = useAxios({
+    //     method: "GET",
+    //     url: `/auth/pw/${key}`
+    // });
+
+    const { isError: keyIsError, refetch: keyCheck } = useQuery("keyCheck", () => authKeyCheck(key), {
+        enabled: false,
+        suspense: true,
+        retry: 0,
     });
 
     useEffect(() => {
         setCurrentPage(-1);
         if (!isLogIn)
             keyCheck();
-    }, [key, isLogIn, setCurrentPage]);
+    }, [key, isLogIn, setCurrentPage, keyCheck]);
 
     const goLoginHandler = useCallback(() => {
         setLoginModalShown(true);
@@ -72,7 +81,8 @@ function ResetPassWord() {
             });
     }, [fetchData, matchs]);
 
-    if (keyCheckStatus.isError) {
+    if (keyIsError && !isLogIn) {
+        console.log("aa");
         return (
             <Content>
                 <Title>{t("title")}</Title>
