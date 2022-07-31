@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import customAxios from "../../customAxios";
 
-const changeIamge = (image: File | null): Promise<AxiosResponse> => {
+const changeIamge = (image: FormData | string): Promise<AxiosResponse> => {
     const axios = customAxios();
     const token = localStorage.getItem("token");
     return axios({
