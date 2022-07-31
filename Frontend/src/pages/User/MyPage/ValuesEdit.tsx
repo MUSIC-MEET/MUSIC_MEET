@@ -8,8 +8,8 @@ import changeNickname from "utils/RequestApis/MyPage/ChangeNickname";
 import AlertModal from "components/AlertModal/AlertModal";
 import { useResetRecoilState } from "recoil";
 import LoginState from "store/LoginState";
-import { useQuery } from "react-query";
-import { AxiosResponse } from "axios";
+import { useMutation, useQuery } from "react-query";
+import { Axios, AxiosResponse } from "axios";
 import BottomButton from "./BottomButton";
 
 interface Props {
@@ -34,42 +34,26 @@ function ValuesEdit(props: Props) {
     const [isOpenNicknameModal, setIsOpenNicknameModal] = useState<boolean>(false);
     const [isOpenEmailModal, setIsOpenEmailModal] = useState<boolean>(false);
     const resetLoginState = useResetRecoilState(LoginState);
-
-    const { refetch: requestMailChange } = useQuery("/user/email", () => changeMail(email), {
-        enabled: false,
-        suspense: true,
+    const { mutate: requestMailChange } = useMutation(changeMail, {
         retry: 0,
         useErrorBoundary: true,
-        cacheTime: 0,
-        onSuccess: (res: AxiosResponse) => {
-            console.log(res);
-            if (res?.status === 204) {
+        onSuccess: (response: AxiosResponse) => {
+            if (response?.status === 204) {
                 setIsOpenEmailModal(true);
             }
         },
-        onError: (err: AxiosResponse) => {
-            if (err?.status === 401) {
-                throw "401";
-            }
-        }
+
     });
 
-    const { refetch: requestNicknameChange } = useQuery("/user/nickname", () => changeNickname(nickname), {
-        enabled: false,
-        suspense: true,
-        retry: 0,
-        useErrorBoundary: true,
-        cacheTime: 0,
-        onSuccess: (res: AxiosResponse) => {
-            if (res?.status === 204) {
+    const { mutate: requestNicknameChange } = useMutation(changeNickname, {
+        onSuccess: (response: AxiosResponse) => {
+            if (response?.status === 204) {
                 setIsOpenNicknameModal(true);
             }
         },
-        onError: (err: any) => {
-            if (err.response.status === 401) {
-                throw "401";
-            }
-        }
+        retry: 0,
+        useErrorBoundary: true,
+        mutationKey: "changeNickname",
     });
     const { values, valuesChangeHandler, error } = useForm({
         initValues: myInfo,
@@ -90,13 +74,13 @@ function ValuesEdit(props: Props) {
 
     const nicknameChangeButtonClickHandler = useCallback((e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
-        requestNicknameChange();
-    }, [requestNicknameChange]);
+        requestNicknameChange(nickname);
+    }, [nickname, requestNicknameChange]);
 
     const emailChangeButtonClickHandler = useCallback((e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
-        requestMailChange<AxiosResponse>();
-    }, [requestMailChange]);
+        requestMailChange(email);
+    }, [email, requestMailChange]);
 
     const editBox: EditBoxProps[] = [
         {
