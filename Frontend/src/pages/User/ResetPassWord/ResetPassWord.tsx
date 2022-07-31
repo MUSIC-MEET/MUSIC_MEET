@@ -3,8 +3,6 @@ import Content from "components/UI/Content";
 import React, { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import useAxios from "hooks/use-Http";
-import { CircularProgress } from "@mui/material";
 import SignUpValidator from "pages/SignUp/SignUpValidator";
 import { css } from "@emotion/react";
 import useForm from "hooks/use-form";
@@ -13,8 +11,10 @@ import LoginModalShown from "store/LoginModalShown";
 import ResetPassWordForm from "./ResetPassWordForm";
 import LoginState from "store/LoginState";
 import CurrentPage from "store/CurrentPage";
-
-
+import { useMutation, useQuery } from "react-query";
+import authKeyCheck from "../../../utils/RequestApis/ResetPassword/AuthKeycheck";
+import changePassword from "utils/RequestApis/ResetPassword/ChangePassword";
+import Loading from "components/common/Loading";
 
 interface ResetPasswordValuesType {
     pw1: string;
@@ -34,25 +34,35 @@ function ResetPassWord() {
         useForm({ initValues, validator: SignUpValidator });
     const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
     const setCurrentPage = useSetRecoilState(CurrentPage);
-    const { status, fetchData } = useAxios({
-        url: `/resetpw`,
-        method: "POST",
-        body: {
-            newPw: values.pw1,
-            encoding_value: key
-        },
+
+    const {
+        mutate: requestChangePassword,
+        isSuccess: changeRequestIsSuccess,
+        isError: changeRequestIsError,
+        isLoading: changeRquestIsLoading,
+    } = useMutation(changePassword, {
+        retry: 0,
+        useErrorBoundary: false,
     });
 
-    const { status: keyCheckStatus, fetchData: keyCheck } = useAxios({
-        method: "GET",
-        url: `/auth/pw/${key}`
-    });
+    const {
+        isSuccess: keyIsSuccess,
+        isError: keyIsError,
+        isLoading: keyIsLoading,
+        refetch: keyCheck
+    } =
+        useQuery("keyCheck", () => authKeyCheck(key), {
+            enabled: false,
+            suspense: false,
+            retry: 0,
+            useErrorBoundary: false,
+        });
 
     useEffect(() => {
         setCurrentPage(-1);
         if (!isLogIn)
             keyCheck();
-    }, [key, isLogIn, setCurrentPage]);
+    }, [isLogIn, setCurrentPage, keyCheck]);
 
     const goLoginHandler = useCallback(() => {
         setLoginModalShown(true);
@@ -61,47 +71,41 @@ function ResetPassWord() {
 
     const matchs = ((values.pw1 === values.pw2) && values.pw1.length > 0);
 
-    const onSubmit = useCallback(() => {
+    const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         if (!matchs) return;
-        fetchData()
-            .then(() => {
-                // then
-            })
-            .catch((e) => {
-                // catch
-            });
-    }, [fetchData, matchs]);
+        if (isLogIn) requestChangePassword({ key: null, password: values.pw1 });
+        else requestChangePassword({ key: key, password: values.pw1 });
+    }, [isLogIn, key, matchs, requestChangePassword, values.pw1]);
 
-    if (keyCheckStatus.isError) {
+
+    // 로딩
+    if (keyIsLoading || changeRquestIsLoading) {
         return (
             <Content>
                 <Title>{t("title")}</Title>
-                <p>{t("keyError")}</p>
-            </Content>
+                <Loading />
+            </Content >
         );
     }
 
-    if (status.isLoading) {
-        return (
-            <Content>
-                <Title>{t("title")}</Title>
-                <CircularProgress />
-            </Content>
-        );
-    }
 
-    if (status.isSucess || status.isError) {
+    // 비밀번호 변경 리퀘스트 결과
+    if (
+        changeRequestIsSuccess ||
+        changeRequestIsError
+    ) {
         return (
             <Content>
                 <Title>{t("title")}</Title>
-                {status.isSucess &&
+                {changeRequestIsSuccess &&
                     <React.Fragment>
                         <p>{t("sucess")}</p>
                         <a onClick={goLoginHandler} css={css`margin-top: 1rem; cursor: pointer;`}>{t("go")}</a>
                     </React.Fragment>
                 }
                 {
-                    status.isError &&
+                    changeRequestIsError &&
                     <React.Fragment>
                         <p>{t("error")}</p>
                     </React.Fragment>
@@ -110,17 +114,34 @@ function ResetPassWord() {
         );
     }
 
+    // 비회원 인증키도 알맞지않고 회원이 아닐때 유효하지 않다는걸 알려주는 화면 렌더링
+    if (keyIsError && !isLogIn) {
+        return (
+            <Content>
+                <Title>{t("title")}</Title>
+                <p>{t("keyError")}</p>
+            </Content>
+        );
+    }
+
+    // 비회원 인증키가 유효하거나 회원일때 새 비밀번호 입력하는 폼 렌더링
+    if (keyIsSuccess || isLogIn) {
+        return (
+            <Content>
+                <Title>{t("title")}</Title>
+                <ResetPassWordForm
+                    onSubmit={onSubmit}
+                    values={values}
+                    error={error}
+                    valuesChangeHandler={valuesChangeHandler}
+                    matchs={matchs}
+                />
+            </Content >
+        );
+    }
+
     return (
-        <Content>
-            <Title>{t("title")}</Title>
-            <ResetPassWordForm
-                onSubmit={onSubmit}
-                values={values}
-                error={error}
-                valuesChangeHandler={valuesChangeHandler}
-                matchs={matchs}
-            />
-        </Content >
+        <div></div>
     );
 }
 

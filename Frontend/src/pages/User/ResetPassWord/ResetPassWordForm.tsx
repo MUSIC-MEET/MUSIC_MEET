@@ -11,7 +11,7 @@ const WIDTH = "25rem";
 const HEIGHT = "2.5rem";
 
 interface ResetPasswordFormProps {
-    onSubmit: () => void;
+    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     values: {
         pw1: string;
         pw2: string;
