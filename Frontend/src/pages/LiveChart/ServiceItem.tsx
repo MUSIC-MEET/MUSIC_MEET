@@ -21,9 +21,18 @@ function ServiceItem(props: ServiceItemProps) {
         navigator(`/livechart/${name}/100`);
     }, [name, navigator]);
 
+    const renderImage = useCallback((): string => {
+        if (ctx.theme === "dark")
+            return darkImg;
+        else if (ctx.theme === "light" && isSelected)
+            return darkImg;
+        else
+            return lightImg;
+    }, [ctx.theme, darkImg, isSelected, lightImg]);
+
     return (
         <Item select={isSelected} onClick={itemClickHandler}>
-            <img src={ctx.theme === "dark" ? darkImg : lightImg} alt={alt} />
+            <img src={renderImage()} alt={alt} />
         </Item>
     );
 }
