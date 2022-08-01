@@ -19,7 +19,7 @@ interface SongType {
 
 function ChartList({ service, rank }: ChartListProps) {
     const [songList, setSongList] = useState<SongType[]>([]);
-    const { data } = useQuery("getLiveList", () => getChartList({ service, rank }), {
+    const { data } = useQuery(["getLiveList", service], () => getChartList({ service, rank }), {
         suspense: false,
         useErrorBoundary: false,
         retry: 3,
@@ -58,5 +58,5 @@ const listStyle = css`
     width: 91rem;
 `;
 
-export default ChartList;
+export default React.memo(ChartList);
 export { SongType };
