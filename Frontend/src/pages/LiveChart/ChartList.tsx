@@ -37,7 +37,6 @@ function ChartList({ service, rank }: ChartListProps) {
 
     return (
         <table css={listStyle}>
-            ChartList
             <tbody>
                 {songList.map((song) => (
                     <Song
