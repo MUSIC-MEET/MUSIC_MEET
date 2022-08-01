@@ -2,18 +2,10 @@ import styled from "@emotion/styled";
 import React, { useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import ThemeContext from "store/ThemeContext";
+import { ServiceItemType } from "./ServiceSelector";
 
-
-interface ServiceItemProps {
-    isSelected: boolean;
-    darkImg: string;
-    lightImg: string;
-    alt: string;
-    name: string;
-}
-
-function ServiceItem(props: ServiceItemProps) {
-    const { isSelected, darkImg, lightImg, alt, name } = props;
+function ServiceItem(props: ServiceItemType & { isSelected: boolean }) {
+    const { isSelected, darkImg, lightImg, alt, name, selectedColor } = props;
     const navigator = useNavigate();
     const ctx = useContext(ThemeContext);
 
@@ -31,18 +23,18 @@ function ServiceItem(props: ServiceItemProps) {
     }, [ctx.theme, darkImg, isSelected, lightImg]);
 
     return (
-        <Item select={isSelected} onClick={itemClickHandler}>
+        <Item select={isSelected} selectedColor={selectedColor} onClick={itemClickHandler}>
             <img src={renderImage()} alt={alt} />
         </Item>
     );
 }
 
-const Item = styled.li<{ select: boolean }>`
+const Item = styled.li<{ select: boolean, selectedColor: string }>`
     display: flex;
         justify-content: center;
         align-items: center;
-        background-color: ${props => props.select ? "rgb(37,128,55)" : ""};
-        border: 1px solid gray;
+        background-color: ${props => props.select ? props.selectedColor : ""};
+        border: ${props => props.select ? "" : "1px solid gray"};
         border-radius: 10px;
         width: 6.25rem;
         height: 2.5rem;
@@ -51,3 +43,4 @@ const Item = styled.li<{ select: boolean }>`
         margin-right: 0.625rem;
 `;
 export default React.memo(ServiceItem);
+
