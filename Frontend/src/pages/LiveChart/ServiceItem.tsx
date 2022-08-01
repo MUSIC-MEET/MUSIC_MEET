@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import React, { useCallback } from "react";
-import melon from "assets/melon.png";
 import { useNavigate } from "react-router-dom";
 
 
