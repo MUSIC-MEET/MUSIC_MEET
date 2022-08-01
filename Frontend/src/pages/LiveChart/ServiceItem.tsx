@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import ThemeContext from "store/ThemeContext";
 
 
 interface ServiceItemProps {
@@ -14,6 +15,7 @@ interface ServiceItemProps {
 function ServiceItem(props: ServiceItemProps) {
     const { isSelected, darkImg, lightImg, alt, name } = props;
     const navigator = useNavigate();
+    const ctx = useContext(ThemeContext);
 
     const itemClickHandler = useCallback(() => {
         navigator(`/livechart/${name}/100`);
@@ -21,7 +23,7 @@ function ServiceItem(props: ServiceItemProps) {
 
     return (
         <Item select={isSelected} onClick={itemClickHandler}>
-            <img src={darkImg} alt={alt} />
+            <img src={ctx.theme === "dark" ? darkImg : lightImg} alt={alt} />
         </Item>
     );
 }
