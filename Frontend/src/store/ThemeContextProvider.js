@@ -64,17 +64,39 @@ const LightThemeInit = {
 };
 
 function ThemeContextProvider(props) {
-    const [theme, setTheme] = useState("dark");
-    const [themeStyle, setThemeStyle] = useState(DarkThemeInit);
+    const initTheme = (() => {
+        if(
+            localStorage.getItem("theme") !== "dark" && 
+            localStorage.getItem("theme") !== "light"
+        ) {
+            return "dark";
+        }
+        else return localStorage.getItem("theme");    
+    })();
+    const initThemestyle = (() => {
+        if(
+            localStorage.getItem("theme") === "dark" ||
+            localStorage.getItem("theme") !== "light"
+        ) {
+            return DarkThemeInit;
+        }  
+        else {
+            return LightThemeInit;
+        }
+    });
+    const [theme, setTheme] = useState(initTheme);
+    const [themeStyle, setThemeStyle] = useState(initThemestyle);
 
     const setDarkTheme = () => {
         setTheme("dark");
         setThemeStyle(DarkThemeInit);
+        localStorage.setItem("theme", "dark");
     };
 
     const setLightTheme = () => {
         setTheme("light");
         setThemeStyle(LightThemeInit);
+        localStorage.setItem("theme", "light");
     };
 
     const themeObj = {
