@@ -1,10 +1,11 @@
 import { css } from "@emotion/react";
 import React from "react";
 import { SongType } from "./ChartList";
-function Song({ rank, title, singer, img_src }: SongType) {
+function Song({ rank, title, singer, imgSrc }: SongType) {
+
     return (
         <tr css={songStyle}>
-            <td className="img"><img src={img_src} alt="" /></td>
+            <td className="img"><img src={imgSrc} alt="" /></td>
             <td className="rank">{rank}</td>
             <td className="title">{title}</td>
             <td className="singer">{singer}</td>
@@ -21,10 +22,9 @@ const songStyle = css`
     &:hover { 
         background: rgba(88, 88, 88, 0.1);
     }
-    & > .img  {
+    & > td> img  {
         width: 3.375rem;
         height: 3.375rem;
-        border: 1px solid red;
         margin-right: 1.2rem;
     }
 
