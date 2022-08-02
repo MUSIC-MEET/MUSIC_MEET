@@ -1038,7 +1038,7 @@ public class UserService {
     //
     // 차트 테스트
     //
-    public ArrayList<Song> getChart(String siteCode)
+    public ArrayList<Song> getChart(String siteCode, String num)
     {
         final int site = Integer.parseInt(siteCode);
         int rank = 0;
@@ -1081,6 +1081,9 @@ public class UserService {
                 song.setSite(site);
 
                 chart.add(song);
+
+                if (chart.size() == Integer.parseInt(num))
+                    break;
             }
 
         } catch (Exception e) {
