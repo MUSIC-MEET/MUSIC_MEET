@@ -64,7 +64,7 @@ public class BotService {
                         sql = "insert into melonchart values (?,?,?,?,?,?)";
                         break;
                     case 2:
-                        sql = "insert into geinechart values (?,?,?,?,?,?)";
+                        sql = "insert into geniechart values (?,?,?,?,?,?)";
                         break;
                     case 3:
                         sql = "insert into bugschart values (?,?,?,?,?,?)";
@@ -118,7 +118,7 @@ public class BotService {
                     sql = "delete from melonchart";
                     break;
                 case 2:
-                    sql = "delete from geinechart";
+                    sql = "delete from geniechart";
                     break;
                 case 3:
                     sql = "delete from bugschart";

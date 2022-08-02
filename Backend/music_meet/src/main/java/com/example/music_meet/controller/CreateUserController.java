@@ -454,14 +454,14 @@ public class CreateUserController
 
         if (site.equals("melon"))
             siteCode = "1";
-        else if (site.equals("geine"))
+        else if (site.equals("genie"))
             siteCode = "2";
         else if (site.equals("bugs"))
             siteCode = "3";
         else
             {   }
 
-        return new ResponseEntity<>(userService.getChart(siteCode, num),HttpStatus.OK);
+        return new ResponseEntity<>(userService.getChart(siteCode, num), HttpStatus.OK);
     }
 
 
