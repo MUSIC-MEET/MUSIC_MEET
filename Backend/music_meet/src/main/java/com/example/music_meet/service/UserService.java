@@ -1,6 +1,7 @@
 package com.example.music_meet.service;
 
 import com.example.music_meet.bot.Song;
+import com.example.music_meet.dto.ResponseChart;
 import com.example.music_meet.dto.ResponseSong;
 import com.example.music_meet.util.AES256Util;
 import com.example.music_meet.util.SHA256;
@@ -1040,12 +1041,13 @@ public class UserService {
     //
     // 차트 테스트
     //
-    public ArrayList<ResponseSong> getChart(String siteCode, String num)
+    public ResponseChart getChart(String siteCode, String _rank)
     {
         final int site = Integer.parseInt(siteCode);
         int rank = 0;
-        String title, singer, img_src = null;
-        ArrayList<ResponseSong> chart = new ArrayList<>();
+        String title, singer, img_src, updateTime = null;
+        ResponseChart responseChart = new ResponseChart();
+        ArrayList<ResponseSong> songs = new ArrayList<>();
 
         try {
             Class.forName(classForName);
@@ -1054,18 +1056,19 @@ public class UserService {
             switch (site)
             {
                 case 1:
-                    sql = "select rank,title, singer, img_src from melonchart";
+                    sql = "SELECT `rank` , `title`, `singer`, `img_src` FROM melonchart LIMIT ?";
                     break;
                 case 2:
-                    sql = "select rank,title, singer, img_src from geniechart";
+                    sql = "SELECT `rank`, `title`, `singer`, `img_src` FROM geniechart LIMIT ?";
                     break;
                 case 3:
-                    sql = "select rank,title, singer, img_src from bugschart";
+                    sql = "SELECT `rank`, `title`, `singer`, `img_src` FROM bugschart LIMIT ?";
                     break;
                 default:
                     break;
             }
             pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, Integer.parseInt(_rank));
             rs = pstmt.executeQuery();
             while (rs.next())
             {
@@ -1081,11 +1084,33 @@ public class UserService {
                 song.setSinger(singer);
                 song.setImgSrc(img_src);
 
-                chart.add(song);
+                songs.add(song);
+            }
 
-                if (chart.size() == Integer.parseInt(num))
+            switch (site)
+            {
+                case 1:
+                    sql = "SELECT `time` FROM melonchart LIMIT 1";
+                    break;
+                case 2:
+                    sql = "SELECT `time` FROM FROM geniechart LIMIT 1";
+                    break;
+                case 3:
+                    sql = "SELECT `time` FROM FROM bugschart LIMIT 1";
+                    break;
+                default:
                     break;
             }
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            while(rs.next())
+            {
+                updateTime = rs.getString(1);
+            }
+
+            responseChart.setSongs(songs);
+            responseChart.setUpdateTime(updateTime);
+
 
         } catch (Exception e) {
             System.out.println("BotService.insertDB()에서 예외처리로 빠짐");
@@ -1099,7 +1124,7 @@ public class UserService {
                 throw new RuntimeException(e);
             }
         }
-        return chart;
+        return responseChart;
 
     }
 }
