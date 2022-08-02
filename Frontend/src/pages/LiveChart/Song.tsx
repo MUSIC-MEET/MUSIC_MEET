@@ -22,10 +22,9 @@ const songStyle = css`
     &:hover { 
         background: rgba(88, 88, 88, 0.1);
     }
-    & > .img  {
+    & > td> img  {
         width: 3.375rem;
         height: 3.375rem;
-        border: 1px solid red;
         margin-right: 1.2rem;
     }
 
