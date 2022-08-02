@@ -87,7 +87,6 @@
             android:layout_width="370sp"
             android:layout_height="wrap_content"
             android:hint="이메일 입력"
-            android:inputType="TYPE_CLASS_TEXT"
             android:textColor="@color/member_page_color"
             android:textColorHint="@color/edit_text_color"
             android:backgroundTint="@color/member_page_color"
