@@ -15,7 +15,7 @@ interface SongType {
     rank: number;
     title: string;
     singer: string;
-    img_src: string;
+    imgSrc: string;
 }
 
 function ChartList({ service, rank }: ChartListProps) {
@@ -42,7 +42,7 @@ function ChartList({ service, rank }: ChartListProps) {
                         rank={song.rank}
                         title={song.title}
                         singer={song.singer}
-                        img_src={song.img_src}
+                        imgSrc={song.imgSrc}
                     />
                 ))}
             </tbody>

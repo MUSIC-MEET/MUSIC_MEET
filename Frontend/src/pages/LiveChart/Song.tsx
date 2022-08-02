@@ -1,10 +1,11 @@
 import { css } from "@emotion/react";
 import React from "react";
 import { SongType } from "./ChartList";
-function Song({ rank, title, singer, img_src }: SongType) {
+function Song({ rank, title, singer, imgSrc }: SongType) {
+
     return (
         <tr css={songStyle}>
-            <td className="img"><img src={img_src} alt="" /></td>
+            <td className="img"><img src={imgSrc} alt="" /></td>
             <td className="rank">{rank}</td>
             <td className="title">{title}</td>
             <td className="singer">{singer}</td>
