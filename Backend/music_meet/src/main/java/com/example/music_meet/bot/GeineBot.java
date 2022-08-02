@@ -23,7 +23,7 @@ public class GeineBot implements Bot{
                     final int site = 2;
                     final String title = ele.select("td.info > a:nth-child(1)").text();
                     final String singer = ele.select("td.info > a:nth-child(2)").text();
-                    final String imgSrc = ele.select(".cover").text();
+                    final String imgSrc = "https:" + ele.select(".cover > img").attr("src");
                     Song song = new Song();
                     song.setSite(site);
                     song.setRank(rank++);
