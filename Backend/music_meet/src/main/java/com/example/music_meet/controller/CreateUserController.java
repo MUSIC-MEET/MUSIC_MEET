@@ -4,6 +4,7 @@ package com.example.music_meet.controller;
 
 import com.example.music_meet.bot.Song;
 import com.example.music_meet.dto.ResetPw;
+import com.example.music_meet.dto.ResponseChart;
 import com.example.music_meet.dto.User;
 import com.example.music_meet.error.SignupErrorForm;
 import com.example.music_meet.service.JwtService;
@@ -447,8 +448,8 @@ public class CreateUserController
     //
     // 차트 호출
     //
-    @RequestMapping(path = "/livechart/{site}/{num}", method = RequestMethod.GET)
-    public ResponseEntity<Object> callChart(@PathVariable("site") String site, @PathVariable("num") String num)
+    @RequestMapping(path = "/livechart/{site}/{rank}", method = RequestMethod.GET)
+    public ResponseEntity<Object> callChart(@PathVariable("site") String site, @PathVariable("rank") String rank)
     {
         String siteCode = null;
 
@@ -459,9 +460,11 @@ public class CreateUserController
         else if (site.equals("bugs"))
             siteCode = "3";
         else
-            {   }
+            {return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
 
-        return new ResponseEntity<>(userService.getChart(siteCode, num), HttpStatus.OK);
+        ResponseChart responseChart = userService.getChart(siteCode, rank);
+
+        return new ResponseEntity<>(responseChart, HttpStatus.OK);
     }
 
 
