@@ -14,13 +14,13 @@ function Chart() {
             <ServiceSelector
                 service={service}
             />
+
             <ChartList
                 service={service}
                 rank={rank}
             />
-
         </section>
     );
 }
 
-export default Chart;
+export default React.memo(Chart);

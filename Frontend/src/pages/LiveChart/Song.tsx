@@ -39,4 +39,4 @@ const songStyle = css`
     }
 `;
 
-export default Song;
+export default React.memo(Song);

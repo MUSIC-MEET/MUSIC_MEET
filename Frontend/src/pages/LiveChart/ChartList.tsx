@@ -1,9 +1,10 @@
 import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import getChartList from "utils/RequestApis/LiveChart/getChartList";
 import { AxiosResponse } from "axios";
 import Song from "./Song";
+import Loading from "components/common/Loading";
 
 interface ChartListProps {
     service: string;
@@ -19,7 +20,7 @@ interface SongType {
 
 function ChartList({ service, rank }: ChartListProps) {
     const [songList, setSongList] = useState<SongType[]>([]);
-    const { data } = useQuery(["getLiveList", service], () => getChartList({ service, rank }), {
+    const { isLoading } = useQuery(["getLiveList", [service, rank]], () => getChartList({ service, rank }), {
         suspense: false,
         useErrorBoundary: false,
         retry: 3,
@@ -29,12 +30,9 @@ function ChartList({ service, rank }: ChartListProps) {
         }
     });
 
-    useEffect(() => {
-        //
-        console.log("ChartListRender");
-    }, [service, rank, data]);
-
-
+    if (isLoading) {
+        return <div css={listStyle}><Loading /></div>;
+    }
     return (
         <table css={listStyle}>
             <tbody>
