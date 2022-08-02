@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import Title from "components/common/Title";
 import ThemeContext from "../../store/ThemeContext";
 import { useTranslation } from "react-i18next";
