@@ -10,6 +10,7 @@ function Index() {
             <TopText />
             <Routes>
                 <Route path=":service/:rank" element={<Chart />} />
+                <Route path=":service" element={<Chart />} />
                 <Route path="*" element={<Chart />} />
             </Routes>
         </Wrap>
