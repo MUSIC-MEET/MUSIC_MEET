@@ -1093,10 +1093,10 @@ public class UserService {
                     sql = "SELECT `time` FROM melonchart LIMIT 1";
                     break;
                 case 2:
-                    sql = "SELECT `time` FROM FROM geniechart LIMIT 1";
+                    sql = "SELECT `time` FROM geniechart LIMIT 1";
                     break;
                 case 3:
-                    sql = "SELECT `time` FROM FROM bugschart LIMIT 1";
+                    sql = "SELECT `time` FROM bugschart LIMIT 1";
                     break;
                 default:
                     break;
