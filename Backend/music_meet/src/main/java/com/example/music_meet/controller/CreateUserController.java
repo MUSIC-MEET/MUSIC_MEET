@@ -444,13 +444,24 @@ public class CreateUserController
     }
 
 
-
-    @RequestMapping(path = "/livechart", method = RequestMethod.GET)
-    public ResponseEntity<Object> callChart(@RequestBody Map<String, String> site)
+    //
+    // 차트 호출
+    //
+    @RequestMapping(path = "/livechart/{site}/{num}", method = RequestMethod.GET)
+    public ResponseEntity<Object> callChart(@PathVariable("site") String site, @PathVariable("num") String num)
     {
+        String siteCode = null;
 
+        if (site.equals("melon"))
+            siteCode = "1";
+        else if (site.equals("geine"))
+            siteCode = "2";
+        else if (site.equals("bugs"))
+            siteCode = "3";
+        else
+            {   }
 
-        return new ResponseEntity<>(userService.getChart(site.get("sitecode")),HttpStatus.OK);
+        return new ResponseEntity<>(userService.getChart(siteCode, num),HttpStatus.OK);
     }
 
 
