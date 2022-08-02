@@ -1,6 +1,7 @@
 package com.example.music_meet.service;
 
 import com.example.music_meet.bot.Song;
+import com.example.music_meet.dto.ResponseSong;
 import com.example.music_meet.util.AES256Util;
 import com.example.music_meet.util.SHA256;
 import com.example.music_meet.dto.ResetPw;
@@ -66,6 +67,7 @@ public class UserService {
 
     @Autowired
     private java.sql.Timestamp date;
+
 
     //
     // 아이디 찾기
@@ -1038,12 +1040,12 @@ public class UserService {
     //
     // 차트 테스트
     //
-    public ArrayList<Song> getChart(String siteCode, String num)
+    public ArrayList<ResponseSong> getChart(String siteCode, String num)
     {
         final int site = Integer.parseInt(siteCode);
         int rank = 0;
         String title, singer, img_src = null;
-        ArrayList<Song> chart = new ArrayList<>();
+        ArrayList<ResponseSong> chart = new ArrayList<>();
 
         try {
             Class.forName(classForName);
@@ -1055,7 +1057,7 @@ public class UserService {
                     sql = "select rank,title, singer, img_src from melonchart";
                     break;
                 case 2:
-                    sql = "select rank,title, singer, img_src from geinechart";
+                    sql = "select rank,title, singer, img_src from geniechart";
                     break;
                 case 3:
                     sql = "select rank,title, singer, img_src from bugschart";
@@ -1073,12 +1075,11 @@ public class UserService {
                 singer = rs.getString(3);
                 img_src = rs.getString(4);
 
-                Song song = new Song();
+                ResponseSong song = new ResponseSong();
                 song.setRank(rank);
                 song.setTitle(title);
                 song.setSinger(singer);
                 song.setImgSrc(img_src);
-                song.setSite(site);
 
                 chart.add(song);
 

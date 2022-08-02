@@ -89,7 +89,7 @@ REFERENCES `ChartSite` (
 	`sitecode`
 );
 
-create table `geineChart` (
+create table `genieChart` (
 	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
 	`time`	 datetime	 NULL,
 	`title`	 VARCHAR(70)	 NULL,
@@ -97,7 +97,7 @@ create table `geineChart` (
 	`img_src`	 VARCHAR(200)	 NULL,
 	`sitecode`	 INT(1)	 NOT NULL
 );
-ALTER TABLE `geineChart` ADD CONSTRAINT `FK_ChartSite_TO_geineChart_1` FOREIGN KEY (
+ALTER TABLE `genieChart` ADD CONSTRAINT `FK_ChartSite_TO_genieChart_1` FOREIGN KEY (
 	`sitecode`
 )
 REFERENCES `ChartSite` (
