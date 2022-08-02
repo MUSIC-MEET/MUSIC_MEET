@@ -17,4 +17,7 @@
     <color name="edit_color">#f37e4e</color>
     <color name="tranparent">#00000000</color>
     <color name="Tab_Bar_Color">#0d0907</color>
+    <color name="login_page_color">#ff5500</color>
+    <color name="main_page_color">#ff5500</color>
+    <color name="member_page_color">#ff5500</color>
 </resources>

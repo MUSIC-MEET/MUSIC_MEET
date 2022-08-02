@@ -13,7 +13,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
             android:src="@drawable/ic_main_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="SOUNDCLOUD"
-            android:textColor="@color/text_color"
+            android:textColor="@color/main_page_color"
             android:textSize="36sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/loginbtn" app:layout_constraintTop_toTopOf="@+id/main_logo"
@@ -45,13 +44,14 @@
             android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toTopOf="@+id/loginbtn"
             app:layout_constraintTop_toTopOf="@+id/main_logo" app:layout_constraintVertical_bias="0.602"/>
+
     <android.widget.Button
             android:id="@+id/loginbtn"
             android:layout_width="350sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="로그인"
-            android:textColor="@color/text_color"
+            android:textColor="@color/main_page_color"
             android:textSize="14sp"
             android:textStyle="bold"
             android:background="@drawable/custom_ripple_effect"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="회원가입"
-            android:textColor="@color/text_color"
+            android:textColor="@color/main_page_color"
             android:textSize="14sp"
             android:textStyle="bold"
             android:background="@drawable/custom_ripple_effect"

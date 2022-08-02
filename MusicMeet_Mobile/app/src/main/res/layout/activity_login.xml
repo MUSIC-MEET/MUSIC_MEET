@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -11,8 +12,10 @@
     <!--로그인 입력-->
 
     <!--로그인 버튼-->
+
+
     <ImageView
-            android:id="@+id/closebox"
+            android:id="@+id/login_page_closebox"
             android:layout_width="25sp"
             android:layout_height="25sp"
             android:src="@drawable/ic_closebox"
@@ -45,25 +48,29 @@
 
             android:layout_width="370sp"
             android:layout_height="wrap_content"
-            android:text="아이디(이메일)"
-            android:textColor="@color/edit_text_color"
-            android:textColorHint="@color/text_color"
+            android:hint="아이디(이메일)"
+            android:textColor="@color/login_page_color"
+            android:textColorHint="@color/edit_text_color"
+            android:backgroundTint="@color/login_page_color"
             android:textSize="16sp"
-            android:id="@+id/editText" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintBottom_toTopOf="@+id/editText2"/>
+            android:id="@+id/loginText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintBottom_toTopOf="@+id/pwText"/>
 
     <EditText
-
             android:layout_width="370sp"
             android:layout_height="wrap_content"
-            android:text="비밀번호"
-            android:textColor="@color/edit_text_color"
-            android:textColorHint="@color/text_color"
+            android:hint="비밀번호"
+            android:inputType="textPassword"
+            android:textColor="@color/login_page_color"
+            android:textColorHint="@color/edit_text_color"
+            android:backgroundTint="@color/login_page_color"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/editText2"
+            android:id="@+id/pwText"
             app:layout_constraintTop_toBottomOf="@+id/textView"
             app:layout_constraintBottom_toTopOf="@+id/LoginOk"
             app:layout_constraintHorizontal_bias="0.487"
@@ -97,5 +104,6 @@
             android:id="@+id/guideline3"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.02"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
