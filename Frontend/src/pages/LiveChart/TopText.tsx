@@ -2,24 +2,25 @@ import styled from "@emotion/styled";
 import React, { useContext, useEffect } from "react";
 import Title from "components/common/Title";
 import ThemeContext from "../../store/ThemeContext";
+import { useTranslation } from "react-i18next";
 
 function TopText() {
     const ctx = useContext(ThemeContext);
     const subTitleFontColor = ctx.themeStyle.secondFont.fontColor;
-
+    const { t } = useTranslation<"liveChartPage">("liveChartPage");
 
     return (
         <Section>
-            <Title>{"음악차트"}</Title>
+            <Title>{t("title")}</Title>
             <SubTitle
                 color={subTitleFontColor}
             >
-                {"여러 사이트의 음악 순위를 한눈에 확인해보세요!"}
+                {t("subTitle")}
             </SubTitle>
             <UpdateTimeText
                 color={subTitleFontColor}
             >
-                {"최신 업데이트 : 2020.01.01"}
+                {`${t("updateTime")} : 2020.01.01`}
             </UpdateTimeText>
         </Section>
     );

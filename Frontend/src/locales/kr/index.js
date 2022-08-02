@@ -9,3 +9,4 @@ export { default as guestRoute } from "./GuestRoute";
 export { default as privateRoute } from "./PrivateRoute";
 export { default as unAuthorization } from "./UnAuthorization";
 export { default as deleteAccountPage } from "./DeleteAccountPage";
+export { default as liveChartPage } from "./LiveChartPage";
