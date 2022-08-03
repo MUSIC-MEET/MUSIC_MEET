@@ -11,7 +11,7 @@ function Chart() {
     const { t } = useTranslation<"liveChartPage">("liveChartPage");
     const params =
         useParams<{ service: string; rank: string; }>();
-    const serviceList = useMemo(() => ["melon", "spotify", "genie"], []);
+    const serviceList = useMemo(() => ["melon", "bugs", "genie", "flo"], []);
     const service: string = params.service ?? "melon";
     const isNotSupportedService = useMemo(() => !serviceList.includes(service), [service, serviceList]);
     const rank = params.rank ?? "100";

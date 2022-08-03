@@ -6,12 +6,13 @@ interface SelectorProps {
 }
 
 import Dmelon from "assets/Dmelon.png";
-import Dvibe from "assets/Dvibe.png";
-import Dspotify from "assets/Dspotify.png";
 import Dgenine from "assets/Dgenie.png";
 import Lmelon from "assets/Lmelon.png";
-import Lspotify from "assets/Lspotify.png";
 import Lgenine from "assets/Lgenie.png";
+import DBugs from "assets/DBugs.png";
+import LBugs from "assets/LBugs.png";
+import DFlo from "assets/DFlo.png";
+import LFlo from "assets/LFlo.png";
 
 interface ServiceItemType {
     id?: number;
@@ -31,15 +32,15 @@ function ServiceSelector(props: SelectorProps) {
             alt: "melon_log",
             darkImg: Dmelon,
             lightImg: Lmelon,
-            selectedColor: "rgb(37, 128,55)"
+            selectedColor: "rgb(37, 128, 55)"
         },
         {
             id: 1,
-            name: "spotify",
-            alt: "Spotify_log",
-            darkImg: Dspotify,
-            lightImg: Lspotify,
-            selectedColor: "#e606d3"
+            name: "bugs",
+            alt: "Bugs_log",
+            darkImg: DBugs,
+            lightImg: LBugs,
+            selectedColor: "rgb(255, 59, 42)"
         },
         {
             id: 2,
@@ -48,6 +49,14 @@ function ServiceSelector(props: SelectorProps) {
             darkImg: Dgenine,
             lightImg: Lgenine,
             selectedColor: "rgb(37, 137, 251)"
+        },
+        {
+            id: 3,
+            name: "flo",
+            alt: "FLO_log",
+            darkImg: DFlo,
+            lightImg: LFlo,
+            selectedColor: "rgb(47, 25 ,458)"
         },
     ], []);
     return (
