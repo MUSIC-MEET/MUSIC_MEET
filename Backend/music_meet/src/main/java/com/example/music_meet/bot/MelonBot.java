@@ -16,7 +16,7 @@ public class MelonBot implements Bot{
             this.parse();
         } catch(Exception e) {
 
-        }
+            }
     }
 
     private void parse() throws IOException {
