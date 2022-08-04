@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/Black"
+        tools:context=".Login_Activity">
+
+    <!--로그인 입력-->
+
+    <!--로그인 버튼-->
+
+
+    <ImageView
+            android:id="@+id/login_page_closebox"
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:src="@drawable/ic_closebox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.054"
+            app:layout_constraintVertical_bias="0.022"
+            />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintVertical_bias="0.103"
+            android:id="@+id/textView"/>
+
+    <EditText
+
+            android:layout_width="370sp"
+            android:layout_height="wrap_content"
+            android:hint="아이디(이메일)"
+            android:textColor="@color/login_page_color"
+            android:textColorHint="@color/edit_text_color"
+            android:backgroundTint="@color/login_page_color"
+            android:textSize="16sp"
+            android:id="@+id/loginText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintBottom_toTopOf="@+id/pwText"/>
+
+    <EditText
+            android:layout_width="370sp"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호"
+            android:inputType="textPassword"
+            android:textColor="@color/login_page_color"
+            android:textColorHint="@color/edit_text_color"
+            android:backgroundTint="@color/login_page_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/pwText"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintBottom_toTopOf="@+id/LoginOk"
+            app:layout_constraintHorizontal_bias="0.487"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginTop="52dp"/>
+
+    <android.widget.Button
+            android:id="@+id/LoginOk"
+            android:layout_width="350sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_ripple_effect"
+            android:text="로그인"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.491" app:layout_constraintVertical_bias="0.32"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline2"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.048661802"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline3"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.02"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

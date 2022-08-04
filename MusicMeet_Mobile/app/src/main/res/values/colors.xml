@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="Black">#222222</color>     <!-- 배경색-->
+    <color name="text_color">#ff5500</color>    <!-- 라인 색 및 글자 색-->
+    <color name="button_click_color">#ff5500</color> <!--버튼 클릭 시 색상-->
+    <color name="icon_click_color">#ff5500</color>    <!--아이콘 클릭시 색상-->
+    <color name="text_click_color">#000000</color>
+    <color name="edit_text_color">#6a6a6a</color>
+    <color name="edit_color">#f37e4e</color>
+    <color name="tranparent">#00000000</color>
+    <color name="Tab_Bar_Color">#0d0907</color>
+    <color name="login_page_color">#ff5500</color>
+    <color name="main_page_color">#ff5500</color>
+    <color name="member_page_color">#ff5500</color>
+</resources>
