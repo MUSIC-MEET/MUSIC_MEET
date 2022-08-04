@@ -54,6 +54,7 @@ dependencies {
     def fragment_version = "1.2.5"
     implementation 'androidx.viewpager2:viewpager2:1.0.0'   //ViewPager2
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.android.volley:volley:1.1.1'            //서버통신에 필요
 
 
 }
