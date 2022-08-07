@@ -5,3 +5,4 @@ CREATE TABLE `ChartSite` (
 insert into chartSite values(1, '멜론');
 insert into chartSite values(2, '지니');
 insert into chartSite values(3, '벅스');
+insert into chartSite values(4, '플로');
