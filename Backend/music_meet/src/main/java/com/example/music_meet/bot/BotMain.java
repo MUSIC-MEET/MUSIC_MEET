@@ -10,9 +10,9 @@ public class BotMain {
     @Scheduled(fixedRate = 1000 * 60 * 30)
     public void botMain() throws IOException {
         BotController botController = new BotController();
-        //botController.addBot(new MelonBot());
-        //botController.addBot(new GeineBot());
-        //botController.addBot(new BugsBot());
+        botController.addBot(new MelonBot());
+        botController.addBot(new GeineBot());
+        botController.addBot(new BugsBot());
         botController.addBot(new FloBot());
         botController.start();
     }

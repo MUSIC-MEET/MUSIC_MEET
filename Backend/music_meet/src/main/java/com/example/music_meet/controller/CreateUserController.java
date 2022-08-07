@@ -459,7 +459,9 @@ public class CreateUserController
             siteCode = "2";
         else if (site.equals("bugs"))
             siteCode = "3";
-        else
+        else if (site.equals("flo")) {
+            siteCode = "4";
+        } else
             {return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
 
         ResponseChart responseChart = userService.getChart(siteCode, rank);
