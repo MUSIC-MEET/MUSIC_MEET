@@ -69,6 +69,9 @@ public class BotService {
                     case 3:
                         sql = "insert into bugschart values (?,?,?,?,?,?)";
                         break;
+                    case 4:
+                        sql = "insert into flochart values (?,?,?,?,?,?)";
+                        break;
                     default:
                         break;
                 }
@@ -122,6 +125,9 @@ public class BotService {
                     break;
                 case 3:
                     sql = "delete from bugschart";
+                    break;
+                case 4:
+                    sql = "delete from flochart";
                     break;
                 default:
                     break;

@@ -72,7 +72,7 @@ CREATE TABLE `ChartSite` (
 insert into chartSite values(1, '멜론');
 insert into chartSite values(2, '지니');
 insert into chartSite values(3, '벅스');
-
+insert into chartSite values(4, '플로');
 
 create table `melonChart` (
 	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
@@ -114,6 +114,22 @@ create table `bugsChart` (
 	`sitecode`	 INT(1)	 NOT NULL
 );
 ALTER TABLE `bugsChart` ADD CONSTRAINT `FK_ChartSite_TO_bugsChart_1` FOREIGN KEY (
+	`sitecode`
+)
+REFERENCES `ChartSite` (
+	`sitecode`
+);
+
+
+create table `floChart` (
+	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
+	`time`	 datetime	 NULL,
+	`title`	 VARCHAR(70)	 NULL,
+	`singer`	 VARCHAR(50)	 NULL,
+	`img_src`	 VARCHAR(200)	 NULL,
+	`sitecode`	 INT(1)	 NOT NULL
+);
+ALTER TABLE `floChart` ADD CONSTRAINT `FK_ChartSite_TO_floChart_1` FOREIGN KEY (
 	`sitecode`
 )
 REFERENCES `ChartSite` (

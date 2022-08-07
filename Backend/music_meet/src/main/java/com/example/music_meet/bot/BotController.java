@@ -24,7 +24,7 @@ public class BotController {
             try {
                 bot.start();
                 songs = bot.getSongList();
-                //this.printSongs(songs);
+                this.printSongs(songs);
                 botService.deleteDB(songs.get(0).getSite());
                 botService.insertDB(songs);
             } catch (Exception e) {
