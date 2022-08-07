@@ -1064,6 +1064,8 @@ public class UserService {
                 case 3:
                     sql = "SELECT `rank`, `title`, `singer`, `img_src` FROM bugschart LIMIT ?";
                     break;
+                case 4:
+                    sql = "SELECT `rank`, `title`, `singer`, `img_src` FROM flochart LIMIT ?";
                 default:
                     break;
             }
@@ -1097,6 +1099,9 @@ public class UserService {
                     break;
                 case 3:
                     sql = "SELECT `time` FROM bugschart LIMIT 1";
+                    break;
+                case 4:
+                    sql = "SELECT `time` FROM flochart LIMIT 1";
                     break;
                 default:
                     break;
