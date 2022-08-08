@@ -5,7 +5,7 @@ const changeIamge = (image: FormData | string): Promise<AxiosResponse> => {
     const axios = customAxios();
     const token = localStorage.getItem("token");
     return axios({
-        method: "put",
+        method: "POST",
         url: "/user/image",
         headers: {
             authorization: `${token}`,
