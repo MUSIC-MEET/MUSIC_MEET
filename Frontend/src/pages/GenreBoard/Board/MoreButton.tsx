@@ -10,12 +10,20 @@ function MoreButton() {
     const ctx = useContext(ThemeContext);
     const hiddenBoxRef = useRef<HTMLDivElement>(null);
     const buttonClickHandler = useCallback(() => {
+        let timer;
         if (hiddenBoxRef?.current?.classList.contains("open")) {
             hiddenBoxRef?.current?.classList.remove("open");
             hiddenBoxRef?.current?.classList.add("close");
+            clearTimeout(timer);
         } else {
             hiddenBoxRef?.current?.classList.remove("close");
             hiddenBoxRef?.current?.classList.add("open");
+            timer = setTimeout(() => {
+                if (hiddenBoxRef?.current?.classList.contains("open")) {
+                    hiddenBoxRef?.current?.classList.remove("open");
+                    hiddenBoxRef?.current?.classList.add("close");
+                }
+            }, 3000);
         }
 
     }, []);
