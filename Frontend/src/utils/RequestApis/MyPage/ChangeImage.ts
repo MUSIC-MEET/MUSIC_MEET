@@ -1,11 +1,11 @@
 import { AxiosResponse } from "axios";
 import customAxios from "../../customAxios";
 
-const changeIamge = (image: FormData | string): Promise<AxiosResponse> => {
+const changeIamge = (image: Blob | string): Promise<AxiosResponse> => {
     const axios = customAxios();
     const token = localStorage.getItem("token");
     return axios({
-        method: "POST",
+        method: "PUT",
         url: "/user/image",
         headers: {
             authorization: `${token}`,
