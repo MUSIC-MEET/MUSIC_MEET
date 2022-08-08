@@ -4,6 +4,8 @@ import { useSetRecoilState } from "recoil";
 import CurrentPage from "store/CurrentPage";
 import { useParams } from "react-router-dom";
 import GenreSelector from "./GenreSelector";
+import PostList from "./PostList";
+import { css } from "@emotion/react";
 
 function Board() {
     const params = useParams<{ genre: string }>();
@@ -13,12 +15,23 @@ function Board() {
         setCurrentPage(2);
     }, [setCurrentPage]);
     return (
-        <Content>
+        <section css={style}>
             <GenreSelector
                 genre={genre}
             />
-        </Content>
+            <PostList />
+        </section>
     );
 }
+
+const style = css`
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+`;
 
 export default Board;

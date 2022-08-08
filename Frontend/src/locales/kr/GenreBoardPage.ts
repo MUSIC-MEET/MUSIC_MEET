@@ -14,6 +14,16 @@ const text: GenreBoardType = {
         dance: "댄스",
         mr: "MR",
         jazz: "재즈",
+    },
+    list: {
+        head: {
+            num: "번호",
+            title: "제목",
+            time: "작성 시간",
+            writer: "작성자",
+            view: "조회수",
+            vote: "추천"
+        }
     }
 };
 

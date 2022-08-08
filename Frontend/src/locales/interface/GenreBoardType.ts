@@ -13,6 +13,16 @@ interface GenreBoardType {
         mr: string;
         jazz: string;
     }
+    list: {
+        head: {
+            num: string;
+            title: string;
+            time: string;
+            writer: string;
+            view: string;
+            vote: string;
+        }
+    }
 }
 
 export default GenreBoardType;

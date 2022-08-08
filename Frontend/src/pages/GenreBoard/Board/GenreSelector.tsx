@@ -44,9 +44,6 @@ const List = React.memo(styled.ul`
     justify-content:  center;
     align-items: center;
     overflow: scroll;
-    width: 80%;
-
-
 `);
 
 export default React.memo(GenreSelector);
