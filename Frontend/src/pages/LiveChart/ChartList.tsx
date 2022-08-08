@@ -5,10 +5,13 @@ import getChartList from "utils/RequestApis/LiveChart/getChartList";
 import { AxiosResponse } from "axios";
 import Song from "./Song";
 import Loading from "components/common/Loading";
+import { useSetRecoilState } from "recoil";
+import LiveChartUpdateTime from "../../store/LiveChartListUpdateTime";
 
 interface ChartListProps {
     service: string;
     rank: string;
+
 }
 
 interface SongType {
@@ -20,6 +23,7 @@ interface SongType {
 
 function ChartList({ service, rank }: ChartListProps) {
     const [songList, setSongList] = useState<SongType[]>([]);
+    const setUpdateTime = useSetRecoilState(LiveChartUpdateTime);
     const { isLoading } = useQuery(["getLiveList", [service, rank]], () => getChartList({ service, rank }), {
         suspense: false,
         useErrorBoundary: false,
@@ -27,6 +31,7 @@ function ChartList({ service, rank }: ChartListProps) {
         refetchOnWindowFocus: false,
         onSuccess: (response: AxiosResponse) => {
             setSongList(response.data.songs);
+            setUpdateTime(response.data.updateTime);
         }
     });
 

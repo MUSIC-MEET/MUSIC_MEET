@@ -3,12 +3,14 @@ import React, { useContext } from "react";
 import Title from "components/common/Title";
 import ThemeContext from "../../store/ThemeContext";
 import { useTranslation } from "react-i18next";
+import { useRecoilValue } from "recoil";
+import LiveChartUpdateTime from "store/LiveChartListUpdateTime";
 
 function TopText() {
     const ctx = useContext(ThemeContext);
     const subTitleFontColor = ctx.themeStyle.secondFont.fontColor;
     const { t } = useTranslation<"liveChartPage">("liveChartPage");
-
+    const updateTime = useRecoilValue(LiveChartUpdateTime);
     return (
         <Section>
             <Title>{t("title")}</Title>
@@ -20,7 +22,7 @@ function TopText() {
             <UpdateTimeText
                 color={subTitleFontColor}
             >
-                {`${t("updateTime")} : 2020.01.01`}
+                {`${t("updateTime")} : ${updateTime}`}
             </UpdateTimeText>
         </Section>
     );

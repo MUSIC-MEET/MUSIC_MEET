@@ -41,4 +41,4 @@ const navStyle = css`
     
 `;
 
-export default Menu;
+export default React.memo(Menu);

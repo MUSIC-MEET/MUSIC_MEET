@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useMemo, useCallback, useEffect } from "react";
 import RouteItem from "../common/RouteItem";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -12,15 +12,20 @@ function RoutesMenu() {
     const routeClickHandler = useCallback((index) => {
         setCurrentPage(index);
     },[setCurrentPage]);
-    const ROUTES = [
+
+    useEffect(() => {
+        //
+    },[]);
+
+    const ROUTES = useMemo(() => [
         { name : t("routes.menu0"), link: "/" },
         { name : t("routes.menu1"), link: "/livechart" },
-        { name : t("routes.menu2"), link: "/tmp" },
+        { name : t("routes.menu2"), link: "/board" },
         { name : t("routes.menu3"), link: "/tmp" },
         { name : t("routes.menu4"), link: "/tmp" },
-    ];
+    ],[t]);
 
-    return (
+    return ( 
         <nav>
             <ul>
                 {ROUTES.map((route,index) =>(
