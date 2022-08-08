@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import GenreSelector from "./GenreSelector";
 import PostList from "./PostList";
 import { css } from "@emotion/react";
+import MoreButton from "./MoreButton";
 
 function Board() {
     const params = useParams<{ genre: string }>();
@@ -20,6 +21,7 @@ function Board() {
                 genre={genre}
             />
             <PostList />
+            <MoreButton />
         </section>
     );
 }

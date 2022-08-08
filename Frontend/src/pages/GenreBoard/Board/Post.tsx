@@ -23,6 +23,7 @@ const style = css`
     & > td {
         padding-top: 1rem;
         padding-bottom: 1rem;
+        text-overflow: ellipsis;
     }
 
     &:hover {
