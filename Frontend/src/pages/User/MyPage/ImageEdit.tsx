@@ -31,9 +31,7 @@ function ImageEdit() {
 
     const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("image", newImg);
-        mutate(formData);
+        mutate(newImg);
     }, [mutate, newImg]);
 
     const onCancelHandler = useCallback(() => {
