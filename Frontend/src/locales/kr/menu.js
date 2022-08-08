@@ -5,7 +5,7 @@ export default {
     routes: {
         "menu0" : "메인",
         "menu1" : "차트 보기",
-        "menu2" : "뮤직 투게더",
+        "menu2" : "장르별 게시판",
         "menu3" : "최신 앨범",
         "menu4" : "DJ 리믹스",
     },

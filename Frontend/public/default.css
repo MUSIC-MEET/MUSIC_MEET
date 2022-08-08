@@ -157,3 +157,12 @@ input:focus {
 input[type="submit"]:foucs {
     border: none;
 }
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    scrollbar-width: none;
+    /* Firefox */
+}

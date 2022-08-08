@@ -6,14 +6,16 @@ import Content from "./components/UI/Content";
 import { css } from "@emotion/react";
 import "./i18n";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import SignUp from "./pages/SignUp/Index";
-import UserFind from "./pages/Find/Index";
-import EmailAuth from "./pages/Auth/Index";
-import User from "./pages/User/Index";
 import LiveChart from "./pages/LiveChart/Index";
 import GuestRoute from "./components/common/GuestRoute";
 import { QueryClientProvider, QueryClient }  from "react-query";
-import { ErrorBoundary } from "components/common/ErrorBoundary";
+
+import SignUp from "./pages/SignUp/Index";
+import UserFind from "./pages/Find/Index";
+import EmailAuth from "./pages/Auth/Index";
+import GenreBoard from "pages/GenreBoard/Index";
+import User from "./pages/User/Index";
+
 const rootStyle = css`
     display: flex;
     flex-direction: row;
@@ -66,6 +68,7 @@ function App() {
                             <Route path="/user/*" element={<User />} />
                             <Route path="/livechart/*" element={<LiveChart />} />
                             <Route path="/unauthorization" element={<h2>unauthorization</h2>} />
+                            <Route path="/board/*" element={<GenreBoard />} />
                         </Routes>
                 
                     </Content>

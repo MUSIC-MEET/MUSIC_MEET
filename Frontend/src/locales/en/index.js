@@ -10,3 +10,4 @@ export { default as privateRoute } from "./PrivateRoute";
 export { default as unAuthorization } from "./UnAuthorization";
 export { default as deleteAccountPage } from "./DeleteAccountPage";
 export { default as liveChartPage } from "./LiveChartPage";
+export { default as genreBoardPage } from "./GenreBoardPage";

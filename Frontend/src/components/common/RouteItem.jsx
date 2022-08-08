@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { css } from "@emotion/react";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,13 +11,19 @@ const style = css`
 function RouteItem(props) {
     const navigator = useNavigate();
     const ctx = useContext(ThemeContext);
-    const color= ctx.themeStyle.menu.clicked;
-    const hoverColor = ctx.themeStyle.menu.hover;
+    const color= useMemo(() => ctx.themeStyle.menu.clicked, [ctx]);
+    const hoverColor = useMemo(() =>ctx.themeStyle.menu.hover, [ctx]);
     const { name, link, currentIndex, onClickRoute, clicked } = props;
     const navigaterHandler = useCallback(() => {
         navigator(link);
         onClickRoute(currentIndex);
     },[currentIndex, link, navigator, onClickRoute]);
+
+
+    useEffect(() => {
+        //
+    },[]);
+
     return (
         <li css={[style, 
             css`

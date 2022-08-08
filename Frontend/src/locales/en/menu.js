@@ -5,7 +5,7 @@ export default {
     routes: {
         "menu0" : "Main",
         "menu1" : "Show Chart",
-        "menu2" : "Music Together",
+        "menu2" : "Genre Board",
         "menu3" : "Latest Album",
         "menu4" : "DJ Remix",
     },
