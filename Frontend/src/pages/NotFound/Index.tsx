@@ -1,19 +1,23 @@
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useState } from "react";
 import Text from "components/common/Text";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
+import EasterEgg from "./EasterEgg";
+import styled from "@emotion/styled";
 function Index() {
+    const [isStartEasteregg, setIsStartEasteregg] = useState(false);
     return (
-        <div css={style}>
+        <Wrap>
             <Text>
                 {"404\\\n Not Found Page"}
             </Text>
-            <AcUnitIcon css={snow} />
-        </div>
+            <AcUnitIcon className="snow" onClick={() => setIsStartEasteregg(true)} />
+            {isStartEasteregg && <EasterEgg />}
+        </Wrap>
     );
 }
 
-const style = css`
+const Wrap = React.memo(styled.div`
     width: 100%;
     height: 100%;
     display: flex;
@@ -24,22 +28,24 @@ const style = css`
     line-height: 1.5;
     font-size: 4rem;
     margin-bottom: 3rem;
-`;
 
-const snow = css`
-    color: skyblue;
-    cursor: pointer;
-    animation: rotate 3s infinite linear;
-    @keyframes rotate {
-        from {
-            transform: rotate(0deg);
-        }
+    .snow {
+        color: skyblue;
+        cursor: pointer;
+        animation: rotate 3s infinite linear;
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
 
-        to {
-            transform: rotate(360deg);
+            to {
+                transform: rotate(360deg);
+            }
         }
     }
-`;
+
+    
+`);
 
 
 export default Index;

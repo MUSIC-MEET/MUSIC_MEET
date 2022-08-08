@@ -31,7 +31,7 @@ public class JwtService
     // 헤더 만드는부분
     //
     private Map<String, Object> createHeader() {
-        Map<String, Ob  ject> header = new HashMap<>();
+        Map<String, Object> header = new HashMap<>();
         header.put("typ", "JWT");
         header.put("alg", "HS256"); // 해시 256 사용하여 암호화
         header.put("regDate", System.currentTimeMillis());
