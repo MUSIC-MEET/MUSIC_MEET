@@ -20,13 +20,13 @@ function MoreButton() {
 
     }, []);
     return (
-        <Button theme={ctx.theme} onClick={buttonClickHandler}>
+        <Button theme={ctx.theme}>
             <div className="hidden-box" ref={hiddenBoxRef}>
                 <CreateIcon className="btn" />
                 <SearchIcon className="btn" />
             </div>
 
-            <MoreHorizIcon className="btn" />
+            <MoreHorizIcon className="btn" onClick={buttonClickHandler} />
         </Button>
     );
 }
