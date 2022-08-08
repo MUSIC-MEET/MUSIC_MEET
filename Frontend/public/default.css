@@ -166,3 +166,28 @@ input[type="submit"]:foucs {
     scrollbar-width: none;
     /* Firefox */
 }
+
+._snow {
+    -webkit-box-shadow: 0px 0px 10px 6px rgba(143, 241, 255, 0.76);
+    box-shadow: 0px 0px 10px 6px rgba(143, 241, 255, 0.76);
+    border-radius: 100%;
+    background-color: skyblue;
+    z-index: 123123;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+
+    animation: drop-snow 5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes drop-snow {
+    0% {
+        top: 0px;
+    }
+
+    100% {
+        top: 99%;
+    }
+
+}
