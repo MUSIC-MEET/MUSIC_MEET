@@ -2,7 +2,6 @@
 
 package com.example.music_meet.controller;
 
-import com.example.music_meet.bot.Song;
 import com.example.music_meet.dto.ResetPw;
 import com.example.music_meet.dto.ResponseChart;
 import com.example.music_meet.dto.User;
@@ -12,8 +11,6 @@ import com.example.music_meet.service.LoginService;
 import com.example.music_meet.service.MailService;
 import com.example.music_meet.service.UserService;
 import com.example.music_meet.util.AES256Util;
-import com.example.music_meet.util.CustomAnnotationConfig;
-import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,25 +19,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 
-import javax.mail.Multipart;
-import javax.print.attribute.standard.Media;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -388,28 +376,30 @@ public class CreateUserController
     //
     // 마이페이지에서 이미지 변경하는 컨트롤러 (좀 더 알아보고 구현 예정)
     //
-    @RequestMapping(path="/user/image", method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> changeUserImage(@RequestParam(required=true, value="picture") Multipart image)
+    @RequestMapping(path="/user/image", method = RequestMethod.PUT ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> changeUserImage(@RequestParam(value = "image") MultipartFile image)
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        System.out.println();
 
         if (request.getAttribute("userNum") == null)
         {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         final String userNum = (String) request.getAttribute("userNum");
-        final String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "userimages";
-        final String filePath = path + File.separator + image;//.getOriginalFilename();
+        final String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator
+                + "resources" + File.separator + "static" + File.separator + "profileimage" + File.separator;
+        final String file = new Date().getTime() + "_" + image.getOriginalFilename();
 
-        System.out.println(image.getContentType());
-        System.out.println(path);
-        System.out.println(filePath);
+        File newFile = new File(path + file);
 
-        // 서버 컴퓨터에 이미지 저장
-        userService.savedUserImage((MultipartFile) image);
+        try{
+            image.transferTo(newFile);
+        } catch (Exception e) {
+
+        }
+
         // DB에 해당 유저의 이미지 경로 수정
-        userService.changeUserImnagePath(userNum,path);
+        userService.changeUserImnagePath(userNum, file);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
