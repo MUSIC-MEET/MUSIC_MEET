@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
-import Content from "components/UI/Content";
 import { useSetRecoilState } from "recoil";
 import CurrentPage from "store/CurrentPage";
 import { useParams } from "react-router-dom";
-import GenreSelector from "./GenreSelector";
+import GenreSelector from "../GenreSelector";
 import PostList from "./PostList";
 import { css } from "@emotion/react";
 import MoreButton from "./MoreButton";
+import Title from "components/common/Title";
+import { useTranslation } from "react-i18next";
 
 function Board() {
+    const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
     const params = useParams<{ genre: string }>();
     const genre = params.genre ?? "kpop";
     const setCurrentPage = useSetRecoilState(CurrentPage);
@@ -17,6 +19,7 @@ function Board() {
     }, [setCurrentPage]);
     return (
         <section css={style}>
+            <Title>{t("title")}</Title>
             <GenreSelector
                 genre={genre}
             />
@@ -34,6 +37,10 @@ const style = css`
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    & > h1 {
+        width: 100%;
+        text-align:center;
+    }
 `;
 
 export default Board;
