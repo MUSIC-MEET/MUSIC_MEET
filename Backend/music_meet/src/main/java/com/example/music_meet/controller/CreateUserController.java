@@ -258,7 +258,7 @@ public class CreateUserController
     }
 
     //
-    //  마이페이지에 아이디, 비밀번호, 닉네임 출력해주는 컨트롤러
+    //  마이페이지에 아이디, 비밀번호, 닉네임, 이미지 출력해주는 컨트롤러
     //
     @RequestMapping(path="/user/myinfo", method = RequestMethod.GET)
     public ResponseEntity<Object> callUserInfo()
@@ -272,7 +272,7 @@ public class CreateUserController
         }
 
         Map<String,String> userMap;
-        userMap = jwtService.getClaimsFromJwt(authorization);
+        userMap = jwtService.getClaimsFromJwt(authorization); // userMap에 userNum 추가
         userMap.putAll(userService.findUserInfo(userMap.get("userNum")));
 
         Map<String,String> findEmailFuncRequestMap = new HashMap<>();
@@ -401,7 +401,7 @@ public class CreateUserController
         // DB에 해당 유저의 이미지 경로 수정
         userService.changeUserImnagePath(userNum, file);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
