@@ -9,7 +9,7 @@ interface GenreType {
     text: string;
 }
 
-function GenreSelector({ genre }: { genre: string }) {
+function GenreSelector({ genre, board, write }: { genre: string, board?: boolean, write?: boolean }) {
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
     const genreList: GenreType[] = useMemo(() => [
         { id: 0, name: "balad", text: t("genre.balad") },
@@ -32,6 +32,8 @@ function GenreSelector({ genre }: { genre: string }) {
                     name={_genre.name}
                     text={_genre.text}
                     isSelected={_genre.name === genre}
+                    board={board}
+                    write={write}
                 />
             ))}
         </List>
@@ -39,6 +41,9 @@ function GenreSelector({ genre }: { genre: string }) {
 }
 
 const List = React.memo(styled.ul`
+    width: 100vw;
+    min-height: 3rem;
+    height: auto;
     display: flex;
     flex-direction: row;
     justify-content:  center;
