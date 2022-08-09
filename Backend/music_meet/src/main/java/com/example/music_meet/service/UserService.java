@@ -320,7 +320,6 @@ public class UserService {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                System.out.println(rs.getString(1));
                 result = true;
             }
 
@@ -851,7 +850,7 @@ public class UserService {
     // CreateUserController.callUserInfo에서 사용중
     public Map<String, String> findUserInfo(String userNum)
     {
-        sql = "select id, email, nickname, userimage from user where usernum = ?";
+        sql = "select usernum, id, email, nickname, userimage from user where usernum = ?";
         Map<String, String> map = new HashMap<>();
         try {
             Class.forName(classForName);
@@ -867,14 +866,15 @@ public class UserService {
                 map.put("id", null);
                 map.put("email", null);
                 map.put("nickname", null);
+                map.put("userImage", null);
             }
             else
             {
-                //map.put("userNum", Integer.toString(rs.getInt(1)));
-                map.put("id", rs.getString(1));
-                map.put("email", rs.getString(2));
-                map.put("nickname", rs.getString(3));
-                map.put("userImage", rs.getString(4));
+                map.put("userNum", Integer.toString(rs.getInt(1)));
+                map.put("id", rs.getString(2));
+                map.put("email", rs.getString(3));
+                map.put("nickname", rs.getString(4));
+                map.put("userImage", rs.getString(5));
             }
         }
         catch (Exception e)
@@ -1060,7 +1060,6 @@ public class UserService {
             rs = pstmt.executeQuery();
             while (rs.next())
             {
-                //System.out.println("들어오나?? ");
                 rank = rs.getInt(1);
                 title = rs.getString(2);
                 singer = rs.getString(3);

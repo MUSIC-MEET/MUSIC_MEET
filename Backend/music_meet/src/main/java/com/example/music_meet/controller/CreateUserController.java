@@ -273,7 +273,7 @@ public class CreateUserController
 
         Map<String,String> userMap;
         userMap = jwtService.getClaimsFromJwt(authorization); // userMap에 userNum 추가
-        userMap.putAll(userService.findUserInfo(userMap.get("userNum")));
+        userMap.putAll(userService.findUserInfo(userMap.get("userNum"))); // usernum으로 아이디 닉네임 이메일 닉네임 이미지 조회
 
         Map<String,String> findEmailFuncRequestMap = new HashMap<>();
         findEmailFuncRequestMap.put("userNum",userMap.get("userNum"));
