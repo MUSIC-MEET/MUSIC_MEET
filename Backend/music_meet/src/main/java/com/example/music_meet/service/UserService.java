@@ -847,11 +847,11 @@ public class UserService {
     }
 
     //
-    // userNum을 매개변수로 아이디, 이메일, 닉네임을 조회하는 함수
+    // userNum을 매개변수로 아이디, 이메일, 닉네임, 이미지를 조회하는 함수
     // CreateUserController.callUserInfo에서 사용중
     public Map<String, String> findUserInfo(String userNum)
     {
-        sql = "select usernum, id, email, nickname from user where usernum = ?";
+        sql = "select id, email, nickname, userimage from user where usernum = ?";
         Map<String, String> map = new HashMap<>();
         try {
             Class.forName(classForName);
@@ -870,10 +870,11 @@ public class UserService {
             }
             else
             {
-                map.put("userNum", Integer.toString(rs.getInt(1)));
-                map.put("id", rs.getString(2));
-                map.put("email", rs.getString(3));
-                map.put("nickname", rs.getString(4));
+                //map.put("userNum", Integer.toString(rs.getInt(1)));
+                map.put("id", rs.getString(1));
+                map.put("email", rs.getString(2));
+                map.put("nickname", rs.getString(3));
+                map.put("userImage", rs.getString(4));
             }
         }
         catch (Exception e)

@@ -11,7 +11,7 @@ CREATE TABLE `User` (
 	`updatedIp`	 VARCHAR(15)	  NOT NULL,
 	`deletedip`	 VARCHAR(15)	 NULL,
 	`state`	 INT(1)	  NOT NULL,
-    `userimage`	 VARCHAR(100)	 NULL
+    `userimage`		VARCHAR(100)   DEFAULT 'default.png'
 );
 
 ALTER TABLE `User` ADD CONSTRAINT `FK_UserState_TO_User_1` FOREIGN KEY (
