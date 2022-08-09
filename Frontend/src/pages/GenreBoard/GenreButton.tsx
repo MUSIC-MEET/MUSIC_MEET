@@ -7,17 +7,22 @@ interface GenreButtonProps {
     name: string;
     text: string;
     isSelected: boolean;
+    board?: boolean;
+    write?: boolean
 }
 
-function GenreButton({ name, text, isSelected }: GenreButtonProps) {
+function GenreButton({ name, text, isSelected, board, write }: GenreButtonProps) {
     const navigator = useNavigate();
     useEffect(() => {
         //
     }, [isSelected, text]);
 
     const ItemClickHandler = useCallback(() => {
-        navigator(`/board/${name}`);
-    }, [name, navigator]);
+        if (board)
+            navigator(`/board/${name}`);
+        else if (write)
+            navigator(`/board/${name}/write`);
+    }, [board, name, navigator, write]);
 
     return (
         <Item

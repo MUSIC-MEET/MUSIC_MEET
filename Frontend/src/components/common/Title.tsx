@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import React from "react";
 
 function Title(props: { children: string }) {
-    return (<h1 css={[style]}> {props.children}</h1 >);
+    return (<div className="title"><h1 css={[style]}> {props.children}</h1 ></div>);
 }
 
 const style = css`

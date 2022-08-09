@@ -6,9 +6,14 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import ThemeContext from "store/ThemeContext";
 import styled from "@emotion/styled";
+import { useNavigate, useParams } from "react-router-dom";
 function MoreButton() {
+    const params = useParams();
+    const genre: string = params.genre ?? "kpop";
+    const navigator = useNavigate();
     const ctx = useContext(ThemeContext);
     const hiddenBoxRef = useRef<HTMLDivElement>(null);
+
     const buttonClickHandler = useCallback(() => {
         let timer;
         if (hiddenBoxRef?.current?.classList.contains("open")) {
@@ -27,10 +32,15 @@ function MoreButton() {
         }
 
     }, []);
+
+    const writeButtonClickHandler = useCallback(() => {
+        navigator(`/board/${genre}/write`);
+    }, [genre, navigator]);
+
     return (
         <Button theme={ctx.theme}>
             <div className="hidden-box" ref={hiddenBoxRef}>
-                <CreateIcon className="btn" />
+                <CreateIcon className="btn" onClick={writeButtonClickHandler} />
                 <SearchIcon className="btn" />
             </div>
 
@@ -104,3 +114,4 @@ const Button = styled.button`
 `;
 
 export default MoreButton;
+
