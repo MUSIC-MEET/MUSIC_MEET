@@ -988,23 +988,8 @@ public class UserService {
         return result;
     }
 
-    public void savedUserImage(MultipartFile image)
-    {
-        LocalDate localDate = LocalDate.now();
-        final String path = System.getProperty("user.dir") + "\\src\\main\\resources\\UserImages";
 
-        String fileName = localDate + "_" + image.getOriginalFilename();
-        File savedFile = new File(path, fileName);
-
-        try {
-            image.transferTo(savedFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public void changeUserImnagePath(String userNum,String path)
+    public void changeUserImnagePath(String userNum,String file)
     {
         sql = "update user set userimage = ? where usernum = ?";
         try {
@@ -1012,7 +997,7 @@ public class UserService {
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1, path);
+            pstmt.setString(1, file);
             pstmt.setInt(2, Integer.parseInt(userNum));
             rsInt = pstmt.executeUpdate();
         }
@@ -1039,7 +1024,7 @@ public class UserService {
 
 
     //
-    // 차트 테스트
+    // 차트
     //
     public ResponseChart getChart(String siteCode, String _rank)
     {
