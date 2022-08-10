@@ -69,6 +69,14 @@ public class UserService {
     @Autowired
     private java.sql.Timestamp date;
 
+    @Value("${server.url}")
+    private String serverURL;
+
+    @Value("${server.port}")
+    private String serverPort;
+
+    final private String serverFolder = "profileimage";
+
 
     //
     // 아이디 찾기
@@ -866,7 +874,7 @@ public class UserService {
                 map.put("id", null);
                 map.put("email", null);
                 map.put("nickname", null);
-                map.put("userImage", null);
+                map.put("image", null);
             }
             else
             {
@@ -874,7 +882,7 @@ public class UserService {
                 map.put("id", rs.getString(2));
                 map.put("email", rs.getString(3));
                 map.put("nickname", rs.getString(4));
-                map.put("userImage", rs.getString(5));
+                map.put("image", serverURL + ":" + serverPort + "/" + serverFolder + "/" + rs.getString(5));
             }
         }
         catch (Exception e)

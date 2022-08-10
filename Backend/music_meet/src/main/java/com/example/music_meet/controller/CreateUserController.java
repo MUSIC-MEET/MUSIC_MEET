@@ -62,6 +62,14 @@ public class CreateUserController
 
     private AES256Util aes256Util;
 
+    @Value("${server.url}")
+    private String serverURL;
+
+    @Value("${server.port}")
+    private String serverPort;
+
+    final private String serverFolder = "profileimage";
+
 
     //
     // 회원가입
@@ -271,7 +279,7 @@ public class CreateUserController
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        Map<String,String> userMap;
+        Map<String, String> userMap;
         userMap = jwtService.getClaimsFromJwt(authorization); // userMap에 userNum 추가
         userMap.putAll(userService.findUserInfo(userMap.get("userNum"))); // usernum으로 아이디 닉네임 이메일 닉네임 이미지 조회
 
@@ -401,7 +409,10 @@ public class CreateUserController
         // DB에 해당 유저의 이미지 경로 수정
         userService.changeUserImnagePath(userNum, file);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        Map<String, String> responseMap = new HashMap<>();
+        responseMap.put("image",serverURL+ ":" + serverPort + "/" + serverFolder + "/" + file);
+
+        return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
 
 

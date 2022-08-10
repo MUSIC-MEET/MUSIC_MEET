@@ -51,7 +51,7 @@ public class InterceptorService implements HandlerInterceptor
             try {
                 jwtService.validateToken(jwt);
 
-                sql = "select id, state from user where usernum = ?";
+                sql = "SELECT id, state FROM user WHERE usernum = ? LIMIT 1";
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/music_meet?serverTimezone=Asia/Seoul&characterEncoding=UTF-8", "root", "0000");
                 pstmt = conn.prepareStatement(sql);
