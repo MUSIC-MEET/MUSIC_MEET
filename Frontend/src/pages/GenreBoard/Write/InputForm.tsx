@@ -2,8 +2,12 @@ import { css } from "@emotion/react";
 import Form from "components/common/Form";
 import Input from "components/common/Input";
 import React from "react";
+import "@toast-ui/editor/dist/toastui-editor.css";
+
+import { Editor } from "@toast-ui/react-editor";
 
 function InputForm() {
+
     return (
         <Form
             onSubmit={() => console.log("aa")}
@@ -26,6 +30,7 @@ function InputForm() {
 
             <span>
                 <label htmlFor="content">내용</label>
+                <Editor />
             </span>
         </ Form>
     );
