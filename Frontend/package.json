@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.0.5",
     "axios": "^0.27.2",
     "customize-cra": "^1.0.0",
+    "i18next": "^21.9.0",
     "i18next-browser-languagedetector": "^6.1.4",
     "react": "^18.1.0",
     "react-app-rewired": "^2.2.1",
