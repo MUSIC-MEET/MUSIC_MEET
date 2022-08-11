@@ -7,11 +7,11 @@ import { useMutation } from "react-query";
 import chnageImage from "utils/RequestApis/MyPage/ChangeImage";
 import ButtonWrapper from "./ButtonWrapper";
 
-function ImageEdit() {
+function ImageEdit({ image }: { image: string }) {
     const { t } = useTranslation<"myPage">("myPage");
     const imgRef = React.createRef<HTMLInputElement>();
     const [isSelected, setIsSelected] = useState<boolean>(false);
-    const [imgSrc, setImgSrc] = useState<string>("");
+    const [imgSrc, setImgSrc] = useState<string>(image);
     const [newImg, setNewImg] = useState<Blob | string>("");
     const { mutate } = useMutation(chnageImage, {
         retry: 0
@@ -36,9 +36,9 @@ function ImageEdit() {
 
     const onCancelHandler = useCallback(() => {
         setNewImg("");
-        setImgSrc("");
+        setImgSrc(image);
         setIsSelected(false);
-    }, []);
+    }, [image]);
 
     return (
         <section>
