@@ -9,3 +9,7 @@ Backend/music_meet/src/main/resources/static/profileimage/
 Frontend/node_modules
 Frontend/.DS_Store
 Frontend/build
+
+# Mobile
+MusicMeet_Mobile/build
+MusicMeet_Mobile/.idea
