@@ -3,19 +3,19 @@ import React from "react";
 
 interface RedButtonProps {
     value: string;
+    type?: string;
     onClick?: () => void;
 }
 
 function RedButton(props: RedButtonProps) {
-    const { value, onClick } = props;
+    const { value, onClick, type } = props;
     return (
-        <RedButtonComponent onClick={onClick}>
-            {value}
+        <RedButtonComponent type={type} value={value} onClick={onClick}>
         </RedButtonComponent>
     );
 }
 
-const RedButtonComponent = styled.button`
+const RedButtonComponent = React.memo(styled.input`
 
 /* CSS */
     appearance: none;
@@ -43,5 +43,5 @@ const RedButtonComponent = styled.button`
         transition-duration: .35s;
     }
 
-`;
+`);
 export default React.memo(RedButton);

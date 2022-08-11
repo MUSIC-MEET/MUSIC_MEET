@@ -37,12 +37,13 @@ const Wrap = styled.div`
     align-items: center;
     text-align: center;
     line-height: 1.5;
-    & > button {
+    & > input {
         position: absolute;
         bottom : 30px;
         font-size: 1.3rem;
         width:  8rem;
         height: 3rem;
+        text-align: center;
     }
 `;
 
