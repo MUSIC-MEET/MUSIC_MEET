@@ -1,9 +1,9 @@
 import { css } from "@emotion/react";
 import Button from "components/common/Button";
 import Submit from "components/common/Submit";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import chnageImage from "utils/RequestApis/MyPage/ChangeImage";
 import ButtonWrapper from "./ButtonWrapper";
 
@@ -13,9 +13,16 @@ function ImageEdit({ image }: { image: string }) {
     const [isSelected, setIsSelected] = useState<boolean>(false);
     const [imgSrc, setImgSrc] = useState<string>(image);
     const [newImg, setNewImg] = useState<Blob | string>("");
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        //
+    }, [image]);
+
     const { mutate } = useMutation(chnageImage, {
         retry: 0,
         onSuccess: () => {
+            queryClient.invalidateQueries(["myinfo"]);
             setIsSelected(false);
         },
         onError: (err) => {
@@ -94,4 +101,4 @@ const imgStyle = css`
     object-fit: contain;
 `;
 
-export default React.memo(ImageEdit);
+export default React.memo(ImageEdit);   
