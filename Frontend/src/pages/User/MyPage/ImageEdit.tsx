@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import Button from "components/common/Button";
 import Submit from "components/common/Submit";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import chnageImage from "utils/RequestApis/MyPage/ChangeImage";
@@ -14,10 +14,15 @@ function ImageEdit({ image }: { image: string }) {
     const [imgSrc, setImgSrc] = useState<string>(image);
     const [newImg, setNewImg] = useState<Blob | string>("");
     const queryClient = useQueryClient();
+
+    useEffect(() => {
+        //
+    }, [image]);
+
     const { mutate } = useMutation(chnageImage, {
         retry: 0,
         onSuccess: () => {
-            queryClient.invalidateQueries(["/user/myinfo"]);
+            queryClient.invalidateQueries(["myinfo"]);
             setIsSelected(false);
         },
         onError: (err) => {
