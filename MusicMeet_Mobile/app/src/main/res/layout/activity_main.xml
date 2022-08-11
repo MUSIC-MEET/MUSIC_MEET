@@ -8,16 +8,30 @@
         android:background="@color/Black"
         tools:context=".MainActivity">
 
+    <!--이미지 옆으로 계속 넘겨줌-->
+
+    <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteY="54dp"
+            tools:layout_editor_absoluteX="0dp"
+           />
+
     <ImageView
             android:id="@+id/main_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/ic_main_logo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintVertical_bias="0.614"/>
 
     <TextView
             android:id="@+id/soundcloud"
@@ -28,9 +42,12 @@
             android:textColor="@color/main_page_color"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/loginbtn" app:layout_constraintTop_toTopOf="@+id/main_logo"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.365"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.664"/>
+
     <TextView
             android:id="@+id/explanation"
             android:layout_width="wrap_content"
@@ -41,9 +58,12 @@
             android:textAlignment="center"
             android:textColor="#ffffff"
             android:textSize="14sp"
-            android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toTopOf="@+id/loginbtn"
-            app:layout_constraintTop_toTopOf="@+id/main_logo" app:layout_constraintVertical_bias="0.602"/>
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.732"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     <android.widget.Button
             android:id="@+id/loginbtn"
@@ -55,10 +75,13 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:background="@drawable/custom_ripple_effect"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_logo"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintVertical_bias="0.871"/>
+
     <android.widget.Button
             android:id="@+id/membersbtn"
             android:layout_width="350sp"
@@ -69,12 +92,12 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:background="@drawable/custom_ripple_effect"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.957"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/explanation"
-            app:layout_constraintHorizontal_bias="0.491"
-            app:layout_constraintVertical_bias="0.625"/>
+            app:layout_constraintHorizontal_bias="0.491"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
+    <color name="status_bar_Color">#222222</color>
     <color name="Black">#222222</color>     <!-- 배경색-->
     <color name="text_color">#ff5500</color>    <!-- 라인 색 및 글자 색-->
     <color name="button_click_color">#ff5500</color> <!--버튼 클릭 시 색상-->
