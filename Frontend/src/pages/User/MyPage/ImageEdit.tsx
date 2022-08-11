@@ -14,7 +14,13 @@ function ImageEdit({ image }: { image: string }) {
     const [imgSrc, setImgSrc] = useState<string>(image);
     const [newImg, setNewImg] = useState<Blob | string>("");
     const { mutate } = useMutation(chnageImage, {
-        retry: 0
+        retry: 0,
+        onSuccess: () => {
+            setIsSelected(false);
+        },
+        onError: (err) => {
+            //
+        }
     });
 
     const fileSelectHandler = useCallback(() => {
