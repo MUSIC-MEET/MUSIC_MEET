@@ -22,9 +22,12 @@ function UserEdit() {
         }
     );
     const myInfo = data.data;
+    const { image } = myInfo;
     return (
         <article css={[articleStyle]}>
-            <ImageEdit />
+            <ImageEdit
+                image={image}
+            />
             <ValuesEdit
                 myInfo={myInfo}
             />
