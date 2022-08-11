@@ -9,7 +9,7 @@ import LoginState from "store/LoginState";
 
 function UserEdit() {
     const state = useRecoilValue(LoginState);
-    const { data } = useQuery(["/user/myinfo", state], () => getMyInfo(),
+    const { data } = useQuery(["myinfo", state], () => getMyInfo(),
         {
             suspense: true,
             useErrorBoundary: true,
