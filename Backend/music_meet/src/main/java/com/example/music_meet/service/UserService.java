@@ -882,7 +882,7 @@ public class UserService {
                 map.put("id", rs.getString(2));
                 map.put("email", rs.getString(3));
                 map.put("nickname", rs.getString(4));
-                map.put("image", serverURL + ":" + serverPort + "/" + serverFolder + "/" + rs.getString(5));
+                map.put("image", serverURL + ":" + serverPort + "/user/image/" + rs.getString(5));
             }
         }
         catch (Exception e)
@@ -1017,7 +1017,7 @@ public class UserService {
         finally
         {
             try {
-                rs.close();
+                //rs.close();
                 pstmt.close();
                 conn.close();
             } catch (SQLException e) {
@@ -1026,10 +1026,6 @@ public class UserService {
         }
 
     }
-
-
-
-
 
 
     //

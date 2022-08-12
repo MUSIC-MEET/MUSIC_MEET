@@ -12,6 +12,7 @@ import com.example.music_meet.service.MailService;
 import com.example.music_meet.service.UserService;
 import com.example.music_meet.util.AES256Util;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -25,10 +26,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.security.GeneralSecurityException;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,6 +68,8 @@ public class CreateUserController
     private String serverPort;
 
     final private String serverFolder = "profileimage";
+    final private String filePath = System.getProperty("user.dir")+ File.separator + "src" + File.separator + "main" + File.separator
+            + "resources" + File.separator + "profileimage" + File.separator;
 
 
     //
@@ -266,7 +267,7 @@ public class CreateUserController
     }
 
     //
-    //  마이페이지에 아이디, 비밀번호, 닉네임, 이미지 출력해주는 컨트롤러
+    //  마이페이지에 아이디, 이메일, 닉네임, 이미지 출력해주는 컨트롤러
     //
     @RequestMapping(path="/user/myinfo", method = RequestMethod.GET)
     public ResponseEntity<Object> callUserInfo()
@@ -289,10 +290,27 @@ public class CreateUserController
 
         final String email = userService.findEmailFunc(findEmailFuncRequestMap);
         userMap.remove("userNum");
-        userMap.put("email",email);
+        userMap.put("email", email);
 
         return new ResponseEntity<>(userMap,HttpStatus.OK);
     }
+
+    //
+    // 이미지 보내주는 컨트롤러
+    //
+    @RequestMapping(path="/user/image/{imageName}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> sendImage(@PathVariable("imageName") String imageName) throws IOException
+    {
+       /* String path = System.getProperty("user.dir")+ File.separator + "src" + File.separator + "main" + File.separator
+                + "resources" + File.separator + "profileimage" + File.separator + imageName;*/
+        InputStream imageStream = new FileInputStream(filePath + imageName);
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+    }
+
+
+
 
     //
     // 이메일 바꾸는 API
@@ -394,11 +412,9 @@ public class CreateUserController
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         final String userNum = (String) request.getAttribute("userNum");
-        final String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator
-                + "resources" + File.separator + "static" + File.separator + "profileimage" + File.separator;
         final String file = new Date().getTime() + "_" + image.getOriginalFilename();
 
-        File newFile = new File(path + file);
+        File newFile = new File(filePath + file);
 
         try{
             image.transferTo(newFile);
@@ -410,7 +426,10 @@ public class CreateUserController
         userService.changeUserImnagePath(userNum, file);
 
         Map<String, String> responseMap = new HashMap<>();
-        responseMap.put("image",serverURL+ ":" + serverPort + "/" + serverFolder + "/" + file);
+        responseMap.put("image", serverURL + ":" + serverPort + "/" + "user" + "/" + "image" + "/" + file);
+
+
+
 
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
@@ -470,7 +489,9 @@ public class CreateUserController
         return new ResponseEntity<>(responseChart, HttpStatus.OK);
     }
 
-
+    //
+    //
+    //
 
 
 }
