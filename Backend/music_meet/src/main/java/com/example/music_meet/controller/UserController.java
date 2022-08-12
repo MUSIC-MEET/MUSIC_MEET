@@ -7,12 +7,10 @@ import com.example.music_meet.dto.ResponseChart;
 import com.example.music_meet.dto.User;
 import com.example.music_meet.error.SignupErrorForm;
 import com.example.music_meet.service.JwtService;
-import com.example.music_meet.service.LoginService;
 import com.example.music_meet.service.MailService;
 import com.example.music_meet.service.UserService;
 import com.example.music_meet.util.AES256Util;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -36,24 +34,21 @@ import java.util.Map;
 @Controller
 @CrossOrigin("*")
 @Slf4j
-public class CreateUserController
+public class UserController
 {
-    @Value("${email.key}")
-    private String emailKey;
+
     @Autowired
     private UserService userService;
 
     @Autowired
     private MailService mailService;
 
-    @Autowired
-    private LoginService loginService;
+
 
     @Autowired
     private JwtService jwtService;
 
-    @Autowired
-    private java.sql.Timestamp date;
+
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;// 암호화 객체
@@ -67,9 +62,8 @@ public class CreateUserController
     @Value("${server.port}")
     private String serverPort;
 
-    final private String serverFolder = "profileimage";
-    final private String filePath = System.getProperty("user.dir")+ File.separator + "src" + File.separator + "main" + File.separator
-            + "resources" + File.separator + "profileimage" + File.separator;
+    final private String filePath = System.getProperty("user.dir")+ File.separator + "src" + File.separator + "main"
+            + File.separator + "resources" + File.separator + "profileimage" + File.separator;
 
 
     //
@@ -296,23 +290,6 @@ public class CreateUserController
     }
 
     //
-    // 이미지 보내주는 컨트롤러
-    //
-    @RequestMapping(path="/user/image/{imageName}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> sendImage(@PathVariable("imageName") String imageName) throws IOException
-    {
-       /* String path = System.getProperty("user.dir")+ File.separator + "src" + File.separator + "main" + File.separator
-                + "resources" + File.separator + "profileimage" + File.separator + imageName;*/
-        InputStream imageStream = new FileInputStream(filePath + imageName);
-        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-        imageStream.close();
-        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
-    }
-
-
-
-
-    //
     // 이메일 바꾸는 API
     //
     @RequestMapping(path="/user/email", method = RequestMethod.PUT)
@@ -400,7 +377,7 @@ public class CreateUserController
     }
 
     //
-    // 마이페이지에서 이미지 변경하는 컨트롤러 (좀 더 알아보고 구현 예정)
+    // 마이페이지에서 이미지 변경하는 컨트롤러
     //
     @RequestMapping(path="/user/image", method = RequestMethod.PUT ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> changeUserImage(@RequestParam(value = "image") MultipartFile image)
@@ -428,12 +405,8 @@ public class CreateUserController
         Map<String, String> responseMap = new HashMap<>();
         responseMap.put("image", serverURL + ":" + serverPort + "/" + "user" + "/" + "image" + "/" + file);
 
-
-
-
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
-
 
     //
     // 회원탈퇴 API
@@ -464,34 +437,6 @@ public class CreateUserController
 
     }
 
-
-    //
-    // 차트 호출
-    //
-    @RequestMapping(path = "/livechart/{site}/{rank}", method = RequestMethod.GET)
-    public ResponseEntity<Object> callChart(@PathVariable("site") String site, @PathVariable("rank") String rank)
-    {
-        String siteCode = null;
-
-        if (site.equals("melon"))
-            siteCode = "1";
-        else if (site.equals("genie"))
-            siteCode = "2";
-        else if (site.equals("bugs"))
-            siteCode = "3";
-        else if (site.equals("flo")) {
-            siteCode = "4";
-        } else
-            {return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
-
-        ResponseChart responseChart = userService.getChart(siteCode, rank);
-
-        return new ResponseEntity<>(responseChart, HttpStatus.OK);
-    }
-
-    //
-    //
-    //
 
 
 }
