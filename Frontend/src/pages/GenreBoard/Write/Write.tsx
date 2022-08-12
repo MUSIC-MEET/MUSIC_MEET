@@ -14,11 +14,13 @@ function Write() {
                 genre={genre}
                 write={true}
             />
-            <InputForm />
+            <InputForm
+                genre={genre}
+            />
         </section>
     );
 }
 
 
 
-export default Write;
+export default React.memo(Write);
