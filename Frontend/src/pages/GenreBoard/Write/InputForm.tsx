@@ -7,13 +7,17 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import { Editor } from "@toast-ui/react-editor";
 import ThemeContext from "../../../store/ThemeContext";
-import RedButton from "components/common/RedButton";
+import BottomButton from "./BottomButton";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-function InputForm() {
+function InputForm({ genre: genre }: { genre: string }) {
     const ctx = useContext(ThemeContext);
     const editorRef = useRef<Editor>(null);
     const [title, setTitle] = useState<string>("");
     const [content, setContent] = useState<string>("");
+    const navigator = useNavigate();
+    const { t } = useTranslation<"genreWritePage">("genreWritePage");
 
     const onChangeTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(() => e.target.value);
@@ -28,6 +32,10 @@ function InputForm() {
         console.log(title, content);
     }, [content, title]);
 
+    const goBackHandler = useCallback(() => {
+        navigator(`/board/${genre}`);
+    }, [genre, navigator]);
+
     return (
         <Form
             onSubmit={onSubmit}
@@ -35,13 +43,13 @@ function InputForm() {
             addCss={[formStyle]}
         >
             <span>
-                <label htmlFor="title">제목</label>
+                <label htmlFor="title">{t("input.titleLabel")}</label>
                 <Input
                     w={"100%"}
                     h={"3rem"}
                     onChange={setTitle}
                     input={{
-                        placeholder: "제목을 입력하세요",
+                        placeholder: t("input.titlePlaceholder"),
                         name: "title",
                         id: "title",
                         type: "text",
@@ -52,7 +60,7 @@ function InputForm() {
             </span>
 
             <span>
-                <label htmlFor="content">내용</label>
+                <label htmlFor="content">{t("input.contentLabel")}</label>
                 <Editor
                     initialEditType="wysiwyg"
                     height="40rem"
@@ -60,13 +68,11 @@ function InputForm() {
                     previewStyle="vertical"
                     onChange={onChangeContent}
                     ref={editorRef}
+                    placeholder={t("input.contentPlaceholder")}
+
                 />
             </span>
-
-            <RedButton
-                value="작성"
-                type={"submit"}
-            />
+            <BottomButton goBackHandler={goBackHandler} />
         </Form>
     );
 }
@@ -77,11 +83,6 @@ const formStyle = css`
     justify-content: center;
     align-items: flex-start;
 
-    & > input[type="submit"] {
-        float: right;
-        width: 5rem;
-        height: 3.5rem;
-    }
 
     span {
         width: 70rem;
@@ -96,4 +97,4 @@ const formStyle = css`
 
 `;
 
-export default InputForm;
+export default React.memo(InputForm);
