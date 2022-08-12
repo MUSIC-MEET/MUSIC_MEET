@@ -68,8 +68,8 @@ public class CreateUserController
     private String serverPort;
 
     final private String serverFolder = "profileimage";
-    final private String filePath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator
-            + "resources" + File.separator + "static" + File.separator + "profileimage" + File.separator;
+    final private String filePath = System.getProperty("user.dir")+ File.separator + "src" + File.separator + "main" + File.separator
+            + "resources" + File.separator + "profileimage" + File.separator;
 
 
     //
@@ -301,10 +301,9 @@ public class CreateUserController
     @RequestMapping(path="/user/image/{imageName}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> sendImage(@PathVariable("imageName") String imageName) throws IOException
     {
-        String path = System.getProperty("user.dir")+ File.separator + "resources" + File.separator + "static" + File.separator + "profileimage" + File.separator + imageName;
-        InputStream imageStream = new FileInputStream(path);
-        //InputStream imageStream = new FileInputStream("C:" + File.separator + "Users" + File.separator + "Admin" + File.separator + "Desktop"  + File.separator + "music_meet" + File.separator + "Backend" + File.separator + "music_meet" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"  + File.separator + "profileimage" + File.separator + imageName);
-        System.out.println(path);
+       /* String path = System.getProperty("user.dir")+ File.separator + "src" + File.separator + "main" + File.separator
+                + "resources" + File.separator + "profileimage" + File.separator + imageName;*/
+        InputStream imageStream = new FileInputStream(filePath + imageName);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
@@ -417,8 +416,6 @@ public class CreateUserController
 
         File newFile = new File(filePath + file);
 
-        System.out.println(serverURL);
-        System.out.println(serverPort);
         try{
             image.transferTo(newFile);
         } catch (Exception e) {
