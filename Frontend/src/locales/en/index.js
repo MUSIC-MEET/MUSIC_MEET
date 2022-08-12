@@ -11,3 +11,4 @@ export { default as unAuthorization } from "./UnAuthorization";
 export { default as deleteAccountPage } from "./DeleteAccountPage";
 export { default as liveChartPage } from "./LiveChartPage";
 export { default as genreBoardPage } from "./GenreBoardPage";
+export { default as genreWritePage } from "./GenreWritePage";

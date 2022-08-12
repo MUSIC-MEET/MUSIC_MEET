@@ -4,12 +4,14 @@ import GenreSelector from "../GenreSelector";
 import { useParams } from "react-router-dom";
 import style from "../SectionStyle";
 import InputForm from "./InputForm";
+import { useTranslation } from "react-i18next";
 function Write() {
     const params = useParams();
     const genre = params.genre ?? "kpop";
+    const { t } = useTranslation<"genreWritePage">("genreWritePage");
     return (
         <section css={style}>
-            <Title>{"글 작성"}</Title>
+            <Title>{t("title")}</Title>
             <GenreSelector
                 genre={genre}
                 write={true}

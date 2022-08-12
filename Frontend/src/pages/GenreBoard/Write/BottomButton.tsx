@@ -2,21 +2,23 @@ import { css } from "@mui/material";
 import GreenButton from "components/common/GreenButton";
 import RedButton from "components/common/RedButton";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface BottomButtonHandler {
     goBackHandler: () => void;
 }
 
 function BottomButton(props: BottomButtonHandler) {
+    const { t } = useTranslation<"genreWritePage">("genreWritePage");
     return (
         <section css={style}>
             <GreenButton
-                value={"작성"}
+                value={t("button.submit")}
                 type={"submit"}
             />
 
             <RedButton
-                value="취소"
+                value={t("button.cancel")}
                 type={"button"}
                 onClick={props.goBackHandler}
             />
