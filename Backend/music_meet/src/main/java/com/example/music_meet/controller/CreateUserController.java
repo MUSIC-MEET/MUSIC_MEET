@@ -296,7 +296,7 @@ public class CreateUserController
     }
 
     //
-    //
+    // 이미지 보내주는 컨트롤러
     //
     @RequestMapping(path="/user/image/{imageName}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> sendImage(@PathVariable("imageName") String imageName) throws IOException
