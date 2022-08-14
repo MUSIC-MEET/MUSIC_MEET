@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import GenreBoardContext from "store/GenreBoardContext";
 import GenreButton from "./GenreButton";
 
 interface GenreType {
@@ -9,8 +10,9 @@ interface GenreType {
     text: string;
 }
 
-function GenreSelector({ genre, board, write }: { genre: string, board?: boolean, write?: boolean }) {
+function GenreSelector({ board, write }: { board?: boolean, write?: boolean }) {
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
+    const { genre } = useContext(GenreBoardContext);
     const genreList: GenreType[] = useMemo(() => [
         { id: 0, name: "balad", text: t("genre.balad") },
         { id: 1, name: "rnb", text: t("genre.rnb") },
@@ -52,3 +54,7 @@ const List = React.memo(styled.ul`
 `);
 
 export default React.memo(GenreSelector);
+
+function nreBoardContext(Ge: any, nreBoardContext: any): { genre: any; } {
+    throw new Error("Function not implemented.");
+}

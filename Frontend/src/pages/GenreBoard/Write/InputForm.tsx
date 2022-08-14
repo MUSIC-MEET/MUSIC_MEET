@@ -10,15 +10,31 @@ import ThemeContext from "../../../store/ThemeContext";
 import BottomButton from "./BottomButton";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import GenreBoardContext from "store/GenreBoardContext";
+import write from "utils/RequestApis/GenreBoard/write";
+import { useMutation } from "react-query";
 
-function InputForm({ genre: genre }: { genre: string }) {
+function InputForm() {
     const ctx = useContext(ThemeContext);
+    const { genre } = useContext(GenreBoardContext);
     const editorRef = useRef<Editor>(null);
     const [title, setTitle] = useState<string>("");
     const [content, setContent] = useState<string>("");
     const navigator = useNavigate();
     const { t } = useTranslation<"genreWritePage">("genreWritePage");
 
+    const goBackHandler = useCallback(() => {
+        navigator(`/board/${genre}`);
+    }, [genre, navigator]);
+
+    const { mutate } = useMutation(write, {
+        onSuccess: () => {
+            goBackHandler();
+        },
+        onError: (res) => {
+            console.log(res);
+        }
+    });
     const onChangeTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(() => e.target.value);
     }, []);
@@ -29,12 +45,14 @@ function InputForm({ genre: genre }: { genre: string }) {
 
     const onSubmit = useCallback((e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
-        console.log(title, content);
-    }, [content, title]);
+        mutate({
+            genre,
+            title,
+            content,
+        });
+    }, [content, genre, mutate, title]);
 
-    const goBackHandler = useCallback(() => {
-        navigator(`/board/${genre}`);
-    }, [genre, navigator]);
+
 
     return (
         <Form
