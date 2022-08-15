@@ -54,7 +54,3 @@ const List = React.memo(styled.ul`
 `);
 
 export default React.memo(GenreSelector);
-
-function nreBoardContext(Ge: any, nreBoardContext: any): { genre: any; } {
-    throw new Error("Function not implemented.");
-}

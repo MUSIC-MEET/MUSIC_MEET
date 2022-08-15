@@ -1,26 +1,24 @@
 import { AxiosResponse } from "axios";
 import customAxios from "../../customAxios";
 
-const write = 
-    (
-        { genre, title, content }
-        : { genre: string, title: string, content: string }
+const uploadImg = 
+    ( 
+        image: Blob 
     ): Promise<AxiosResponse> => {
         const axios = customAxios();
         const token = localStorage.getItem("token");
         return axios({
             method: "POST",
-            url: `/genreboard`,
+            url: `/genreboard/image`,
             headers: {
-                "authorization": `${token}`
+                authorization: `${token}`,
+                "Content-Type": "multipart/form-data",
             },
             data: {
-                genre,
-                title,
-                content
+                image
             }
         });
     };
 
 
-export default write;
+export default uploadImg;

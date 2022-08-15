@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import GenreBoardContext from "store/GenreBoardContext";
 import write from "utils/RequestApis/GenreBoard/write";
 import { useMutation } from "react-query";
+import uploadImg from "../../../utils/RequestApis/GenreBoard/uploadImg";
 
 function InputForm() {
     const ctx = useContext(ThemeContext);
@@ -87,6 +88,13 @@ function InputForm() {
                     onChange={onChangeContent}
                     ref={editorRef}
                     placeholder={t("input.contentPlaceholder")}
+                    hooks={{
+                        addImageBlobHook: async (blob: Blob, callback: (url: string) => void) => {
+                            const response = await uploadImg(blob);
+                            const { imgSrc } = response.data;
+                            callback(imgSrc);
+                        }
+                    }}
 
                 />
             </span>
