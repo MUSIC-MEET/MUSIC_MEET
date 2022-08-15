@@ -11,8 +11,11 @@ import com.example.music_meet.service.MailService;
 import com.example.music_meet.service.UserService;
 import com.example.music_meet.util.AES256Util;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.file.ConfigurationSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -434,8 +437,8 @@ public class UserController
         {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-
     }
+
 
 
 
