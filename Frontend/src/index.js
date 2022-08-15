@@ -8,9 +8,9 @@ import { RecoilRoot } from "recoil";
 
 if (process.env.NODE_ENV === "development") {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { worker } = require("./mocks/browser");
-    console.log("msw working");
-    worker.start();
+    // const { worker } = require("./mocks/browser");
+    // console.log("msw working");
+    // worker.start();
 }
 
 
