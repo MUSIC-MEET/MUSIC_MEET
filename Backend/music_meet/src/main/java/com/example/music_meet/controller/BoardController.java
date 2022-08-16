@@ -45,7 +45,7 @@ public class BoardController
         final String genre = reqeustMap.get("genre");
         final String title = reqeustMap.get("title");
         final String content = reqeustMap.get("content");
-        final int usernum = (int) request.getAttribute("userNum");
+        final int usernum = Integer.parseInt((String) request.getAttribute("userNum"));
 
         requestWriteGenreBoard = new RequestWriteGenreBoard(genre,title,content,usernum);
 

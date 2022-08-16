@@ -34,7 +34,7 @@ public class BoardService
     {
         try
         {
-            sql = "INSERT INTO Board(genre, title, usernum, content, createat) VALUES((SELECT genre FROM genrestate WHERE name = ?),?,?,?,?)";
+            sql = "INSERT INTO Board(genre, title, usernum, content, createdat) VALUES((SELECT genre FROM genrestate WHERE name = ?),?,?,?,?)";
             //
             // DB구간
             //
