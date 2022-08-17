@@ -3,7 +3,8 @@ Backend/music_meet/.idea
 .idea
 .vscode
 Backend/music_meet/src/main/resources/profileimage/
-
+Backend/music_meet/build/lib/profileimage/
+Backend/music_meet/build/lib/temp/
 
 # Front 
 # dependencies
