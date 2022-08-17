@@ -5,7 +5,16 @@ plugins {
 }
 
 ext {
+	profile = (!project.hasProperty('profile') || !profile) ? 'dev' : profile // default = dev
+}
 
+sourceSets {
+	main {
+		resources {
+			srcDirs 'src/main/resources/dev' , 'src/main/resources/product'
+
+		}
+	}
 }
 
 group = 'com.example'

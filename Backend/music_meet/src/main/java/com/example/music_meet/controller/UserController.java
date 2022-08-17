@@ -3,7 +3,6 @@
 package com.example.music_meet.controller;
 
 import com.example.music_meet.dto.ResetPw;
-import com.example.music_meet.dto.ResponseChart;
 import com.example.music_meet.dto.User;
 import com.example.music_meet.error.SignupErrorForm;
 import com.example.music_meet.service.JwtService;
@@ -11,11 +10,8 @@ import com.example.music_meet.service.MailService;
 import com.example.music_meet.service.UserService;
 import com.example.music_meet.util.AES256Util;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.file.ConfigurationSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -65,8 +61,9 @@ public class UserController
     @Value("${server.port}")
     private String serverPort;
 
-    final private String filePath = System.getProperty("user.dir")+ File.separator + "src" + File.separator + "main"
-            + File.separator + "resources" + File.separator + "profileimage" + File.separator;
+    @Value("${file.image.profileimage}")
+    private String profileimage;
+
 
 
     //
@@ -385,6 +382,8 @@ public class UserController
     @RequestMapping(path="/user/image", method = RequestMethod.PUT ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> changeUserImage(@RequestParam(value = "image") MultipartFile image)
     {
+        //System.out.println(profile);
+
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
         if (request.getAttribute("userNum") == null)
@@ -394,7 +393,7 @@ public class UserController
         final String userNum = (String) request.getAttribute("userNum");
         final String file = new Date().getTime() + "_" + image.getOriginalFilename();
 
-        File newFile = new File(filePath + file);
+        File newFile = new File(profileimage + file);
 
         try{
             image.transferTo(newFile);
