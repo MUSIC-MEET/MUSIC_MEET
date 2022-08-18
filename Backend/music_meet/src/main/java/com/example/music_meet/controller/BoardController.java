@@ -36,8 +36,8 @@ public class BoardController
     @Value("${server.port}")
     private String serverPort;
 
-    @Value("${file.image.temp}")
-    private String temp;
+    //@Value("${file.image.temp}")
+    private String temp = System.getProperty("user.dir") + File.separator + "temp" + File.separator;
 
 
 
@@ -83,7 +83,6 @@ public class BoardController
         final String file = new Date().getTime() + "_" + image.getOriginalFilename();
 
         File newFile = new File(temp + file);
-
         try{
             image.transferTo(newFile);
         } catch (Exception e) {
@@ -91,9 +90,9 @@ public class BoardController
         }
 
         Map<String, String> responseMap = new HashMap<>();
-        responseMap.put("image", serverURL + ":" + serverPort + "/img/" + image);
+        responseMap.put("imgSrc", serverURL + ":" + serverPort + "/image/" + file);
 
-        return new ResponseEntity<>(responseMap, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
 
 
