@@ -61,8 +61,8 @@ public class UserController
     @Value("${server.port}")
     private String serverPort;
 
-    @Value("${file.image.profileimage}")
-    private String profileimage;
+    //@Value("${file.image.profileimage}")
+    private String profileimage = System.getProperty("user.dir") + File.separator + "profileimage" + File.separator;
 
 
 

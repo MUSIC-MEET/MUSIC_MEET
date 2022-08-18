@@ -23,11 +23,11 @@ import java.io.*;
 @Slf4j
 public class ImageController {
 
-    @Value("${file.image.profileimage}")
-    private String profileimage;
+    //@Value("${file.image.profileimage}")
+    final private String profileimage = System.getProperty("user.dir") + File.separator + "profileimage" + File.separator;
 
-    @Value("${file.image.temp}")
-    private String temp;
+    //@Value("${file.image.temp}")
+    final private String temp = System.getProperty("user.dir") + File.separator + "temp" + File.separator;
 
     //
     // 유저의 프로필 이미지 보내주는 컨트롤러
@@ -44,7 +44,7 @@ public class ImageController {
     //
     // temp의 이미지를 보내주는 API
     //
-    @RequestMapping(path = "/img/{imageName}", method = RequestMethod.POST)
+    @RequestMapping(path = "/image/{imageName}", method = RequestMethod.GET)
     public ResponseEntity<Object> returnBoardImage(@PathVariable("imageName") String imageName) throws IOException
     {
         InputStream imageStream = new FileInputStream(temp + imageName);
