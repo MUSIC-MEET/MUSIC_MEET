@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
         }
         //회원가입 화면 이동
         binding.membersbtn.setOnClickListener {
-            val Members_Intent = Intent(this, Members_Activity::class.java)
-            startActivity(Members_Intent)
+            val Member_Intent = Intent(this, Members_Activity::class.java)
+            startActivity(Member_Intent)
         }
 
 

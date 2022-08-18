@@ -11,6 +11,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:alpha="0.5"/>
+            android:alpha="0.3"
+            android:background="@drawable/gradient"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
