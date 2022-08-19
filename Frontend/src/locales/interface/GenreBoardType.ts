@@ -12,6 +12,7 @@ interface GenreBoardType {
         dance: string;
         mr: string;
         jazz: string;
+        ost: string;
     }
     list: {
         head: {

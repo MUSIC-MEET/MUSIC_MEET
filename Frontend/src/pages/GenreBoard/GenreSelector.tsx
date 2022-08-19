@@ -25,6 +25,7 @@ function GenreSelector({ board, write }: { board?: boolean, write?: boolean }) {
         { id: 8, name: "dance", text: t("genre.dance") },
         { id: 9, name: "mr", text: t("genre.mr") },
         { id: 10, name: "jazz", text: t("genre.jazz") },
+        { id: 11, name: "ost", text: t("genre.ost") },
     ], [t]);
     return (
         <List>
