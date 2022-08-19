@@ -13,6 +13,7 @@ function Index() {
                     <Route path="/" element={<Board />} />
                     <Route path="/:genre" element={<Board />} />
                     <Route path=":genre/write" element={<PrivateRoute RouteComponent={Write} />} />
+                    <Route path=":genre/:id" element={<h2>aa</h2>} />
                 </Routes>
             </Content >
         </GenreBoardContextProvider>
