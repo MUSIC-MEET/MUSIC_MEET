@@ -14,6 +14,7 @@ const text: GenreBoardType = {
         dance: "댄스",
         mr: "MR",
         jazz: "재즈",
+        ost: "OST",
     },
     list: {
         head: {
