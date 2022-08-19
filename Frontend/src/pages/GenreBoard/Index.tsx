@@ -12,12 +12,14 @@ function Index() {
     return (
 
         <Content>
-            <Routes>
-                <GenreBoardContextProvider>
+            <GenreBoardContextProvider>
+                <Routes>
                     <Route path="/" element={<Board />} />
                     <Route path="/:genre" element={<Board />} />
                     <Route path=":genre/write" element={<PrivateRoute RouteComponent={Write} />} />
-                </GenreBoardContextProvider>
+                </Routes>
+            </GenreBoardContextProvider>
+            <Routes>
                 <Route path=":genre/:num" element={<View />} />
             </Routes>
         </Content >

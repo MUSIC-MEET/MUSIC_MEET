@@ -10,7 +10,7 @@ function View() {
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
     return (
         <section css={sectionStyle}>
-            <h1 className="genre_name"><a>{t(`genre.${genre}`)}</a></h1>
+            <h1 className="genre-ame"><a>{t(`genre.${genre}`)}</a></h1>
             <Post />
         </section>
     );
@@ -21,7 +21,7 @@ const sectionStyle = css`
     margin-top: 5rem;
     width: 80vw;
     height: 100vh;
-    & > .genre_name {
+    & > .genre-name {
         font-size: 3rem;
         font-weight: 800;
         margin-bottom: 1rem;
