@@ -10,16 +10,18 @@ import GenreBoardContextProvider from "../../store/GenreBoardContextProvider";
 
 function Index() {
     return (
-        <GenreBoardContextProvider>
-            <Content>
-                <Routes>
+
+        <Content>
+            <Routes>
+                <GenreBoardContextProvider>
                     <Route path="/" element={<Board />} />
                     <Route path="/:genre" element={<Board />} />
                     <Route path=":genre/write" element={<PrivateRoute RouteComponent={Write} />} />
-                    <Route path=":genre/:num" element={<View />} />
-                </Routes>
-            </Content >
-        </GenreBoardContextProvider>
+                </GenreBoardContextProvider>
+                <Route path=":genre/:num" element={<View />} />
+            </Routes>
+        </Content >
+
     );
 }
 
