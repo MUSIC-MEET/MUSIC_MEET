@@ -3,7 +3,7 @@ import React from "react";
 const ThemeContext = React.createContext({
     theme: "light",
     themeStyle: {
-        menu: { login:{ fontColor: "" } },
+        menu: { fontColor: "" ,login:{ fontColor: "" } },
         content: { fontColor: "" },
         modal: {},
         input: { borderColor : "" },

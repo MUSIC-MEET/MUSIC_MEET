@@ -1,9 +1,9 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
-function Text(props: { children: string }) {
+function Text(props: { children: string; className?: string }) {
     return (
-        <ReactMarkdown>{`${props.children}`}</ReactMarkdown>
+        <ReactMarkdown className={props.className}>{`${props.children}`}</ReactMarkdown>
     );
 }
 
