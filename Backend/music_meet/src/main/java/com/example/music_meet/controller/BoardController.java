@@ -1,6 +1,7 @@
 package com.example.music_meet.controller;
 
-import com.example.music_meet.dto.Request.RequestWriteGenreBoard;
+import com.example.music_meet.dto.Request.Request_WriteGenreBoard;
+import com.example.music_meet.dto.Response.Response_getBoardForGenreNum;
 import com.example.music_meet.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class BoardController
     @Autowired
     private BoardService boardService;
 
-    private RequestWriteGenreBoard requestWriteGenreBoard;
+    private Request_WriteGenreBoard requestWriteGenreBoard;
 
     @Value("${server.url}")
     private String serverURL;
@@ -61,7 +62,7 @@ public class BoardController
         final String content = reqeustMap.get("content");
         final int usernum = Integer.parseInt((String) request.getAttribute("userNum"));
 
-        requestWriteGenreBoard = new RequestWriteGenreBoard(genre,title,content,usernum);
+        requestWriteGenreBoard = new Request_WriteGenreBoard(genre,title,content,usernum);
 
         boardService.WriteGenreBoard(requestWriteGenreBoard);
 
@@ -94,6 +95,44 @@ public class BoardController
 
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
+
+    //
+    // 해당 장르의 글들을 페이지에 뿌려주는 API
+    //
+    @RequestMapping( path = "/board/{genre}", method = RequestMethod.POST)
+    public ResponseEntity<Object> getGenreBoarList()
+    {
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //
+    // 해당 장르의 특정 번호의 글을 불러오는 API
+    //
+    @RequestMapping(path = "/board/{genre}/{num}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getBoardForGenreNum(@PathVariable("genre") final String genre, @PathVariable("num") final String num)
+    {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final String userNum = (String) request.getAttribute("userNum");
+        Response_getBoardForGenreNum response_getBoardForGenreNum = new Response_getBoardForGenreNum();
+
+        Map<String, String> map = boardService.getBoardForGenreNum(genre, num);
+
+        response_getBoardForGenreNum.setUserimage( serverURL + ":" + serverPort + "/" + "user" + "/" + "image" + "/" + map.get("userimage"));
+        response_getBoardForGenreNum.setTitle(map.get("title"));
+        response_getBoardForGenreNum.setContent(map.get("content"));
+        response_getBoardForGenreNum.setView(Integer.parseInt(map.get("view")));
+        response_getBoardForGenreNum.setCreatedat(map.get("createdat"));
+        response_getBoardForGenreNum.setVote(Integer.parseInt(map.get("vote")));
+
+        return new ResponseEntity<>(response_getBoardForGenreNum, HttpStatus.OK);
+    }
+
+
 
 
 }
