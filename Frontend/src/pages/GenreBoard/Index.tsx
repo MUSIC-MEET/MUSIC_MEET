@@ -22,7 +22,7 @@ function Index() {
             </GenreBoardContextProvider>
             <GenreBoardViewerContextProvider>
                 <Routes>
-                    <Route path=":genre/:num" element={<View />} />
+                    <Route path=":genre/post/:num" element={<View />} />
                 </Routes>
             </GenreBoardViewerContextProvider>
 
