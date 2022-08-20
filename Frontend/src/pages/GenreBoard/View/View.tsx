@@ -13,10 +13,9 @@ function View() {
     const params = useParams();
     const genre = params.genre ?? "kpop";
     const num = params.num ?? "0";
+    console.log(num);
     useEffect(() => {
         setCurrentPage(1);
-        setGenre(genre);
-        setNum(num);
     });
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
     const navigator = useNavigate();

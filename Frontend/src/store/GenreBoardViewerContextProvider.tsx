@@ -4,7 +4,7 @@ import { GenreBoardViewerContextType } from "./GenreBoardViewerContext";
 
 function GenreBoardViewerProvider(props: { children: React.ReactNode }) {
     const [genre, setGenre] = useState<string>("kpop");
-    const [num, setNum] = useState<string>("0");
+    const [num, setNum] = useState<string>("1");
 
     const setGenreHandler = (genre: string) => {
         setGenre(() => genre);

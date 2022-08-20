@@ -13,7 +13,7 @@ const GenreBoardViewerContext = React.createContext<GenreBoardViewerContextType>
         setGenre: (genre: string) => {
             //
         },
-        num: "1",
+        num: "",
         setNum: (num: string) => {
             //
         }

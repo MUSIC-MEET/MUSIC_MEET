@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Text from "components/common/Text";
 import styled from "@emotion/styled";
 import ThemeContext from "store/ThemeContext";
@@ -10,44 +10,77 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import { useQuery } from "react-query";
 import GenreBoardViewerContext from "store/GenreBoardViewerContext";
 import getPost from "../../../utils/RequestApis/GenreBoard/getPost";
+import { useParams } from "react-router-dom";
+import { Viewer } from "@toast-ui/react-editor";
+
+
+interface PostType {
+    title: string;
+    content: string;
+    nickname: string;
+    createdAt: string;
+    imgSrc: string;
+    view: number;
+    vote: number;
+}
 
 function Post() {
     const ctx = useContext(ThemeContext);
     const { fontColor } = ctx.themeStyle.menu;
-    const { genre, num } = useContext(GenreBoardViewerContext);
-    const { data, isError, isSuccess } = useQuery(["genreBoardPost", genre, num], () => getPost({ genre, num }), {
-        retry: 0,
-        suspense: false,
+    // const { genre, num } = useContext(GenreBoardViewerContext);
+    const params = useParams();
+    const genre = params.genre ?? "kpop";
+    const num = params.num ?? "0";
+
+    const [post, setPost] = useState<PostType>({
+        title: "",
+        content: "",
+        nickname: "",
+        createdAt: "",
+        imgSrc: "",
+        view: 0,
+        vote: 0,
     });
 
+    useEffect(() => {
+        //
+    }, [genre, num]);
+
+    const { isError, isSuccess } = useQuery(["genreBoardPost", genre, num], () => getPost({ genre, num }), {
+        retry: 0,
+        suspense: false,
+        onSuccess: ({ data }) => {
+            setPost(data);
+        }
+    });
 
     if (isSuccess) {
         return (
             <article css={postStyle}>
-                <h1 className="post-title">제목</h1>
+                <h1 className="post-title">{post.title}</h1>
                 <AdditionalInfo className="post-info" fontColor={fontColor}>
                     <div className="post-writer-info">
-                        <img className="profile-img" src="www.naver.com" />
-                        <span className="post-writer">난아무개에요</span>
+                        <img className="profile-img" src={post.imgSrc} />
+                        <span className="post-writer">{post.nickname}</span>
                     </div>
                     <div className="post-info">
                         <div className="post-date wrapper">
                             <QueryBuilderIcon className="post-date-icon icon" />
-                            <span className="post-date-text text">2020.01.01</span>
+                            <span className="post-date-text text">{post.createdAt}</span>
                         </div>
                         <div className="post-hit wrapper">
                             <VisibilityIcon className="post-hit-icon icon" />
-                            <span className="post-hit text">3</span>
+                            <span className="post-hit text">{post.view}</span>
                         </div>
                         <div className="post-vote wrapper">
                             <ThumbUpAltIcon className="post-vote-icon icon" />
-                            <span className="post-vote text">10</span>
+                            <span className="post-vote text">{post.vote}</span>
                         </div>
                     </div>
                 </AdditionalInfo>
-                <Text className="post-content">
-                    {"내용 \\\n aaa"}
-                </Text>
+                <Viewer
+                    initialValue={post.content}
+                />
             </article >
         );
     }
@@ -120,6 +153,10 @@ const postStyle = css`
         margin-top: 1rem;
         min-height: 20rem;
         
+    }
+
+    .toastui-editor-contents > * {
+        color: white;
     }
 
 `;
