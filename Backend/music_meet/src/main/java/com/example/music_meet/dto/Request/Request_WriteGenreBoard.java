@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RequestWriteGenreBoard
+public class Request_WriteGenreBoard
 {
     private String genre;
     private String title;

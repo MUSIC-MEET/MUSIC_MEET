@@ -14,3 +14,4 @@ INSERT INTO GenreState VALUES(7, 'classic');
 INSERT INTO GenreState VALUES(8, 'dance');
 INSERT INTO GenreState VALUES(9, 'mr');
 INSERT INTO GenreState VALUES(10, 'jazz');
+INSERT INTO GenreState VALUES(11, 'ost');
