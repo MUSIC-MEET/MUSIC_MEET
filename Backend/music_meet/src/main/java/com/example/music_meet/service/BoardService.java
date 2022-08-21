@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +34,6 @@ public class BoardService
     private String sql;
 
     private java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-
 
     //
     //  글을 DB에 저장하는 함
@@ -81,7 +82,9 @@ public class BoardService
         final String genreBoard = genre + "board";
         try
         {
-            sql = "SELECT a.userimage, a.nickname,b.title, b.content, b.createdat, b.`view`, b.vote FROM user a, " + genreBoard + " b WHERE a.usernum = b.usernum AND b.num = ? AND b.`state` = 0 ";
+             sql = "SELECT a.userimage, a.nickname, b.title, b.content, DATE_FORMAT(b.`createdat`, '%y-%m-%d %T') AS createdat, b.`view`, b.vote FROM user a, "
+                     + genreBoard + " b WHERE a.usernum = b.usernum AND b.num = ? AND b.`state` = 0;";
+
             //
             // DB구간
             //
@@ -97,7 +100,7 @@ public class BoardService
                 responseMap.put("nickname", rs.getString("nickname"));
                 responseMap.put("title", rs.getString("title"));
                 responseMap.put("content", rs.getString("content"));
-                responseMap.put("createdAt", rs.getDate("createdat").toString());
+                responseMap.put("createdAt", rs.getString("createdat"));
                 responseMap.put("view", rs.getString("view"));
                 responseMap.put("vote", rs.getString("vote"));
             }
