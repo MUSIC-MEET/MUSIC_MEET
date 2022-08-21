@@ -8,10 +8,10 @@ import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import { useQuery } from "react-query";
-import GenreBoardViewerContext from "store/GenreBoardViewerContext";
 import getPost from "../../../utils/RequestApis/GenreBoard/getPost";
 import { useParams } from "react-router-dom";
 import { Viewer } from "@toast-ui/react-editor";
+import { AxiosError, AxiosResponse } from "axios";
 
 
 interface PostType {
@@ -27,72 +27,47 @@ interface PostType {
 function Post() {
     const ctx = useContext(ThemeContext);
     const { fontColor } = ctx.themeStyle.menu;
-    // const { genre, num } = useContext(GenreBoardViewerContext);
     const params = useParams();
     const genre = params.genre ?? "kpop";
     const num = params.num ?? "0";
 
-    const [post, setPost] = useState<PostType>({
-        title: "",
-        content: "",
-        nickname: "",
-        createdAt: "",
-        imgSrc: "",
-        view: 0,
-        vote: 0,
+    const { data } = useQuery<PostType, AxiosError>(["genreBoardPost", genre, num], () => getPost({ genre, num }), {
+        suspense: true,
+        useErrorBoundary: true,
     });
-
-    useEffect(() => {
-        //
-    }, [genre, num]);
-
-    const { isError, isSuccess } = useQuery(["genreBoardPost", genre, num], () => getPost({ genre, num }), {
-        retry: 0,
-        suspense: false,
-        onSuccess: ({ data }) => {
-            setPost(data);
-        }
-    });
-
-    if (isSuccess) {
-        return (
-            <article css={postStyle}>
-                <h1 className="post-title">{post.title}</h1>
-                <AdditionalInfo className="post-info" fontColor={fontColor}>
-                    <div className="post-writer-info">
-                        <img className="profile-img" src={post.imgSrc} />
-                        <span className="post-writer">{post.nickname}</span>
-                    </div>
-                    <div className="post-info">
-                        <div className="post-date wrapper">
-                            <QueryBuilderIcon className="post-date-icon icon" />
-                            <span className="post-date-text text">{post.createdAt}</span>
-                        </div>
-                        <div className="post-hit wrapper">
-                            <VisibilityIcon className="post-hit-icon icon" />
-                            <span className="post-hit text">{post.view}</span>
-                        </div>
-                        <div className="post-vote wrapper">
-                            <ThumbUpAltIcon className="post-vote-icon icon" />
-                            <span className="post-vote text">{post.vote}</span>
-                        </div>
-                    </div>
-                </AdditionalInfo>
-                <Viewer
-                    initialValue={post.content}
-                />
-            </article >
-        );
-    }
 
     return (
-        <div>
-            aa
-        </div>
+        <article css={postStyle}>
+            <h1 className="post-title">{data?.title}</h1>
+            <AdditionalInfo className="post-info" fontColor={fontColor}>
+                <div className="post-writer-info">
+                    <img className="profile-img" src={data?.imgSrc} />
+                    <span className="post-writer">{data?.nickname}</span>
+                </div>
+                <div className="post-info">
+                    <div className="post-date wrapper">
+                        <QueryBuilderIcon className="post-date-icon icon" />
+                        <span className="post-date-text text">{data?.createdAt}</span>
+                    </div>
+                    <div className="post-hit wrapper">
+                        <VisibilityIcon className="post-hit-icon icon" />
+                        <span className="post-hit text">{data?.view}</span>
+                    </div>
+                    <div className="post-vote wrapper">
+                        <ThumbUpAltIcon className="post-vote-icon icon" />
+                        <span className="post-vote text">{data?.vote}</span>
+                    </div>
+                </div>
+            </AdditionalInfo>
+            <Viewer
+                initialValue={data?.content}
+            />
+        </article >
     );
+
 }
 
-const AdditionalInfo = React.memo(styled.div<{ fontColor: string }>`
+const AdditionalInfo = styled.div<{ fontColor: string }>`
         width: 100%;
         height: 2.5rem;
         color : ${props => props.fontColor};
@@ -139,7 +114,7 @@ const AdditionalInfo = React.memo(styled.div<{ fontColor: string }>`
             }
         }
     
-`);
+`;
 
 const postStyle = css`
     width: 80rem;
@@ -161,4 +136,5 @@ const postStyle = css`
 
 `;
 
-export default React.memo(Post);
+export default Post;
+export { PostType };
