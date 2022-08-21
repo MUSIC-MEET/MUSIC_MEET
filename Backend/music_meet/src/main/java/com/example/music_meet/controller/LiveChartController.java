@@ -23,7 +23,7 @@ public class LiveChartController {
 
 
     //
-    // 차트 호출
+    // 실시간 순위 차트.md
     //
     @RequestMapping(path = "/livechart/{site}/{rank}", method = RequestMethod.GET)
     public ResponseEntity<Object> callChart(@PathVariable("site") String site, @PathVariable("rank") String rank)

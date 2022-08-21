@@ -31,7 +31,7 @@ public class LoginController
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //
-    //
+    //  로그인.md
     //
     @RequestMapping(method = RequestMethod.POST, path = "/user/login")
     public ResponseEntity<Object> loginFunc(@RequestBody User user)
