@@ -1,9 +1,23 @@
+import styled from "@emotion/styled";
 import React from "react";
-
+import Text from "components/common/Text";
+import { useTranslation } from "react-i18next";
 function NotFoundPost() {
+
+    const { t } = useTranslation<"genreBoardViewer">("genreBoardViewer");
     return (
-        <div>NotFoundPost</div>
+        <Div>
+            <Text>{t("error.notFound")}</Text>
+        </Div>
     );
 }
 
-export default NotFoundPost;
+const Div = React.memo(styled.div`
+    width: 80vw;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-top: 3rem;
+    
+`);
+
+export default React.memo(NotFoundPost);
