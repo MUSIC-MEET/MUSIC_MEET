@@ -1,26 +1,32 @@
 import { css } from "@emotion/react";
-import React, { useContext, useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import Post from "./Post";
 import CurrentPage from "store/CurrentPage";
 import { useSetRecoilState } from "recoil";
+import Loading from "components/common/Loading";
+import ErrorBoundary from "./ErrorBoundary";
 
 function View() {
     const setCurrentPage = useSetRecoilState(CurrentPage);
     const params = useParams();
     const genre = params.genre ?? "kpop";
-    const num = params.num ?? "0";
-    console.log(num);
+
     useEffect(() => {
-        setCurrentPage(1);
+        setCurrentPage(2);
     });
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
     const navigator = useNavigate();
     return (
         <section css={sectionStyle}>
             <h1 className="genre-name"><a onClick={() => navigator(`/board/${genre}`)}>{t(`genre.${genre}`)}</a></h1>
-            <Post />
+            <ErrorBoundary>
+                <Suspense fallback={<Loading />}>
+                    <Post />
+                </Suspense>
+            </ErrorBoundary>
+
         </section>
     );
 }
@@ -37,4 +43,4 @@ const sectionStyle = css`
         cursor: pointer;
     }
 `;
-export default View;
+export default React.memo(View);
