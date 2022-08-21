@@ -81,7 +81,7 @@ public class BoardService
         final String genreBoard = genre + "board";
         try
         {
-            sql = "SELECT a.userimage, b.title, b.content, b.createdat, b.`view`, b.vote FROM user a, " + genreBoard + " b WHERE a.usernum = b.usernum AND b.num = ? AND b.`state` = 0 ";
+            sql = "SELECT a.userimage, a.nickname,b.title, b.content, b.createdat, b.`view`, b.vote FROM user a, " + genreBoard + " b WHERE a.usernum = b.usernum AND b.num = ? AND b.`state` = 0 ";
             //
             // DB구간
             //
@@ -94,11 +94,16 @@ public class BoardService
             if(rs.next())
             {
                 responseMap.put("userimage", rs.getString("userimage"));
+                responseMap.put("nickname", rs.getString("nickname"));
                 responseMap.put("title", rs.getString("title"));
                 responseMap.put("content", rs.getString("content"));
-                responseMap.put("createdat", rs.getDate("createdat").toString());
+                responseMap.put("createdAt", rs.getDate("createdat").toString());
                 responseMap.put("view", rs.getString("view"));
                 responseMap.put("vote", rs.getString("vote"));
+            }
+            else
+            {
+                responseMap.put("userimage", "NoData");
             }
 
         } catch (SQLException e) {

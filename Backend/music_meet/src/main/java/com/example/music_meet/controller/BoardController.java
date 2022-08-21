@@ -46,7 +46,7 @@ public class BoardController
 
 
     //
-    // 장르게시판 글 작성하는 API
+    // 장르게시판 글 작성.md
     //
     @RequestMapping( path = "/genreboard", method = RequestMethod.POST)
     public ResponseEntity<Object> CreateGenreBoard(@RequestBody Map<String,String> reqeustMap)
@@ -70,8 +70,8 @@ public class BoardController
     }
 
     //
-    //  장르 게시판에 글 작성할 때 이미지 추가할 경우에 사용되는 API
-    //  이미지를 받아서 temp에 저장하는 기능을 함
+    //  게시판 이미지 처리.md
+    //
     @RequestMapping( path = "/genreboard/image", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> GenreBoarImage(@RequestParam(value = "image") MultipartFile image)
     {
@@ -91,13 +91,13 @@ public class BoardController
         }
 
         Map<String, String> responseMap = new HashMap<>();
-        responseMap.put("imgSrc", serverURL + ":" + serverPort + "/image/" + file);
+        responseMap.put("imgSrc", serverURL + ":" + serverPort + "/board" + "/image/" + file);
 
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
 
     //
-    // 해당 장르의 글들을 페이지에 뿌려주는 API
+    // 해당 장르의 글들을 페이지에 뿌
     //
     @RequestMapping( path = "/board/{genre}", method = RequestMethod.POST)
     public ResponseEntity<Object> getGenreBoarList()
@@ -107,7 +107,7 @@ public class BoardController
     }
 
     //
-    // 해당 장르의 특정 번호의 글을 불러오는 API
+    // 게시판 글 호출.md
     //
     @RequestMapping(path = "/board/{genre}/{num}", method = RequestMethod.GET)
     public ResponseEntity<Object> getBoardForGenreNum(@PathVariable("genre") final String genre, @PathVariable("num") final String num)
@@ -122,17 +122,20 @@ public class BoardController
 
         Map<String, String> map = boardService.getBoardForGenreNum(genre, num);
 
-        response_getBoardForGenreNum.setUserimage( serverURL + ":" + serverPort + "/" + "user" + "/" + "image" + "/" + map.get("userimage"));
-        response_getBoardForGenreNum.setTitle(map.get("title"));
-        response_getBoardForGenreNum.setContent(map.get("content"));
-        response_getBoardForGenreNum.setView(Integer.parseInt(map.get("view")));
-        response_getBoardForGenreNum.setCreatedat(map.get("createdat"));
-        response_getBoardForGenreNum.setVote(Integer.parseInt(map.get("vote")));
-
-        return new ResponseEntity<>(response_getBoardForGenreNum, HttpStatus.OK);
+        if (map.get("userimage").equals("NoData"))
+        {
+            return new ResponseEntity<>(response_getBoardForGenreNum, HttpStatus.NOT_FOUND);
+        }
+        else
+        {
+            response_getBoardForGenreNum.setImgSrc( serverURL + ":" + serverPort + "/" + "user" + "/" + "image" + "/" + map.get("userimage"));
+            response_getBoardForGenreNum.setNickname(map.get("nickname"));
+            response_getBoardForGenreNum.setTitle(map.get("title"));
+            response_getBoardForGenreNum.setContent(map.get("content"));
+            response_getBoardForGenreNum.setView(Integer.parseInt(map.get("view")));
+            response_getBoardForGenreNum.setCreatedAt(map.get("createdAt"));
+            response_getBoardForGenreNum.setVote(Integer.parseInt(map.get("vote")));
+            return new ResponseEntity<>(response_getBoardForGenreNum, HttpStatus.OK);
+        }
     }
-
-
-
-
 }

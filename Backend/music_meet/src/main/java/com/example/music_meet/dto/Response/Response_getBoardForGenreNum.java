@@ -11,10 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Response_getBoardForGenreNum
 {
-    private String userimage;
+    private String imgSrc;
+    private String Nickname;
     private String title;
     private String content;
-    private String createdat;
+    private String createdAt;
     private int view;
     private int vote;
 }
