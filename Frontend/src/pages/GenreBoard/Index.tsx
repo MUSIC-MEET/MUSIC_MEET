@@ -7,8 +7,6 @@ import View from "./View/View";
 
 import PrivateRoute from "components/common/PrivateRoute";
 import GenreBoardContextProvider from "store/GenreBoardContextProvider";
-import GenreBoardViewerContextProvider from "store/GenreBoardViewerContextProvider";
-
 function Index() {
     return (
 
@@ -20,11 +18,11 @@ function Index() {
                     <Route path=":genre/write" element={<PrivateRoute RouteComponent={Write} />} />
                 </Routes>
             </GenreBoardContextProvider>
-            <GenreBoardViewerContextProvider>
-                <Routes>
-                    <Route path=":genre/post/:num" element={<View />} />
-                </Routes>
-            </GenreBoardViewerContextProvider>
+
+            <Routes>
+                <Route path=":genre/post/:num" element={<View />} />
+            </Routes>
+
 
         </Content >
 

@@ -27,7 +27,6 @@ interface PostType {
 function Post() {
     const ctx = useContext(ThemeContext);
     const { fontColor } = ctx.themeStyle.menu;
-    // const { genre, num } = useContext(GenreBoardViewerContext);
     const params = useParams();
     const genre = params.genre ?? "kpop";
     const num = params.num ?? "0";
