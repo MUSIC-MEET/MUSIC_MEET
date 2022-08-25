@@ -23,7 +23,7 @@ class Members_Activity : AppCompatActivity() {
     lateinit var pw: EditText
     lateinit var email: EditText
     lateinit var nickname: EditText
-
+    var userNum: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,19 +53,20 @@ class Members_Activity : AppCompatActivity() {
             val pwstr = pw.text.toString()
             val emailstr = email.text.toString()
             val nicknamestr = nickname.text.toString()
+            val usernum = userNum.toString()
 
-            memberservice.memberOK(idstr, pwstr, emailstr, nicknamestr).enqueue(object : Callback<Body> {
+            memberservice.memberOK(usernum, idstr, pwstr, emailstr, nicknamestr).enqueue(object : Callback<Body> {
                 override fun onResponse(call: retrofit2.Call<Body>, response: Response<Body>) {
                     val result = response.body()
-                    Log.d("로그인","${result}")
+                    Log.d("회원가입", "${result}")
                     /*Toast.makeText(this@Members_Activity, "회원가입 완료되었습니다.\n메인 페이지로 이동합니다.", Toast.LENGTH_SHORT).show()
-                    Main_Intent().apply {  }*/
+                    Main_Intent().apply { }*/
 
                 }
 
                 override fun onFailure(call: retrofit2.Call<Body>, t: Throwable) {
-                    Log.d("로그인","${t.localizedMessage}")
-                    /*Toast.makeText(this@Members_Activity,"회원가입에 실패하였습니다.\n다시한번 확인해주세요.",Toast.LENGTH_SHORT).show()*/
+                    Log.d("회원가입", "${t.localizedMessage}")
+                    /*Toast.makeText(this@Members_Activity, "회원가입에 실패하였습니다.\n다시한번 확인해주세요.", Toast.LENGTH_SHORT).show()*/
                 }
             })
         }
@@ -73,19 +74,27 @@ class Members_Activity : AppCompatActivity() {
 
     interface memberService {
         @FormUrlEncoded
-        @POST("http://localhost:8080/createuser/")
+        @POST("createuser")
         fun memberOK(
+            @Field("usernum") memberNum: String,
             @Field("id") memberid: String,
             @Field("pw") memberpw: String,
             @Field("email") memberemail: String,
             @Field("nickname") membernick: String
         ): retrofit2.Call<Body>
     }
-    fun Main_Intent(){
+
+    fun Main_Intent() {
         var Main_Intent = Intent(this, MainActivity::class.java)
         startActivity(Main_Intent)
     }
 
 }
+
+data class member(
+    val code: String,
+    val msg: String
+)
+
 
 

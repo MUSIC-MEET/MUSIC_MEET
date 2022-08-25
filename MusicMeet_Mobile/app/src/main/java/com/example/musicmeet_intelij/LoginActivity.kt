@@ -1,14 +1,10 @@
 package com.example.musicmeet_intelij
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.musicmeet_intelij.databinding.ActivityLoginBinding
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -35,42 +31,54 @@ class Login_Activity : AppCompatActivity() {
             finish()
         }
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://localhost:8080/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        /* val retrofit = Retrofit.Builder()
+             .baseUrl("http://localhost:8080")
+             .addConverterFactory(GsonConverterFactory.create())
+             .build()
 
-        val service = retrofit.create(SignService::class.java)
+         val loginService: LoginService = retrofit.create(LoginService::class.java)
 
-        bindingLogin.LoginOk.setOnClickListener {
+         bindingLogin.LoginOk.setOnClickListener {
 
-            val idstr = id.text.toString()
-            val pwstr = pw.text.toString()
+             val idstr = id.text.toString()
+             val pwstr = pw.text.toString()
 
-            service.login(idstr, pwstr).enqueue(object : Callback<Body> {
+             loginService.login(idstr, pwstr).enqueue(object : Callback<Body> {
+
+                 override fun onFailure(call: retrofit2.Call<Body>, t : Throwable) {
+                   // 실패할경우
+                     *//*  Toast.makeText(this@Login_Activity, "로그인 실패\n다시 한번 확인해주세요.", Toast.LENGTH_SHORT).show()*//*
+                }
+
                 override fun onResponse(call: retrofit2.Call<Body>, response: Response<Body>) {
-                    Toast.makeText(this@Login_Activity, "로그인 성공\n잠시만 기다려주세요.", Toast.LENGTH_SHORT).show()
-
-
+                    //정상 응답
+                    *//*Toast.makeText(this@Login_Activity, "로그인 성공\n잠시만 기다려주세요.", Toast.LENGTH_SHORT).show()*//*
                 }
 
-                override fun onFailure(call: retrofit2.Call<Body>, t: Throwable) {
-                    Toast.makeText(this@Login_Activity,"로그인 실패\n다시 한번 확인해주세요.", Toast.LENGTH_SHORT).show()
-                }
             })
-        }
+        }*/
+        bindingLogin.LoginOk.setOnClickListener {
+            val Music_Main_Intent = Intent(this, Music_Main_Activity::class.java)
+            startActivity(Music_Main_Intent)
 
+        }
     }
 }
 
-
-interface SignService {
+interface LoginService {
 
     @FormUrlEncoded
-    @POST("http://localhost:8080/user/login/")
+    @POST("user/login")
     fun login(
         @Field("id") id: String,
         @Field("pw") pw: String
     ): retrofit2.Call<Body>
 
 }
+
+data class Login(
+    val code: String,
+    val msg: String
+)
+
+
