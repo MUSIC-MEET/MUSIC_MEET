@@ -62,6 +62,7 @@ function Post() {
             <Viewer
                 initialValue={data?.content}
             />
+
         </article >
     );
 
