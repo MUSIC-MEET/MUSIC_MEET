@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Response_getBoardForGenreNum
+public class Response_GetGenreBoardForGenreNum
 {
     private String imgSrc;
     private String Nickname;

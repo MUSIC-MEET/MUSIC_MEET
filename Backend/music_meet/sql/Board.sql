@@ -1,10 +1,11 @@
 CREATE TABLE `baladBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
-	`vote`		INT(10)	NOT NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
@@ -25,12 +26,13 @@ REFERENCES `VisibleState` (
 
 
 CREATE TABLE `rnbBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
-	`vote`		INT(10)	NOT NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
@@ -51,7 +53,7 @@ REFERENCES `VisibleState` (
 
 
 CREATE TABLE `hippopBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
@@ -76,12 +78,13 @@ REFERENCES `VisibleState` (
 
 
 CREATE TABLE `trortBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
-	`vote`		INT(10)	NOT NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
@@ -102,12 +105,13 @@ REFERENCES `VisibleState` (
 
 
 CREATE TABLE `kpopBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
-	`vote`		INT(10)	NOT NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
@@ -128,12 +132,13 @@ REFERENCES `VisibleState` (
 
 
 CREATE TABLE `jpopBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
-	`vote`		INT(10)	NOT NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
@@ -154,12 +159,13 @@ REFERENCES `VisibleState` (
 
 
 CREATE TABLE `popBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
-	`vote`		INT(10)	NOT NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
@@ -180,12 +186,13 @@ REFERENCES `VisibleState` (
 
 
 CREATE TABLE `classicBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
-	`vote`		INT(10)	NOT NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
@@ -206,12 +213,13 @@ REFERENCES `VisibleState` (
 
 
 CREATE TABLE `danceBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
-	`vote`		INT(10)	NOT NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
@@ -232,12 +240,13 @@ REFERENCES `VisibleState` (
 
 
 CREATE TABLE `mrBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
-	`vote`		INT(10)	NOT NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
@@ -258,12 +267,13 @@ REFERENCES `VisibleState` (
 
 
 CREATE TABLE `jazzBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
-	`vote`		INT(10)	NOT NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
@@ -284,12 +294,13 @@ REFERENCES `VisibleState` (
 
 
 CREATE TABLE `ostBoard` (
-	`num`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
+	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
-	`vote`		INT(10)	NOT NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
