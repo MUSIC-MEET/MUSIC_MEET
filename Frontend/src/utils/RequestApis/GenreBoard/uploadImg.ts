@@ -9,7 +9,7 @@ const uploadImg =
         const token = localStorage.getItem("token");
         return axios({
             method: "POST",
-            url: `/genreboard/image`,
+            url: `/board/image`,
             headers: {
                 authorization: `${token}`,
                 "Content-Type": "multipart/form-data",
