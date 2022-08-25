@@ -1,7 +1,11 @@
 package com.example.music_meet.controller;
 
+import com.example.music_meet.dto.Request.Request_DeleteGenreBoard;
+import com.example.music_meet.dto.Request.Request_GetGenreBoardList;
+import com.example.music_meet.dto.Request.Request_ModifyGenreBoard;
 import com.example.music_meet.dto.Request.Request_WriteGenreBoard;
-import com.example.music_meet.dto.Response.Response_getBoardForGenreNum;
+import com.example.music_meet.dto.Response.Response_GetGenreBoardForGenreNum;
+import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
 import com.example.music_meet.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @CrossOrigin("*")
@@ -40,15 +42,10 @@ public class BoardController
     //@Value("${file.image.temp}")
     private String temp = System.getProperty("user.dir") + File.separator + "temp" + File.separator;
 
-
-
-
-
-
     //
-    // 장르게시판 글 작성.md
+    //  장르 게시판 글 작성.md
     //
-    @RequestMapping( path = "/genreboard", method = RequestMethod.POST)
+    @RequestMapping( path = "/board", method = RequestMethod.POST)
     public ResponseEntity<Object> CreateGenreBoard(@RequestBody Map<String,String> reqeustMap)
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -70,9 +67,9 @@ public class BoardController
     }
 
     //
-    //  게시판 이미지 처리.md
+    //  장르 게시판 이미지 처리.md
     //
-    @RequestMapping( path = "/genreboard/image", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping( path = "/board/image", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> GenreBoarImage(@RequestParam(value = "image") MultipartFile image)
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -97,17 +94,65 @@ public class BoardController
     }
 
     //
-    // 해당 장르의 글들을 페이지에 뿌
+    //  장르 게시판 글 수정.md
     //
-    @RequestMapping( path = "/board/{genre}", method = RequestMethod.POST)
-    public ResponseEntity<Object> getGenreBoarList()
+    @RequestMapping( path = "/board", method = RequestMethod.PUT)
+    public ResponseEntity<Object> ModifyGenreBoar(@RequestBody Map<String, String> requestMap)
     {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final String genre = requestMap.get("genre");
+        final String boardNum = requestMap.get("boardNum");
+        final String title = requestMap.get("title");
+        final String content = requestMap.get("content");
+        final String userNum = (String) request.getAttribute("userNum");
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (boardService.ModifyGenreBoard(new Request_ModifyGenreBoard(genre,boardNum,title, content, userNum)))
+        {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     //
-    // 게시판 글 호출.md
+    //  장르 게시판 글 삭제.md
+    //
+    @RequestMapping( path = "/board", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> DeleteGenreBoard(@RequestBody Map<String, String> requestMap)
+    {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final String genre = requestMap.get("genre");
+        final String boardNum = requestMap.get("boardNum");
+        final String userNum = (String) request.getAttribute("userNum");
+        boardService.DeleteGenreBoard(new Request_DeleteGenreBoard(genre, boardNum, userNum));
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //
+    // 장르게시판 글 목록 호출.md
+    //
+    @RequestMapping( path = "/board/{genre}/{min}/{max}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getGenreBoarList(@PathVariable("genre")String genre, @PathVariable("min")String min,
+                                                   @PathVariable("max")String max)
+    {
+        ArrayList<Response_GetGenreBoardList> genreboards;
+        genreboards = boardService.getGenreBoarList(new Request_GetGenreBoardList(genre, Integer.parseInt(min), Integer.parseInt(max)));
+        return new ResponseEntity<>(genreboards, HttpStatus.OK);
+    }
+
+    //
+    // 장르 게시판 글 호출.md
     //
     @RequestMapping(path = "/board/{genre}/{num}", method = RequestMethod.GET)
     public ResponseEntity<Object> getBoardForGenreNum(@PathVariable("genre") final String genre, @PathVariable("num") final String num)
@@ -118,24 +163,24 @@ public class BoardController
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         final String userNum = (String) request.getAttribute("userNum");
-        Response_getBoardForGenreNum response_getBoardForGenreNum = new Response_getBoardForGenreNum();
+        Response_GetGenreBoardForGenreNum response_getGenreBoardForGenreNum = new Response_GetGenreBoardForGenreNum();
 
         Map<String, String> map = boardService.getBoardForGenreNum(genre, num);
 
         if (map.get("userimage").equals("NoData"))
         {
-            return new ResponseEntity<>(response_getBoardForGenreNum, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(response_getGenreBoardForGenreNum, HttpStatus.NOT_FOUND);
         }
         else
         {
-            response_getBoardForGenreNum.setImgSrc( serverURL + ":" + serverPort + "/" + "user" + "/" + "image" + "/" + map.get("userimage"));
-            response_getBoardForGenreNum.setNickname(map.get("nickname"));
-            response_getBoardForGenreNum.setTitle(map.get("title"));
-            response_getBoardForGenreNum.setContent(map.get("content"));
-            response_getBoardForGenreNum.setView(Integer.parseInt(map.get("view")));
-            response_getBoardForGenreNum.setCreatedAt(map.get("createdAt"));
-            response_getBoardForGenreNum.setVote(Integer.parseInt(map.get("vote")));
-            return new ResponseEntity<>(response_getBoardForGenreNum, HttpStatus.OK);
+            response_getGenreBoardForGenreNum.setImgSrc( serverURL + ":" + serverPort + "/" + "user" + "/" + "image" + "/" + map.get("userimage"));
+            response_getGenreBoardForGenreNum.setNickname(map.get("nickname"));
+            response_getGenreBoardForGenreNum.setTitle(map.get("title"));
+            response_getGenreBoardForGenreNum.setContent(map.get("content"));
+            response_getGenreBoardForGenreNum.setView(Integer.parseInt(map.get("view")));
+            response_getGenreBoardForGenreNum.setCreatedAt(map.get("createdAt"));
+            response_getGenreBoardForGenreNum.setVote(Integer.parseInt(map.get("upvote")) - Integer.parseInt(map.get("downvote")));
+            return new ResponseEntity<>(response_getGenreBoardForGenreNum, HttpStatus.OK);
         }
     }
 }
