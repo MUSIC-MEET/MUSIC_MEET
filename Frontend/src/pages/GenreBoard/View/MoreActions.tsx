@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import BuildIcon from "@mui/icons-material/Build";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ReportIcon from "@mui/icons-material/Report";
@@ -8,31 +8,56 @@ import LoginState from "store/LoginState";
 import { useMutation } from "react-query";
 import deleteBoard from "../../../utils/RequestApis/GenreBoard/deleteBoard";
 import ConfirmModal from "../../../components/AlertModal/ConfirmModal";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { AxiosResponse } from "axios";
 
-function MoreActions({ writer, num }: { writer: string, num: string }) {
+function MoreActions(
+    { writer, num, genre }: { writer: string, num: string, genre: string }
+) {
     const { nickname } = useRecoilValue<{ nickname: string }>(LoginState);
-
+    const { t } = useTranslation<"genreBoardViewer">("genreBoardViewer");
+    const [shownDeleteModal, setShownDeleteModal] = useState<boolean>(false);
+    const navigator = useNavigate();
     const { mutate } = useMutation(deleteBoard, {
-        onSuccess: () => {
-            //
+        onSuccess: (response: AxiosResponse) => {
+            if (response.status === 204) {
+                navigator(`/board/${genre}`);
+            }
         }
     });
 
-    const deleteHandler = useCallback(() => {
-        //
-        // mutate({ writer, num });
+    const deleteModalCloseHandler = useCallback(() => {
+        setShownDeleteModal(false);
     }, []);
+
+    const deleteModalOpenHandler = useCallback(() => {
+        setShownDeleteModal(true);
+    }, []);
+
+    const deleteHandler = useCallback(() => {
+        mutate({ genre, num });
+    }, [genre, mutate, num]);
     return (
         <section css={style}>
-            <ConfirmModal
-                title={"삭제"}
-                content={"정말 삭제하시겠습니까?"}
-                confirmButtonText={"삭제"}
-                cancelButtonText={"취소"}
-            />
+            {
+                shownDeleteModal &&
+                <ConfirmModal
+                    title={t("deleteModal.title")}
+                    content={t("deleteModal.content")}
+                    confirmButtonText={t("deleteModal.confirm")}
+                    cancelButtonText={t("deleteModal.cancel")}
+                    onConfirm={deleteHandler}
+                    onCancel={deleteModalCloseHandler}
+                    onClose={deleteModalCloseHandler}
+                />
+            }
             {nickname === writer &&
                 <React.Fragment>
-                    <button className="delete button">
+                    <button
+                        onClick={deleteModalOpenHandler}
+                        className="delete button"
+                    >
                         <DeleteForeverIcon />
                     </button>
                     <button className="edit button">

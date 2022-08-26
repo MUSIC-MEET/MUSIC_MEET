@@ -12,13 +12,15 @@ interface ConfirmModalProps {
     content: string;
     confirmButtonText: string;
     cancelButtonText: string;
-
+    onCancel: () => void;
+    onClose: () => void;
+    onConfirm: () => void;
 }
 
 function ConfirmModal(props: ConfirmModalProps) {
-    const { title, content, confirmButtonText, cancelButtonText } = props;
+    const { title, content, confirmButtonText, cancelButtonText, onCancel, onClose, onConfirm } = props;
     return (
-        <Modal css={css`min-height: 20rem;`}>
+        <Modal css={css`min-height: 20rem;`} onClose={onClose}>
             <Wrap css={moreStyle}>
                 <Title>{title}</Title>
                 <Text>{content}</Text>
@@ -26,10 +28,12 @@ function ConfirmModal(props: ConfirmModalProps) {
                     <RedButton
                         type="button"
                         value={confirmButtonText}
+                        onClick={onConfirm}
                     />
                     <GreenButton
                         type="button"
                         value={cancelButtonText}
+                        onClick={onCancel}
                     />
                 </div>
             </Wrap>
