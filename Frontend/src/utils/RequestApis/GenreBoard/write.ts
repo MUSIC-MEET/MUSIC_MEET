@@ -10,7 +10,7 @@ const write =
         const token = localStorage.getItem("token");
         return axios({
             method: "POST",
-            url: `/genreboard`,
+            url: `/board`,
             headers: {
                 "authorization": `${token}`
             },

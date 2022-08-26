@@ -12,6 +12,8 @@ import getPost from "../../../utils/RequestApis/GenreBoard/getPost";
 import { useParams } from "react-router-dom";
 import { Viewer } from "@toast-ui/react-editor";
 import { AxiosError, AxiosResponse } from "axios";
+import Vote from "./Vote";
+import MoreActions from "./MoreActions";
 
 
 interface PostType {
@@ -62,7 +64,12 @@ function Post() {
             <Viewer
                 initialValue={data?.content}
             />
-
+            <Vote />
+            <MoreActions
+                writer={data!.nickname}
+                genre={genre}
+                num={num}
+            />
         </article >
     );
 

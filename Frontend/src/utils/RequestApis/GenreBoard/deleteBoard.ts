@@ -1,24 +1,25 @@
 import { AxiosResponse } from "axios";
 import customAxios from "../../customAxios";
 
-const uploadImg = 
-    ( 
-        image: Blob 
-    ): Promise<AxiosResponse> => {
+const deleteBoard = 
+    ({ 
+        genre, num
+    }: {genre: string; num: string;}): Promise<AxiosResponse> => {
         const axios = customAxios();
         const token = localStorage.getItem("token");
+
         return axios({
-            method: "POST",
-            url: `/board/image`,
+            method: "DELETE",
+            url: `/board`,
             headers: {
                 authorization: `${token}`,
-                "Content-Type": "multipart/form-data",
             },
             data: {
-                image
+                genre,
+                "boardNum": num
             }
         });
     };
 
 
-export default uploadImg;
+export default deleteBoard;
