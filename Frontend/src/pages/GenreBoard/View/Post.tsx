@@ -67,6 +67,7 @@ function Post() {
             <Vote />
             <MoreActions
                 writer={data!.nickname}
+                num={num}
             />
         </article >
     );

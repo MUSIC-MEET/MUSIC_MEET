@@ -1,15 +1,35 @@
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useCallback } from "react";
 import BuildIcon from "@mui/icons-material/Build";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ReportIcon from "@mui/icons-material/Report";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
+import { useMutation } from "react-query";
+import deleteBoard from "../../../utils/RequestApis/GenreBoard/deleteBoard";
+import ConfirmModal from "../../../components/AlertModal/ConfirmModal";
 
-function MoreActions({ writer }: { writer: string }) {
+function MoreActions({ writer, num }: { writer: string, num: string }) {
     const { nickname } = useRecoilValue<{ nickname: string }>(LoginState);
+
+    const { mutate } = useMutation(deleteBoard, {
+        onSuccess: () => {
+            //
+        }
+    });
+
+    const deleteHandler = useCallback(() => {
+        //
+        // mutate({ writer, num });
+    }, []);
     return (
         <section css={style}>
+            <ConfirmModal
+                title={"삭제"}
+                content={"정말 삭제하시겠습니까?"}
+                confirmButtonText={"삭제"}
+                cancelButtonText={"취소"}
+            />
             {nickname === writer &&
                 <React.Fragment>
                     <button className="delete button">

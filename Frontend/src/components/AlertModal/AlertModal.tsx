@@ -5,6 +5,7 @@ import Title from "components/common/Title";
 import Modal from "components/UI/Modal";
 import Text from "components/common/Text";
 import React from "react";
+import { Wrap } from "./Wrap";
 
 interface AlertModalProps {
     title: string;
@@ -18,7 +19,7 @@ function AlertModal(props: AlertModalProps) {
     const { title, content, onClose, button, buttonClick } = props;
     return (
         <Modal css={css`min-height: 20rem;`} onClose={onClose}>
-            <Wrap>
+            <Wrap css={moreStyle}>
                 <Title>{title}</Title>
                 <Text>{content}</Text>
                 <RedButton
@@ -30,13 +31,7 @@ function AlertModal(props: AlertModalProps) {
     );
 }
 
-const Wrap = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    line-height: 1.5;
+const moreStyle = css`
     & > input {
         position: absolute;
         bottom : 30px;
@@ -44,7 +39,9 @@ const Wrap = styled.div`
         width:  8rem;
         height: 3rem;
         text-align: center;
-    }
+    }   
+    
 `;
+
 
 export default AlertModal;
