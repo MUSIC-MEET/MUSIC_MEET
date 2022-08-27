@@ -12,6 +12,12 @@ const text: GenreWriteType = {
     button: {
         submit: "Write",
         cancel: "Cancel"
+    },
+    backup: {
+        title: "Backup exists",
+        content: "There is a backup. Do you want to apply it?",
+        confirm: "Apply backup",
+        cancel: "Delete backup"
     }
 };
 
