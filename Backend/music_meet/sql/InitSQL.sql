@@ -501,7 +501,7 @@ CREATE TABLE `baladComment` (
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
@@ -534,7 +534,7 @@ CREATE TABLE `rnbComment` (
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
@@ -567,7 +567,7 @@ CREATE TABLE `hiphopComment` (
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
@@ -600,7 +600,7 @@ CREATE TABLE `trortComment` (
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
@@ -633,7 +633,7 @@ CREATE TABLE `kpopComment` (
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
@@ -666,7 +666,7 @@ CREATE TABLE `jpopComment` (
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
@@ -699,7 +699,7 @@ CREATE TABLE `popComment` (
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
@@ -732,7 +732,7 @@ CREATE TABLE `classicComment` (
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
@@ -765,7 +765,7 @@ CREATE TABLE `danceComment` (
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
@@ -798,7 +798,7 @@ CREATE TABLE `mrComment` (
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
@@ -831,7 +831,7 @@ CREATE TABLE `jazzComment` (
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
@@ -859,12 +859,14 @@ REFERENCES `VisibleState` (
 );
 
 
+
+
 CREATE TABLE `ostComment` (
 	`commentnum`	INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`usernum`	INT(10)	NOT NULL,
 	`boardnum`	INT(10)	NOT NULL,
 	`content`	VARCHAR(100)	  NULL,
-	`createat`	datetime	  NULL,
+	`createdat`	datetime	  NULL,
 	`upvote`	INT(10)	  NULL		  DEFAULT 0,
 	`downvote`	INT(10)	  NULL 	  DEFAULT 0,
 	`state`	INT(1)	  NOT NULL		  DEFAULT 0
