@@ -7,6 +7,7 @@ import InputForm from "./InputForm";
 import { useTranslation } from "react-i18next";
 import GenreBoardContext from "store/GenreBoardContext";
 import Loading from "components/common/Loading";
+import ErrorBoundary from "../ErrorBoundary";
 function Write() {
     const params = useParams();
     const genre = params.genre ?? "kpop";
@@ -19,10 +20,12 @@ function Write() {
             <GenreSelector
                 write={true}
             />
-            <Suspense fallback={<Loading />}>
-                <InputForm
-                />
-            </Suspense>
+            <ErrorBoundary>
+                <Suspense fallback={<Loading />}>
+                    <InputForm
+                    />
+                </Suspense>
+            </ErrorBoundary>
         </section>
     );
 }

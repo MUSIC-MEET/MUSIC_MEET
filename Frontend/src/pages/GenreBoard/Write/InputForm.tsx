@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import Form from "components/common/Form";
 import Input from "components/common/Input";
-import React, { useCallback, useContext, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
@@ -24,17 +24,19 @@ function InputForm() {
     const navigator = useNavigate();
     const { t } = useTranslation<"genreWritePage">("genreWritePage");
 
+    useEffect(() => {
+        console.log("rerender");
+    }, []);
+
     const goBackHandler = useCallback(() => {
         navigator(`/board/${genre}`);
     }, [genre, navigator]);
 
     const { mutate } = useMutation(write, {
+        useErrorBoundary: true,
         onSuccess: () => {
             goBackHandler();
         },
-        onError: (res) => {
-            console.log(res);
-        }
     });
     const onChangeTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(() => e.target.value);
@@ -52,8 +54,6 @@ function InputForm() {
             content,
         });
     }, [content, genre, mutate, title]);
-
-
 
     return (
         <Form

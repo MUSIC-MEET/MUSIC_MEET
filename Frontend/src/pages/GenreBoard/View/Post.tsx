@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { Suspense, useContext, useEffect, useState } from "react";
 import Text from "components/common/Text";
 import styled from "@emotion/styled";
 import ThemeContext from "store/ThemeContext";
