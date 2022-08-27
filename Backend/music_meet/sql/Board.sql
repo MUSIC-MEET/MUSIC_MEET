@@ -52,7 +52,7 @@ REFERENCES `VisibleState` (
 );
 
 
-CREATE TABLE `hippopBoard` (
+CREATE TABLE `hiphopBoard` (
 	`boardnum`		INT(10) AUTO_INCREMENT 	NOT NULL  PRIMARY KEY,
 	`title`		VARCHAR(20)	 NULL,
 	`usernum`		INT(10)	 NOT NULL,
@@ -62,14 +62,14 @@ CREATE TABLE `hippopBoard` (
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );
 
-ALTER TABLE `hippopBoard` ADD CONSTRAINT `FK_User_TO_hippopBoard_1` FOREIGN KEY (
+ALTER TABLE `hiphopBoard` ADD CONSTRAINT `FK_User_TO_hiphopBoard_1` FOREIGN KEY (
 	`usernum`
 )
 REFERENCES `User` (
 	`usernum`
 );
 
-ALTER TABLE `hippopBoard` ADD CONSTRAINT `FK_VisibleState_TO_hippopBoard_1` FOREIGN KEY (
+ALTER TABLE `hiphopBoard` ADD CONSTRAINT `FK_VisibleState_TO_hiphopBoard_1` FOREIGN KEY (
 	`state`
 )
 REFERENCES `VisibleState` (

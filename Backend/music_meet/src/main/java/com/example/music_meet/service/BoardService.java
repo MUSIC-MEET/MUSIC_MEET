@@ -1,9 +1,6 @@
 package com.example.music_meet.service;
 
-import com.example.music_meet.dto.Request.Request_DeleteGenreBoard;
-import com.example.music_meet.dto.Request.Request_GetGenreBoardList;
-import com.example.music_meet.dto.Request.Request_ModifyGenreBoard;
-import com.example.music_meet.dto.Request.Request_WriteGenreBoard;
+import com.example.music_meet.dto.Request.*;
 import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -262,6 +259,48 @@ public class BoardService
             }
         }
         return boards;
+    }
+
+    //
+    // 장르 게시판 추천, 비추천 선택
+    //
+    public Boolean genreBoardVote(Request_GenreBoardVote request_genreBoardVote)
+    {
+        boolean result = false;
+        final String genreBoard = request_genreBoardVote.getGenre() + "board";
+        final String vote = request_genreBoardVote.getVote();
+        final int boardNum = request_genreBoardVote.getBoardNum();
+        try
+        {
+            if (vote.equals("upvote"))
+                sql = "UPDATE " + genreBoard + " SET upvote = upvote + 1 WHERE boardnum = ? AND state = 0";
+            else
+                sql = "UPDATE " + genreBoard + " SET downvote = downvote + 1 WHERE boardnum = ? AND state = 0";
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, boardNum);
+
+            rsInt = pstmt.executeUpdate();
+            if (rsInt != 0)
+                result = true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
     }
 
 }

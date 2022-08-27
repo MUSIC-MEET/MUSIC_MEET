@@ -1,9 +1,6 @@
 package com.example.music_meet.controller;
 
-import com.example.music_meet.dto.Request.Request_DeleteGenreBoard;
-import com.example.music_meet.dto.Request.Request_GetGenreBoardList;
-import com.example.music_meet.dto.Request.Request_ModifyGenreBoard;
-import com.example.music_meet.dto.Request.Request_WriteGenreBoard;
+import com.example.music_meet.dto.Request.*;
 import com.example.music_meet.dto.Response.Response_GetGenreBoardForGenreNum;
 import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
 import com.example.music_meet.service.BoardService;
@@ -157,12 +154,6 @@ public class BoardController
     @RequestMapping(path = "/board/{genre}/{num}", method = RequestMethod.GET)
     public ResponseEntity<Object> getBoardForGenreNum(@PathVariable("genre") final String genre, @PathVariable("num") final String num)
     {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        if (request.getAttribute("userNum") == null)
-        {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        final String userNum = (String) request.getAttribute("userNum");
         Response_GetGenreBoardForGenreNum response_getGenreBoardForGenreNum = new Response_GetGenreBoardForGenreNum();
 
         Map<String, String> map = boardService.getBoardForGenreNum(genre, num);
@@ -183,4 +174,34 @@ public class BoardController
             return new ResponseEntity<>(response_getGenreBoardForGenreNum, HttpStatus.OK);
         }
     }
+
+    //
+    // 장르 게시판 추천,비추천 선택.md
+    //
+    @RequestMapping(path = "/board/vote", method = RequestMethod.PUT)
+    public ResponseEntity<Object> genreBoardVote(@RequestBody Map<String,String> requestMap)
+    {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final String userNum = (String) request.getAttribute("userNum");
+        final String genre = requestMap.get("genre");
+        final int boardNum = Integer.parseInt(requestMap.get("boardNum"));
+        final String vote = requestMap.get("vote");
+
+        if (boardService.genreBoardVote(new Request_GenreBoardVote(genre,boardNum,vote)))
+        {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
+
 }
