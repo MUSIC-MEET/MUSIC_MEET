@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import Form from "components/common/Form";
 import Input from "components/common/Input";
-import React, { useCallback, useContext, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
@@ -15,6 +15,8 @@ import write from "utils/RequestApis/GenreBoard/write";
 import { useMutation } from "react-query";
 import uploadImg from "../../../utils/RequestApis/GenreBoard/uploadImg";
 import ConfirmModal from "../../../components/AlertModal/ConfirmModal";
+import { useRecoilValue } from "recoil";
+import LoginModalShownState from "store/LoginModalShown";
 
 function InputForm() {
     const ctx = useContext(ThemeContext);
@@ -22,11 +24,14 @@ function InputForm() {
     const editorRef = useRef<Editor>(null);
     const [title, setTitle] = useState<string>("");
     const [content, setContent] = useState<string>("");
+    const isShwonLoginForm = useRecoilValue<boolean>(LoginModalShownState);
     const [hasBackup, setHasBackup] =
         useState<boolean>(() => localStorage.getItem("backup_board") ? true : false);
     const navigator = useNavigate();
     const { t } = useTranslation<"genreWritePage">("genreWritePage");
-
+    useEffect(() => {
+        //
+    }, [isShwonLoginForm]);
     const goBackHandler = useCallback(() => {
         navigator(`/board/${genre}`);
     }, [genre, navigator]);
