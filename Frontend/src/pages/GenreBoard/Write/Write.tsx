@@ -21,8 +21,10 @@ function Write() {
                 write={true}
             />
             <ErrorBoundary>
-                <InputForm
-                />
+                <Suspense fallback={<Loading />}>
+                    <InputForm
+                    />
+                </Suspense>
             </ErrorBoundary>
         </section>
     );
