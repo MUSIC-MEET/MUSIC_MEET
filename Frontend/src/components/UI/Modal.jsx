@@ -52,7 +52,7 @@ const backropStyle = css`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.75);
-    z-index: 99;
+    z-index: 10002;
 `;
 
 const modalOverlayStyle = css`
@@ -62,7 +62,7 @@ const modalOverlayStyle = css`
     top: 5vw;
     left:50%;
     transform:translateX(-50%);
-    z-index: 100;
+    z-index: 1000003;
     border-radius: 5px;
     padding: 1rem;
     border: 1px solid gray;
