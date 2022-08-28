@@ -14,9 +14,9 @@ import GenreBoardContext from "store/GenreBoardContext";
 import write from "utils/RequestApis/GenreBoard/write";
 import { useMutation } from "react-query";
 import uploadImg from "../../../utils/RequestApis/GenreBoard/uploadImg";
-import ConfirmModal from "../../../components/AlertModal/ConfirmModal";
 import { useRecoilValue } from "recoil";
 import LoginModalShownState from "store/LoginModalShown";
+import BackupAlertWrapper from "./BackupAlertWrapper";
 
 function InputForm() {
     const ctx = useContext(ThemeContext);
@@ -25,7 +25,7 @@ function InputForm() {
     const [title, setTitle] = useState<string>("");
     const [content, setContent] = useState<string>("");
     const isShwonLoginForm = useRecoilValue<boolean>(LoginModalShownState);
-    const [hasBackup, setHasBackup] =
+    const [backupWrapperShown, setBackupWrapperShown] =
         useState<boolean>(() => localStorage.getItem("backup_board") ? true : false);
     const navigator = useNavigate();
     const { t } = useTranslation<"genreWritePage">("genreWritePage");
@@ -83,24 +83,6 @@ function InputForm() {
         });
     }, [content, genre, mutate, title]);
 
-    /**
-     * 백업 적용
-     */
-    const applyBackupHandler = useCallback(() => {
-        const backup = JSON.parse(localStorage.getItem("backup_board") || "{}");
-        setTitle(() => backup.title);
-        setContent(() => backup.content);
-        editorRef?.current!.getInstance().setMarkdown(backup.content);
-        setHasBackup(() => false);
-    }, []);
-
-    /**
-     * 백업 삭제
-     */
-    const dropBackupHandler = useCallback(() => {
-        localStorage.removeItem("backup_board");
-        setHasBackup(() => false);
-    }, []);
 
     return (
         <Form
@@ -108,18 +90,23 @@ function InputForm() {
             direction={"column"}
             addCss={[formStyle]}
         >
-            {hasBackup &&
-                <div>
-                    <ConfirmModal
-                        title={t("backup.title")}
-                        content={t("backup.content")}
-                        confirmButtonText={t("backup.confirm")}
-                        cancelButtonText={t("backup.cancel")}
-                        onConfirm={applyBackupHandler}
-                        onCancel={dropBackupHandler}
-                        onClose={dropBackupHandler}
-                    />
-                </div>
+            {backupWrapperShown &&
+
+                // <ConfirmModal
+                //     title={t("backup.title")}
+                //     content={t("backup.content")}
+                //     confirmButtonText={t("backup.confirm")}
+                //     cancelButtonText={t("backup.cancel")}
+                //     onConfirm={applyBackupHandler}
+                //     onCancel={dropBackupHandler}
+                //     onClose={dropBackupHandler}
+                // />
+                <BackupAlertWrapper
+                    setTitle={setTitle}
+                    setContent={setContent}
+                    ref={editorRef}
+                    close={() => setBackupWrapperShown(false)}
+                />
             }
             <span>
                 <label htmlFor="title">{t("input.titleLabel")}</label>
@@ -133,7 +120,7 @@ function InputForm() {
                         id: "title",
                         type: "text",
                         value: title,
-                        onChange: onChangeTitle
+                        onChange: onChangeTitle,
                     }}
                 />
             </span>
@@ -168,7 +155,7 @@ const formStyle = css`
     max-width: 100vw;
     justify-content: center;
     align-items: flex-start;
-
+    position: relative;
 
     span {
         width: 70rem;
