@@ -11,6 +11,12 @@ interface GenreWriteType {
         submit: string;
         cancel: string;
     }
+    backup: {
+        title: string;
+        content: string;
+        confirm: string;
+        cancel: string;
+    }
 }
 
 export default GenreWriteType;

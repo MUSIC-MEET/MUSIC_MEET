@@ -12,6 +12,12 @@ const text: GenreWriteType = {
     button: {
         submit: "작성",
         cancel: "취소"
+    },
+    backup: {
+        title: "백업 존재",
+        content: "작성하던글이 존재합니다. 적용 하시겠습니까?",
+        confirm: "백업 적용",
+        cancel: "백업 삭제"
     }
 };
 

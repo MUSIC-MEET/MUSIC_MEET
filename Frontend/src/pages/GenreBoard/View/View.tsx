@@ -6,7 +6,7 @@ import Post from "./Post";
 import CurrentPage from "store/CurrentPage";
 import { useSetRecoilState } from "recoil";
 import Loading from "components/common/Loading";
-import ErrorBoundary from "./ErrorBoundary";
+import ErrorBoundary from "../ErrorBoundary";
 
 function View() {
     const setCurrentPage = useSetRecoilState(CurrentPage);

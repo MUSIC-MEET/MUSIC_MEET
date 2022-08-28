@@ -22,11 +22,9 @@ function Index() {
             <Routes>
                 <Route path=":genre/post/:num" element={<View />} />
             </Routes>
-
-
         </Content >
 
     );
 }
 
-export default Index;
+export default React.memo(Index);

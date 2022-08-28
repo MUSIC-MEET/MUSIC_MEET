@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { Suspense, useContext, useEffect, useState } from "react";
 import Text from "components/common/Text";
 import styled from "@emotion/styled";
 import ThemeContext from "store/ThemeContext";
@@ -14,6 +14,8 @@ import { Viewer } from "@toast-ui/react-editor";
 import { AxiosError, AxiosResponse } from "axios";
 import Vote from "./Vote";
 import MoreActions from "./MoreActions";
+import Loading from "components/common/Loading";
+import ErrorBoundary from "../ErrorBoundary";
 
 
 interface PostType {
@@ -64,12 +66,16 @@ function Post() {
             <Viewer
                 initialValue={data?.content}
             />
-            <Vote />
-            <MoreActions
-                writer={data!.nickname}
-                genre={genre}
-                num={num}
-            />
+            <ErrorBoundary>
+                <Suspense fallback={<Loading />}>
+                    <Vote />
+                    <MoreActions
+                        writer={data!.nickname}
+                        genre={genre}
+                        num={num}
+                    />
+                </Suspense>
+            </ErrorBoundary>
         </article >
     );
 

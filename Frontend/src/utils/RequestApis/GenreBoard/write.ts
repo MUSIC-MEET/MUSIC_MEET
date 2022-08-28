@@ -8,6 +8,7 @@ const write =
     ): Promise<AxiosResponse> => {
         const axios = customAxios();
         const token = localStorage.getItem("token");
+        console.log(title, content);
         return axios({
             method: "POST",
             url: `/board`,
