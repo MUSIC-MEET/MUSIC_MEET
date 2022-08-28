@@ -6,14 +6,14 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from "rea
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import { Editor } from "@toast-ui/react-editor";
-import ThemeContext from "../../../store/ThemeContext";
+import ThemeContext from "../../store/ThemeContext";
 import BottomButton from "./BottomButton";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import GenreBoardContext from "store/GenreBoardContext";
 import write from "utils/RequestApis/GenreBoard/write";
 import { useMutation } from "react-query";
-import uploadImg from "../../../utils/RequestApis/GenreBoard/uploadImg";
+import uploadImg from "../../utils/RequestApis/GenreBoard/uploadImg";
 import { useRecoilValue } from "recoil";
 import LoginModalShownState from "store/LoginModalShown";
 import BackupAlertWrapper from "./BackupAlertWrapper";
