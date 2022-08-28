@@ -1,7 +1,8 @@
 import GenreWriteType from "locales/interface/GenreWriteType";
 
 const text: GenreWriteType = {
-    title: "제목",
+    title: "글 쓰기",
+    update: "글 수정",
     input: {
         titleLabel: "제목",
         titlePlaceholder: "제목을 입력하세요.",

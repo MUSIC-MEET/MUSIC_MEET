@@ -1,7 +1,8 @@
 import GenreWriteType from "locales/interface/GenreWriteType";
 
 const text: GenreWriteType = {
-    title: "Post Write",
+    title: "Write Post",
+    update: "Edit Post",
     input: {
         titleLabel: "Title",
         titlePlaceholder: "Enter title",

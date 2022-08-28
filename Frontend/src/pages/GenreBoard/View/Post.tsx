@@ -1,6 +1,4 @@
-import { css } from "@emotion/react";
-import React, { Suspense, useContext, useEffect, useState } from "react";
-import Text from "components/common/Text";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import ThemeContext from "store/ThemeContext";
 
@@ -11,11 +9,9 @@ import { useQuery } from "react-query";
 import getPost from "../../../utils/RequestApis/GenreBoard/getPost";
 import { useParams } from "react-router-dom";
 import { Viewer } from "@toast-ui/react-editor";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import Vote from "./Vote";
 import MoreActions from "./MoreActions";
-import Loading from "components/common/Loading";
-import ErrorBoundary from "../ErrorBoundary";
 
 
 interface PostType {
@@ -31,6 +27,7 @@ interface PostType {
 function Post() {
     const ctx = useContext(ThemeContext);
     const { fontColor } = ctx.themeStyle.menu;
+    const { fontColor: viewerFontColor } = ctx.themeStyle.content;
     const params = useParams();
     const genre = params.genre ?? "kpop";
     const num = params.num ?? "0";
@@ -41,7 +38,7 @@ function Post() {
     });
 
     return (
-        <article css={postStyle}>
+        <Article fontColor={viewerFontColor}>
             <h1 className="post-title">{data?.title}</h1>
             <AdditionalInfo className="post-info" fontColor={fontColor}>
                 <div className="post-writer-info">
@@ -66,20 +63,43 @@ function Post() {
             <Viewer
                 initialValue={data?.content}
             />
-            <ErrorBoundary>
-                <Suspense fallback={<Loading />}>
-                    <Vote />
-                    <MoreActions
-                        writer={data!.nickname}
-                        genre={genre}
-                        num={num}
-                    />
-                </Suspense>
-            </ErrorBoundary>
-        </article >
+            <Vote />
+            <MoreActions
+                writer={data!.nickname}
+                genre={genre}
+                num={num}
+            />
+
+        </Article >
     );
 
 }
+
+const Article = styled.article<{ fontColor: string }>`
+    width: 80rem;
+    margin-top: 3rem;
+    & > .post-title {
+        font-size: 2rem;
+        font-weight: 400;
+    }
+
+    & > .post-content {
+        margin-top: 1rem;
+        min-height: 20rem;
+        
+    }
+
+    .toastui-editor-contents p,
+    .toastui-editor-contents h1,
+    .toastui-editor-contents h2,
+    .toastui-editor-contents h3,
+    .toastui-editor-contents h4,
+    .toastui-editor-contents h5,
+    .toastui-editor-contents h6 {
+        margin: 0px !important;
+        color: ${props => props.fontColor};
+    }
+`;
 
 const AdditionalInfo = styled.div<{ fontColor: string }>`
         width: 100%;
@@ -130,25 +150,6 @@ const AdditionalInfo = styled.div<{ fontColor: string }>`
     
 `;
 
-const postStyle = css`
-    width: 80rem;
-    margin-top: 3rem;
-    & > .post-title {
-        font-size: 2rem;
-        font-weight: 400;
-    }
-
-    & > .post-content {
-        margin-top: 1rem;
-        min-height: 20rem;
-        
-    }
-
-    .toastui-editor-contents > * {
-        color: white;
-    }
-
-`;
 
 export default Post;
 export { PostType };

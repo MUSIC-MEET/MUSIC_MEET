@@ -20,6 +20,7 @@ function MoreActions(
     const [shownDeleteModal, setShownDeleteModal] = useState<boolean>(false);
     const navigator = useNavigate();
     const { mutate } = useMutation(deleteBoard, {
+        useErrorBoundary: true,
         onSuccess: (response: AxiosResponse) => {
             if (response.status === 204) {
                 navigator(`/board/${genre}`);

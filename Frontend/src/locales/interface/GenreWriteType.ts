@@ -1,5 +1,6 @@
 interface GenreWriteType {
     title: string;
+    update: string;
     input: {
         titleLabel: string;
         titlePlaceholder: string;
