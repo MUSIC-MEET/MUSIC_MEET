@@ -66,16 +66,13 @@ function Post() {
             <Viewer
                 initialValue={data?.content}
             />
-            <ErrorBoundary>
-                <Suspense fallback={<Loading />}>
-                    <Vote />
-                    <MoreActions
-                        writer={data!.nickname}
-                        genre={genre}
-                        num={num}
-                    />
-                </Suspense>
-            </ErrorBoundary>
+            <Vote />
+            <MoreActions
+                writer={data!.nickname}
+                genre={genre}
+                num={num}
+            />
+
         </article >
     );
 
