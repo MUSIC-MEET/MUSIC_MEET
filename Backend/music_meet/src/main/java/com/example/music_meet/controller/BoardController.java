@@ -177,7 +177,6 @@ public class BoardController
 
     //
     // 장르 게시판 추천,비추천 선택.md
-    //
     @RequestMapping(path = "/board/vote", method = RequestMethod.PUT)
     public ResponseEntity<Object> genreBoardVote(@RequestBody Map<String,String> requestMap)
     {
@@ -202,6 +201,17 @@ public class BoardController
     }
 
 
-
+    //
+    // 장르 게시판 글 호출_Small
+    //
+    @RequestMapping(path = "/board/{genre}/{num}/small", method = RequestMethod.GET)
+    public ResponseEntity<Object> getGenreBoard_Small(@PathVariable("genre") String genre, @PathVariable("num") int boardNum)
+    {
+        Map<String, String> responseMap = boardService.getGenreBoard_Small(genre,boardNum);
+        if (responseMap.get("title").equals(null))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else
+            return new ResponseEntity<>(responseMap, HttpStatus.OK);
+    }
 
 }
