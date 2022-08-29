@@ -21,7 +21,8 @@ interface PostType {
     createdAt: string;
     imgSrc: string;
     view: number;
-    vote: number;
+    upvote: number;
+    downvote: number;
 }
 
 function Post() {
@@ -37,6 +38,7 @@ function Post() {
         useErrorBoundary: true,
     });
 
+    const vote = data!.upvote + (-data!.downvote);
     return (
         <Article fontColor={viewerFontColor}>
             <h1 className="post-title">{data?.title}</h1>
@@ -56,14 +58,17 @@ function Post() {
                     </div>
                     <div className="post-vote wrapper">
                         <ThumbUpAltIcon className="post-vote-icon icon" />
-                        <span className="post-vote text">{data?.vote}</span>
+                        <span className="post-vote text">{vote}</span>
                     </div>
                 </div>
             </AdditionalInfo>
             <Viewer
                 initialValue={data?.content}
             />
-            <Vote />
+            <Vote
+                upvote={data?.upvote}
+                downvote={data?.downvote}
+            />
             <MoreActions
                 writer={data!.nickname}
                 genre={genre}
