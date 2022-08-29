@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
  * 게시글 추천 컴포넌트
  * @returns {React.FC}
  */
-function Vote() {
+function Vote({ upvote, downvote }: { upvote?: number, downvote?: number }) {
     const params = useParams();
     const genre = params.genre ?? "kpop";
     const num = params.num ?? "-1";
@@ -54,14 +54,14 @@ function Vote() {
                 onClick={() => voteHandler("upvote")}
             >
                 <ThumbUpAltIcon className="vote-icon" />
-                <span>1</span>
+                <span>{upvote}</span>
             </button>
             <button
                 className="downvote vote"
                 onClick={() => voteHandler("downvote")}
             >
                 <ThumbDownAltIcon className="vote-icon" />
-                <span>2</span>
+                <span>{downvote}</span>
             </button>
         </section >
     );

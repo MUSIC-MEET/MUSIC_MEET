@@ -11,7 +11,7 @@ import LoginState from "store/LoginState";
 function InputComment() {
     const params = useParams<{ genre: string; num: string }>();
     const genre = params.genre ?? "kpop";
-    const num = params.genre ?? "-1";
+    const num = params.num ?? "-1";
     const [comment, setComment] = useState<string>("");
     const { t } = useTranslation<"genreBoardViewer">("genreBoardViewer");
     const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
