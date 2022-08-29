@@ -25,9 +25,10 @@ function View() {
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
                     <Post />
+                    <Comments />
                 </Suspense>
             </ErrorBoundary>
-            <Comments />
+
         </section>
     );
 }

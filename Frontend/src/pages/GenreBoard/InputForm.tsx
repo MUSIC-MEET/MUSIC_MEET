@@ -18,70 +18,31 @@ import { useRecoilValue } from "recoil";
 import LoginModalShownState from "store/LoginModalShown";
 import BackupAlertWrapper from "./BackupAlertWrapper";
 
-function InputForm() {
+interface InputFormProps {
+    type: "write" | "edit";
+    title: string;
+    content: string;
+    onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChangeContent: () => void;
+    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    setTitle: (title: string) => void;
+    setContent: (content: string) => void;
+    goBackHandler: () => void;
+    editorRef: React.RefObject<Editor>;
+}
+
+
+function InputForm(props: InputFormProps) {
+    const { title, content, onChangeTitle, onChangeContent, onSubmit, goBackHandler, editorRef, type }
+        = props;
     const ctx = useContext(ThemeContext);
-    const { genre } = useContext(GenreBoardContext);
-    const editorRef = useRef<Editor>(null);
-    const [title, setTitle] = useState<string>("");
-    const [content, setContent] = useState<string>("");
     const isShwonLoginForm = useRecoilValue<boolean>(LoginModalShownState);
     const [backupWrapperShown, setBackupWrapperShown] =
         useState<boolean>(() => localStorage.getItem("backup_board") ? true : false);
-    const navigator = useNavigate();
     const { t } = useTranslation<"genreWritePage">("genreWritePage");
     useEffect(() => {
         //
     }, [isShwonLoginForm]);
-    const goBackHandler = useCallback(() => {
-        navigator(`/board/${genre}`);
-    }, [genre, navigator]);
-
-    const { mutate } = useMutation(write, {
-        useErrorBoundary: true,
-        onSuccess: () => {
-            localStorage.removeItem("backup_board");
-            goBackHandler();
-        },
-    });
-
-    /**
-     * 제목, 내용 백업해서 localStorage에 저장
-     */
-    const postBackup = useCallback(() => {
-        const backup = {
-            title: title,
-            content: content
-        };
-        localStorage.setItem("backup_board", JSON.stringify(backup));
-    }, [content, title]);
-
-    /**
-     * 제목이 변경될때마다 호출
-     */
-    const onChangeTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(() => e.target.value);
-        postBackup();
-    }, [postBackup]);
-
-    /**
-     * 내용이 변경될때마다 호출
-     */
-    const onChangeContent = useCallback(() => {
-        setContent(() => editorRef?.current!.getInstance().getMarkdown());
-        postBackup();
-    }, [postBackup]);
-
-    /**
-     * 게시글 작성 버튼 클릭 
-     */
-    const onSubmit = useCallback((e: React.FormEvent<HTMLElement>) => {
-        e.preventDefault();
-        mutate({
-            genre,
-            title,
-            content,
-        });
-    }, [content, genre, mutate, title]);
 
 
     return (
@@ -92,8 +53,8 @@ function InputForm() {
         >
             {backupWrapperShown &&
                 <BackupAlertWrapper
-                    setTitle={setTitle}
-                    setContent={setContent}
+                    setTitle={props.setTitle}
+                    setContent={props.setContent}
                     ref={editorRef}
                     close={() => setBackupWrapperShown(false)}
                 />
@@ -103,7 +64,7 @@ function InputForm() {
                 <Input
                     w={"100%"}
                     h={"3rem"}
-                    onChange={setTitle}
+                    onChange={onChangeTitle}
                     input={{
                         placeholder: t("input.titlePlaceholder"),
                         name: "title",
@@ -118,6 +79,7 @@ function InputForm() {
             <span>
                 <label htmlFor="content">{t("input.contentLabel")}</label>
                 <Editor
+                    initialValue={content}
                     initialEditType="wysiwyg"
                     height="40rem"
                     theme={ctx.theme}
@@ -132,7 +94,6 @@ function InputForm() {
                             callback(imgSrc);
                         }
                     }}
-
                 />
             </span>
             <BottomButton goBackHandler={goBackHandler} />

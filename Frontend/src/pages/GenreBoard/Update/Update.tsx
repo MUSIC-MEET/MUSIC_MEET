@@ -15,7 +15,6 @@ function Update() {
     const { setGenre } = useContext(GenreBoardContext);
     setGenre(genre);
     const { t } = useTranslation<"genreWritePage">("genreWritePage");
-
     const { data } = useQuery(["editboard"], () => { /**  */ },
 
     );
@@ -26,10 +25,10 @@ function Update() {
             <GenreSelector
                 write={true}
             />
-            <ErrorBoundary>
+            {/* <ErrorBoundary>
                 <InputForm
                 />
-            </ErrorBoundary>
+            </ErrorBoundary> */}
         </section>
     );
 }
