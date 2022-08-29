@@ -170,7 +170,8 @@ public class BoardController
             response_getGenreBoardForGenreNum.setContent(map.get("content"));
             response_getGenreBoardForGenreNum.setView(Integer.parseInt(map.get("view")));
             response_getGenreBoardForGenreNum.setCreatedAt(map.get("createdAt"));
-            response_getGenreBoardForGenreNum.setVote(Integer.parseInt(map.get("upvote")) - Integer.parseInt(map.get("downvote")));
+            response_getGenreBoardForGenreNum.setUpvote(Integer.parseInt(map.get("upvote")));
+            response_getGenreBoardForGenreNum.setDownvote(Integer.parseInt(map.get("downvote")));
             return new ResponseEntity<>(response_getGenreBoardForGenreNum, HttpStatus.OK);
         }
     }
