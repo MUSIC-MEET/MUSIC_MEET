@@ -9,6 +9,13 @@ const text: GenreBoardViewerType = {
         content: "Are you sure you want to delete this post?",
         confirm: "Delete",
         cancel: "Cancel"
+    },
+    vote: {
+        notLogin: {
+            title: "Warning",
+            content: "This service is required login.",
+            button: "OK"
+        }
     }
 
 };

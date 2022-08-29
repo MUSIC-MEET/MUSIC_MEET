@@ -9,6 +9,14 @@ interface GenreBoardViewerType {
         confirm: string;
         cancel: string;
     }
+
+    vote: {
+        notLogin: {
+            title: string;
+            content: string;
+            button: string;
+        }
+    }
 }
 
 export default GenreBoardViewerType;

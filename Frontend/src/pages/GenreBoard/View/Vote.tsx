@@ -8,6 +8,7 @@ import vote from "utils/RequestApis/GenreBoard/vote";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
 import AlertModal from "components/AlertModal/AlertModal";
+import { useTranslation } from "react-i18next";
 
 /**
  * 게시글 추천 컴포넌트
@@ -20,6 +21,7 @@ function Vote() {
     const queryClient = useQueryClient();
     const [notLoginAlertShown, setNotLoginAlertShown] = useState<boolean>(false);
     const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
+    const { t } = useTranslation<"genreBoardViewer">("genreBoardViewer");
     const { mutate } = useMutation(vote, {
         useErrorBoundary: true,
         onSuccess: () => {
@@ -40,9 +42,9 @@ function Vote() {
             {
                 notLoginAlertShown &&
                 <AlertModal
-                    title="경고"
-                    content="로그인이 필요한 서비스입니다."
-                    button="확인"
+                    title={t("vote.notLogin.title")}
+                    content={t("vote.notLogin.content")}
+                    button={t("vote.notLogin.button")}
                     onClose={() => setNotLoginAlertShown(false)}
                     buttonClick={() => setNotLoginAlertShown(false)}
                 />
