@@ -303,4 +303,50 @@ public class BoardService
         return result;
     }
 
+    //
+    // 장르 게시판 글 호출_Small
+    //
+    public Map<String , String> getGenreBoard_Small(String genre, int boardNum)
+    {
+        final String genreBoard = genre + "board";
+        Map<String , String> responseMap = new HashMap<>();
+        try
+        {
+            sql = "SELECT a.title, a.content, b.nickname FROM " + genreBoard + " a, user b WHERE a.usernum = b.usernum " +
+                    " AND a.boardnum = ? AND a.state = 0";
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, boardNum);
+
+            rs = pstmt.executeQuery();
+            if (rs.next())
+            {
+                responseMap.put("title", rs.getString("title"));
+                responseMap.put("content", rs.getString("content"));
+                responseMap.put("nickname", rs.getString("nickname"));
+            }
+            else
+                responseMap.put("title", null);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return responseMap;
+    }
 }
