@@ -91,16 +91,6 @@ function InputForm() {
             addCss={[formStyle]}
         >
             {backupWrapperShown &&
-
-                // <ConfirmModal
-                //     title={t("backup.title")}
-                //     content={t("backup.content")}
-                //     confirmButtonText={t("backup.confirm")}
-                //     cancelButtonText={t("backup.cancel")}
-                //     onConfirm={applyBackupHandler}
-                //     onCancel={dropBackupHandler}
-                //     onClose={dropBackupHandler}
-                // />
                 <BackupAlertWrapper
                     setTitle={setTitle}
                     setContent={setContent}

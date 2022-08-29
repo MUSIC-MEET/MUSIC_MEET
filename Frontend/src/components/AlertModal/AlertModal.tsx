@@ -25,6 +25,7 @@ function AlertModal(props: AlertModalProps) {
                 <RedButton
                     value={button}
                     onClick={buttonClick}
+                    type={"button"}
                 />
             </Wrap>
         </Modal>

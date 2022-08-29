@@ -1,20 +1,67 @@
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
+import { useParams } from "react-router-dom";
+import { useMutation, useQueryClient } from "react-query";
+import vote from "utils/RequestApis/GenreBoard/vote";
+import { useRecoilValue } from "recoil";
+import LoginState from "store/LoginState";
+import AlertModal from "components/AlertModal/AlertModal";
 
+/**
+ * 게시글 추천 컴포넌트
+ * @returns {React.FC}
+ */
 function Vote() {
+    const params = useParams();
+    const genre = params.genre ?? "kpop";
+    const num = params.num ?? "-1";
+    const queryClient = useQueryClient();
+    const [notLoginAlertShown, setNotLoginAlertShown] = useState<boolean>(false);
+    const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
+    const { mutate } = useMutation(vote, {
+        useErrorBoundary: true,
+        onSuccess: () => {
+            queryClient.invalidateQueries(["genreBoardPost", genre, num]);
+        },
+    });
+
+    const voteHandler = useCallback((type: "upvote" | "downvote") => {
+        if (!isLogIn) {
+            setNotLoginAlertShown(true);
+            return;
+        }
+        mutate({ genre, num, type });
+    }, [genre, isLogIn, mutate, num]);
+
     return (
         <section css={style}>
-            <button className="upvote vote">
+            {
+                notLoginAlertShown &&
+                <AlertModal
+                    title="경고"
+                    content="로그인이 필요한 서비스입니다."
+                    button="확인"
+                    onClose={() => setNotLoginAlertShown(false)}
+                    buttonClick={() => setNotLoginAlertShown(false)}
+                />
+            }
+            <button
+                className="upvote vote"
+                onClick={() => voteHandler("upvote")}
+            >
                 <ThumbUpAltIcon className="vote-icon" />
                 <span>1</span>
             </button>
-            <button className="downvote vote">
+            <button
+                className="downvote vote"
+                onClick={() => voteHandler("downvote")}
+            >
                 <ThumbDownAltIcon className="vote-icon" />
                 <span>2</span>
             </button>
-        </section>
+        </section >
     );
 }
 
