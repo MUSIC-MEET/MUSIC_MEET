@@ -76,7 +76,7 @@ function Post() {
 }
 
 const Article = styled.article<{ fontColor: string }>`
-    width: 80rem;
+    width: 100%;
     margin-top: 3rem;
     & > .post-title {
         font-size: 2rem;

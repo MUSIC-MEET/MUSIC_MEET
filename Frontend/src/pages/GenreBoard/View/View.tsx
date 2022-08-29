@@ -35,7 +35,7 @@ function View() {
 const sectionStyle = css`
     margin-top: 5rem;
     width: 80vw;
-    height: 100vh;
+    height: 100%;
     & > .genre-name {
         font-size: 3rem;
         font-weight: 800;
