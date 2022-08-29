@@ -17,5 +17,6 @@ public class Response_GetGenreBoardForGenreNum
     private String content;
     private String createdAt;
     private int view;
-    private int vote;
+    private int upvote;
+    private int downvote;
 }
