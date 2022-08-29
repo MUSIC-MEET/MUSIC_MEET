@@ -9,6 +9,22 @@ const text: GenreBoardViewerType = {
         content: "이 게시글을 삭제하시겠습니까?",
         confirm: "삭제",
         cancel: "취소"
+    },
+    vote: {
+        notLogin: {
+            title: "경고",
+            content: "로그인이 필요한 기능입니다.",
+            button: "확인",
+        }
+    },
+    comment: {
+        input: {
+            placeholder: {
+                login: "댓글을 입력해주세요",
+                notLogin: "로그인이 필요한 기능입니다."
+            },
+            submit: "등록"
+        }
     }
 };
 
