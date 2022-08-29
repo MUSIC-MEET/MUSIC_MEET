@@ -18,6 +18,8 @@ import write from "utils/RequestApis/GenreBoard/write";
 function Write() {
     const params = useParams();
     const genre = params.genre ?? "kpop";
+    const { setGenre } = useContext(GenreBoardContext);
+    setGenre(genre);
     const { t } = useTranslation<"genreWritePage">("genreWritePage");
     const navigator = useNavigate();
     const [title, setTitle] = useState<string>("");
