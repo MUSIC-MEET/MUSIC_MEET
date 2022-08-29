@@ -16,6 +16,15 @@ const text: GenreBoardViewerType = {
             content: "This service is required login.",
             button: "OK"
         }
+    },
+    comment: {
+        input: {
+            placeholder: {
+                login: "Enter your comment",
+                notLogin: "This service is required login."
+            },
+            submit: "Submit"
+        }
     }
 
 };

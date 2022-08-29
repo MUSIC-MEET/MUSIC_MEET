@@ -7,6 +7,7 @@ import CurrentPage from "store/CurrentPage";
 import { useSetRecoilState } from "recoil";
 import Loading from "components/common/Loading";
 import ErrorBoundary from "../ErrorBoundary";
+import Comments from "./Comments";
 
 function View() {
     const setCurrentPage = useSetRecoilState(CurrentPage);
@@ -26,7 +27,7 @@ function View() {
                     <Post />
                 </Suspense>
             </ErrorBoundary>
-
+            <Comments />
         </section>
     );
 }

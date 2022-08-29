@@ -17,6 +17,16 @@ interface GenreBoardViewerType {
             button: string;
         }
     }
+
+    comment: {
+        input: {
+            placeholder: {
+                login: string;
+                notLogin: string;
+            }
+            submit: string;
+        }
+    }
 }
 
 export default GenreBoardViewerType;

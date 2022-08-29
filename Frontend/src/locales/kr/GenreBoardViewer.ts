@@ -16,6 +16,15 @@ const text: GenreBoardViewerType = {
             content: "로그인이 필요한 기능입니다.",
             button: "확인",
         }
+    },
+    comment: {
+        input: {
+            placeholder: {
+                login: "댓글을 입력해주세요",
+                notLogin: "로그인이 필요한 기능입니다."
+            },
+            submit: "등록"
+        }
     }
 };
 
