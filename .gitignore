@@ -16,3 +16,6 @@ Frontend/build
 # Mobile
 MusicMeet_Mobile/build
 MusicMeet_Mobile/.idea
+.DS_Store
+Backend/.DS_Store
+Backend/music_meet/.DS_Store

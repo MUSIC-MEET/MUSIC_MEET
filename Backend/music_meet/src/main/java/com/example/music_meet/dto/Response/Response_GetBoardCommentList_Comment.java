@@ -7,10 +7,10 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Response_GetBoardCommentList
+public class Response_GetBoardCommentList_Comment
 {
     private int commentNum;
-    private String content;
+    private String comment;
     private String createdAt;
     private String nickname;
     private String userImage;
