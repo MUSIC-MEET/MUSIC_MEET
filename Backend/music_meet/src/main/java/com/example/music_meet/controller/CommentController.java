@@ -2,9 +2,9 @@ package com.example.music_meet.controller;
 
 import com.example.music_meet.dto.Request.Request_boardCommentVote;
 import com.example.music_meet.dto.Request.Request_createBoardComment;
-import com.example.music_meet.dto.Response.Response_GetBoardCommentList;
+import com.example.music_meet.dto.Response.Response_GetBoardCommentList_Comment;
+import com.example.music_meet.dto.Response.Response_getBoardCommentList_Comments;
 import com.example.music_meet.service.CommentService;
-import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,15 +62,17 @@ public class CommentController
     @RequestMapping(path = "/board/comment/{genre}/{boardnum}", method = RequestMethod.GET)
     public ResponseEntity<Object> getBoardCommentList(@PathVariable("genre") String genre, @PathVariable("boardnum") int boardNum)
     {
-        ArrayList<Response_GetBoardCommentList> comments = commentService.getBoardCommentList(genre, boardNum);
-        if (comments.get(0).getCommentNum() == -1)
-            return new ResponseEntity<>(comments,HttpStatus.BAD_REQUEST);
-        else if (comments.size() != 0)
-            return new ResponseEntity<>(comments, HttpStatus.OK);
-        else
+        ArrayList<Response_GetBoardCommentList_Comment> comments = commentService.getBoardCommentList(genre, boardNum);
+        Response_getBoardCommentList_Comments responseComments = new Response_getBoardCommentList_Comments();
+
+        if (comments == null)   // 글이 없음
         {
-            comments = null;
-            return new ResponseEntity<>(comments, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else //if (comments.size() != 0)             // 정상
+        {
+            responseComments.setComments(comments);
+            return new ResponseEntity<>(responseComments, HttpStatus.OK);
         }
     }
 

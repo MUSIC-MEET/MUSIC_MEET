@@ -7,11 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,6 +29,7 @@ public class BoardService
     private ResultSet rs = null;
     private int rsInt = 0;
     private String sql;
+
 
     private java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 

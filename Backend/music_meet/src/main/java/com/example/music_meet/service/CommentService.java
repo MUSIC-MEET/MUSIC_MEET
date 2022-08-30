@@ -3,12 +3,12 @@ package com.example.music_meet.service;
 
 import com.example.music_meet.dto.Request.Request_boardCommentVote;
 import com.example.music_meet.dto.Request.Request_createBoardComment;
-import com.example.music_meet.dto.Response.Response_GetBoardCommentList;
+import com.example.music_meet.dto.Response.Response_GetBoardCommentList_Comment;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -34,6 +34,11 @@ public class CommentService
 
     private java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 
+    @Value("${server.url}")
+    private String serverURL;
+
+    @Value("${server.port}")
+    private String serverPort;
 
     //
     // 댓글 작성
@@ -81,9 +86,9 @@ public class CommentService
     //
     // 댓글 목록 호출
     //
-    public ArrayList<Response_GetBoardCommentList> getBoardCommentList(String genre, int boardNum)
+    public ArrayList<Response_GetBoardCommentList_Comment> getBoardCommentList(String genre, int boardNum)
     {
-        ArrayList<Response_GetBoardCommentList> comments = new ArrayList<>();
+        ArrayList<Response_GetBoardCommentList_Comment> comments = new ArrayList<>();
         final String genreBoard = genre + "board";
         final String genreComment = genre + "comment";
         try
@@ -97,6 +102,7 @@ public class CommentService
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, boardNum);
+            rs = pstmt.executeQuery();
 
             boolean result = false;
             if (rs.next())
@@ -105,30 +111,28 @@ public class CommentService
             if (result == true)
             {
                 sql = "SELECT a.commentnum, a.content, DATE_FORMAT(a.`createdat`, '%y-%m-%d %T') AS createdat," +
-                        " a.upvote, a.downvote, b.nickname, b.userimage FROM " + genreComment +
-                        " a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND a.boardnum = ? " +
-                        "ORDER BY a.createdat DESC";
-
+                        " a.upvote, a.downvote, b.nickname, b.userimage FROM " + genreComment + " a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND a.boardnum = ? " +
+                        "ORDER BY a.createdat ASC";
+                pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, boardNum);
                 rs = pstmt.executeQuery();
 
-                for (int i = 0; rs.next(); i++) {
-                    Response_GetBoardCommentList comment = new Response_GetBoardCommentList();
+                while (rs.next())
+                {
+                    Response_GetBoardCommentList_Comment comment = new Response_GetBoardCommentList_Comment();
                     comment.setCommentNum(rs.getInt("commentnum"));
-                    comment.setContent(rs.getString("content"));
+                    comment.setComment(rs.getString("content"));
                     comment.setCreatedAt(rs.getString("createdat"));
                     comment.setNickname(rs.getString("nickname"));
                     comment.setUpvote(rs.getInt("upvote"));
                     comment.setDownvote(rs.getInt("downvote"));
-                    comment.setUserImage(rs.getString("userimage"));
+                    comment.setUserImage(serverURL + ":" + serverPort + "/user" + "/image/" + rs.getString(  "userimage"));
                     comments.add(comment);
                 }
             }
             // 글이 없는 경우
             else {
-                Response_GetBoardCommentList comment = new Response_GetBoardCommentList();
-                comment.setCommentNum(-1);
-                comments.add(comment);
+                comments = null;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -145,7 +149,6 @@ public class CommentService
         }
         return comments;
     }
-
 
     //
     // 댓글 추천, 비추천 선택
