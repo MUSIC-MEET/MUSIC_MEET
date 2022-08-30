@@ -84,11 +84,11 @@ public class CommentService
     public ArrayList<Response_GetBoardCommentList> getBoardCommentList(String genre, int boardNum)
     {
         ArrayList<Response_GetBoardCommentList> comments = new ArrayList<>();
+        final String genreBoard = genre + "board";
         final String genreComment = genre + "comment";
         try
         {
-            sql = "SELECT a.commentnum, a.content, DATE_FORMAT(a.`createdat`, '%y-%m-%d %T') AS createdat , a.upvote, a.downvote, b.nickname FROM " + genreComment +
-                  " a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND a.boardnum = ? ORDER BY a.createdat DESC";
+            sql = "SELECT * FROM " + genreBoard + " WHERE boardnum = ? AND state = 0";
 
             //
             // DB구간
@@ -97,22 +97,38 @@ public class CommentService
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, boardNum);
-            rs = pstmt.executeQuery();
 
-            for (int i=0; rs.next(); i++)
+            boolean result = false;
+            if (rs.next())
+                result = true;
+
+            if (result == true)
             {
-                Response_GetBoardCommentList comment = new Response_GetBoardCommentList();
-                comment.setCommentNum(rs.getInt("commentnum"));
-                comment.setContent(rs.getString("content"));
-                comment.setCreatedAt(rs.getString("createdat"));
-                comment.setNickname(rs.getString("nickname"));
-                comment.setUpvote(rs.getInt("upvote"));
-                comment.setDownvote(rs.getInt("downvote"));
+                sql = "SELECT a.commentnum, a.content, DATE_FORMAT(a.`createdat`, '%y-%m-%d %T') AS createdat," +
+                        " a.upvote, a.downvote, b.nickname, b.userimage FROM " + genreComment +
+                        " a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND a.boardnum = ? " +
+                        "ORDER BY a.createdat DESC";
 
+                pstmt.setInt(1, boardNum);
+                rs = pstmt.executeQuery();
+
+                for (int i = 0; rs.next(); i++) {
+                    Response_GetBoardCommentList comment = new Response_GetBoardCommentList();
+                    comment.setCommentNum(rs.getInt("commentnum"));
+                    comment.setContent(rs.getString("content"));
+                    comment.setCreatedAt(rs.getString("createdat"));
+                    comment.setNickname(rs.getString("nickname"));
+                    comment.setUpvote(rs.getInt("upvote"));
+                    comment.setDownvote(rs.getInt("downvote"));
+                    comment.setUserImage(rs.getString("userimage"));
+                    comments.add(comment);
+                }
+            }
+            else {
+                Response_GetBoardCommentList comment = new Response_GetBoardCommentList();
+                comment.setCommentNum(-1);
                 comments.add(comment);
             }
-
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

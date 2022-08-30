@@ -13,6 +13,7 @@ public class Response_GetBoardCommentList
     private String content;
     private String createdAt;
     private String nickname;
+    private String userImage;
     private int upvote;
     private int downvote;
 }
