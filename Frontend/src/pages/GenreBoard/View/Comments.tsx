@@ -1,11 +1,13 @@
 import { css } from "@emotion/react";
 import React from "react";
+import CommentList from "./CommentList";
 import InputComment from "./InputComment";
 
 function Comments() {
     return (
         <article css={style}>
             <InputComment />
+            <CommentList />
         </article>
     );
 }
