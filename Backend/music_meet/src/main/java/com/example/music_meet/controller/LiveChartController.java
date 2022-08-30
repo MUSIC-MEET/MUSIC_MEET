@@ -1,6 +1,7 @@
 package com.example.music_meet.controller;
 
 import com.example.music_meet.dto.ResponseChart;
+import com.example.music_meet.service.LiveChartService;
 import com.example.music_meet.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LiveChartController {
 
     @Autowired
-    private UserService userService;
+    private LiveChartService liveChartService;
 
 
 
@@ -41,7 +42,7 @@ public class LiveChartController {
         } else
         {return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
 
-        ResponseChart responseChart = userService.getChart(siteCode, rank);
+        ResponseChart responseChart = liveChartService.getChart(siteCode, rank);
 
         return new ResponseEntity<>(responseChart, HttpStatus.OK);
     }

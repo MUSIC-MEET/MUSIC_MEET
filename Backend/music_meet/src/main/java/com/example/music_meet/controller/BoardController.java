@@ -215,4 +215,14 @@ public class BoardController
             return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
 
+    //
+    // 장르 게시판 작성 유효성 검사
+    //
+    @RequestMapping(path = "/board/{}/{num}/small", method = RequestMethod.GET)
+    public ResponseEntity<Object> Validate_GenreBoard(@PathVariable("genre") String genre, @PathVariable("num") int boardNum)
+    {
+
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

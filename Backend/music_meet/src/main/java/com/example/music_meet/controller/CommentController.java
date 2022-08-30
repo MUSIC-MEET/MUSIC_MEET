@@ -63,8 +63,13 @@ public class CommentController
     public ResponseEntity<Object> getBoardCommentList(@PathVariable("genre") String genre, @PathVariable("boardnum") int boardNum)
     {
         ArrayList<Response_GetBoardCommentList> comments = commentService.getBoardCommentList(genre, boardNum);
-        if (comments.size() == 0)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (comments.get(0).getCommentNum() == -1)
+            return new ResponseEntity<>(comments,HttpStatus.BAD_REQUEST);
+        else if (comments.size() == 0)
+        {
+            comments = null;
+            return new ResponseEntity<>(comments, HttpStatus.OK);
+        }
         else
             return new ResponseEntity<>(comments, HttpStatus.OK);
     }
