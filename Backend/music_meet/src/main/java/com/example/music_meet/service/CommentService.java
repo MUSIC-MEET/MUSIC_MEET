@@ -124,6 +124,7 @@ public class CommentService
                     comments.add(comment);
                 }
             }
+            // 글이 없는 경우
             else {
                 Response_GetBoardCommentList comment = new Response_GetBoardCommentList();
                 comment.setCommentNum(-1);
