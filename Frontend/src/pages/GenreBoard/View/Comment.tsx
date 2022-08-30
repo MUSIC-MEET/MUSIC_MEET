@@ -32,7 +32,7 @@ const style = css`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #4a4a4a;
     padding-bottom: 0.5rem;
     padding-top: 0.5rem;
     .comment-wrapper {
@@ -41,7 +41,7 @@ const style = css`
     }
 `;
 
-const CommentTop = styled.div`
+const CommentTop = React.memo(styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -66,10 +66,10 @@ const CommentTop = styled.div`
             font-size: 0.8rem;
         }
     }
-`;
+`);
 
-const CommentBody = styled.div`
+const CommentBody = React.memo(styled.div`
     
-`;
+`);
 
 export default React.memo(Comment);
