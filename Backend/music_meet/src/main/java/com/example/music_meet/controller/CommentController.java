@@ -65,13 +65,13 @@ public class CommentController
         ArrayList<Response_GetBoardCommentList> comments = commentService.getBoardCommentList(genre, boardNum);
         if (comments.get(0).getCommentNum() == -1)
             return new ResponseEntity<>(comments,HttpStatus.BAD_REQUEST);
-        else if (comments.size() == 0)
+        else if (comments.size() != 0)
+            return new ResponseEntity<>(comments, HttpStatus.OK);
+        else
         {
             comments = null;
             return new ResponseEntity<>(comments, HttpStatus.OK);
         }
-        else
-            return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     //
