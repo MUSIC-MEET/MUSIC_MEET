@@ -1,13 +1,16 @@
 package com.example.musicmeet_intelij
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.musicmeet_intelij.databinding.ActivityLoginBinding
+import com.google.gson.annotations.SerializedName
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 lateinit var bindingLogin: ActivityLoginBinding
@@ -27,58 +30,69 @@ class Login_Activity : AppCompatActivity() {
         id = findViewById(R.id.loginText)
         pw = findViewById(R.id.pwText)
 
+        //종료버튼
         bindingLogin.loginPageClosebox.setOnClickListener {
             finish()
         }
 
-        /* val retrofit = Retrofit.Builder()
-             .baseUrl("http://localhost:8080")
-             .addConverterFactory(GsonConverterFactory.create())
-             .build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://10.107.2.251:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-         val loginService: LoginService = retrofit.create(LoginService::class.java)
+        val LoginService = retrofit.create(LoginService::class.java)
 
-         bindingLogin.LoginOk.setOnClickListener {
 
-             val idstr = id.text.toString()
-             val pwstr = pw.text.toString()
 
-             loginService.login(idstr, pwstr).enqueue(object : Callback<Body> {
-
-                 override fun onFailure(call: retrofit2.Call<Body>, t : Throwable) {
-                   // 실패할경우
-                     *//*  Toast.makeText(this@Login_Activity, "로그인 실패\n다시 한번 확인해주세요.", Toast.LENGTH_SHORT).show()*//*
-                }
-
-                override fun onResponse(call: retrofit2.Call<Body>, response: Response<Body>) {
-                    //정상 응답
-                    *//*Toast.makeText(this@Login_Activity, "로그인 성공\n잠시만 기다려주세요.", Toast.LENGTH_SHORT).show()*//*
-                }
-
-            })
-        }*/
         bindingLogin.LoginOk.setOnClickListener {
-            val Music_Main_Intent = Intent(this, Music_Main_Activity::class.java)
-            startActivity(Music_Main_Intent)
 
+          /*  val Music_Main_Intent = Intent(this, Music_Main_Activity::class.java)
+            startActivity(Music_Main_Intent)*/
+
+
+            var login_D = LoginData()
+
+            login_D.id = id.text.toString()
+            login_D.pw = pw.text.toString()
+
+            LoginService.login(login_D).enqueue(object : Callback<LoginResponse> {
+                override fun onResponse(call: retrofit2.Call<LoginResponse>, response: Response<LoginResponse>) {
+                    println(response.body()?.token)
+                    println(response.body()?.nickname)
+
+                }
+
+                override fun onFailure(call: retrofit2.Call<LoginResponse>, t: Throwable) {
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                    t.printStackTrace()
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+
+                }
+            })
         }
     }
+
+    interface LoginService {
+
+        @POST("/user/login")
+        @Headers("Content-Type:application/json;charset=utf-8","accept:application/json"
+        ,"User-agent:Mozilla/5.0 (Android 7.0; Mobile; rv:54.0) Gecko/54.0 Firefox/54.0",
+        )
+        fun login(
+            @Body id: LoginData
+        ): retrofit2.Call<LoginResponse>
+}
+    data class LoginResponse (
+        @SerializedName("token") val token: String,
+        @SerializedName("nickname") val nickname: String
+    )
 }
 
-interface LoginService {
 
-    @FormUrlEncoded
-    @POST("user/login")
-    fun login(
-        @Field("id") id: String,
-        @Field("pw") pw: String
-    ): retrofit2.Call<Body>
+class LoginData
+{
+     var id : String?  = null
+    var pw : String? = null
 
 }
-
-data class Login(
-    val code: String,
-    val msg: String
-)
-
-

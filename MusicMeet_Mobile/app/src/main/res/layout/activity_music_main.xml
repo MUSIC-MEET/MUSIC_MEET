@@ -40,6 +40,8 @@
                 app:tabSelectedTextColor="@color/icon_click_color"
                 app:tabIndicatorColor="@color/icon_click_color"
                 app:tabRippleColor="@color/icon_click_color"
+
+
                 />
 
 

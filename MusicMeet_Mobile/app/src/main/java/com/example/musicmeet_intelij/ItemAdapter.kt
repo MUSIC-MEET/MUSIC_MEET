@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 
-
+//메인화면페이지 이미지 넘기는 뷰페이저 adapter
 class ItemAdapter(private val images: MutableList<Int>, private val viewPager2: ViewPager2):
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>(){
 

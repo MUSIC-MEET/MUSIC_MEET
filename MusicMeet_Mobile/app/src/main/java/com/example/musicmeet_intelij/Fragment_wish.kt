@@ -40,6 +40,8 @@ class Fragment_wish : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentWishBinding.inflate(inflater, container, false)
         return binding.root
+
+        return inflater.inflate(R.layout.fragment_wish, container, false)
     }
     //binding 에러뜨면 null 처리
     override fun onDestroyView() {
