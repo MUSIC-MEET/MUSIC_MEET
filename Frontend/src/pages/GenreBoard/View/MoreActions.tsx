@@ -54,19 +54,21 @@ function MoreActions(
                     onClose={deleteModalCloseHandler}
                 />
             }
-            {nickname === writer &&
+            {nickname === writer ?
                 <React.Fragment>
-                    <DeleteIconButton
-                        onClick={deleteModalOpenHandler}
-                    />
                     <EditIconButton
                         onClick={() => {/* TODO */ }}
                     />
+                    <DeleteIconButton
+                        onClick={deleteModalOpenHandler}
+                    />
                 </React.Fragment>
+                :
+                <ReportIconButton
+                    onClick={() => {/* TODO */ }}
+                />
             }
-            <ReportIconButton
-                onClick={() => {/* TODO */ }}
-            />
+
         </section >
     );
 }
