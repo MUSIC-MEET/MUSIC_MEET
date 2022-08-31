@@ -1,7 +1,5 @@
 import { css } from "@emotion/react";
 import React, { useCallback, useState } from "react";
-import BuildIcon from "@mui/icons-material/Build";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ReportIcon from "@mui/icons-material/Report";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
@@ -11,6 +9,9 @@ import ConfirmModal from "../../../components/AlertModal/ConfirmModal";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { AxiosResponse } from "axios";
+import DeleteIconButton from "components/common/ActionButton/DeleteIconButton";
+import EditIconButton from "components/common/ActionButton/EditIconButton";
+import ReportIconButton from "components/common/ActionButton/ReportIconButton";
 
 function MoreActions(
     { writer, num, genre }: { writer: string, num: string, genre: string }
@@ -55,21 +56,18 @@ function MoreActions(
             }
             {nickname === writer &&
                 <React.Fragment>
-                    <button
+                    <DeleteIconButton
                         onClick={deleteModalOpenHandler}
-                        className="delete button"
-                    >
-                        <DeleteForeverIcon />
-                    </button>
-                    <button className="edit button">
-                        <BuildIcon />
-                    </button>
+                    />
+                    <EditIconButton
+                        onClick={() => {/* TODO */ }}
+                    />
                 </React.Fragment>
             }
-            <button className="report button">
-                <ReportIcon />
-            </button>
-        </section>
+            <ReportIconButton
+                onClick={() => {/* TODO */ }}
+            />
+        </section >
     );
 }
 
@@ -81,28 +79,12 @@ const style = css`
     justify-content: flex-end;
     align-items: center;
 
-    .button {
-        all: unset;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    & > .action-button {
         width: 2.5rem;
         height: 2.5rem;
-        margin-left: 0.3rem;
-        border-radius: 3px;
+        margin-left: 0.5rem;
     }
-
-    .delete {
-        background-color: #b3301f;
-    }
-    .edit {
-        background-color: #1fb61f;
-    }
-
-    .report {
-        background-color: red;
-    }
+    
 `;
 
 

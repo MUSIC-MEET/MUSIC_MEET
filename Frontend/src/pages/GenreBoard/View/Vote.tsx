@@ -9,6 +9,8 @@ import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
 import AlertModal from "components/AlertModal/AlertModal";
 import { useTranslation } from "react-i18next";
+import UpVoteButton from "components/common/VoteButton/UpVoteButton";
+import DownVoteButton from "components/common/VoteButton/DownVoteButton";
 
 /**
  * 게시글 추천 컴포넌트
@@ -49,20 +51,14 @@ function Vote({ upvote, downvote }: { upvote?: number, downvote?: number }) {
                     buttonClick={() => setNotLoginAlertShown(false)}
                 />
             }
-            <button
-                className="upvote vote"
+            <UpVoteButton
                 onClick={() => voteHandler("upvote")}
-            >
-                <ThumbUpAltIcon className="vote-icon" />
-                <span>{upvote}</span>
-            </button>
-            <button
-                className="downvote vote"
+                value={upvote}
+            />
+            <DownVoteButton
                 onClick={() => voteHandler("downvote")}
-            >
-                <ThumbDownAltIcon className="vote-icon" />
-                <span>{downvote}</span>
-            </button>
+                value={downvote}
+            />
         </section >
     );
 }
@@ -80,24 +76,9 @@ const style = css`
     }
 
     .vote {
-        all: unset;
-        cursor: pointer;    
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 3.5rem;
+        width: 4.5rem;
         height: 2.5rem;
         margin-left : 1rem;
-        color: white;
-        border-radius: 3px;
-    }
-
-    .upvote {
-        background-color: #b3301f;
-    }
-
-    .downvote {
-        background-color: #3f51b5;
     }
 `;
 
