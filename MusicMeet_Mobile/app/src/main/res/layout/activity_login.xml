@@ -9,11 +9,6 @@
         android:background="@color/Black"
         tools:context=".Login_Activity">
 
-    <!--로그인 입력-->
-
-    <!--로그인 버튼-->
-
-
     <ImageView
             android:id="@+id/login_page_closebox"
             android:layout_width="25sp"
@@ -54,6 +49,8 @@
             android:backgroundTint="@color/login_page_color"
             android:textSize="16sp"
             android:id="@+id/loginText"
+            android:nextFocusDown="@id/pwText"
+            android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -71,6 +68,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/pwText"
+            android:nextFocusDown="@id/LoginOk"
             app:layout_constraintTop_toBottomOf="@+id/textView"
             app:layout_constraintBottom_toTopOf="@+id/LoginOk"
             app:layout_constraintHorizontal_bias="0.487"

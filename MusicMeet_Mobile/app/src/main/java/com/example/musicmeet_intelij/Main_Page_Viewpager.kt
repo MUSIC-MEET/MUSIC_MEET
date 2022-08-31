@@ -4,6 +4,7 @@ package com.example.musicmeet_intelij
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 
 class Main_Page_Viewpager(fa:FragmentActivity): FragmentStateAdapter(fa) {
 
@@ -16,4 +17,6 @@ class Main_Page_Viewpager(fa:FragmentActivity): FragmentStateAdapter(fa) {
             0 -> {}
         }
     }
-}*/
+}
+*/
+

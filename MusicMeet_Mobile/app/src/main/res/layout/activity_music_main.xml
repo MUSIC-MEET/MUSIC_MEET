@@ -8,85 +8,84 @@
         android:background="@color/Black"
         tools:context=".Music_Main_Activity">
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
-            android:layout_width="0sp"
-            android:layout_height="0sp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintWidth_percent="1"
             app:layout_constraintHeight_percent=".9"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/appbarlayout"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.23"/>
 
-    <com.google.android.material.tabs.TabLayout
-            android:id="@+id/after_login_tablayout"
-            android:background="@color/Black"
-            app:tabIconTint="@color/icon_click_color"
-            app:tabIndicatorColor="@color/icon_click_color"
-            android:layout_width="match_parent"
-            android:layout_height="0sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/viewpager"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-        <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/main_page_home"/>
-
-        <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/main_page_chart"/>
-
-        <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/main_page_wishlist"/>
-
-        <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/main_page_home"/>
-
-    </com.google.android.material.tabs.TabLayout>
-   <!-- <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-    <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+    <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/appbarlayout"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/viewpager">
+            app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="메인"/>
+        <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:id="@+id/tabs"
+                android:background="@color/black"
+                app:tabTextColor="@color/Black"
+                app:tabIconTint="@color/icon_click_color"
+                app:tabSelectedTextColor="@color/icon_click_color"
+                app:tabIndicatorColor="@color/icon_click_color"
+                app:tabRippleColor="@color/icon_click_color"
 
-        <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="검색"/>
 
-        <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="내 서재"/>
+                />
 
-        <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="마이페이지"/>
 
-    </com.google.android.material.tabs.TabLayout>-->
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <!--<com.google.android.material.tabs.TabLayout
+                android:id="@+id/TabLayout"
+                app:tabBackground="@color/black"
+                app:tabIndicatorColor="@color/icon_click_color"
+                app:tabRippleColor="@color/icon_click_color"
+                app:tabSelectedTextColor="@color/"
+                app:tabTextColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="0sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewpager"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:tabtextColor="@color/"
+                    android:icon="@drawable/main_page_home"/>
+
+            <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:icon="@drawable/main_page_chart"/>
+
+            <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/main_page_wishlist"/>
+
+            <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/main_page_info"/>
+
+        </com.google.android.material.tabs.TabLayout>
+
+  -->
 </androidx.constraintlayout.widget.ConstraintLayout>
