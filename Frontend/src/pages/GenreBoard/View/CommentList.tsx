@@ -20,6 +20,7 @@ function CommentList() {
             {data?.comments.map((comment, index) => (
                 <Comment
                     key={index}
+                    userImage={comment.userImage}
                     commentNum={comment.commentNum}
                     comment={comment.comment}
                     nickname={comment.nickname}
