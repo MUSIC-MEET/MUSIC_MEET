@@ -13,11 +13,9 @@ function Comments() {
 }
 
 const style = css`
-    margin-top: 2rem;
     width: 100%;
     min-height: 10rem;
     position: relative;
-
 `;
 
 export default Comments;

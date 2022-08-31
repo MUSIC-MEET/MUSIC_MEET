@@ -5,6 +5,7 @@ interface CommentType {
     nickname: string;
     upvote: string;
     downvote: string;
+    userImage: string;
 }
 
 export default CommentType;

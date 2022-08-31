@@ -1,6 +1,6 @@
 import Form from "components/common/Form";
 import React, { useCallback, useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import writeComment from "utils/RequestApis/GenreBoard/writeComment";
 import InputForm from "./InputForm";
@@ -15,9 +15,14 @@ function InputComment() {
     const [comment, setComment] = useState<string>("");
     const { t } = useTranslation<"genreBoardViewer">("genreBoardViewer");
     const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
+    const queryClient = useQueryClient();
     const { mutate } = useMutation(writeComment, {
         useErrorBoundary: true,
+        onSuccess: () => {
+            queryClient.invalidateQueries(["commentList", genre, num]);
+        }
     });
+
     const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (comment.length !== 0) {
