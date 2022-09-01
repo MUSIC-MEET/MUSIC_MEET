@@ -83,6 +83,7 @@ function Post() {
 const Article = styled.article<{ fontColor: string }>`
     width:100%;
     margin-top: 3rem;
+    margin-bottom: 2rem;
     & > .post-title {
         font-size: 2rem;
         font-weight: 400;

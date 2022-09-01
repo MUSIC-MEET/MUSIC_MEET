@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 
 }
 
@@ -54,7 +55,14 @@ dependencies {
     def fragment_version = "1.2.5"
     implementation 'androidx.viewpager2:viewpager2:1.0.0'   //ViewPager2
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.android.volley:volley:1.1.1'            //서버통신에 필요
+
+    implementation 'com.squareup.retrofit2:retrofit:(insert latest version)'    //서버연결 retrofit2
+    implementation 'com.squareup.retrofit2:converter-gson:(insert latest version)'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+
 
 
 }

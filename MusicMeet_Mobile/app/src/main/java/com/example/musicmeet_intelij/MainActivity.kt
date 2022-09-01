@@ -8,12 +8,12 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.musicmeet_intelij.databinding.ActivityMainBinding
 
 lateinit var binding: ActivityMainBinding
+
 class MainActivity : AppCompatActivity() {
 
 
-
     //무한 슬라이드 핸들러 생성
-    private val sliderImageHandler : Handler = Handler()
+    private val sliderImageHandler: Handler = Handler()
     private val sliderImageRunnable = Runnable { binding.viewpager2.currentItem = binding.viewpager2.currentItem + 1 }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +28,9 @@ class MainActivity : AppCompatActivity() {
         }
         //회원가입 화면 이동
         binding.membersbtn.setOnClickListener {
-            val Members_Intent = Intent(this, Members_Activity::class.java)
-            startActivity(Members_Intent)
+            val Member_Intent = Intent(this, Members_Activity::class.java)
+            startActivity(Member_Intent)
         }
-
 
 
         //배경에 나올 이미지
@@ -43,12 +42,12 @@ class MainActivity : AppCompatActivity() {
         )
 
         //메인페이지 뷰페이저 연결
-       val imageList = arrayListOf<Int>().apply{
-           for (n in 0..12) {
-               addAll(backgroundImages)
+        val imageList = arrayListOf<Int>().apply {
+            for (n in 0..12) {
+                addAll(backgroundImages)
 
-           }
-       }
+            }
+        }
         binding.viewpager2.apply {
             adapter = ItemAdapter(imageList, binding.viewpager2)
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -63,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             setPageTransformer(ZoomOutPageTransformer())
         }
     }
+
     override fun onResume() {
         super.onResume()
         sliderImageHandler.postDelayed(sliderImageRunnable, 3000)
