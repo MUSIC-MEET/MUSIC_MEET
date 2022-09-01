@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import getCommentList from "utils/RequestApis/GenreBoard/getCommentList";
 import Comment from "./Comment";
 import { css } from "@emotion/react";
+import voteComment from "../../../utils/RequestApis/GenreBoard/voteComment";
 function CommentList() {
     const params = useParams<{ genre: string, num: string }>();
     const genre = params.genre ?? "kpop";
     const num = params.num ?? "1";
-
+    const queryClient = useQueryClient();
     const { data } = useQuery(["commentList", genre, num], () => getCommentList({ genre, num }), {
         suspense: true,
         useErrorBoundary: true
     });
+
+    const { mutate: voteMutate } = useMutation(voteComment, {
+        onSuccess: (response) => {
+            if (response.status === 204) {
+                queryClient.invalidateQueries(["commentList", genre, num]);
+            }
+        }
+    });
+
+    const voteHandler = useCallback(({ commentNum, type }: { commentNum: string; type: "upvote" | "downvote" }) => {
+        console.log("clicked");
+        voteMutate({ genre, commentNum, type });
+    }, [genre, voteMutate]);
 
 
     return (
@@ -27,6 +41,7 @@ function CommentList() {
                     createdAt={comment.createdAt}
                     upvote={comment.upvote}
                     downvote={comment.downvote}
+                    voteHandler={voteHandler}
                 />
             ))}
         </ul>

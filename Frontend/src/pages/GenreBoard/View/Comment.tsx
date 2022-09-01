@@ -10,8 +10,13 @@ import DownVoteButton from "components/common/VoteButton/DownVoteButton";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
 
-function Comment(props: CommentType) {
+interface HandlerType {
+    voteHandler: ({ type, commentNum }: { type: "upvote" | "downvote", commentNum: string }) => void;
+}
+
+function Comment(props: CommentType & HandlerType) {
     const { commentNum, comment, nickname, createdAt, upvote, downvote, userImage } = props;
+    const { voteHandler } = props;
     const { nickname: loginNickname } = useRecoilValue<{ nickname: string }>(LoginState);
     return (
         <li css={style}>
@@ -43,11 +48,11 @@ function Comment(props: CommentType) {
                 <p>{comment}</p>
                 <div className="votes comment-wrapper">
                     <UpVoteButton
-                        onClick={() => {/* TODO */ }}
+                        onClick={() => { voteHandler({ type: "upvote", commentNum }); }}
                         value={upvote}
                     />
                     <DownVoteButton
-                        onClick={() => {/* TODO */ }}
+                        onClick={() => { voteHandler({ type: "downvote", commentNum }); }}
                         value={downvote}
                     />
                 </div>
