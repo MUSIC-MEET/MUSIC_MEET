@@ -17,6 +17,7 @@ function CommentList() {
     });
 
     const { mutate: voteMutate } = useMutation(voteComment, {
+        useErrorBoundary: true,
         onSuccess: (response) => {
             if (response.status === 204) {
                 queryClient.invalidateQueries(["commentList", genre, num]);
@@ -25,6 +26,7 @@ function CommentList() {
     });
 
     const { mutate: deleteMutate } = useMutation(deleteComment, {
+        useErrorBoundary: true,
         onSuccess: (response) => {
             if (response.status === 204) {
                 queryClient.invalidateQueries(["commentList", genre, num]);
