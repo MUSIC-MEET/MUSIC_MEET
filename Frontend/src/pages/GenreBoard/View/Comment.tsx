@@ -10,8 +10,14 @@ import DownVoteButton from "components/common/VoteButton/DownVoteButton";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
 
-function Comment(props: CommentType) {
-    const { commentNum, comment, nickname, createdAt, upvote, downvote, userImage } = props;
+interface HandlerType {
+    vote: ({ type, commentNum }: { type: "upvote" | "downvote", commentNum: string }) => void;
+
+    remove: ({ commentNum }: { commentNum: string }) => void;
+}
+
+function Comment(props: CommentType & HandlerType) {
+    const { commentNum, comment, nickname, createdAt, upvote, downvote, userImage, vote, remove } = props;
     const { nickname: loginNickname } = useRecoilValue<{ nickname: string }>(LoginState);
     return (
         <li css={style}>
@@ -29,7 +35,7 @@ function Comment(props: CommentType) {
                                     onClick={() => {/* TODO */ }}
                                 />
                                 <DeleteIconButton
-                                    onClick={() => {/* TODO */ }}
+                                    onClick={() => remove({ commentNum })}
                                 />
                             </React.Fragment>
                             :
@@ -43,11 +49,11 @@ function Comment(props: CommentType) {
                 <p>{comment}</p>
                 <div className="votes comment-wrapper">
                     <UpVoteButton
-                        onClick={() => {/* TODO */ }}
+                        onClick={() => { vote({ type: "upvote", commentNum }); }}
                         value={upvote}
                     />
                     <DownVoteButton
-                        onClick={() => {/* TODO */ }}
+                        onClick={() => { vote({ type: "downvote", commentNum }); }}
                         value={downvote}
                     />
                 </div>

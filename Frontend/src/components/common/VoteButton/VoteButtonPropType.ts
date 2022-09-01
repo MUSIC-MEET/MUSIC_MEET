@@ -1,6 +1,6 @@
 interface VoteButtonPropType {
     value: string | number | undefined;
-    onClick: (value: string) => void;
+    onClick: any;
     className?: string;
 }
 
