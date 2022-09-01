@@ -11,12 +11,13 @@ import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
 
 interface HandlerType {
-    voteHandler: ({ type, commentNum }: { type: "upvote" | "downvote", commentNum: string }) => void;
+    vote: ({ type, commentNum }: { type: "upvote" | "downvote", commentNum: string }) => void;
+
+    remove: ({ commentNum }: { commentNum: string }) => void;
 }
 
 function Comment(props: CommentType & HandlerType) {
-    const { commentNum, comment, nickname, createdAt, upvote, downvote, userImage } = props;
-    const { voteHandler } = props;
+    const { commentNum, comment, nickname, createdAt, upvote, downvote, userImage, vote, remove } = props;
     const { nickname: loginNickname } = useRecoilValue<{ nickname: string }>(LoginState);
     return (
         <li css={style}>
@@ -34,7 +35,7 @@ function Comment(props: CommentType & HandlerType) {
                                     onClick={() => {/* TODO */ }}
                                 />
                                 <DeleteIconButton
-                                    onClick={() => {/* TODO */ }}
+                                    onClick={() => remove({ commentNum })}
                                 />
                             </React.Fragment>
                             :
@@ -48,11 +49,11 @@ function Comment(props: CommentType & HandlerType) {
                 <p>{comment}</p>
                 <div className="votes comment-wrapper">
                     <UpVoteButton
-                        onClick={() => { voteHandler({ type: "upvote", commentNum }); }}
+                        onClick={() => { vote({ type: "upvote", commentNum }); }}
                         value={upvote}
                     />
                     <DownVoteButton
-                        onClick={() => { voteHandler({ type: "downvote", commentNum }); }}
+                        onClick={() => { vote({ type: "downvote", commentNum }); }}
                         value={downvote}
                     />
                 </div>
