@@ -110,6 +110,7 @@ public class CommentController
         final String content = requestMap.get("content");
         final int commentNum = Integer.parseInt(requestMap.get("commentNum"));
 
+
         if (commentService.modifyboardComment(genre, userNum, content, commentNum))
             return new ResponseEntity<>(HttpStatus.OK);
         else

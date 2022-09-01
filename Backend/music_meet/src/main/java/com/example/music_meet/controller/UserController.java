@@ -382,8 +382,6 @@ public class UserController
     @RequestMapping(path="/user/image", method = RequestMethod.PUT ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> changeUserImage(@RequestParam(value = "image") MultipartFile image)
     {
-        //System.out.println(profile);
-
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
         if (request.getAttribute("userNum") == null)
@@ -391,7 +389,7 @@ public class UserController
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         final String userNum = (String) request.getAttribute("userNum");
-        final String file = new Date().getTime() + "_" + image.getOriginalFilename();
+        final String file = new Date().getTime() + "_" + image.getOriginalFilename().replaceAll(" ", "");
 
         File newFile = new File(profileimage + file);
 
