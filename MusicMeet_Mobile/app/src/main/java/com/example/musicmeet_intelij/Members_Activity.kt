@@ -4,15 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.musicmeet_intelij.databinding.ActivityMembersBinding
+import okhttp3.ResponseBody
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 lateinit var bindingmembers: ActivityMembersBinding
@@ -41,7 +42,7 @@ class Members_Activity : AppCompatActivity() {
         }
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://localhost:8080/")
+            .baseUrl("http://192.168.219.110:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -49,52 +50,60 @@ class Members_Activity : AppCompatActivity() {
 
         bindingmembers.memberOk.setOnClickListener {
 
-            val idstr = id.text.toString()
-            val pwstr = pw.text.toString()
-            val emailstr = email.text.toString()
-            val nicknamestr = nickname.text.toString()
-            val usernum = userNum.toString()
+            var member_D = memberData()
 
-            memberservice.memberOK(usernum, idstr, pwstr, emailstr, nicknamestr).enqueue(object : Callback<Body> {
-                override fun onResponse(call: retrofit2.Call<Body>, response: Response<Body>) {
+            member_D.id = id.text.toString()
+            member_D.pw = pw.text.toString()
+            member_D.email = email.text.toString()
+            member_D.nickname = nickname.text.toString()
+
+
+
+            memberservice.memberOK(member_D).enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: retrofit2.Call<ResponseBody>, response: Response<ResponseBody>) {
                     val result = response.body()
                     Log.d("회원가입", "${result}")
-                    /*Toast.makeText(this@Members_Activity, "회원가입 완료되었습니다.\n메인 페이지로 이동합니다.", Toast.LENGTH_SHORT).show()
-                    Main_Intent().apply { }*/
-
+                    Toast.makeText(this@Members_Activity, "회원가입 완료되었습니다.\n로그인 페이지로 이동합니다.", Toast.LENGTH_SHORT).show()
+                    Login_Intent().apply { }
                 }
 
-                override fun onFailure(call: retrofit2.Call<Body>, t: Throwable) {
+                override fun onFailure(call: retrofit2.Call<ResponseBody>, t: Throwable) {
                     Log.d("회원가입", "${t.localizedMessage}")
                     /*Toast.makeText(this@Members_Activity, "회원가입에 실패하였습니다.\n다시한번 확인해주세요.", Toast.LENGTH_SHORT).show()*/
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                    /*  t.printStackTrace()*/
+                    Log.d("안돼", t.localizedMessage)
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                 }
             })
         }
     }
 
     interface memberService {
-        @FormUrlEncoded
-        @POST("createuser")
+        @POST("/createuser")
+        @Headers(
+            "Content-Type:application/json;charset=utf-8", "accept:application/json",
+            "User-agent:Mozilla/5.0 (Android 7.0; Mobile; rv:54.0) Gecko/54.0 Firefox/54.0",
+        )
         fun memberOK(
-            @Field("usernum") memberNum: String,
-            @Field("id") memberid: String,
-            @Field("pw") memberpw: String,
-            @Field("email") memberemail: String,
-            @Field("nickname") membernick: String
-        ): retrofit2.Call<Body>
+            @Body num: memberData
+        ): retrofit2.Call<ResponseBody>
     }
 
-    fun Main_Intent() {
-        var Main_Intent = Intent(this, MainActivity::class.java)
-        startActivity(Main_Intent)
+    fun Login_Intent() {
+        var Login_Intent = Intent(this, Login_Activity::class.java)
+        startActivity(Login_Intent)
     }
 
 }
 
-data class member(
-    val code: String,
-    val msg: String
-)
+class memberData {
+    var id: String? = null
+    var pw: String? = null
+    var email: String? = null
+    var nickname: String? = null
+}
+
 
 
 
