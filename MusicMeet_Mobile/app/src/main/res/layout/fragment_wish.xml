@@ -15,5 +15,5 @@
             android:textColor="@color/icon_click_color"
             android:textSize="50sp"
             android:gravity="center"
-            android:text="차트"/>
+            android:text="위시"/>
 </FrameLayout>
