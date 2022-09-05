@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import CommentType from "./CommentType";
 import DeleteIconButton from "components/common/ActionButton/DeleteIconButton";
 import EditIconButton from "components/common/ActionButton/EditIconButton";
@@ -9,16 +9,49 @@ import UpVoteButton from "components/common/VoteButton/UpVoteButton";
 import DownVoteButton from "components/common/VoteButton/DownVoteButton";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
+import Form from "components/common/Form";
+import Input from "components/common/Input";
+import Submit from "components/common/Submit";
+import { AxiosResponse } from "axios";
 
 interface HandlerType {
+    genre: string;
     vote: ({ type, commentNum }: { type: "upvote" | "downvote", commentNum: string }) => void;
-
     remove: ({ commentNum }: { commentNum: string }) => void;
+    editMutate: ({ genre, commentNum, newComment }
+        : {
+            genre: string;
+            commentNum: string;
+            newComment: string;
+        }) => void;
 }
 
+/**
+ * 댓글 컴포넌트
+ * @param props CoommentType & HandlerType
+ * @returns 
+ */
 function Comment(props: CommentType & HandlerType) {
-    const { commentNum, comment, nickname, createdAt, upvote, downvote, userImage, vote, remove } = props;
+    const { commentNum, comment, nickname, createdAt, upvote, downvote, userImage, vote, remove, editMutate, genre }
+        = props;
     const { nickname: loginNickname } = useRecoilValue<{ nickname: string }>(LoginState);
+    const [isEditMode, setIsEditMode] = useState<boolean>(false);
+    const [newComment, setNewComment] = useState<string>(comment);
+
+    const changEditMode = useCallback(() => {
+        setIsEditMode(() => !isEditMode);
+    }, [isEditMode]);
+
+    const newCommentChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setNewComment(() => e.target.value);
+    }, []);
+
+    const editCommentHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        editMutate({ genre, commentNum, newComment });
+        changEditMode();
+    }, [changEditMode, commentNum, editMutate, genre, newComment]);
+
     return (
         <li css={style}>
             <CommentTop>
@@ -32,7 +65,7 @@ function Comment(props: CommentType & HandlerType) {
                         loginNickname === nickname ?
                             <React.Fragment>
                                 <EditIconButton
-                                    onClick={() => {/* TODO */ }}
+                                    onClick={changEditMode}
                                 />
                                 <DeleteIconButton
                                     onClick={() => remove({ commentNum })}
@@ -46,19 +79,39 @@ function Comment(props: CommentType & HandlerType) {
                 </div>
             </CommentTop>
             <CommentBody>
-                <p>{comment}</p>
-                <div className="votes comment-wrapper">
-                    <UpVoteButton
-                        onClick={() => { vote({ type: "upvote", commentNum }); }}
-                        value={upvote}
-                    />
-                    <DownVoteButton
-                        onClick={() => { vote({ type: "downvote", commentNum }); }}
-                        value={downvote}
-                    />
-                </div>
+                {isEditMode ?
+                    <React.Fragment>
+                        <Form
+                            onSubmit={editCommentHandler}
+                            direction="row"
+                        >
+                            <Input
+                                input={{
+                                    value: newComment,
+                                    onChange: newCommentChangeHandler,
+                                }}
+                            />
+                            <Submit value={"수정"} />
+                        </Form>
+                    </React.Fragment>
+                    :
+                    <React.Fragment>
+                        <p>{comment}</p>
+                        <div className="votes comment-wrapper">
+                            <UpVoteButton
+                                onClick={() => { vote({ type: "upvote", commentNum }); }}
+                                value={upvote}
+                            />
+                            <DownVoteButton
+                                onClick={() => { vote({ type: "downvote", commentNum }); }}
+                                value={downvote}
+                            />
+                        </div>
+                    </React.Fragment>
+
+                }
             </CommentBody>
-        </li>
+        </li >
     );
 }
 
@@ -123,7 +176,7 @@ const CommentBody = React.memo(styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
+    min-height: 4.5rem;
     .vote {
         width: 3rem;
         height: 2.5rem;

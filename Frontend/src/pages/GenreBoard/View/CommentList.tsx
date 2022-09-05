@@ -6,11 +6,13 @@ import Comment from "./Comment";
 import { css } from "@emotion/react";
 import voteComment from "utils/RequestApis/GenreBoard/voteComment";
 import deleteComment from "utils/RequestApis/GenreBoard/deleteComment";
+import editComment from "utils/RequestApis/GenreBoard/editComment";
 function CommentList() {
     const params = useParams<{ genre: string, num: string }>();
     const genre = params.genre ?? "kpop";
     const num = params.num ?? "1";
     const queryClient = useQueryClient();
+
     const { data } = useQuery(["commentList", genre, num], () => getCommentList({ genre, num }), {
         suspense: true,
         useErrorBoundary: true
@@ -34,6 +36,15 @@ function CommentList() {
         }
     });
 
+    const { mutate: editMutate } = useMutation(editComment, {
+        useErrorBoundary: true,
+        onSuccess: (response) => {
+            if (response.status === 204) {
+                queryClient.invalidateQueries(["commentList", genre, num]);
+            }
+        }
+    });
+
     const voteHandler = useCallback(({ commentNum, type }: { commentNum: string; type: "upvote" | "downvote" }) => {
         voteMutate({ genre, commentNum, type });
     }, [genre, voteMutate]);
@@ -48,6 +59,7 @@ function CommentList() {
                 data?.comments.map((comment, index) => (
                     <Comment
                         key={index}
+                        genre={genre}
                         userImage={comment.userImage}
                         commentNum={comment.commentNum}
                         comment={comment.comment}
@@ -57,6 +69,7 @@ function CommentList() {
                         downvote={comment.downvote}
                         vote={voteHandler}
                         remove={deleteCommentHandler}
+                        editMutate={editMutate}
                     />
                 ))
             }
