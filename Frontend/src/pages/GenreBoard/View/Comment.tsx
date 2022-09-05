@@ -12,7 +12,7 @@ import LoginState from "store/LoginState";
 import Form from "components/common/Form";
 import Input from "components/common/Input";
 import Submit from "components/common/Submit";
-import { AxiosResponse } from "axios";
+import { useTranslation } from "react-i18next";
 
 interface HandlerType {
     genre: string;
@@ -37,7 +37,7 @@ function Comment(props: CommentType & HandlerType) {
     const { nickname: loginNickname } = useRecoilValue<{ nickname: string }>(LoginState);
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
     const [newComment, setNewComment] = useState<string>(comment);
-
+    const { t } = useTranslation<"genreBoardViewer">("genreBoardViewer");
     const changEditMode = useCallback(() => {
         setIsEditMode(() => !isEditMode);
     }, [isEditMode]);
@@ -91,7 +91,7 @@ function Comment(props: CommentType & HandlerType) {
                                     onChange: newCommentChangeHandler,
                                 }}
                             />
-                            <Submit value={"수정"} />
+                            <Submit value={t("comment.edit.submit")} />
                         </Form>
                     </React.Fragment>
                     :
@@ -183,6 +183,19 @@ const CommentBody = React.memo(styled.div`
         .vote-icon {
             margin-right: 0.3rem;
         }
+    }
+
+    & > form {
+        width: 100%;
+    }
+    & > form > input {
+        margin-right: 0.5rem;
+        flex: 9;
+        height: 2.5rem;
+    }
+
+    & > form > input[type="submit"] {
+        flex: 1;
     }
     
 `);
