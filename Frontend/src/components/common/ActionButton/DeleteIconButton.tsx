@@ -23,6 +23,7 @@ const style = css`
     align-items: center;
     background-color: #b3301f;
     border-radius: 3px;
+    color: white;
 
 `;
 export default React.memo(DeleteIconButton);

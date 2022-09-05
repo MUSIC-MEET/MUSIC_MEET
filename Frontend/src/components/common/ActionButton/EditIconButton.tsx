@@ -23,6 +23,7 @@ const style = css`
     align-items: center;
     background-color: #1fb61f;
     border-radius: 3px;
+    color: white;
 
 `;
 export default React.memo(EditIconButton);

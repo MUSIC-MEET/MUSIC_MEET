@@ -24,6 +24,7 @@ const style = css`
     align-items: center;
     background-color: red;
     border-radius: 3px;
+    color: white;
 
 `;
 export default React.memo(ReportIconButton);
