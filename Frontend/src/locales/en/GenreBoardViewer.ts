@@ -24,8 +24,13 @@ const text: GenreBoardViewerType = {
                 notLogin: "This service is required login."
             },
             submit: "Submit"
+        },
+
+        edit: {
+            submit: "Edit"
         }
-    }
+    },
+
 
 };
 

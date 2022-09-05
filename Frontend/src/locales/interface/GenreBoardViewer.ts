@@ -26,6 +26,9 @@ interface GenreBoardViewerType {
             }
             submit: string;
         }
+        edit: {
+            submit: string;
+        }
     }
 }
 

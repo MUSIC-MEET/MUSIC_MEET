@@ -24,6 +24,9 @@ const text: GenreBoardViewerType = {
                 notLogin: "로그인이 필요한 기능입니다."
             },
             submit: "등록"
+        },
+        edit: {
+            submit: "수정"
         }
     }
 };
