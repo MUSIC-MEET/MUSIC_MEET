@@ -15,6 +15,16 @@ interface AlertModalProps {
     buttonClick?: () => void;
 }
 
+/**
+ * 알림 모달
+ * @param props 
+ * @params props.title 제목
+ * @params props.content 내용
+ * @params props.button 버튼 텍스트
+ * @params props.onClose 닫기 버튼 클릭시 실행되는 함수
+ * @params props.buttonClick 버튼 클릭시 실행되는 함수
+ * @returns 
+ */
 function AlertModal(props: AlertModalProps) {
     const { title, content, onClose, button, buttonClick } = props;
     return (
