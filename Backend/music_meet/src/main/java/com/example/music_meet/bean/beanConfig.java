@@ -4,10 +4,12 @@ import com.JPA.Repository.AccountRepository;
 import com.example.music_meet.service.InterceptorService;
 import com.example.music_meet.service.UserService;
 import com.example.music_meet.validate.Validate;
+import com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter;
 import lombok.Getter;
 import lombok.Setter;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -104,5 +106,13 @@ public class beanConfig implements WebMvcConfigurer
     @Bean
     public String mysqlpassword(){return this.mysqlpassword; }
 
+    /*@Bean
+    public FilterRegistrationBean getFilterRegistrationBean(){
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new XssEscapeServletFilter());
+        registrationBean.setOrder(1);
+        registrationBean.addUrlPatterns("/*");    //filter를 거칠 url patterns
+        return registrationBean;
+    }*/
 
 }

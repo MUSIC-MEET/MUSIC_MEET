@@ -112,7 +112,7 @@ public class CommentController
 
 
         if (commentService.modifyboardComment(genre, userNum, content, commentNum))
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 

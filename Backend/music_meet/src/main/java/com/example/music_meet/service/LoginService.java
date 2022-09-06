@@ -1,19 +1,12 @@
 package com.example.music_meet.service;
 
 import com.example.music_meet.util.AES256Util;
-import com.example.music_meet.util.CustomAnnotationConfig;
 import com.example.music_meet.util.SHA256;
 import com.example.music_meet.dto.User;
-//import io.jsonwebtoken.*;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.music_meet.util.CustomAnnotationConfig.*;
-
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
