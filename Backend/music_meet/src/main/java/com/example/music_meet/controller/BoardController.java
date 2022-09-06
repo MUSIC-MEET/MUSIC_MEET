@@ -216,13 +216,23 @@ public class BoardController
     }
 
     //
-    // 장르 게시판 작성 유효성 검사
+    // 장르 게시판 제목, 내용 유효성
     //
-    @RequestMapping(path = "/board/{}/{num}/small", method = RequestMethod.GET)
-    public ResponseEntity<Object> Validate_GenreBoard(@PathVariable("genre") String genre, @PathVariable("num") int boardNum)
+    @RequestMapping(path = "/board/validate", method = RequestMethod.PUT)
+    public ResponseEntity<Object> validate_GenreBoardTitle(@RequestBody Map<String, String> requestMap)
     {
+        final String title = requestMap.get("title");
+        final String content = requestMap.get("content");
 
+        boolean result1 = boardService.validate_GenreBoardTitle(title);
+        boolean result2 = boardService.validate_GenreBoardContent(content);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (result1 && result2)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
+
+
 }

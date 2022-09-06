@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,6 +33,12 @@ public class BoardService
 
 
     private java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+
+    private int titleLenth_Min = 1;
+    private int titleLenth_Max = 20;
+
+    private int contentLenth_Min = 5;
+    private int contentLenth_Max = 1000;
 
     //
     //  글을 DB에 저장하는 함
@@ -346,5 +353,27 @@ public class BoardService
         }
 
         return responseMap;
+    }
+
+    //
+    // 장르 게시판 제목 유효성 검사
+    //
+    public boolean validate_GenreBoardTitle(String title)
+    {
+        if (1 <= title.length() && title.length() <= 20)
+            return true;
+        else
+            return false;
+    }
+
+    //
+    // 장르 게시판 내용 유효성 검사
+    //
+    public boolean validate_GenreBoardContent(String content)
+    {
+        if (1 <= content.length() && content.length() <= 1000)
+            return true;
+        else
+            return false;
     }
 }

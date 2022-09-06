@@ -46,27 +46,42 @@ public class CommentService
     public boolean createBoardComment(Request_createBoardComment request_createBoardComment)
     {
         boolean result = false;
+        final String genreBoard = request_createBoardComment.getGenre() + "board";
         final String genreComment = request_createBoardComment.getGenre() + "comment";
+        int state = 0;
+
         try
         {
-            sql = "INSERT INTO " + genreComment + "(usernum, boardnum, content, createdat) " +
-                    " VALUES(?,?,?,?)";
+            sql = "SELECT state FROM " + genreBoard + " WHERE boardnum = ?";
             //
             // DB구간
             //
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+
             pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, request_createBoardComment.getBoardNum());
+            rs = pstmt.executeQuery();
+            while (rs.next())
+            {
+                state = rs.getInt("state");
+            }
 
-            pstmt.setInt(1, request_createBoardComment.getUserNum());
-            pstmt.setInt(2, request_createBoardComment.getBoardNum());
-            pstmt.setString(3, request_createBoardComment.getComment());
-            pstmt.setTimestamp(4, date);
+            if (state == 0) {
+                sql = "INSERT INTO " + genreComment + "(usernum, boardnum, content, createdat) VALUES(?,?,?,?)";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, request_createBoardComment.getUserNum());
+                pstmt.setInt(2, request_createBoardComment.getBoardNum());
+                pstmt.setString(3, request_createBoardComment.getComment());
+                pstmt.setTimestamp(4, date);
 
-            rsInt = pstmt.executeUpdate();
+                rsInt = pstmt.executeUpdate();
+            }
 
             if (rsInt != 0)
                 result = true;
+            else
+                result = false;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -74,6 +89,7 @@ public class CommentService
             throw new RuntimeException(e);
         }finally {
             try {
+                rs.close();
                 pstmt.close();
                 conn.close();
             } catch (SQLException e) {
@@ -159,7 +175,7 @@ public class CommentService
         final String genreComment = request_boardCommentVote.getGenre() + "comment";
         try
         {
-            if (request_boardCommentVote.getGenre().equals("upvote"))
+            if (request_boardCommentVote.getVote().equals("upvote"))
                 sql = "UPDATE " + genreComment + " SET upvote = upvote +1 WHERE commentnum = ? AND state = 0";
             else
                 sql = "UPDATE " + genreComment + " SET downvote = downvote +1 WHERE commentnum = ? AND state = 0";
