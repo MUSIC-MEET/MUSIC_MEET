@@ -8,15 +8,12 @@ import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import { Editor } from "@toast-ui/react-editor";
 import ThemeContext from "../../store/ThemeContext";
 import BottomButton from "./BottomButton";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import GenreBoardContext from "store/GenreBoardContext";
-import write from "utils/RequestApis/GenreBoard/write";
-import { useMutation } from "react-query";
 import uploadImg from "../../utils/RequestApis/GenreBoard/uploadImg";
 import { useRecoilValue } from "recoil";
 import LoginModalShownState from "store/LoginModalShown";
 import BackupAlertWrapper from "./BackupAlertWrapper";
+import AlertModal from "components/AlertModal/AlertModal";
 
 interface InputFormProps {
     type: "write" | "edit";
@@ -24,7 +21,7 @@ interface InputFormProps {
     content: string;
     onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onChangeContent: () => void;
-    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    onSubmit: () => void;
     setTitle: (title: string) => void;
     setContent: (content: string) => void;
     goBackHandler: () => void;
@@ -39,15 +36,28 @@ function InputForm(props: InputFormProps) {
     const isShwonLoginForm = useRecoilValue<boolean>(LoginModalShownState);
     const [backupWrapperShown, setBackupWrapperShown] =
         useState<boolean>(() => localStorage.getItem("backup_board") ? true : false);
+    const [titleErrorShwon, setTitleErrorShown] = useState<boolean>(false);
+    const [contentErrorShown, setContentErrorShown] = useState<boolean>(false);
     const { t } = useTranslation<"genreWritePage">("genreWritePage");
     useEffect(() => {
         //
     }, [isShwonLoginForm]);
 
-
+    const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (title === "" || title.length > 20) {
+            setTitleErrorShown(true);
+            return;
+        }
+        if (content === "" || title.length > 1000) {
+            setContentErrorShown(true);
+            return;
+        }
+        onSubmit();
+    }, [content, onSubmit, title]);
     return (
         <Form
-            onSubmit={onSubmit}
+            onSubmit={onSubmitHandler}
             direction={"column"}
             addCss={[formStyle]}
         >
@@ -57,6 +67,24 @@ function InputForm(props: InputFormProps) {
                     setContent={props.setContent}
                     ref={editorRef}
                     close={() => setBackupWrapperShown(false)}
+                />
+            }
+            {titleErrorShwon &&
+                <AlertModal
+                    title={t("error.title.title")}
+                    content={t("error.title.content")}
+                    onClose={() => setTitleErrorShown(false)}
+                    buttonClick={() => setTitleErrorShown(false)}
+                    button={t("error.title.button")}
+                />
+            }
+            {contentErrorShown &&
+                <AlertModal
+                    title={t("error.content.title")}
+                    content={t("error.content.content")}
+                    onClose={() => setContentErrorShown(false)}
+                    buttonClick={() => setContentErrorShown(false)}
+                    button={t("error.content.button")}
                 />
             }
             <span>

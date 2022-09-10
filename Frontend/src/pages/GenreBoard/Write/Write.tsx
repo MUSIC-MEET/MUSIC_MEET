@@ -72,8 +72,7 @@ function Write() {
     /**
      * 게시글 작성 버튼 클릭 
      */
-    const onSubmit = useCallback((e: React.FormEvent<HTMLElement>) => {
-        e.preventDefault();
+    const onSubmit = useCallback(() => {
         mutate({
             genre,
             title,
