@@ -56,11 +56,14 @@ public class BoardController
         final String content = reqeustMap.get("content");
         final int usernum = Integer.parseInt((String) request.getAttribute("userNum"));
 
-        requestWriteGenreBoard = new Request_WriteGenreBoard(genre,title,content,usernum);
-
-        boardService.WriteGenreBoard(requestWriteGenreBoard);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if (1 <= title.length() && title.length() <= 20 && 1 <= content.length() && content.length() <= 1000) {
+            requestWriteGenreBoard = new Request_WriteGenreBoard(genre, title, content, usernum);
+            boardService.WriteGenreBoard(requestWriteGenreBoard);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     //
