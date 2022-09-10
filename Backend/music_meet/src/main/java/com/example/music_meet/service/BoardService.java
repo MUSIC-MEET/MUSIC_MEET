@@ -225,7 +225,7 @@ public class BoardService
         try
         {
             sql = "SELECT a.title, a.usernum, a.boardnum, a.createdat, a.`view`, a.upvote, a.downvote, b.nickname FROM " + genreBoard +
-                    " a, user b WHERE a.usernum = b.usernum AND a.state = 0 ORDER BY a.createdat DESC " +
+                    " a, user b WHERE a.usernum = b.usernum AND a.state = 0 ORDER BY a.boardnum DESC " +
                     " LIMIT ?,?";
             //
             // DB구간
