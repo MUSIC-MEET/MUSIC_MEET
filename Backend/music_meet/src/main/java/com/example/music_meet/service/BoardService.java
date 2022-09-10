@@ -32,8 +32,6 @@ public class BoardService
     private String sql;
 
 
-    private java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-
     private int titleLenth_Min = 1;
     private int titleLenth_Max = 20;
 
@@ -45,6 +43,7 @@ public class BoardService
     //
     public void WriteGenreBoard(Request_WriteGenreBoard requestWriteGenreBoard)
     {
+        java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
         final String genreBoard = requestWriteGenreBoard.getGenre() + "board";
         try
         {
