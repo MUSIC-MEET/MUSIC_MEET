@@ -798,6 +798,7 @@ public class UserService {
         }
         finally {
             try {
+                rs.close();
                 pstmt.close();
                 conn.close();
             } catch (SQLException e) {
