@@ -10,5 +10,12 @@ interface DeleteAccountPageTypes {
         content: string;
         button: string;
     }
+
+    checkModal: {
+        title: string;
+        content: string;
+        confirm: string;
+        cancel: string;
+    }
 }
 export default DeleteAccountPageTypes;

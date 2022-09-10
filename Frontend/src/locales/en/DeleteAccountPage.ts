@@ -10,6 +10,12 @@ const text: DeleteAccountPageTypes = {
         title: "Success",
         content: "Your account has been deleted.",
         button: "OK"
+    },
+    checkModal: {
+        title: "Warning",
+        content: "Are you sure you want to delete your account? \\\n Deleted accounts cannot be recovered.",
+        confirm: "Delete",
+        cancel: "Cancel"
     }
 };
 

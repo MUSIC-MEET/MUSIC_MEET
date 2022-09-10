@@ -17,6 +17,19 @@ interface ConfirmModalProps {
     onConfirm: () => void;
 }
 
+
+/**
+ * 
+ * @param props obj
+ * @param props.title string - modal title
+ * @param props.content string - modal content
+ * @param props.confirmButtonText string - confirm button text
+ * @param props.cancelButtonText string - cancel button text
+ * @param props.onCancel function - cancel button click event
+ * @param props.onClose function - close button click event
+ * @param props.onConfirm function - confirm button click event
+ * @returns 
+ */
 function ConfirmModal(props: ConfirmModalProps) {
     const { title, content, confirmButtonText, cancelButtonText, onCancel, onClose, onConfirm } = props;
     return (
