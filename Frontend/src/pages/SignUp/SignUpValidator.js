@@ -52,9 +52,13 @@ async function SignUpValidator( props) {
     if(props.name === "pw1") {
         if(pw1.length !=0 && !isPw(pw1)) {
             setErrors({ ...errors, pw1: "invalid" });
+        } else if(pw2.length !=0 && pw1 !== pw2) {
+            setErrors({ ...errors, pw2: "invalid" });
+        } else if(isPw(pw1) && pw1 === pw2) { 
+            setErrors({ ...errors, pw1: "valid", pw2: "valid" });
         } else if(isPw(pw1)) {
             setErrors({ ...errors, pw1: "valid" });
-        }
+        } 
     }
 
     if(props.name === "pw2") {
