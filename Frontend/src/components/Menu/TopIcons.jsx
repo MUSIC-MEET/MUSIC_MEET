@@ -14,8 +14,10 @@ function TopIcons(props) {
     const onChangeLanguage = useCallback(() => {
         if(t("mode") === "kr") {
             i18n.changeLanguage("en");
+            localStorage.setItem("i18nextLng", "en");
         } else {
             i18n.changeLanguage("kr");
+            localStorage.setItem("i18nextLng", "kr");
         }
     },[i18n, t]);
 
