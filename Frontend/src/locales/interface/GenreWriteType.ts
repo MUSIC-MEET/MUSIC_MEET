@@ -18,6 +18,19 @@ interface GenreWriteType {
         confirm: string;
         cancel: string;
     }
+
+    error: {
+        title: {
+            title: string;
+            content: string;
+            button: string;
+        },
+        content: {
+            title: string;
+            content: string;
+            button: string;
+        }
+    }
 }
 
 export default GenreWriteType;

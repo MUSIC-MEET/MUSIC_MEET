@@ -10,6 +10,12 @@ const text: DeleteAccountPageTypes = {
         title: "성공",
         content: "회원 탈퇴가 완료되었습니다.",
         button: "확인"
+    },
+    checkModal: {
+        title: "경고",
+        content: "정말로 탈퇴 하시겠습니까? \\\n 탈퇴된 계정은 복구할 수 없습니다.",
+        confirm: "탈퇴",
+        cancel: "취소"
     }
 };
 
