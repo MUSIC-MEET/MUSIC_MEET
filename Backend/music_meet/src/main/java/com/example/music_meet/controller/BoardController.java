@@ -193,12 +193,25 @@ public class BoardController
         final String genre = requestMap.get("genre");
         final int boardNum = Integer.parseInt(requestMap.get("boardNum"));
         final String vote = requestMap.get("vote");
+        Request_GenreBoardVote request_genreBoardVote = new Request_GenreBoardVote(genre,boardNum,vote);
+        String sql = "";
 
-        if (boardService.genreBoardVote(new Request_GenreBoardVote(genre,boardNum,vote)))
+        // genreVoteTable에 해당 유저 번호, 해당 글의 데이터가 있는지 조회
+        int voteState = boardService.isSelectVote(userNum, request_genreBoardVote);
+
+        if (voteState == 2) // 추천, 비추천을 한번도 누른적이 없다.
         {
+            boardService.insertVoteTable(userNum, request_genreBoardVote);
+            if (vote.equals("upvote"))
+                sql = "UPDATE " + genre + "board SET upvote = upvote + 1 WHERE boardnum = ? AND state = 0";
+            else
+                sql = "UPDATE " + genre + "board SET downvote = downvote + 1 WHERE boardnum = ? AND state = 0";
+
+            // genreBoard DB에 반영
+            boardService.genreBoardPlusVote(sql, request_genreBoardVote);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        else
+        else                         // 추천, 비추천을 누른적이 있다. 프론트로 알려줄 것
         {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -218,24 +231,6 @@ public class BoardController
             return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
 
-    //
-    // 장르 게시판 제목, 내용 유효성
-    //
-    @RequestMapping(path = "/board/validate", method = RequestMethod.PUT)
-    public ResponseEntity<Object> validate_GenreBoardTitle(@RequestBody Map<String, String> requestMap)
-    {
-        final String title = requestMap.get("title");
-        final String content = requestMap.get("content");
-
-        boolean result1 = boardService.validate_GenreBoardTitle(title);
-        boolean result2 = boardService.validate_GenreBoardContent(content);
-
-        if (result1 && result2)
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-    }
 
 
 }
