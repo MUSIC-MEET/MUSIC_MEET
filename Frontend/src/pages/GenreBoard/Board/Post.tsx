@@ -1,34 +1,31 @@
 import { css } from "@emotion/react";
 import React, { useMemo } from "react";
 import { PostType } from "./PostList";
-function Post(props: PostType) {
-    const { id, title, writer, time, view, vote } = useMemo(() => props, [props]);
+interface PostProps {
+    style: string;
+}
+
+function Post(props: PostType & PostProps) {
+    const { id, title, writer, time, view, vote, style } = useMemo(() => props, [props]);
     return (
-        <tr css={style}>
-            <td className="num">{id}</td>
-            <td className="title">{title}</td>
-            <td className="writer">{writer}</td>
-            <td className="time">{time}</td>
-            <td className="view">{view}</td>
-            <td className="vote">{vote}</td>
-        </tr>
+        <div className={`wrap`} css={[_style, style]}>
+            <span className="num">{id}</span>
+            <span className="title">{title}</span>
+            <span className="writer">{writer}</span>
+            <span className="time">{time}</span>
+            <span className="view">{view}</span>
+            <span className="vote">{vote}</span>
+        </ div >
     );
 }
 
-const style = css`
-    cursor: pointer;
-    text-align: center;
-    border-bottom: 0.2px solid #5b5b5b;
-    
-    & > td {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        text-overflow: ellipsis;
+const _style = css`
+            cursor: pointer;
+            text-align: center;
+            border-bottom: 0.2px solid #5b5b5b;
+            &:hover {
+                background: rgba(88, 88, 88, 0.1);
     }
-
-    &:hover {
-        background: rgba(88, 88, 88, 0.1);
-    }
-`;
+            `;
 
 export default Post;
