@@ -2,7 +2,6 @@ import Title from "components/common/Title";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
-import ErrorBoundary from "../ErrorBoundary";
 import InputForm from "../InputForm";
 import style from "../SectionStyle";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -90,20 +89,18 @@ function Edit() {
         <section css={style}>
             <Title>{t("update")}</Title>
             {isDeleted && <DeletePostAlert />}
-            <ErrorBoundary>
-                <InputForm
-                    type="edit"
-                    title={title}
-                    content={content}
-                    onChangeTitle={onChangeTitle}
-                    onChangeContent={onChangeContent}
-                    onSubmit={onSubmit}
-                    goBackHandler={goPost}
-                    editorRef={editorRef}
-                    setTitle={setTitle}
-                    setContent={setContent}
-                />
-            </ErrorBoundary>
+            <InputForm
+                type="edit"
+                title={title}
+                content={content}
+                onChangeTitle={onChangeTitle}
+                onChangeContent={onChangeContent}
+                onSubmit={onSubmit}
+                goBackHandler={goPost}
+                editorRef={editorRef}
+                setTitle={setTitle}
+                setContent={setContent}
+            />
         </section>
     );
 
