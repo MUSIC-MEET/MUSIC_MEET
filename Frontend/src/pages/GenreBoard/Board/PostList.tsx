@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Post from "./Post";
 
 import { FixedSizeList } from "react-window";
-
+import InfiniteLoader from "react-window-infinite-loader";
 
 interface PostType {
     id: string;
@@ -55,7 +55,14 @@ function PostList() {
 
     ], []);
 
+    const Todo = () => {
+        //
+    };
 
+    const isItemLoaded = (index: number) => {
+        //
+        return true;
+    };
     return (
         <div css={tableStyle}>
             <div className="wrap table-header">
@@ -67,21 +74,30 @@ function PostList() {
                 <span className="vote">{t("list.head.vote")}</span>
             </div>
 
-
-            <FixedSizeList
-                height={480}
-                // 아이템이 보이는 곳의 크기
+            <InfiniteLoader
+                isItemLoaded={isItemLoaded}
                 itemCount={DUMY_POST_LIST.length}
-                // 아이템 개수
-                itemSize={48}
-                // 아이템 높이
-                width={1024}
-                // 아이템 보이는 곳의 넓이
-                itemData={DUMY_POST_LIST}
-
+                loadMoreItems={Todo}
             >
-                {Row}
-            </FixedSizeList>
+                {({ onItemsRendered, ref }) => (
+                    <FixedSizeList
+                        height={400}
+                        // 아이템이 보이는 곳의 크기
+                        itemCount={DUMY_POST_LIST.length}
+                        // 아이템 개수
+                        itemSize={48}
+                        // 아이템 높이
+                        width={1024}
+                        // 아이템 보이는 곳의 넓이
+                        itemData={DUMY_POST_LIST}
+                        ref={ref}
+                    // onItemsRendered={onItemsRendered}
+                    >
+                        {Row}
+                    </FixedSizeList>
+                )}
+            </InfiniteLoader>
+
         </div >
     );
 }

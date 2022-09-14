@@ -10,6 +10,12 @@ interface GenreBoardViewerType {
         cancel: string;
     }
 
+    deleteAlertModal: {
+        title: string;
+        content: string;
+        confirm: string;
+    }
+
     vote: {
         notLogin: {
             title: string;

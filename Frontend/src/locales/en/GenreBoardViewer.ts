@@ -10,6 +10,11 @@ const text: GenreBoardViewerType = {
         confirm: "Delete",
         cancel: "Cancel"
     },
+    deleteAlertModal: {
+        title: "Error",
+        content: "This post has been deleted.",
+        confirm: "Confirm"
+    },
     vote: {
         notLogin: {
             title: "Warning",

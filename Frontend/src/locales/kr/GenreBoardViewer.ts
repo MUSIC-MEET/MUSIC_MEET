@@ -10,6 +10,11 @@ const text: GenreBoardViewerType = {
         confirm: "삭제",
         cancel: "취소"
     },
+    deleteAlertModal: {
+        title: "에러",
+        content: "이 게시글은 이미 삭제되었습니다.",
+        confirm: "확인"
+    },
     vote: {
         notLogin: {
             title: "경고",

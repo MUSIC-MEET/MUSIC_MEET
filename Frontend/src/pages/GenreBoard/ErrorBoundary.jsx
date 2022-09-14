@@ -45,10 +45,7 @@ class ErrorBoundary extends React.Component {
         }
         else if(this.state.hasError && this.state.errorCode === "400" ) {
             return(
-                <div>
-                    <DeletePostAlert />
-                    {this.props.children}
-                </div>
+                <DeletePostAlert />
             );
         }
         return this.props.children;
