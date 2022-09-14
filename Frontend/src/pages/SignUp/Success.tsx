@@ -5,7 +5,6 @@ import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import Title from "components/common/Title";
 
-
 function Success() {
     const { t } = useTranslation("registerPage");
     const navigate = useNavigate();

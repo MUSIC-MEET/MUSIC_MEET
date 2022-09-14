@@ -1,15 +1,29 @@
 import AlertModal from "components/AlertModal/AlertModal";
-import React from "react";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 function DeletePostAlert() {
+    const { t } = useTranslation<"genreBoardViewer">("genreBoardViewer");
+    const navigator = useNavigate();
+    const [isOpen, setIsOpen] = useState(true);
+    const onCloseHandler = () => {
+        setIsOpen(false);
+        navigator(`/board`);
+    };
     return (
-        <AlertModal
-            title="삭제된 게시글"
-            content="본문이 삭제되어 수행할 수 없습니다."
-            button="확인"
-            onClose={() => { /* ... */ }}
-            buttonClick={() => {/* TODO */ }}
-        />
+        <React.Fragment>
+            {isOpen &&
+                <AlertModal
+                    title={t("deleteAlertModal.title")}
+                    content={t("deleteAlertModal.content")}
+                    button={t("deleteAlertModal.confirm")}
+                    onClose={onCloseHandler}
+                    buttonClick={onCloseHandler}
+                />
+            }
+        </React.Fragment>
+
     );
 }
 
