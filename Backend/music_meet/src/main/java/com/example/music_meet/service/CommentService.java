@@ -169,16 +169,16 @@ public class CommentService
     //
     // 댓글 추천, 비추천 선택
     //
-    public boolean boardCommentVote(Request_boardCommentVote request_boardCommentVote)
+    public boolean boardCommentVote(String sql, Request_boardCommentVote request_boardCommentVote)
     {
         boolean result = false;
         final String genreComment = request_boardCommentVote.getGenre() + "comment";
         try
         {
-            if (request_boardCommentVote.getVote().equals("upvote"))
+            /*if (request_boardCommentVote.getVote().equals("upvote"))
                 sql = "UPDATE " + genreComment + " SET upvote = upvote +1 WHERE commentnum = ? AND state = 0";
             else
-                sql = "UPDATE " + genreComment + " SET downvote = downvote +1 WHERE commentnum = ? AND state = 0";
+                sql = "UPDATE " + genreComment + " SET downvote = downvote +1 WHERE commentnum = ? AND state = 0";*/
             //
             // DB구간
             //
@@ -283,4 +283,78 @@ public class CommentService
 
     }
 
+    public int isSelectVote(int userNum,Request_boardCommentVote request_boardCommentVote)
+    {
+        int result = 2;
+        final String genreBoardCommentVote = request_boardCommentVote.getGenre() + "BoardCommentVote";
+        try
+        {
+            sql = "SELECT vote FROM " + genreBoardCommentVote + " WHERE usernum = ? AND commentnum = ?";
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, userNum);
+            pstmt.setInt(2, request_boardCommentVote.getCommentNum());
+
+            rs = pstmt.executeQuery();
+            if (rs.next())
+            {
+                result = rs.getInt("vote");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
+    public void insertVoteTable(int userNum, Request_boardCommentVote request_boardCommentVote)
+    {
+        final String genreBoardCommentVote = request_boardCommentVote.getGenre() + "BoardCommentVote";
+        try
+        {
+            sql = "INSERT INTO " + genreBoardCommentVote + "(usernum, commentnum,  vote) VALUES(?,?,?)";
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, userNum);
+            pstmt.setInt(2, request_boardCommentVote.getCommentNum());
+            if (request_boardCommentVote.getVote().equals("upvote"))
+                pstmt.setInt(3, 0);
+            else
+                pstmt.setInt(3, 1);
+
+            rsInt = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
 }
