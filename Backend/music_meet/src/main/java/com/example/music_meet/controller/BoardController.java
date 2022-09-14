@@ -3,6 +3,7 @@ package com.example.music_meet.controller;
 import com.example.music_meet.dto.Request.*;
 import com.example.music_meet.dto.Response.Response_GetGenreBoardForGenreNum;
 import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
+import com.example.music_meet.dto.Response.Response_searchGenreBoard;
 import com.example.music_meet.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -219,18 +220,30 @@ public class BoardController
 
 
     //
-    // 장르 게시판 글 호출_Small
+    // 장르 게시판 글 호출_Small.md
     //
     @RequestMapping(path = "/board/{genre}/{num}/small", method = RequestMethod.GET)
     public ResponseEntity<Object> getGenreBoard_Small(@PathVariable("genre") String genre, @PathVariable("num") int boardNum)
     {
         Map<String, String> responseMap = boardService.getGenreBoard_Small(genre,boardNum);
-        if (responseMap.get("title").equals(null))
+        if (responseMap.get("title") == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         else
             return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
 
+    //
+    // 장르 게시판 글 검색.md
+    //
+    @RequestMapping(path = "/board/search/{genre}/{title}", method = RequestMethod.GET)
+    public ResponseEntity<Object> searchGenreBoard(@PathVariable("genre") String genre ,@PathVariable("title") String title)
+    {
+        ArrayList<Response_searchGenreBoard> genreboards = boardService.searchTitle(genre,title);
 
+        if (genreboards == null)
+            return new ResponseEntity<>(genreboards,HttpStatus.BAD_REQUEST);
+        else
+            return new ResponseEntity<>(genreboards,HttpStatus.OK);
+    }
 
 }

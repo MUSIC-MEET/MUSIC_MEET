@@ -2,6 +2,7 @@ package com.example.music_meet.service;
 
 import com.example.music_meet.dto.Request.*;
 import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
+import com.example.music_meet.dto.Response.Response_searchGenreBoard;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -468,5 +469,57 @@ public class BoardService
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public ArrayList<Response_searchGenreBoard> searchTitle(String genre,String title)
+    {
+        ArrayList<Response_searchGenreBoard> response_searchGenreBoards = new ArrayList<>();
+        final String genreBoard = genre + "board";
+        try
+        {
+            sql = "SELECT a.boardnum, a.title, b.nickname, a.createdat, a.`view`, a.upvote, a.downvote FROM " + genreBoard + " a, user b WHERE a.title LIKE ? AND a.state = 0 AND a.usernum = b.usernum";
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, "%" + title + "%");
+
+            rs = pstmt.executeQuery();
+            for(int i = 0; rs.next(); i++)
+            {
+                Response_searchGenreBoard response_searchGenreBoard = new Response_searchGenreBoard();
+                response_searchGenreBoard.setBoardNum(rs.getInt("boardnum"));
+                response_searchGenreBoard.setTitle(rs.getString("title"));
+                response_searchGenreBoard.setNickname(rs.getString("nickname"));
+                response_searchGenreBoard.setCreatedAt(rs.getTime("createdat").toString());
+                response_searchGenreBoard.setView(rs.getInt("view"));
+                response_searchGenreBoard.setUpvote(rs.getInt("upvote"));
+                response_searchGenreBoard.setDownvote(rs.getInt("downvote"));
+                response_searchGenreBoards.add(response_searchGenreBoard);
+
+            }
+
+            if (response_searchGenreBoards.size() == 0)
+            {
+                response_searchGenreBoards = null;
+                rs.close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return response_searchGenreBoards;
+
     }
 }
