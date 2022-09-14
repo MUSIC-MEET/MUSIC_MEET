@@ -11,6 +11,7 @@ import { useSetRecoilState } from "recoil";
 import getEditPost from "utils/RequestApis/GenreBoard/getEditPost";
 import { Editor } from "@toast-ui/react-editor";
 import editBoard from "utils/RequestApis/GenreBoard/editBoard";
+import DeletePostAlert from "../View/DeletePostAlert";
 
 function Edit() {
     const params = useParams<{ genre: string; id: string }>();
@@ -24,14 +25,19 @@ function Edit() {
     const setCurrentPage = useSetRecoilState(CurrentPage);
     const navigator = useNavigate();
     const queryClient = useQueryClient();
-
+    const [isDeleted, setIsDeleted] = useState<boolean>(false);
     const { status, data } = useQuery(["editBoard"],
         async () => {
             return getEditPost({ genre, num: id });
         },
         {
+            useErrorBoundary: false,
             suspense: false,
             retry: 0,
+            onError: () => {
+                console.log("sibal");
+                setIsDeleted(true);
+            }
         }
     );
 
@@ -45,7 +51,8 @@ function Edit() {
         onSuccess: () => {
             queryClient.removeQueries(["genreBoardPost"]);
             goPost();
-        }
+        },
+
     });
 
     useEffect(() => {
@@ -75,10 +82,13 @@ function Edit() {
             content
         });
     }, [genre, id, title, content, mutate]);
+
+
     return (
         <section css={style}>
             <Title>{t("update")}</Title>
-            <ErrorBoundary>
+            {isDeleted && <DeletePostAlert />}
+            <ErrorBoundary>r
                 <InputForm
                     type="edit"
                     title={title}
@@ -94,6 +104,8 @@ function Edit() {
             </ErrorBoundary>
         </section>
     );
+
+
 }
 
 export default Edit;

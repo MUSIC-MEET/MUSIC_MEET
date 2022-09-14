@@ -15,7 +15,6 @@ function Index() {
                 <Route path="/:genre" element={<Board />} />
                 <Route path=":genre/write" element={<PrivateRoute RouteComponent={Write} />} />
                 <Route path=":genre/edit/:id" element={<PrivateRoute RouteComponent={Edit} />} />
-
                 <Route path=":genre/post/:num" element={<View />} />
             </Routes>
         </Content >
