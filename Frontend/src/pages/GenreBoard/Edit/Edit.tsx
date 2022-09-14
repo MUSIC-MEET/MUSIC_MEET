@@ -26,6 +26,7 @@ function Edit() {
     const navigator = useNavigate();
     const queryClient = useQueryClient();
     const [isDeleted, setIsDeleted] = useState<boolean>(false);
+
     const { status, data } = useQuery(["editBoard"],
         async () => {
             return getEditPost({ genre, num: id });
@@ -35,7 +36,6 @@ function Edit() {
             suspense: false,
             retry: 0,
             onError: () => {
-                console.log("sibal");
                 setIsDeleted(true);
             }
         }
@@ -47,11 +47,13 @@ function Edit() {
 
     const { mutate } = useMutation(editBoard, {
         retry: 0,
-        useErrorBoundary: true,
         onSuccess: () => {
             queryClient.removeQueries(["genreBoardPost"]);
             goPost();
         },
+        onError: () => {
+            setIsDeleted(true);
+        }
 
     });
 
@@ -88,7 +90,7 @@ function Edit() {
         <section css={style}>
             <Title>{t("update")}</Title>
             {isDeleted && <DeletePostAlert />}
-            <ErrorBoundary>r
+            <ErrorBoundary>
                 <InputForm
                     type="edit"
                     title={title}
