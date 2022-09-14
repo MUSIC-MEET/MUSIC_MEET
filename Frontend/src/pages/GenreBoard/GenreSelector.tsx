@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import GenreBoardContext from "store/GenreBoardContext";
+import { useParams } from "react-router-dom";
 import GenreButton from "./GenreButton";
 
 interface GenreType {
@@ -12,7 +12,9 @@ interface GenreType {
 
 function GenreSelector({ board, write }: { board?: boolean, write?: boolean }) {
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
-    const { genre } = useContext(GenreBoardContext);
+    const params = useParams<{ genre: string }>();
+    const genre = params.genre ?? "kpop";
+
     const genreList: GenreType[] = useMemo(() => [
         { id: 0, name: "balad", text: t("genre.balad") },
         { id: 1, name: "rnb", text: t("genre.rnb") },
