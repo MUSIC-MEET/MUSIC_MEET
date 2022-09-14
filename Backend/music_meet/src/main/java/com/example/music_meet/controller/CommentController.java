@@ -88,8 +88,30 @@ public class CommentController
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        if (commentService.boardCommentVote(request_boardCommentVote))
+        final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
+
+        String sql = "";
+
+        if (commentService.isSelectVote(userNum, request_boardCommentVote) == 2) // 2면 없음, 있으면 1 or 0임
+        {
+            commentService.insertVoteTable(userNum, request_boardCommentVote);
+
+            if (request_boardCommentVote.getVote().equals("upvote"))
+            {
+                sql = "UPDATE " + request_boardCommentVote.getGenre() + "comment SET upvote = upvote + 1 WHERE commentnum = ? AND state = 0";
+            }
+            else if (request_boardCommentVote.getVote().equals("downvote"))
+            {
+                sql = "UPDATE " + request_boardCommentVote.getGenre() + "comment SET downvote = downvote + 1 WHERE commentnum = ? AND state = 0";
+            }
+            else
+            {
+                sql = null;
+            }
+
+            commentService.boardCommentVote(sql, request_boardCommentVote);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

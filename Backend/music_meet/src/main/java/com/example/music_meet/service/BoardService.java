@@ -353,12 +353,12 @@ public class BoardService
     public int isSelectVote(String userNum, Request_GenreBoardVote request_genreBoardVote)
     {
         int voteState = 2;
-        final String genreVoteTable = request_genreBoardVote.getGenre() + "votetable";
+        final String genreBoardVote = request_genreBoardVote.getGenre() + "BoardVote";
 
         final int boardNum = request_genreBoardVote.getBoardNum();
         try
         {
-            sql = "SELECT vote FROM " + genreVoteTable + " WHERE  usernum = ? AND boardnum = ?";
+            sql = "SELECT vote FROM " + genreBoardVote + " WHERE  usernum = ? AND boardnum = ?";
 
             //
             // DB구간
@@ -395,7 +395,7 @@ public class BoardService
     public void insertVoteTable(String userNum, Request_GenreBoardVote request_genreBoardVote)
     {
         final int boardNum = request_genreBoardVote.getBoardNum();
-        final String genreVoteTable = request_genreBoardVote.getGenre() + "VoteTable";
+        final String genreBoardVote = request_genreBoardVote.getGenre() + "BoardVote";
         final int voteStateCode;
         if (request_genreBoardVote.getVote().equals("upvote"))
             voteStateCode = 0;
@@ -404,7 +404,7 @@ public class BoardService
 
         try
         {
-            sql = "INSERT INTO " + genreVoteTable + "(usernum, boardnum, vote) VALUES(?,?,?)";
+            sql = "INSERT INTO " + genreBoardVote + "(usernum, boardnum, vote) VALUES(?,?,?)";
             //
             // DB구간
             //
