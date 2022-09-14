@@ -3,16 +3,11 @@
 
 ### method : GET
 
-### comment : 게시글 수정할 때 기존의 장르 게시판 호출로 가져오면 조회수가 늘어나는 문재가 있음
+### comment : 게시글 수정할 때 기존의 장르 게시판 호출로 가져오면 조회수가 늘어나는 문제가 있음
 ###           그러므로 글 내용, 제목만 호출하는 API가 필요함
 
 ### request :
-~~~json
-{
-    "genre" : "kpop",
-    "boardNum" : "2"
-}
-~~~
+    null
 
 ### response :
 ~~~json
