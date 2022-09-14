@@ -3,10 +3,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import ErrorBoundary from "../ErrorBoundary";
-import GenreSelector from "../GenreSelector";
 import InputForm from "../InputForm";
 import style from "../SectionStyle";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import CurrentPage from "store/CurrentPage";
 import { useSetRecoilState } from "recoil";
 import getEditPost from "utils/RequestApis/GenreBoard/getEditPost";
@@ -24,6 +23,7 @@ function Edit() {
     const { t } = useTranslation<"genreWritePage">("genreWritePage");
     const setCurrentPage = useSetRecoilState(CurrentPage);
     const navigator = useNavigate();
+    const queryClient = useQueryClient();
 
     const { status, data } = useQuery(["editBoard"],
         async () => {
@@ -35,11 +35,16 @@ function Edit() {
         }
     );
 
+    const goPost = useCallback(() => {
+        navigator(`/board/${genre}/post/${id}`);
+    }, [genre, id, navigator]);
+
     const { mutate } = useMutation(editBoard, {
         retry: 0,
         useErrorBoundary: true,
         onSuccess: () => {
-            navigator(`/board/${genre}/post/${id}`);
+            queryClient.removeQueries(["genreBoardPost"]);
+            goPost();
         }
     });
 
@@ -47,6 +52,7 @@ function Edit() {
         setCurrentPage(2);
         if (status === "success") {
             setTitle(() => data.title);
+            editorRef.current?.getInstance().setMarkdown(data.content);
             setContent(() => data.content);
         }
     }, [status, data, setCurrentPage]);
@@ -59,6 +65,8 @@ function Edit() {
         setContent(() => editorRef?.current!.getInstance().getMarkdown());
     }, []);
 
+
+
     const onSubmit = useCallback(() => {
         mutate({
             genre,
@@ -70,18 +78,20 @@ function Edit() {
     return (
         <section css={style}>
             <Title>{t("update")}</Title>
-            <InputForm
-                type="edit"
-                title={title}
-                content={content}
-                onChangeTitle={onChangeTitle}
-                onChangeContent={onChangeContent}
-                onSubmit={onSubmit}
-                goBackHandler={() => navigator(`/board/${genre}`)}
-                editorRef={editorRef}
-                setTitle={setTitle}
-                setContent={setContent}
-            />
+            <ErrorBoundary>
+                <InputForm
+                    type="edit"
+                    title={title}
+                    content={content}
+                    onChangeTitle={onChangeTitle}
+                    onChangeContent={onChangeContent}
+                    onSubmit={onSubmit}
+                    goBackHandler={goPost}
+                    editorRef={editorRef}
+                    setTitle={setTitle}
+                    setContent={setContent}
+                />
+            </ErrorBoundary>
         </section>
     );
 }
