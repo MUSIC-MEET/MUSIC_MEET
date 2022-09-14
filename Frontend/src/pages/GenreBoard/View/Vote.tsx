@@ -27,7 +27,7 @@ function Vote({ upvote, downvote }: { upvote?: number, downvote?: number }) {
     const { mutate } = useMutation(vote, {
         useErrorBoundary: true,
         onSuccess: () => {
-            queryClient.invalidateQueries(["genreBoardPost", genre, num]);
+            queryClient.invalidateQueries("genreBoardPost");
         },
     });
 
