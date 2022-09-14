@@ -33,12 +33,6 @@ public class BoardService
     private String sql;
 
 
-    private int titleLenth_Min = 1;
-    private int titleLenth_Max = 20;
-
-    private int contentLenth_Min = 5;
-    private int contentLenth_Max = 1000;
-
     //
     //  글을 DB에 저장하는 함
     //
@@ -351,6 +345,10 @@ public class BoardService
         return responseMap;
     }
 
+
+    //
+    // 장르BoardCommentVote 테이블에서 값 확인
+    //
     public int isSelectVote(String userNum, Request_GenreBoardVote request_genreBoardVote)
     {
         int voteState = 2;
@@ -393,6 +391,10 @@ public class BoardService
         return voteState;
     }
 
+
+    //
+    // 장르BoardVote 테이블에 값 삽입
+    //
     public void insertVoteTable(String userNum, Request_GenreBoardVote request_genreBoardVote)
     {
         final int boardNum = request_genreBoardVote.getBoardNum();
@@ -432,45 +434,10 @@ public class BoardService
         }
     }
 
-    public void deleteVoteTable(String userNum, Request_GenreBoardVote request_genreBoardVote)
-    {
-        final int boardNum = request_genreBoardVote.getBoardNum();
-        final String genreVoteTable = request_genreBoardVote.getGenre() + "VoteTable";
-        final int voteStateCode;
-        if (request_genreBoardVote.getVote().equals("upvote"))
-            voteStateCode = 0;
-        else
-            voteStateCode = 1;
 
-        try
-        {
-            sql = "DELETE FROM " + genreVoteTable + " WHERE user";
-            //
-            // DB구간
-            //
-            Class.forName(classForName);
-            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
-            pstmt = conn.prepareStatement(sql);
-
-            pstmt.setInt(1, Integer.parseInt(userNum));
-            pstmt.setInt(2, boardNum);
-            pstmt.setInt(3, voteStateCode);
-
-            rsInt = pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }finally {
-            try {
-                pstmt.close();
-                conn.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
+    //
+    // 제목으로 검색
+    //
     public ArrayList<Response_searchGenreBoard> searchTitle(String genre,String title)
     {
         ArrayList<Response_searchGenreBoard> response_searchGenreBoards = new ArrayList<>();

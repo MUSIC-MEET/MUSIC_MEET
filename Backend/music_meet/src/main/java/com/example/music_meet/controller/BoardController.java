@@ -214,7 +214,7 @@ public class BoardController
         }
         else                         // 추천, 비추천을 누른적이 있다. 프론트로 알려줄 것
         {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
