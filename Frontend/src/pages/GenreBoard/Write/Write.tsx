@@ -1,11 +1,10 @@
 import Title from "components/common/Title";
-import React, { useCallback, useContext, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import GenreSelector from "../GenreSelector";
 import { useNavigate, useParams } from "react-router-dom";
 import style from "../SectionStyle";
 import InputForm from "../InputForm";
 import { useTranslation } from "react-i18next";
-import GenreBoardContext from "store/GenreBoardContext";
 import ErrorBoundary from "../ErrorBoundary";
 import { Editor } from "@toast-ui/react-editor";
 import { useMutation } from "react-query";
@@ -18,8 +17,6 @@ import write from "utils/RequestApis/GenreBoard/write";
 function Write() {
     const params = useParams();
     const genre = params.genre ?? "kpop";
-    const { setGenre } = useContext(GenreBoardContext);
-    setGenre(genre);
     const { t } = useTranslation<"genreWritePage">("genreWritePage");
     const navigator = useNavigate();
     const [title, setTitle] = useState<string>("");

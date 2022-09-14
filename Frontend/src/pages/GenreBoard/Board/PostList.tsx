@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Post from "./Post";
 
@@ -18,6 +18,8 @@ interface PostType {
 
 function PostList() {
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
+    const [postList, setPostList] = useState<PostType[]>([]);
+
     const DUMY_POST_LIST: PostType[] = useMemo(() => [
         { id: "0", title: "제목1", writer: "admin", time: "1분전", view: "1000", vote: "500" },
         { id: "1", title: "제목2", writer: "admin", time: "1분전", view: "1000", vote: "500" },

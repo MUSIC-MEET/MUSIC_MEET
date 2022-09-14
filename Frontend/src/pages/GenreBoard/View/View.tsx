@@ -45,4 +45,4 @@ const sectionStyle = css`
         cursor: pointer;
     }
 `;
-export default React.memo(View);
+export default View;

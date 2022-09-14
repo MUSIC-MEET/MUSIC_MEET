@@ -57,7 +57,7 @@ function MoreActions(
             {nickname === writer ?
                 <React.Fragment>
                     <EditIconButton
-                        onClick={() => {/* TODO */ }}
+                        onClick={() => { navigator(`/board/${genre}/edit/${num}`); }}
                     />
                     <DeleteIconButton
                         onClick={deleteModalOpenHandler}

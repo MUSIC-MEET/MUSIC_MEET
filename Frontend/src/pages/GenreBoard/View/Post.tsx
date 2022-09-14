@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "@emotion/styled";
 import ThemeContext from "store/ThemeContext";
 
@@ -33,11 +33,14 @@ function Post() {
     const genre = params.genre ?? "kpop";
     const num = params.num ?? "0";
 
-    const { data } = useQuery<PostType, AxiosError>(["genreBoardPost", genre, num], () => getPost({ genre, num }), {
+    const { data } = useQuery<PostType, AxiosError>(["genreBoardPost"], () => getPost({ genre, num }), {
         suspense: true,
         useErrorBoundary: true,
     });
 
+    useEffect(() => {
+        //
+    }, [data]);
     const vote = data!.upvote + (-data!.downvote);
     return (
         <Article fontColor={viewerFontColor}>
@@ -62,6 +65,7 @@ function Post() {
                     </div>
                 </div>
             </AdditionalInfo>
+
             <Viewer
                 initialValue={data?.content}
             />
