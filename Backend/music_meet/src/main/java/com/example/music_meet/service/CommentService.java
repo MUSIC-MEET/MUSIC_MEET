@@ -283,6 +283,10 @@ public class CommentService
 
     }
 
+    
+    //
+    // 장르BoardcommentVote 테이블에서 값 확인
+    //
     public int isSelectVote(int userNum,Request_boardCommentVote request_boardCommentVote)
     {
         int result = 2;
@@ -321,6 +325,11 @@ public class CommentService
         return result;
     }
 
+
+
+    //
+    // 장르BoardcommentVote 테이블에 값 삽입
+    //
     public void insertVoteTable(int userNum, Request_boardCommentVote request_boardCommentVote)
     {
         final String genreBoardCommentVote = request_boardCommentVote.getGenre() + "BoardCommentVote";
