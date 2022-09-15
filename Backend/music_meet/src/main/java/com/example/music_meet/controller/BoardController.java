@@ -182,6 +182,7 @@ public class BoardController
 
     //
     // 장르 게시판 추천,비추천 선택.md
+    //
     @RequestMapping(path = "/board/vote", method = RequestMethod.PUT)
     public ResponseEntity<Object> genreBoardVote(@RequestBody Map<String,String> requestMap)
     {
@@ -233,17 +234,45 @@ public class BoardController
     }
 
     //
-    // 장르 게시판 글 검색.md
+    // 장르 게시판 글 제목으로 검색.md
     //
-    @RequestMapping(path = "/board/search/{genre}/{title}", method = RequestMethod.GET)
-    public ResponseEntity<Object> searchGenreBoard(@PathVariable("genre") String genre ,@PathVariable("title") String title)
+    @RequestMapping(path = "/board/search/{genre}/title/{title}", method = RequestMethod.GET)
+    public ResponseEntity<Object> searchGenreBoard_Title(@PathVariable("genre") String genre ,@PathVariable("title") String title)
     {
-        ArrayList<Response_searchGenreBoard> genreboards = boardService.searchTitle(genre,title);
+        ArrayList<Response_searchGenreBoard> genreboards = boardService.searchGenreBoard_Title(genre,title);
 
         if (genreboards == null)
             return new ResponseEntity<>(genreboards,HttpStatus.BAD_REQUEST);
         else
             return new ResponseEntity<>(genreboards,HttpStatus.OK);
+    }
+
+    //
+    // 장르 게시판 글 닉네임으로 검색.md
+    //
+    @RequestMapping(path = "/board/search/{genre}/nickname/{nickname}", method = RequestMethod.GET)
+    public ResponseEntity<Object> searchGenreBoard_Nickname(@PathVariable("genre") String genre ,@PathVariable("nickname") String nickname)
+    {
+        ArrayList<Response_searchGenreBoard> genreboards = boardService.searchGenreBoard_Nickname(genre,nickname);
+        
+        if (genreboards == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else
+            return new ResponseEntity<>(genreboards,HttpStatus.OK);
+    }
+
+    //
+    // 장르 게시판 글 제목+닉네임으로 검색.md
+    //
+    @RequestMapping(path = "/board/search/{genre}/titleandnickname/{text}", method = RequestMethod.GET)
+    public ResponseEntity<Object> searchGenreBoard_TitleandNickname(@PathVariable("genre") String genre , @PathVariable("text") String text)
+    {
+        ArrayList<Response_searchGenreBoard> genreboards = boardService.searchGenreBoard_TitleAndNickname(genre, text);
+
+        if (genreboards == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else
+            return new ResponseEntity<>(genreboards, HttpStatus.OK);
     }
 
 }
