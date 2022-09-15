@@ -251,7 +251,7 @@ public class BoardController
     // 장르 게시판 글 닉네임으로 검색.md
     //
     @RequestMapping(path = "/board/search/{genre}/nickname/{nickname}", method = RequestMethod.GET)
-    public ResponseEntity<Object> searchGenreBoard_Nickname(@PathVariable("genre") String genre ,@PathVariable("nickname") String nickname)
+    public ResponseEntity<Object> searchGenreBoard_Nickname(@PathVariable("genre") String genre, @PathVariable("nickname") String nickname)
     {
         ArrayList<Response_searchGenreBoard> genreboards = boardService.searchGenreBoard_Nickname(genre,nickname);
         
