@@ -1392,8 +1392,6 @@ REFERENCES `jazzComment` (
 	`commentnum`
 );
 
-
-
 CREATE TABLE `ostBoardCommentVote` (
 	`votenum`	INT(10) AUTO_INCREMENT	NOT NULL PRIMARY KEY,
 	`usernum`	INT(10)	NOT NULL,
