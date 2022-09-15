@@ -894,12 +894,11 @@ REFERENCES `VisibleState` (
 );
 
 
-
 CREATE TABLE `baladBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL  PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `baladBoardVote` ADD CONSTRAINT `FK_User_TO_baladBoardVote_1` FOREIGN KEY (
@@ -918,10 +917,10 @@ REFERENCES `baladBoard` (
 
 
 CREATE TABLE `rnbBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL  PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `rnbBoardVote` ADD CONSTRAINT `FK_User_TO_rnbBoardVote_1` FOREIGN KEY (
@@ -941,10 +940,10 @@ REFERENCES `rnbBoard` (
 
 
 CREATE TABLE `hiphopBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `hiphopBoardVote` ADD CONSTRAINT `FK_User_TO_hiphopBoardVote_1` FOREIGN KEY (
@@ -964,10 +963,10 @@ REFERENCES `hiphopBoard` (
 
 
 CREATE TABLE `trortBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `trortBoardVote` ADD CONSTRAINT `FK_User_TO_trortBoardVote_1` FOREIGN KEY (
@@ -987,10 +986,10 @@ REFERENCES `trortBoard` (
 
 
 CREATE TABLE `kpopBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `kpopBoardVote` ADD CONSTRAINT `FK_User_TO_kpopBoardVote_1` FOREIGN KEY (
@@ -1010,10 +1009,10 @@ REFERENCES `kpopBoard` (
 
 
 CREATE TABLE `jpopBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `jpopBoardVote` ADD CONSTRAINT `FK_User_TO_jpopBoardVote_1` FOREIGN KEY (
@@ -1033,10 +1032,10 @@ REFERENCES `jpopBoard` (
 
 
 CREATE TABLE `popBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `popBoardVote` ADD CONSTRAINT `FK_User_TO_popBoardVote_1` FOREIGN KEY (
@@ -1056,10 +1055,10 @@ REFERENCES `popBoard` (
 
 
 CREATE TABLE `classicBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `classicBoardVote` ADD CONSTRAINT `FK_User_TO_classicBoardVote_1` FOREIGN KEY (
@@ -1079,10 +1078,10 @@ REFERENCES `classicBoard` (
 
 
 CREATE TABLE `danceBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `danceBoardVote` ADD CONSTRAINT `FK_User_TO_danceBoardVote_1` FOREIGN KEY (
@@ -1102,10 +1101,10 @@ REFERENCES `danceBoard` (
 
 
 CREATE TABLE `mrBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `mrBoardVote` ADD CONSTRAINT `FK_User_TO_mrBoardVote_1` FOREIGN KEY (
@@ -1125,10 +1124,10 @@ REFERENCES `mrBoard` (
 
 
 CREATE TABLE `jazzBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `jazzBoardVote` ADD CONSTRAINT `FK_User_TO_jazzBoardVote_1` FOREIGN KEY (
@@ -1148,10 +1147,10 @@ REFERENCES `jazzBoard` (
 
 
 CREATE TABLE `ostBoardVote` (
-	`votenum`		INT(10) 		AUTO_INCREMENT		NOT 	NULL PRIMARY KEY,
-	`usernum`		INT(10)		NOT 	NULL,
-	`boardnum`		INT(10)		NOT 	NULL,
-	`vote`		INT(0)		NULL
+`votenum`	 INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+`usernum`	 INT(10) NOT NULL,
+`boardnum` INT(10) NOT NULL,
+`vote` INT(1) NULL
 );
 
 ALTER TABLE `ostBoardVote` ADD CONSTRAINT `FK_User_TO_ostBoardVote_1` FOREIGN KEY (
@@ -1167,6 +1166,8 @@ ALTER TABLE `ostBoardVote` ADD CONSTRAINT `FK_Board_TO_ostBoardVote_1` FOREIGN K
 REFERENCES `ostBoard` (
 	`boardnum`
 );
+
+
 
 
 
