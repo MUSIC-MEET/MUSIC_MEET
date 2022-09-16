@@ -3,6 +3,7 @@ import React from "react";
 import NotFoundPost from "./View/NotFoundPost";
 import NewLoginAlertModal from "components/AlertModal/NewLoginAlertModal";
 import DeletePostAlert from "./View/DeletePostAlert";
+import DuplicateVoteModal from "../../components/AlertModal/DuplicateVoteModal";
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -23,7 +24,10 @@ class ErrorBoundary extends React.Component {
             console.log(401);
             return { hasError: true, errorCode: "401" };
         }
-        
+        else if(response.status === 403) {
+            console.log(403);
+            return { hasError: true, errorCode: "403" };
+        }
     }
     
 
@@ -46,6 +50,14 @@ class ErrorBoundary extends React.Component {
         else if(this.state.hasError && this.state.errorCode === "400" ) {
             return(
                 <DeletePostAlert />
+            );
+        }
+        else if(this.state.hasError && this.state.errorCode === "403" ) {
+            return (
+                <React.Fragment>
+                    <DuplicateVoteModal />
+                    {this.props.children}
+                </React.Fragment>
             );
         }
         return this.props.children;
