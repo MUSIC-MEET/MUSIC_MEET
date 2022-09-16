@@ -14,3 +14,4 @@ export { default as genreBoardPage } from "./GenreBoardPage";
 export { default as genreWritePage } from "./GenreWritePage";
 export { default as genreBoardViewer } from "./GenreBoardViewer";
 export { default as newLoginAlertModal } from "./NewLoginAlertModal";
+export { default as duplicateVoteModal } from "./DuplicateVoteModal";
