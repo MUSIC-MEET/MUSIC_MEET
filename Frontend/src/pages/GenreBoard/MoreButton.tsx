@@ -37,11 +37,14 @@ function MoreButton() {
         navigator(`/board/${genre}/write`);
     }, [genre, navigator]);
 
+    const searchButtonClickHandler = useCallback(() => {
+        navigator(`/board/${genre}/search/title/`);
+    }, [genre, navigator]);
     return (
         <Button theme={ctx.theme}>
             <div className="hidden-box" ref={hiddenBoxRef}>
                 <CreateIcon className="btn" onClick={writeButtonClickHandler} />
-                <SearchIcon className="btn" />
+                <SearchIcon className="btn" onClick={searchButtonClickHandler} />
             </div>
 
             <MoreHorizIcon className="btn" onClick={buttonClickHandler} />

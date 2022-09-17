@@ -3,7 +3,7 @@ import { useSetRecoilState } from "recoil";
 import CurrentPage from "store/CurrentPage";
 import GenreSelector from "../GenreSelector";
 import PostList from "./PostList";
-import MoreButton from "./MoreButton";
+import MoreButton from "../MoreButton";
 import Title from "components/common/Title";
 import { useTranslation } from "react-i18next";
 import style from "../SectionStyle";
@@ -21,7 +21,7 @@ function Board() {
             <GenreSelector
                 board={true}
             />
-            <PostList />
+            {/* <PostList /> */}
             <MoreButton />
         </section>
     );

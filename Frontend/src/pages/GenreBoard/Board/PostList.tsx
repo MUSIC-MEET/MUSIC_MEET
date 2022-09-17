@@ -5,6 +5,9 @@ import Post from "./Post";
 
 import { FixedSizeList } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
+import { useInfiniteQuery } from "react-query";
+import fetchPosts from "../../../utils/RequestApis/GenreBoard/fetchPosts";
+import { useParams } from "react-router-dom";
 
 interface PostType {
     id: string;
@@ -12,14 +15,16 @@ interface PostType {
     writer: string;
     time: string;
     view: string;
-    vote: string
+    vote: string;
 }
-
+const SIZE = 10;
 
 function PostList() {
+    const params = useParams<{ genre: string }>();
+    const genre = params.genre ?? "kpop";
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
     const [postList, setPostList] = useState<PostType[]>([]);
-
+    const [index, setIndex] = useState<number>(0);
     const DUMY_POST_LIST: PostType[] = useMemo(() => [
         { id: "0", title: "제목1", writer: "admin", time: "1분전", view: "1000", vote: "500" },
         { id: "1", title: "제목2", writer: "admin", time: "1분전", view: "1000", vote: "500" },
@@ -65,6 +70,18 @@ function PostList() {
         //
         return true;
     };
+
+    const { data } = useInfiniteQuery("posts",
+        () => {
+            fetchPosts({ genre, page: "1" });
+        },
+        {
+            getNextPageParam: (lastPage: any, allPages) => {
+                return lastPage?.data.id + 1; // 다음 페이지를 호출할 때 사용 될 pageParam
+            },
+        }
+    );
+
     return (
         <div css={tableStyle}>
             <div className="wrap table-header">
@@ -75,30 +92,30 @@ function PostList() {
                 <span className="view">{t("list.head.view")}</span>
                 <span className="vote">{t("list.head.vote")}</span>
             </div>
-
+            {/* 
             <InfiniteLoader
                 isItemLoaded={isItemLoaded}
-                itemCount={DUMY_POST_LIST.length}
+                itemCount={data!.pages.length}
                 loadMoreItems={Todo}
             >
                 {({ onItemsRendered, ref }) => (
                     <FixedSizeList
                         height={400}
                         // 아이템이 보이는 곳의 크기
-                        itemCount={DUMY_POST_LIST.length}
+                        itemCount={data!.pages.length}
                         // 아이템 개수
                         itemSize={48}
                         // 아이템 높이
                         width={1024}
                         // 아이템 보이는 곳의 넓이
-                        itemData={DUMY_POST_LIST}
+                        itemData={data!.pages}
                         ref={ref}
                     // onItemsRendered={onItemsRendered}
                     >
                         {Row}
                     </FixedSizeList>
                 )}
-            </InfiniteLoader>
+            </InfiniteLoader> */}
 
         </div >
     );
