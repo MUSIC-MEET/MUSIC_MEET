@@ -48,12 +48,30 @@ public class MusicCrawlingBot
     //
     // 크롤링 시작
     //
-    public ArrayList<MusicCrawlingSong> start()
+    public ArrayList<MusicCrawlingSong> getCrawling()
     {
+
         try{
             for (int j = 0; j<genreCode.length; j++) {
                 doc = Jsoup.connect("https://www.melon.com/genre/song_list.htm?gnrCode=" + genreCode[j]).get();
                 song1 = doc.getElementsByClass("input_check ");
+
+                int genreState;
+                switch (j)
+                {
+                    case 0: genreState = 0;
+                    case 1: genreState = 1;
+                    case 2: genreState = 2;
+                    case 3: genreState = 3;
+                    case 4: genreState = 5;
+                    case 5: genreState = 6;
+                    case 6: genreState = 7;
+                    case 7: genreState = 8;
+                    case 8: genreState = 10;
+                    case 9: genreState = 11;
+                    default:
+                        genreState = 100; // 정의되지 않은 장르
+                }
 
                 for (int i = 0; i < 15; i++)
                 {
@@ -67,12 +85,13 @@ public class MusicCrawlingBot
                     musicCrawlingSong.setAlbum(doc.getElementsByClass("list").select("dd").get(0).text());
                     musicCrawlingSong.setReleaseDate(doc.getElementsByClass("list").select("dd").get(1).text());
                     musicCrawlingSong.setImgSrc(doc.getElementsByClass("image_typeAll").select("img").attr("src"));
+                    musicCrawlingSong.setGenre(genreState);
                     if (doc.getElementById("d_video_summary") == null) {
                         musicCrawlingSong.setLyrics("가사를 불러올 수 없거나 부적절한 내용이 첨부되어 있습니다.");
                     } else {
                         musicCrawlingSong.setLyrics(doc.getElementById("d_video_summary").text()); // 여기부터 문제
                     }
-                    musicCrawlingSongs.add(musicCrawlingSong);
+                    this.musicCrawlingSongs.add(musicCrawlingSong);
                     //System.out.println(musicCrawlingSong);
                     //System.out.println();
                 }
@@ -84,25 +103,39 @@ public class MusicCrawlingBot
     }
 
 
-
     //
     // DB에 삽입
     //
-    public boolean insertDB()
+    public boolean insertDB(ArrayList<MusicCrawlingSong> musicCrawlingSongs)
     {
         boolean result = false;
 
         try {
+            sql = "INSERT INTO music(ImgSrc, title, singer, Album, releaseDate, lyrics, Genre)" +
+                    " VALUES(?,?,?,?,?,?,?)";
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
-
-            sql = "INSERT INTO ";
-
-
             pstmt = conn.prepareStatement(sql);
-            rsInt = pstmt.executeUpdate();
+
+            for(int i = 0; i < musicCrawlingSongs.size(); i++)
+            {
+                System.out.println(pstmt);
+                pstmt.setString(1, musicCrawlingSongs.get(i).getImgSrc());
+                pstmt.setString(2, musicCrawlingSongs.get(i).getTitle());
+                pstmt.setString(3, musicCrawlingSongs.get(i).getSinger());
+                pstmt.setString(4, musicCrawlingSongs.get(i).getAlbum());
+                pstmt.setString(5, musicCrawlingSongs.get(i).getReleaseDate());
+                pstmt.setString(6, musicCrawlingSongs.get(i).getLyrics());
+                pstmt.setInt(7, musicCrawlingSongs.get(i).getGenre());
+                rsInt = pstmt.executeUpdate();
+            }
 
 
+
+            if (rsInt > 0 )
+            {
+                result = true;
+            }
 
         } catch (Exception e) {
             System.out.println("MusicCrawlingBot.insertDB에서 문제 발생");
@@ -117,4 +150,47 @@ public class MusicCrawlingBot
         }
         return result;
     }
+
+
+    //
+    // DB삭제
+    //
+    public void deleteDB()
+    {
+        try {
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            sql = "DELETE FROM Music";
+            pstmt = conn.prepareStatement(sql);
+
+            rsInt = pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("MusicCrawlingBot.insertDB에서 문제 발생");
+            e.printStackTrace();
+        } finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
+    }
+
+
+    //
+    // start
+    //
+    public void start()
+    {
+        this.deleteDB();                 // 한번 지우고
+        ArrayList<MusicCrawlingSong> musicCrawlingSongs1 = getCrawling();
+        this.insertDB(musicCrawlingSongs1);    // 실행
+    }
+
+
+
 }
