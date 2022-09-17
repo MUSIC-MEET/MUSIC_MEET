@@ -11,6 +11,6 @@ import lombok.Setter;
 @Setter
 public class Request_GetGenreBoardList {
     private String genre;
-    private int min;
-    private int max;
+    private int page;
+
 }

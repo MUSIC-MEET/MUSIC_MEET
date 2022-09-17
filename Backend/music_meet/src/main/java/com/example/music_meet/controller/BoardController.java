@@ -143,12 +143,11 @@ public class BoardController
     //
     // 장르게시판 글 목록 호출.md
     //
-    @RequestMapping( path = "/board/{genre}/{min}/{max}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getGenreBoarList(@PathVariable("genre")String genre, @PathVariable("min")String min,
-                                                   @PathVariable("max")String max)
+    @RequestMapping( path = "/boards/{genre}/{page}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getGenreBoarList(@PathVariable("genre")String genre, @PathVariable("page")final int page)
     {
         ArrayList<Response_GetGenreBoardList> genreboards;
-        genreboards = boardService.getGenreBoarList(new Request_GetGenreBoardList(genre, Integer.parseInt(min), Integer.parseInt(max)));
+        genreboards = boardService.getGenreBoarList(new Request_GetGenreBoardList(genre, page));
         return new ResponseEntity<>(genreboards, HttpStatus.OK);
     }
 

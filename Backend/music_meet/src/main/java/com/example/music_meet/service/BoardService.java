@@ -214,8 +214,8 @@ public class BoardService
     public ArrayList<Response_GetGenreBoardList> getGenreBoarList(Request_GetGenreBoardList request_getGenreBoardList)
     {
         final String genreBoard = request_getGenreBoardList.getGenre() + "board";
-        final int min = request_getGenreBoardList.getMin();
-        final int max = request_getGenreBoardList.getMax();
+        final int page = request_getGenreBoardList.getPage();
+
         ArrayList<Response_GetGenreBoardList> boards = new ArrayList<Response_GetGenreBoardList>();
         try
         {
@@ -228,11 +228,11 @@ public class BoardService
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, min);
-            pstmt.setInt(2, max);
+            pstmt.setInt(1, page * 10 - 9);
+            pstmt.setInt(2, page * 10);
             rs = pstmt.executeQuery();
 
-            for (int i = 0; rs.next(); i++)
+            while(rs.next())
             {
                 Response_GetGenreBoardList response_getGenreBoardList= new Response_GetGenreBoardList();
                 response_getGenreBoardList.setTitle(rs.getString("title"));
@@ -242,7 +242,6 @@ public class BoardService
                 response_getGenreBoardList.setView(rs.getInt("view"));
                 response_getGenreBoardList.setVote(rs.getInt("upvote") - rs.getInt("downvote"));
                 boards.add(response_getGenreBoardList);
-
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -32,7 +32,7 @@ public class CommentService
     private int rsInt = 0;
     private String sql;
 
-    private java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+
 
     @Value("${server.url}")
     private String serverURL;
@@ -45,6 +45,7 @@ public class CommentService
     //
     public boolean createBoardComment(Request_createBoardComment request_createBoardComment)
     {
+        java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
         boolean result = false;
         final String genreBoard = request_createBoardComment.getGenre() + "board";
         final String genreComment = request_createBoardComment.getGenre() + "comment";
