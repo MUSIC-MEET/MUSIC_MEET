@@ -1,5 +1,6 @@
 package com.example.music_meet.MusicCrawling;
 
+import com.example.music_meet.bot.Song;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.sql.*;
 import java.util.ArrayList;
 
 @Getter
@@ -20,11 +23,31 @@ public class MusicCrawlingBot
     private ArrayList<MusicCrawlingSong> musicCrawlingSongs = new ArrayList<>();
     private Document doc;
     private Elements song1;
-
     private String[] genreCode = {"GN0100", "GN0400", "GN0300", "GN0700", "GN1900", "GN0900", "GN1600", "GN0200", "GN1700", "GN1500"};
-    private ArrayList<Element> song2 = new ArrayList<>();
+
+    @Autowired
+    private String classForName = "com.mysql.cj.jdbc.Driver";
+
+    @Autowired
+    private String mysqlurl = "jdbc:mysql://localhost:3306/music_meet?serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
+
+    @Autowired
+    private String mysqlid = "root";
+
+    @Autowired
+    private String mysqlpassword = "0000";
 
 
+    private Connection conn = null;
+    private PreparedStatement pstmt = null;
+    private ResultSet rs = null;
+    private int rsInt = 0;
+    private String sql;
+
+
+    //
+    // 크롤링 시작
+    //
     public ArrayList<MusicCrawlingSong> start()
     {
         try{
@@ -58,5 +81,40 @@ public class MusicCrawlingBot
             System.out.println("MusicCrawlingBot.start()에서 예외처리로 빠짐");
         }
         return musicCrawlingSongs;
+    }
+
+
+
+    //
+    // DB에 삽입
+    //
+    public boolean insertDB()
+    {
+        boolean result = false;
+
+        try {
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+
+            sql = "INSERT INTO ";
+
+
+            pstmt = conn.prepareStatement(sql);
+            rsInt = pstmt.executeUpdate();
+
+
+
+        } catch (Exception e) {
+            System.out.println("MusicCrawlingBot.insertDB에서 문제 발생");
+            e.printStackTrace();
+        } finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
     }
 }
