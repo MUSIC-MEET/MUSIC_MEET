@@ -1,9 +1,7 @@
 package com.example.music_meet.controller;
 
 import com.example.music_meet.dto.Request.*;
-import com.example.music_meet.dto.Response.Response_GetGenreBoardForGenreNum;
-import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
-import com.example.music_meet.dto.Response.Response_searchGenreBoard;
+import com.example.music_meet.dto.Response.*;
 import com.example.music_meet.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -238,8 +236,8 @@ public class BoardController
     @RequestMapping(path = "/board/search/{genre}/title/{title}", method = RequestMethod.GET)
     public ResponseEntity<Object> searchGenreBoard_Title(@PathVariable("genre") String genre ,@PathVariable("title") String title)
     {
-        ArrayList<Response_searchGenreBoard> genreboards = boardService.searchGenreBoard_Title(genre,title);
-
+        Response_searchGenreBoard_Title genreboards = new Response_searchGenreBoard_Title();
+        genreboards.setBoards(boardService.searchGenreBoard_Title(genre,title));
         if (genreboards == null)
             return new ResponseEntity<>(genreboards,HttpStatus.BAD_REQUEST);
         else
@@ -252,8 +250,9 @@ public class BoardController
     @RequestMapping(path = "/board/search/{genre}/nickname/{nickname}", method = RequestMethod.GET)
     public ResponseEntity<Object> searchGenreBoard_Nickname(@PathVariable("genre") String genre, @PathVariable("nickname") String nickname)
     {
-        ArrayList<Response_searchGenreBoard> genreboards = boardService.searchGenreBoard_Nickname(genre,nickname);
-        
+        Response_searchGenreBoard_Nickname genreboards = new Response_searchGenreBoard_Nickname();
+        genreboards.setBoards(boardService.searchGenreBoard_Nickname(genre,nickname));
+
         if (genreboards == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         else
@@ -266,7 +265,9 @@ public class BoardController
     @RequestMapping(path = "/board/search/{genre}/titleandnickname/{text}", method = RequestMethod.GET)
     public ResponseEntity<Object> searchGenreBoard_TitleandNickname(@PathVariable("genre") String genre , @PathVariable("text") String text)
     {
-        ArrayList<Response_searchGenreBoard> genreboards = boardService.searchGenreBoard_TitleAndNickname(genre, text);
+
+        Response_searchGenreBoard_TitleandNickname genreboards = new Response_searchGenreBoard_TitleandNickname();
+        genreboards.setBoards(boardService.searchGenreBoard_TitleAndNickname(genre, text));
 
         if (genreboards == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

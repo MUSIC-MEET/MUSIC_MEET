@@ -216,20 +216,19 @@ public class BoardService
         final String genreBoard = request_getGenreBoardList.getGenre() + "board";
         final int page = request_getGenreBoardList.getPage();
 
-        ArrayList<Response_GetGenreBoardList> boards = new ArrayList<Response_GetGenreBoardList>();
+        ArrayList<Response_GetGenreBoardList> boards = new ArrayList<>();
         try
         {
             sql = "SELECT a.title, a.usernum, a.boardnum, a.createdat, a.`view`, a.upvote, a.downvote, b.nickname FROM " + genreBoard +
                     " a, user b WHERE a.usernum = b.usernum AND a.state = 0 ORDER BY a.boardnum DESC " +
-                    " LIMIT ?,?";
+                    " LIMIT ?,10";
             //
             // DB구간
             //
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, page * 10 - 9);
-            pstmt.setInt(2, page * 10);
+            pstmt.setInt(1, page * 10 - 10);
             rs = pstmt.executeQuery();
 
             while(rs.next())
@@ -462,8 +461,7 @@ public class BoardService
                 response_searchGenreBoard.setNickname(rs.getString("nickname"));
                 response_searchGenreBoard.setCreatedAt(rs.getTime("createdat").toString());
                 response_searchGenreBoard.setView(rs.getInt("view"));
-                response_searchGenreBoard.setUpvote(rs.getInt("upvote"));
-                response_searchGenreBoard.setDownvote(rs.getInt("downvote"));
+                response_searchGenreBoard.setVote(rs.getInt("upvote") - rs.getInt("downvote"));
                 response_searchGenreBoards.add(response_searchGenreBoard);
 
             }
@@ -489,6 +487,9 @@ public class BoardService
 
     }
 
+    //
+    // 닉네임으로 검색
+    //
     public ArrayList<Response_searchGenreBoard> searchGenreBoard_Nickname(String genre, String nickname)
     {
         ArrayList<Response_searchGenreBoard> response_searchGenreBoards = new ArrayList<>();
@@ -514,8 +515,7 @@ public class BoardService
                 response_searchGenreBoard.setNickname(rs.getString("nickname"));
                 response_searchGenreBoard.setCreatedAt(rs.getTime("createdat").toString());
                 response_searchGenreBoard.setView(rs.getInt("view"));
-                response_searchGenreBoard.setUpvote(rs.getInt("upvote"));
-                response_searchGenreBoard.setDownvote(rs.getInt("downvote"));
+                response_searchGenreBoard.setVote(rs.getInt("upvote") - rs.getInt("downvote"));
                 response_searchGenreBoards.add(response_searchGenreBoard);
             }
 
@@ -539,6 +539,9 @@ public class BoardService
         return response_searchGenreBoards;
     }
 
+    //
+    // 제목 + 닉네임으로 검색
+    //
     public ArrayList<Response_searchGenreBoard> searchGenreBoard_TitleAndNickname(String genre, String text)
     {
         ArrayList<Response_searchGenreBoard> response_searchGenreBoards = new ArrayList<>();
@@ -565,8 +568,7 @@ public class BoardService
                 response_searchGenreBoard.setNickname(rs.getString("nickname"));
                 response_searchGenreBoard.setCreatedAt(rs.getTime("createdat").toString());
                 response_searchGenreBoard.setView(rs.getInt("view"));
-                response_searchGenreBoard.setUpvote(rs.getInt("upvote"));
-                response_searchGenreBoard.setDownvote(rs.getInt("downvote"));
+                response_searchGenreBoard.setVote(rs.getInt("upvote") - rs.getInt("downvote"));
                 response_searchGenreBoards.add(response_searchGenreBoard);
             }
 

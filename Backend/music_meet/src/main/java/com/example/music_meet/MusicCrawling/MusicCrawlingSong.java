@@ -16,4 +16,5 @@ public class MusicCrawlingSong
     private String album;       // 소속 앨범
     private String releaseDate; // 발매일
     private String lyrics;      // 가사
+    private int Genre;       // 장르
 }

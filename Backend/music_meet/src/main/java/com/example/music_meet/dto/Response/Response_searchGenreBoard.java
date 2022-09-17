@@ -16,6 +16,5 @@ public class Response_searchGenreBoard
     private String nickname;
     private String createdAt;
     private int view;
-    private int upvote;
-    private int downvote;
+    private int vote;
 }
