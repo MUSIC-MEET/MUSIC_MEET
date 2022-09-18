@@ -97,7 +97,8 @@ public class MusicCrawlingBot
                 }
             }
         }catch (Exception e){
-            System.out.println("MusicCrawlingBot.start()에서 예외처리로 빠짐");
+            System.out.println("MusicCrawlingBot.getCrawling()에서 예외처리로 빠짐");
+            e.printStackTrace();
         }
         return musicCrawlingSongs;
     }
@@ -119,7 +120,7 @@ public class MusicCrawlingBot
 
             for(int i = 0; i < musicCrawlingSongs.size(); i++)
             {
-                System.out.println(pstmt);
+                System.out.println( musicCrawlingSongs.get(i).getGenre() + " : " + musicCrawlingSongs.get(i).getTitle() + " : " + i);
                 pstmt.setString(1, musicCrawlingSongs.get(i).getImgSrc());
                 pstmt.setString(2, musicCrawlingSongs.get(i).getTitle());
                 pstmt.setString(3, musicCrawlingSongs.get(i).getSinger());
