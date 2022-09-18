@@ -1,8 +1,8 @@
 CREATE TABLE `Music` (
 	`MusicNum`	INT(10)	AUTO_INCREMENT NOT NULL PRIMARY KEY,
 	`ImgSrc`	VARCHAR(250)	NULL,
-	`title`	VARCHAR(50)	NOT NULL,
-	`singer`	VARCHAR(30)	NULL,
+	`title`	VARCHAR(150)	NOT NULL,
+	`singer`	VARCHAR(50)	NULL,
 	`Album`	VARCHAR(100)	NULL,
 	`releaseDate`	VARCHAR(50)	NULL,
 	`lyrics`	VARCHAR(2500)	NULL,

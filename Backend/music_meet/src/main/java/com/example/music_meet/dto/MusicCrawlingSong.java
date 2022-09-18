@@ -1,4 +1,4 @@
-package com.example.music_meet.MusicCrawling;
+package com.example.music_meet.dto;
 
 
 import lombok.*;
