@@ -458,7 +458,7 @@ public class BoardService
                 Response_searchGenreBoard response_searchGenreBoard = new Response_searchGenreBoard();
                 response_searchGenreBoard.setBoardNum(rs.getInt("boardnum"));
                 response_searchGenreBoard.setTitle(rs.getString("title"));
-                response_searchGenreBoard.setNickname(rs.getString("nickname"));
+                response_searchGenreBoard.setUser(rs.getString("nickname"));
                 response_searchGenreBoard.setCreatedAt(rs.getTime("createdat").toString());
                 response_searchGenreBoard.setView(rs.getInt("view"));
                 response_searchGenreBoard.setVote(rs.getInt("upvote") - rs.getInt("downvote"));
@@ -513,7 +513,7 @@ public class BoardService
                 Response_searchGenreBoard response_searchGenreBoard = new Response_searchGenreBoard();
                 response_searchGenreBoard.setBoardNum(rs.getInt("boardnum"));
                 response_searchGenreBoard.setTitle(rs.getString("title"));
-                response_searchGenreBoard.setNickname(rs.getString("nickname"));
+                response_searchGenreBoard.setUser(rs.getString("nickname"));
                 response_searchGenreBoard.setCreatedAt(rs.getTime("createdat").toString());
                 response_searchGenreBoard.setView(rs.getInt("view"));
                 response_searchGenreBoard.setVote(rs.getInt("upvote") - rs.getInt("downvote"));
@@ -567,7 +567,7 @@ public class BoardService
                 Response_searchGenreBoard response_searchGenreBoard = new Response_searchGenreBoard();
                 response_searchGenreBoard.setBoardNum(rs.getInt("boardnum"));
                 response_searchGenreBoard.setTitle(rs.getString("title"));
-                response_searchGenreBoard.setNickname(rs.getString("nickname"));
+                response_searchGenreBoard.setUser(rs.getString("nickname"));
                 response_searchGenreBoard.setCreatedAt(rs.getTime("createdat").toString());
                 response_searchGenreBoard.setView(rs.getInt("view"));
                 response_searchGenreBoard.setVote(rs.getInt("upvote") - rs.getInt("downvote"));
