@@ -5,6 +5,7 @@ import { css } from "@emotion/react";
 import ThemeContext from "store/ThemeContext";
 import styled from "@emotion/styled";
 import Submit from "components/common/Submit";
+import { useTranslation } from "react-i18next";
 
 interface SearchBarProps {
     keyword: string;
@@ -19,6 +20,7 @@ function SearchBar(props: SearchBarProps) {
     const ctx = useContext(ThemeContext);
     const { fontColor } = ctx.themeStyle.content;
     const { borderColor } = ctx.themeStyle.input;
+    const { t } = useTranslation<"genreBoardSearchPage">("genreBoardSearchPage");
     return (
         <Form
             direction="row"
@@ -30,18 +32,19 @@ function SearchBar(props: SearchBarProps) {
                 fontColor={fontColor}
                 borderColor={borderColor}
             >
-                <option value="title">제목</option>
-                <option value="user">user</option>
+                <option value="title">{t("searchBar.options.title")}</option>
+                <option value="user">{t("searchBar.options.nickname")}</option>
             </Select>
             <Input
                 input={{
                     value: keyword,
                     onChange: onChange,
-                    type: "search"
+                    type: "search",
+                    placeholder: t("searchBar.placeholder")
                 }}
             />
             <Submit
-                value="검색"
+                value={t("searchBar.submit")}
             />
 
         </Form>
@@ -59,9 +62,10 @@ const formStyle = css`
         height: 3rem;
     }
     & > select {
-        width: 4rem;
+        width: 6rem;
         margin-right: 0.5rem;
         background: none;
+        text-align: center;
     }
     & > input[type="search"] {
         width: 30%;
