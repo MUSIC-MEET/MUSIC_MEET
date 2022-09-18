@@ -6,17 +6,20 @@ import ThemeContext from "store/ThemeContext";
 import styled from "@emotion/styled";
 import Submit from "components/common/Submit";
 import { useTranslation } from "react-i18next";
+import { Type } from "typescript";
 
 interface SearchBarProps {
     keyword: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    type: string;
+    typeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 
 
 function SearchBar(props: SearchBarProps) {
-    const { keyword, onChange, onSubmit } = props;
+    const { keyword, onChange, onSubmit, type, typeChange } = props;
     const ctx = useContext(ThemeContext);
     const { fontColor } = ctx.themeStyle.content;
     const { borderColor } = ctx.themeStyle.input;
@@ -31,9 +34,10 @@ function SearchBar(props: SearchBarProps) {
             <Select
                 fontColor={fontColor}
                 borderColor={borderColor}
+                onChange={typeChange}
             >
-                <option value="title">{t("searchBar.options.title")}</option>
-                <option value="user">{t("searchBar.options.nickname")}</option>
+                <option selected={type === "title"} value="title">{t("searchBar.options.title")}</option>
+                <option selected={type === "user"} value="user">{t("searchBar.options.nickname")}</option>
             </Select>
             <Input
                 input={{
@@ -47,7 +51,7 @@ function SearchBar(props: SearchBarProps) {
                 value={t("searchBar.submit")}
             />
 
-        </Form>
+        </Form >
     );
 }
 

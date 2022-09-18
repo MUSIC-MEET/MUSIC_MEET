@@ -13,8 +13,9 @@ import { useMutation } from "react-query";
 function Search() {
     const { t } = useTranslation<"genreBoardSearchPage">("genreBoardSearchPage");
     const params = useParams<{ type: "title" | "user"; keyword: string; genre: string }>();
-    const type = params.type ?? "title";
+    const _type = params.type ?? "title";
     const genre = params.genre ?? "kpop";
+    const [type, setType] = useState<string>(_type);
     const [keyword, setKeyword] = useState<string>(params.keyword ?? "");
     const navigator = useNavigate();
     const { data, mutate } = useMutation(getSearchList, {
@@ -33,6 +34,10 @@ function Search() {
         navigator(`/board/${genre}/search/${type}/${keyword}`);
     }, [genre, keyword, mutate, navigator, type]);
 
+    const onTypeChangeHandler = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+        e.preventDefault();
+        setType(() => e.target.value);
+    }, []);
     useEffect(() => {
         if (keyword.length !== 0) {
             mutate({ type, genre, keyword });
@@ -44,12 +49,14 @@ function Search() {
             <Title>{t("title")}</Title>
             <GenreSelector
                 search={true}
-                searchType={type}
+                searchType={_type}
             />
             <SearchBar
                 keyword={keyword}
                 onChange={onChangeKeyWord}
                 onSubmit={onSubmit}
+                type={type}
+                typeChange={onTypeChangeHandler}
             />
             <PostList
                 list={data}
