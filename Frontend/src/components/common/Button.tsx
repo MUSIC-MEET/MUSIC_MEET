@@ -7,15 +7,17 @@ interface ButtonProps {
     onClick?: () => void;
     w?: string,
     h?: string
+    className?: string;
 }
 
 function Button(props: ButtonProps) {
-    const { value, onClick, w, h } = props;
+    const { value, onClick, w, h, className } = props;
     const ctx = useContext(ThemeContext);
     const { borderColor } = ctx.themeStyle.input;
     const { fontColor } = ctx.themeStyle.content;
     return (
         <button
+            className={className}
             css={
                 css`
             border: 1px solid ${borderColor}; 

@@ -104,6 +104,8 @@ section {
 }
 
 body {
+    height: 100vh;
+    overflow: scroll;
     line-height: 1;
 }
 
@@ -190,4 +192,8 @@ input[type="submit"]:foucs {
         top: 99%;
     }
 
+}
+
+html {
+    height: 100vh;
 }
