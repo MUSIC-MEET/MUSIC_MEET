@@ -1,24 +1,23 @@
-package com.example.music_meet.MusicCrawling;
+package com.example.music_meet.service;
 
-import com.example.music_meet.bot.Song;
+import com.example.music_meet.dto.MusicCrawlingSong;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MusicCrawlingBot
+@Service
+public class MusicCrawlingBotService
 {
     private ArrayList<MusicCrawlingSong> musicCrawlingSongs = new ArrayList<>();
     private Document doc;
@@ -141,7 +140,6 @@ public class MusicCrawlingBot
 
             for(int i = 0; i < musicCrawlingSongs.size(); i++)
             {
-                System.out.println( musicCrawlingSongs.get(i).getGenre() + " : " + musicCrawlingSongs.get(i).getTitle() + " : " + i);
                 pstmt.setString(1, musicCrawlingSongs.get(i).getImgSrc());
                 pstmt.setString(2, musicCrawlingSongs.get(i).getTitle());
                 pstmt.setString(3, musicCrawlingSongs.get(i).getSinger());
@@ -152,14 +150,13 @@ public class MusicCrawlingBot
                 rsInt = pstmt.executeUpdate();
             }
 
-
-
             if (rsInt > 0 )
             {
                 result = true;
             }
 
         } catch (Exception e) {
+            result = false;
             System.out.println("MusicCrawlingBot.insertDB에서 문제 발생");
             e.printStackTrace();
         } finally {
@@ -206,13 +203,24 @@ public class MusicCrawlingBot
     //
     // start
     //
-    public void start()
+    public boolean start()
     {
-        this.deleteDB();                 // 한번 지우고
+        this.deleteDB();                        // 한번 지우고
         ArrayList<MusicCrawlingSong> musicCrawlingSongs1 = getCrawling();
-        this.insertDB(musicCrawlingSongs1);    // 실행
+        if(this.insertDB(musicCrawlingSongs1))     // 실행
+            return true;
+        else
+            return false;
     }
 
 
+    //
+    // 음악 댓글 작성.md
+    //
+    public boolean createMusicComment(int userNum, int musicNum, String comment)
+    {
+
+
+    }
 
 }
