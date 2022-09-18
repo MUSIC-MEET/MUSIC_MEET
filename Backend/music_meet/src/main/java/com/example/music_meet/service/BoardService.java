@@ -487,6 +487,7 @@ public class BoardService
 
     }
 
+
     //
     // 닉네임으로 검색
     //
@@ -538,6 +539,7 @@ public class BoardService
         }
         return response_searchGenreBoards;
     }
+
 
     //
     // 제목 + 닉네임으로 검색

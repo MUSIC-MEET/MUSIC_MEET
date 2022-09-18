@@ -236,8 +236,8 @@ public class BoardController
     @RequestMapping(path = "/board/search/{genre}/title/{title}", method = RequestMethod.GET)
     public ResponseEntity<Object> searchGenreBoard_Title(@PathVariable("genre") String genre ,@PathVariable("title") String title)
     {
-        Response_searchGenreBoard_Title genreboards = new Response_searchGenreBoard_Title();
-        genreboards.setBoards(boardService.searchGenreBoard_Title(genre,title));
+        ArrayList<Response_searchGenreBoard> genreboards = boardService.searchGenreBoard_Title(genre,title);
+
         if (genreboards == null)
             return new ResponseEntity<>(genreboards,HttpStatus.BAD_REQUEST);
         else
@@ -250,8 +250,7 @@ public class BoardController
     @RequestMapping(path = "/board/search/{genre}/nickname/{nickname}", method = RequestMethod.GET)
     public ResponseEntity<Object> searchGenreBoard_Nickname(@PathVariable("genre") String genre, @PathVariable("nickname") String nickname)
     {
-        Response_searchGenreBoard_Nickname genreboards = new Response_searchGenreBoard_Nickname();
-        genreboards.setBoards(boardService.searchGenreBoard_Nickname(genre,nickname));
+        ArrayList<Response_searchGenreBoard> genreboards = boardService.searchGenreBoard_Nickname(genre,nickname);
 
         if (genreboards == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -265,9 +264,7 @@ public class BoardController
     @RequestMapping(path = "/board/search/{genre}/titleandnickname/{text}", method = RequestMethod.GET)
     public ResponseEntity<Object> searchGenreBoard_TitleandNickname(@PathVariable("genre") String genre , @PathVariable("text") String text)
     {
-
-        Response_searchGenreBoard_TitleandNickname genreboards = new Response_searchGenreBoard_TitleandNickname();
-        genreboards.setBoards(boardService.searchGenreBoard_TitleAndNickname(genre, text));
+        ArrayList<Response_searchGenreBoard> genreboards = boardService.searchGenreBoard_TitleAndNickname(genre, text);
 
         if (genreboards == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

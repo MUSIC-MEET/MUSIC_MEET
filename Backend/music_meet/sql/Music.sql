@@ -5,7 +5,7 @@ CREATE TABLE `Music` (
 	`singer`	VARCHAR(30)	NULL,
 	`Album`	VARCHAR(100)	NULL,
 	`releaseDate`	VARCHAR(50)	NULL,
-	`lyrics`	VARCHAR(1500)	NULL,
+	`lyrics`	VARCHAR(2500)	NULL,
 	`Genre`	INT(2)	NOT NULL
 );
 
