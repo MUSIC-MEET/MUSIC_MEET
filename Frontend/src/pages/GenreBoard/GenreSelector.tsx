@@ -10,7 +10,8 @@ interface GenreType {
     text: string;
 }
 
-function GenreSelector({ board, write }: { board?: boolean, write?: boolean }) {
+function GenreSelector({ board, write, search, searchType }
+    : { board?: boolean, write?: boolean, search?: boolean; searchType?: "title" | "user" }) {
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
     const params = useParams<{ genre: string }>();
     const genre = params.genre ?? "kpop";
@@ -39,6 +40,8 @@ function GenreSelector({ board, write }: { board?: boolean, write?: boolean }) {
                     isSelected={_genre.name === genre}
                     board={board}
                     write={write}
+                    search={search}
+                    searchType={searchType}
                 />
             ))}
         </List>

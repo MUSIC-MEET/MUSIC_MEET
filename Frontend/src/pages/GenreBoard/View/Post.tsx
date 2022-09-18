@@ -12,18 +12,7 @@ import { Viewer } from "@toast-ui/react-editor";
 import { AxiosError } from "axios";
 import Vote from "./Vote";
 import MoreActions from "./MoreActions";
-
-
-interface PostType {
-    title: string;
-    content: string;
-    nickname: string;
-    createdAt: string;
-    imgSrc: string;
-    view: number;
-    upvote: number;
-    downvote: number;
-}
+import { PostContentType } from "./PostContentType";
 
 function Post() {
     const ctx = useContext(ThemeContext);
@@ -33,7 +22,7 @@ function Post() {
     const genre = params.genre ?? "kpop";
     const num = params.num ?? "0";
 
-    const { data } = useQuery<PostType, AxiosError>(["genreBoardPost"], () => getPost({ genre, num }), {
+    const { data } = useQuery<PostContentType, AxiosError>(["genreBoardPost"], () => getPost({ genre, num }), {
         suspense: true,
         useErrorBoundary: true,
     });
@@ -92,13 +81,11 @@ const Article = styled.article<{ fontColor: string }>`
         font-size: 2rem;
         font-weight: 400;
     }
-
     & > .post-content {
         margin-top: 1rem;
         min-height: 20rem;
         
     }
-
     .toastui-editor-contents p,
     .toastui-editor-contents h1,
     .toastui-editor-contents h2,
@@ -162,4 +149,3 @@ const AdditionalInfo = styled.div<{ fontColor: string }>`
 
 
 export default Post;
-export { PostType };

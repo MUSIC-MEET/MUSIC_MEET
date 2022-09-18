@@ -8,10 +8,12 @@ interface GenreButtonProps {
     text: string;
     isSelected: boolean;
     board?: boolean;
-    write?: boolean
+    write?: boolean;
+    search?: boolean;
+    searchType?: "title" | "user";
 }
 
-function GenreButton({ name, text, isSelected, board, write }: GenreButtonProps) {
+function GenreButton({ name, text, isSelected, board, write, search, searchType }: GenreButtonProps) {
     const navigator = useNavigate();
     useEffect(() => {
         //
@@ -22,8 +24,10 @@ function GenreButton({ name, text, isSelected, board, write }: GenreButtonProps)
             navigator(`/board/${name}`);
         else if (write)
             navigator(`/board/${name}/write`);
-    }, [board, name, navigator, write]);
-
+        else if (search)
+            navigator(`/board/${name}/search/${searchType}/`);
+    }, [board, name, navigator, search, searchType, write]);
+    console.log(searchType);
     return (
         <Item
             isSelected={isSelected}

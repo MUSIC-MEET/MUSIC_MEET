@@ -1,11 +1,10 @@
-import { AxiosResponse } from "axios";
-import { PostType } from "pages/GenreBoard/View/Post";
+import { PostContentType } from "pages/GenreBoard/View/PostContentType";
 import customAxios from "../../customAxios";
 
 const getPost = 
     ({ 
         genre, num
-    }: {genre: string; num: string;}): Promise<PostType> => {
+    }: {genre: string; num: string;}): Promise<PostContentType> => {
         const axios = customAxios();
         const token = localStorage.getItem("token");
 

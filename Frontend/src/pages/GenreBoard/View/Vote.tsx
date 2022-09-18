@@ -16,7 +16,7 @@ import DownVoteButton from "components/common/VoteButton/DownVoteButton";
  * 게시글 추천 컴포넌트
  * @returns {React.FC}
  */
-function Vote({ upvote, downvote }: { upvote?: number, downvote?: number }) {
+function Vote({ upvote, downvote }: { upvote?: string, downvote?: string }) {
     const params = useParams();
     const genre = params.genre ?? "kpop";
     const num = params.num ?? "-1";
