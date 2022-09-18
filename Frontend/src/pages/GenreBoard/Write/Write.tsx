@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import style from "../SectionStyle";
 import InputForm from "../InputForm";
 import { useTranslation } from "react-i18next";
-import ErrorBoundary from "../ErrorBoundary";
 import { Editor } from "@toast-ui/react-editor";
 import { useMutation } from "react-query";
 import write from "utils/RequestApis/GenreBoard/write";
@@ -32,6 +31,7 @@ function Write() {
      * 장르 게시판에 글을 작성
      */
     const { mutate } = useMutation(write, {
+        retry: 0,
         useErrorBoundary: true,
         onSuccess: () => {
             localStorage.removeItem("backup_board");
@@ -83,21 +83,20 @@ function Write() {
             <GenreSelector
                 write={true}
             />
-            <ErrorBoundary>
-                <InputForm
-                    type={"write"}
-                    title={title}
-                    content={content}
-                    onChangeTitle={onChangeTitle}
-                    onChangeContent={onChangeContent}
-                    onSubmit={onSubmit}
-                    setTitle={setTitle}
-                    setContent={setContent}
-                    goBackHandler={goBackHandler}
-                    editorRef={editorRef}
-                />
-            </ErrorBoundary>
-        </section>
+
+            <InputForm
+                type={"write"}
+                title={title}
+                content={content}
+                onChangeTitle={onChangeTitle}
+                onChangeContent={onChangeContent}
+                onSubmit={onSubmit}
+                setTitle={setTitle}
+                setContent={setContent}
+                goBackHandler={goBackHandler}
+                editorRef={editorRef}
+            />
+        </section >
     );
 }
 

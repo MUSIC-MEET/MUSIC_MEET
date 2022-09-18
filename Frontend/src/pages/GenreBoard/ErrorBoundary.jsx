@@ -12,6 +12,7 @@ class ErrorBoundary extends React.Component {
     }
 
     static getDerivedStateFromError({ response }) {
+        console.log("eer");
         if(response.status === 400) {
             console.log(400);
             return { hasError: true, errorCode: "400" };

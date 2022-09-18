@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import CurrentPage from "store/CurrentPage";
 import GenreSelector from "../GenreSelector";
@@ -9,8 +9,7 @@ import { useTranslation } from "react-i18next";
 import style from "../SectionStyle";
 import { useParams } from "react-router-dom";
 import PostList from "../PostList";
-import getSearchList from "utils/RequestApis/GenreBoard/getSearchList";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import getPosts from "utils/RequestApis/GenreBoard/getPosts";
 import Button from "components/common/Button";
 import { css } from "@emotion/react";
@@ -19,7 +18,6 @@ function Board() {
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
     const params = useParams<{ genre: string }>();
     const genre = params.genre ?? "kpop";
-    const listRef = useRef<any>(null);
     const setCurrentPage = useSetRecoilState(CurrentPage);
     const [scroll, setScroll] = useState(0);
     const [page, setPage] = useState<number>(1);
@@ -42,7 +40,7 @@ function Board() {
 
 
     return (
-        <div css={style} ref={listRef} >
+        <div css={style}>
             <Title>{t("title")}</Title>
             <GenreSelector
                 board={true}
