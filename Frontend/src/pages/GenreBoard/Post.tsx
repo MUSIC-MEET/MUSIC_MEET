@@ -2,14 +2,11 @@ import { css } from "@emotion/react";
 import React, { useMemo } from "react";
 import { PostType } from "./PostType";
 import { useNavigate, useParams } from "react-router-dom";
-interface PostProps {
-    style?: string;
-}
 
-function Post(props: PostType & PostProps) {
+function Post(props: PostType) {
     const params = useParams<{ genre: string }>();
     const genre = params.genre ?? "kpop";
-    const { boardNum, title, user, createdAt, view, vote, style } = useMemo(() => props, [props]);
+    const { boardNum, title, user, createdAt, view, vote } = useMemo(() => props, [props]);
     const navigator = useNavigate();
 
     const onClickHandler = () => {
@@ -17,22 +14,26 @@ function Post(props: PostType & PostProps) {
     };
 
     return (
-        <div className={`wrap`} css={[_style, style]} onClick={onClickHandler}>
-            <span className="num">{boardNum}</span>
-            <span className="title">{title}</span>
-            <span className="writer">{user}</span>
-            <span className="time">{createdAt}</span>
-            <span className="view">{view}</span>
-            <span className="vote">{vote}</span>
-        </div>
+        <tr className={`wrap`} css={_style} onClick={onClickHandler}>
+            <td className="num">{boardNum}</td>
+            <td className="title">{title}</td>
+            <td className="writer">{user}</td>
+            <td className="time">{createdAt}</td>
+            <td className="view">{view}</td>
+            <td className="vote">{vote}</td>
+        </tr>
     );
 }
 
 const _style = css`
     cursor: pointer;
     text-align: center;
-    height: 2.5rem;
+    width: 100%;
+    height: 36px;
     border-bottom: 0.2px solid #5b5b5b;
+    & {
+        padding-left: 0.5rem;
+    }
     &:hover {
         background: rgba(88, 88, 88, 0.1);
     }
