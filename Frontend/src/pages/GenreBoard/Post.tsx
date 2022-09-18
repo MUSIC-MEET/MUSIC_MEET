@@ -9,7 +9,7 @@ interface PostProps {
 function Post(props: PostType & PostProps) {
     const params = useParams<{ genre: string }>();
     const genre = params.genre ?? "kpop";
-    const { boardNum, title, nickname, createdAt, view, vote, style } = useMemo(() => props, [props]);
+    const { boardNum, title, user, createdAt, view, vote, style } = useMemo(() => props, [props]);
     const navigator = useNavigate();
 
     const onClickHandler = () => {
@@ -20,7 +20,7 @@ function Post(props: PostType & PostProps) {
         <div className={`wrap`} css={[_style, style]} onClick={onClickHandler}>
             <span className="num">{boardNum}</span>
             <span className="title">{title}</span>
-            <span className="writer">{nickname}</span>
+            <span className="writer">{user}</span>
             <span className="time">{createdAt}</span>
             <span className="view">{view}</span>
             <span className="vote">{vote}</span>

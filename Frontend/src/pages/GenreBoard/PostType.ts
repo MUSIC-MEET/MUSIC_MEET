@@ -1,7 +1,7 @@
 interface PostType {
     boardNum: string;
     title: string;
-    nickname: string;
+    user: string;
     createdAt: string;
     view: string;
     vote: string;
