@@ -59,18 +59,39 @@ public class MusicCrawlingBot
                 int genreState;
                 switch (j)
                 {
-                    case 0: genreState = 0;
-                    case 1: genreState = 1;
-                    case 2: genreState = 2;
-                    case 3: genreState = 3;
-                    case 4: genreState = 5;
-                    case 5: genreState = 6;
-                    case 6: genreState = 7;
-                    case 7: genreState = 8;
-                    case 8: genreState = 10;
-                    case 9: genreState = 11;
+                    case 0:
+                        genreState = 0;
+                        break;
+                    case 1:
+                        genreState = 1;
+                        break;
+                    case 2:
+                        genreState = 2;
+                        break;
+                    case 3:
+                        genreState = 3;
+                        break;
+                    case 4:
+                        genreState = 5;
+                        break;
+                    case 5:
+                        genreState = 6;
+                        break;
+                    case 6:
+                        genreState = 7;
+                        break;
+                    case 7:
+                        genreState = 8;
+                        break;
+                    case 8:
+                        genreState = 10;
+                        break;
+                    case 9:
+                        genreState = 11;
+                        break;
                     default:
                         genreState = 100; // 정의되지 않은 장르
+                        break;
                 }
 
                 for (int i = 0; i < 15; i++)
