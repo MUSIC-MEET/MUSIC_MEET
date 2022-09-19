@@ -99,35 +99,7 @@ public class BoardService
                 responseMap.put("nickname", rs.getString("nickname"));
                 responseMap.put("title", rs.getString("title"));
                 responseMap.put("content", rs.getString("content"));
-
-
-                Timestamp tm = java.sql.Timestamp.valueOf(rs.getString("createdat"));
-                long createdat = tm.getTime();
-                long gapTime = System.currentTimeMillis() - createdat;
-
-                //System.out.println(gapTime / 1000);             // 초
-                //System.out.println(gapTime / (1000 * 60));      // 분
-                //System.out.println(gapTime / (1000 * 60 * 60)); // 시
-
-                if ( gapTime / 1000 < 60)                   // 60초 미만
-                {
-                    responseMap.put("createdAt", (gapTime / 1000) + " Sec");
-                }
-                else if(gapTime / (1000 * 60) < 60)         // 60분 미만
-                {
-                    responseMap.put("createdAt", (gapTime / (1000 * 60)) + " Min");
-                }
-                else if(gapTime / (1000 * 60 * 60) < 24)    // 24시간 미만
-                {
-                    responseMap.put("createdAt", (gapTime / (1000* 60*60)) + " Hour");
-                }
-                else
-                    responseMap.put("createdAt", rs.getString("createdat"));
-
-
-
-                //responseMap.put("createdAt", rs.getString("createdat"));
-
+                responseMap.put("createdAt", rs.getString("createdat"));
                 responseMap.put("view", rs.getString("view"));
                 responseMap.put("upvote", rs.getString("upvote"));
                 responseMap.put("downvote", rs.getString("downvote"));
@@ -265,7 +237,30 @@ public class BoardService
                 response_getGenreBoardList.setTitle(rs.getString("title"));
                 response_getGenreBoardList.setBoardNum(rs.getInt("boardnum"));
                 response_getGenreBoardList.setUser(rs.getString("nickname"));
-                response_getGenreBoardList.setCreatedAt(rs.getString("createdat"));
+
+                Timestamp tm = java.sql.Timestamp.valueOf(rs.getString("createdat"));
+                long createdat = tm.getTime();
+                long gapTime = System.currentTimeMillis() - createdat;
+
+                //System.out.println(gapTime / 1000);             // 초
+                //System.out.println(gapTime / (1000 * 60));      // 분
+                //System.out.println(gapTime / (1000 * 60 * 60)); // 시
+
+                if ( gapTime / 1000 < 60)                   // 60초 미만
+                {
+                    response_getGenreBoardList.setCreatedAt((gapTime / 1000) + " Sec");
+                }
+                else if(gapTime / (1000 * 60) < 60)         // 60분 미만
+                {
+                    response_getGenreBoardList.setCreatedAt((gapTime / (1000 * 60)) + " Min");
+                }
+                else if(gapTime / (1000 * 60 * 60) < 24)    // 24시간 미만
+                {
+                    response_getGenreBoardList.setCreatedAt((gapTime / (1000* 60*60)) + " Hour");
+                }
+                else
+                    response_getGenreBoardList.setCreatedAt(rs.getString("createdat"));
+
                 response_getGenreBoardList.setView(rs.getInt("view"));
                 response_getGenreBoardList.setVote(rs.getInt("upvote") - rs.getInt("downvote"));
                 boards.add(response_getGenreBoardList);
