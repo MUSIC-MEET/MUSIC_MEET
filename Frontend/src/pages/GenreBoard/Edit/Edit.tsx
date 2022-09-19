@@ -5,8 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import InputForm from "../InputForm";
 import style from "../SectionStyle";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import CurrentPage from "store/CurrentPage";
-import { useSetRecoilState } from "recoil";
 import getEditPost from "utils/RequestApis/GenreBoard/getEditPost";
 import { Editor } from "@toast-ui/react-editor";
 import editBoard from "utils/RequestApis/GenreBoard/editBoard";
@@ -21,7 +19,6 @@ function Edit() {
     const [content, setContent] = useState<string>("");
     const editorRef = useRef<Editor>(null);
     const { t } = useTranslation<"genreWritePage">("genreWritePage");
-    const setCurrentPage = useSetRecoilState(CurrentPage);
     const navigator = useNavigate();
     const queryClient = useQueryClient();
     const [isDeleted, setIsDeleted] = useState<boolean>(false);
@@ -57,13 +54,12 @@ function Edit() {
     });
 
     useEffect(() => {
-        setCurrentPage(2);
         if (status === "success") {
             setTitle(() => data.title);
             editorRef.current?.getInstance().setMarkdown(data.content);
             setContent(() => data.content);
         }
-    }, [status, data, setCurrentPage]);
+    }, [status, data]);
 
     const onChangeTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(() => e.target.value);

@@ -12,6 +12,7 @@ function DuplicateVoteModal() {
                     title={t("title")}
                     content={t("content")}
                     button={t("confirm")}
+                    buttonClick={() => setIsOpen(() => false)}
                     onClose={() => setIsOpen(() => false)}
                 />
             }

@@ -59,4 +59,4 @@ const List = React.memo(styled.ul`
     overflow: scroll;
 `);
 
-export default React.memo(GenreSelector);
+export default GenreSelector;

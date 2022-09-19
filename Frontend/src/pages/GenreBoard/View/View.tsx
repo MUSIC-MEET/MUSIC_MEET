@@ -1,22 +1,17 @@
 import { css } from "@emotion/react";
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import Post from "./Post";
-import CurrentPage from "store/CurrentPage";
-import { useSetRecoilState } from "recoil";
 import Loading from "components/common/Loading";
 import ErrorBoundary from "../ErrorBoundary";
 import Comments from "./Comments";
 
 function View() {
-    const setCurrentPage = useSetRecoilState(CurrentPage);
     const params = useParams();
     const genre = params.genre ?? "kpop";
 
-    useEffect(() => {
-        setCurrentPage(2);
-    });
+
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
     const navigator = useNavigate();
     return (
