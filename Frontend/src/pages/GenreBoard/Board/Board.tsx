@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
-import CurrentPage from "store/CurrentPage";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
+
 import GenreSelector from "../GenreSelector";
 import { PostType } from "../PostType";
 import MoreButton from "../MoreButton";
@@ -9,43 +8,40 @@ import { useTranslation } from "react-i18next";
 import style from "../SectionStyle";
 import { useParams } from "react-router-dom";
 import PostList from "../PostList";
-import { useQuery } from "react-query";
 import getPosts from "utils/RequestApis/GenreBoard/getPosts";
 import Button from "components/common/Button";
 import { css } from "@emotion/react";
+import { useQuery, useQueryClient } from "react-query";
 
 function Board() {
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
-    const params = useParams<{ genre: string }>();
-    const genre = params.genre ?? "kpop";
-    const setCurrentPage = useSetRecoilState(CurrentPage);
-    const [scroll, setScroll] = useState(0);
+    const { genre } = useParams<{ genre: string }>();
     const [page, setPage] = useState<number>(1);
     const [list, setList] = useState<PostType[]>([]);
-
-    const { refetch } = useQuery(["getBoards"], () => getPosts({ genre, page }),
-        {
-            retry: 0,
-            suspense: false,
-            onSuccess: (res) => {
-                setList(() => list.concat(res));
-                setPage(() => page + 1);
-            }
+    const queryClient = useQueryClient();
+    const { refetch } = useQuery(["getPosts"], () => getPosts({ genre: genre ?? "kpop", page }), {
+        suspense: true,
+        useErrorBoundary: false,
+        onSuccess: (res) => {
+            setList((prev) => prev.concat(res));
+            setPage((prevPage) => prevPage + 1);
         }
-    );
+    });
 
-    useEffect(() => {
-        setCurrentPage(2);
-    }, [setCurrentPage]);
-
+    useLayoutEffect(() => {
+        refetch();
+    }, [genre]);
 
     return (
-        <div css={style}>
+        <div css={style}  >
             <Title>{t("title")}</Title>
             <GenreSelector
                 board={true}
             />
+
+            {/* <React.Fragment> */}
             <PostList
+
                 list={list}
             />
             <Button
@@ -53,8 +49,12 @@ function Board() {
                 w={"5rem"}
                 h={"3rem"}
                 css={getMorePostButtonStyle}
-                onClick={() => refetch()}
+                onClick={() => { refetch(); }}
             />
+
+            {/* </React.Fragment> */}
+
+
             <MoreButton />
         </div>
     );
@@ -65,4 +65,5 @@ const getMorePostButtonStyle = css`
 `;
 
 
-export default Board;
+// eslint-disable-next-line react/display-name
+export default React.memo(Board, (prevProps, nextProps) => prevProps !== nextProps);

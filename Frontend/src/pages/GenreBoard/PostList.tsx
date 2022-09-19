@@ -2,16 +2,7 @@ import { css } from "@emotion/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Post from "./Post";
-
-import { FixedSizeList } from "react-window";
-import InfiniteLoader from "react-window-infinite-loader";
-import { useInfiniteQuery } from "react-query";
-import fetchPosts from "../../utils/RequestApis/GenreBoard/fetchPosts";
-import { useParams } from "react-router-dom";
 import { PostType } from "./PostType";
-
-
-const SIZE = 10;
 
 interface PostListProps {
     list: PostType[] | undefined;
@@ -21,15 +12,31 @@ interface PostListProps {
 function PostList(props: PostListProps) {
     const { list, onScroll } = props;
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
+
+    useEffect(() => {
+        //
+    }, [list]);
     return (
         <table css={tableStyle}>
             <thead className="wrap table-header">
-                <th className="num">{t("list.head.num")}</th>
-                <th className="title">{t("list.head.title")}</th>
-                <th className="writer">{t("list.head.writer")}</th>
-                <th className="time">{t("list.head.time")}</th>
-                <th className="view">{t("list.head.view")}</th>
-                <th className="vote">{t("list.head.vote")}</th>
+                <tr className="num">
+                    <th>{t("list.head.num")}</th>
+                </tr>
+                <tr className="title">
+                    <th>{t("list.head.title")}</th>
+                </tr>
+                <tr className="writer">
+                    <th>{t("list.head.writer")}</th>
+                </tr>
+                <tr className="time">
+                    <th>{t("list.head.time")}</th>
+                </tr>
+                <tr className="view">
+                    <th>{t("list.head.view")}</th>
+                </tr>
+                <tr className="vote">
+                    <th>{t("list.head.vote")}</th>
+                </tr>
             </thead>
             <tbody className="wrap table-content" onScroll={onScroll}>
                 {list?.map((post, index) => (
@@ -48,7 +55,8 @@ function PostList(props: PostListProps) {
 
 const tableStyle = css`
     margin-top: 3rem;
-    width: 80rem;
+    width: 80vw;
+    padding: 0 1rem;
     display: flex;
     flex-direction: column;
 
@@ -57,6 +65,12 @@ const tableStyle = css`
         justify-content: center;
         align-items: center;
         text-align: centr;
+    }
+
+    tr {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .num{
@@ -101,4 +115,4 @@ const tableStyle = css`
     }
 `;
 
-export default React.memo(PostList);
+export default PostList;

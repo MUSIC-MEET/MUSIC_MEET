@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import React, { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 interface GenreButtonProps {
     name: string;
     text: string;
@@ -18,15 +17,18 @@ function GenreButton({ name, text, isSelected, board, write, search, searchType 
     useEffect(() => {
         //
     }, [isSelected, text]);
-
     const ItemClickHandler = useCallback(() => {
-        if (board)
+        if (board) {
             navigator(`/board/${name}`);
+            location.reload();
+        }
+
         else if (write)
             navigator(`/board/${name}/write`);
         else if (search)
             navigator(`/board/${name}/search/${searchType}/`);
     }, [board, name, navigator, search, searchType, write]);
+
     console.log(searchType);
     return (
         <Item
@@ -55,4 +57,4 @@ const Item = React.memo(
 `
 );
 
-export default React.memo(GenreButton);
+export default GenreButton;
