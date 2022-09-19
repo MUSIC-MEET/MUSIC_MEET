@@ -81,7 +81,7 @@ public class BoardService
         final String genreBoard = genre + "board";
         try
         {
-             sql = "SELECT a.userimage, a.nickname, b.title, b.content, DATE_FORMAT(b.`createdat`, '%y-%m-%d %T') AS createdat, b.`view`, b.upvote, b.downvote FROM user a, "
+             sql = "SELECT a.userimage, a.nickname, b.title, b.content, DATE_FORMAT(b.`createdat`, '%Y-%m-%d %T') AS createdat, b.`view`, b.upvote, b.downvote FROM user a, "
                      + genreBoard + " b WHERE a.usernum = b.usernum AND b.boardnum = ? AND b.`state` = 0;";
 
             //
@@ -99,7 +99,35 @@ public class BoardService
                 responseMap.put("nickname", rs.getString("nickname"));
                 responseMap.put("title", rs.getString("title"));
                 responseMap.put("content", rs.getString("content"));
-                responseMap.put("createdAt", rs.getString("createdat"));
+
+
+                Timestamp tm = java.sql.Timestamp.valueOf(rs.getString("createdat"));
+                long createdat = tm.getTime();
+                long gapTime = System.currentTimeMillis() - createdat;
+
+                //System.out.println(gapTime / 1000);             // 초
+                //System.out.println(gapTime / (1000 * 60));      // 분
+                //System.out.println(gapTime / (1000 * 60 * 60)); // 시
+
+                if ( gapTime / 1000 < 60)                   // 60초 미만
+                {
+                    responseMap.put("createdAt", (gapTime / 1000) + " Sec");
+                }
+                else if(gapTime / (1000 * 60) < 60)         // 60분 미만
+                {
+                    responseMap.put("createdAt", (gapTime / (1000 * 60)) + " Min");
+                }
+                else if(gapTime / (1000 * 60 * 60) < 24)    // 24시간 미만
+                {
+                    responseMap.put("createdAt", (gapTime / (1000* 60*60)) + " Hour");
+                }
+                else
+                    responseMap.put("createdAt", rs.getString("createdat"));
+
+
+
+                //responseMap.put("createdAt", rs.getString("createdat"));
+
                 responseMap.put("view", rs.getString("view"));
                 responseMap.put("upvote", rs.getString("upvote"));
                 responseMap.put("downvote", rs.getString("downvote"));
@@ -111,7 +139,7 @@ public class BoardService
             }
             else
             {
-                responseMap.put("userimage", "NoData");
+                responseMap.put("nickname", "NoData");
             }
 
         } catch (SQLException e) {
@@ -236,7 +264,7 @@ public class BoardService
                 Response_GetGenreBoardList response_getGenreBoardList= new Response_GetGenreBoardList();
                 response_getGenreBoardList.setTitle(rs.getString("title"));
                 response_getGenreBoardList.setBoardNum(rs.getInt("boardnum"));
-                response_getGenreBoardList.setNickname(rs.getString("nickname"));
+                response_getGenreBoardList.setUser(rs.getString("nickname"));
                 response_getGenreBoardList.setCreatedAt(rs.getString("createdat"));
                 response_getGenreBoardList.setView(rs.getInt("view"));
                 response_getGenreBoardList.setVote(rs.getInt("upvote") - rs.getInt("downvote"));
@@ -321,7 +349,7 @@ public class BoardService
             {
                 responseMap.put("title", rs.getString("title"));
                 responseMap.put("content", rs.getString("content"));
-                responseMap.put("nickname", rs.getString("nickname"));
+                responseMap.put("user", rs.getString("nickname"));
             }
             else
                 responseMap.put("title", null);
@@ -442,7 +470,8 @@ public class BoardService
         final String genreBoard = genre + "board";
         try
         {
-            sql = "SELECT a.boardnum, a.title, b.nickname, a.createdat, a.`view`, a.upvote, a.downvote FROM " + genreBoard + " a, user b WHERE a.title LIKE ? AND a.state = 0 AND a.usernum = b.usernum";
+            sql = "SELECT a.boardnum, a.title, b.nickname, a.createdat, a.`view`, a.upvote, a.downvote FROM " + genreBoard +
+                    " a, user b WHERE a.title LIKE ? AND a.state = 0 AND a.usernum = b.usernum ORDER BY a.boardnum DESC";
             //
             // DB구간
             //
@@ -497,7 +526,8 @@ public class BoardService
         final String genreBoard = genre + "board";
         try
         {
-            sql = "SELECT a.boardnum, a.title, b.nickname, a.createdat, a.`view`, a.upvote, a.downvote FROM " + genreBoard + " a, user b WHERE b.nickname LIKE ? AND a.state = 0 AND a.usernum = b.usernum";
+            sql = "SELECT a.boardnum, a.title, b.nickname, a.createdat, a.`view`, a.upvote, a.downvote FROM " + genreBoard +
+                    " a, user b WHERE b.nickname LIKE ? AND a.state = 0 AND a.usernum = b.usernum ORDER BY a.boardnum DESC ";
             //
             // DB구간
             //
@@ -550,7 +580,8 @@ public class BoardService
         final String genreBoard = genre + "board";
         try
         {
-            sql = "SELECT a.boardnum, a.title, b.nickname, a.createdat, a.`view`, a.upvote, a.downvote FROM " + genreBoard + " a, user b WHERE (b.nickname LIKE ? OR a.title LIKE ? )AND a.state = 0 AND a.usernum = b.usernum";
+            sql = "SELECT a.boardnum, a.title, b.nickname, a.createdat, a.`view`, a.upvote, a.downvote FROM " + genreBoard +
+                    " a, user b WHERE (b.nickname LIKE ? OR a.title LIKE ? )AND a.state = 0 AND a.usernum = b.usernum ORDER BY a.boardnum DESC";
             //
             // DB구간
             //

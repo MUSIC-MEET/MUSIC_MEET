@@ -2,6 +2,8 @@ package com.example.music_meet.dto.Response;
 
 import lombok.*;
 
+import java.sql.Timestamp;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

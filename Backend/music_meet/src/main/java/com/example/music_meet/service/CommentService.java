@@ -10,7 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -105,6 +110,9 @@ public class CommentService
     //
     public ArrayList<Response_GetBoardCommentList_Comment> getBoardCommentList(String genre, int boardNum)
     {
+        //java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+        java.sql.Timestamp date = new java.sql.Timestamp((System.currentTimeMillis()));
+
         ArrayList<Response_GetBoardCommentList_Comment> comments = new ArrayList<>();
         final String genreBoard = genre + "board";
         final String genreComment = genre + "comment";
@@ -127,8 +135,9 @@ public class CommentService
 
             if (result == true)
             {
-                sql = "SELECT a.commentnum, a.content, DATE_FORMAT(a.`createdat`, '%y-%m-%d %T') AS createdat," +
-                        " a.upvote, a.downvote, b.nickname, b.userimage FROM " + genreComment + " a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND a.boardnum = ? " +
+                sql = "SELECT a.commentnum, a.content, DATE_FORMAT(a.`createdat`, '%Y-%m-%d %T') AS createdat," +
+                        " a.upvote, a.downvote, b.nickname, b.userimage FROM " + genreComment +
+                        " a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND a.boardnum = ? " +
                         "ORDER BY a.createdat ASC";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, boardNum);
