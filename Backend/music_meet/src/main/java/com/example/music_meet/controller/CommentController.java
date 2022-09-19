@@ -27,7 +27,6 @@ public class CommentController
     private CommentService commentService;
 
 
-
     //
     // 댓글 작성.md
     //
@@ -56,6 +55,7 @@ public class CommentController
 
     }
 
+
     //
     // 댓글 호출.md
     //
@@ -69,12 +69,13 @@ public class CommentController
         {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        else //if (comments.size() != 0)             // 정상
+        else                    // 정상
         {
             responseComments.setComments(comments);
             return new ResponseEntity<>(responseComments, HttpStatus.OK);
         }
     }
+
 
     //
     // 댓글 추천, 비추천 선택.md
@@ -115,6 +116,7 @@ public class CommentController
         else
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
+
 
     //
     // 댓글 수정.md
@@ -161,5 +163,10 @@ public class CommentController
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+
+
+
+
 
 }

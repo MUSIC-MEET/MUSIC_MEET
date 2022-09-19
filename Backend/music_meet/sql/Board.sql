@@ -58,6 +58,8 @@ CREATE TABLE `hiphopBoard` (
 	`usernum`		INT(10)	 NOT NULL,
 	`content`		VARCHAR(1000)	 NULL,
 	`view`		INT(10)	 NULL DEFAULT 0,
+	`upvote`		INT(10)	NOT NULL DEFAULT 0,
+	`downvote`		INT(10)	NOT NULL DEFAULT 0,
 	`createdat`	datetime	 NULL,
 	`state`		INT(1)	 NOT NULL DEFAULT 0
 );

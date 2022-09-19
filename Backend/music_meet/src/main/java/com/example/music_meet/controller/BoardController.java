@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Controller
@@ -159,14 +160,14 @@ public class BoardController
 
         Map<String, String> map = boardService.getBoardForGenreNum(genre, num);
 
-        if (map.get("userimage").equals("NoData"))
+        if (map.get("nickname").equals("NoData"))
         {
             return new ResponseEntity<>(response_getGenreBoardForGenreNum, HttpStatus.NOT_FOUND);
         }
         else
         {
             response_getGenreBoardForGenreNum.setImgSrc( serverURL + ":" + serverPort + "/" + "user" + "/" + "image" + "/" + map.get("userimage"));
-            response_getGenreBoardForGenreNum.setNickname(map.get("nickname"));
+            response_getGenreBoardForGenreNum.setUser(map.get("nickname"));
             response_getGenreBoardForGenreNum.setTitle(map.get("title"));
             response_getGenreBoardForGenreNum.setContent(map.get("content"));
             response_getGenreBoardForGenreNum.setView(Integer.parseInt(map.get("view")));

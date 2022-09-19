@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,7 +14,7 @@ import lombok.Setter;
 public class Response_GetGenreBoardForGenreNum
 {
     private String imgSrc;
-    private String Nickname;
+    private String user;
     private String title;
     private String content;
     private String createdAt;

@@ -12,7 +12,7 @@ public class Response_GetGenreBoardList
 {
     private int boardNum;
     private String title;
-    private String nickname;
+    private String user;
     private String createdAt;
     private int view;
     private int vote;
