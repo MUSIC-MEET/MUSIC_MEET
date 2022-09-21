@@ -1,10 +1,15 @@
-import React from "react";
-import logo2 from "assets/logo2.png";
+import React, { useContext, useMemo } from "react";
+import Llogo from "assets/Llogo.png";
+import Dlogo from "assets/Dlogo.png";
 import { css } from "@emotion/react";
+import ThemeContext from "store/ThemeContext";
 function Logo() {
+    const ctx = useContext(ThemeContext);
+    const theme = ctx.theme;
+    const logo = useMemo(() => theme === "dark" ? Dlogo : Llogo, [theme]);
     return (
         <article css={style} className={`logo`}>
-            <img src={logo2} />
+            <img src={logo} />
         </article>
 
     );
@@ -18,6 +23,7 @@ const style = css`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        margin-right: 2rem;
     }
 `;
 export default Logo;
