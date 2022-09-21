@@ -6,6 +6,7 @@ import Search from "components/Search/Search";
 import RoutesMenu from "components/RoutesMenu/RoutesMenu";
 import { useNavigate } from "react-router-dom";
 import TopIcons from "./TopIcons";
+import Logo from "../common/Logo";
 
 function Menu(props) {
     const ctx = useContext(ThemeContext);
@@ -17,6 +18,7 @@ function Menu(props) {
             css={[navStyle, css` background: ${background}; color: ${fontColor};`]}
         >
             <TopIcons onMenuClose={onMenuClose}/>
+            <Logo />   
             <Login navigator={navigator}/>
             <Search />
             <RoutesMenu />
@@ -37,8 +39,10 @@ const navStyle = css`
         width: 11rem;
         min-height: auto;
     }
-
+    .logo {
+        width: 10rem;
+        height: 3rem;
+    }
     
 `;
-
 export default React.memo(Menu);

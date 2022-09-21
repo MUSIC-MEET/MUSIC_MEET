@@ -29,7 +29,7 @@ const _style = css`
     cursor: pointer;
     text-align: center;
     width: 100%;
-    height: 36px;
+    height: 48px;
     border-bottom: 0.2px solid #5b5b5b;
     & {
         padding-left: 0.5rem;
