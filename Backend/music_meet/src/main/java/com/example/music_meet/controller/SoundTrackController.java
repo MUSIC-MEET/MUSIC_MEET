@@ -1,7 +1,7 @@
 package com.example.music_meet.controller;
 
-import com.example.music_meet.service.MusicCrawlingBotService;
-import lombok.Getter;
+import com.example.music_meet.dto.Response.Response_searchSoundTrack_Window;
+import com.example.music_meet.service.SoundTrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,15 +11,15 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Map;
 
 @Controller
 @CrossOrigin("*")
-public class MusicController
+public class SoundTrackController
 {
     @Autowired
-    private MusicCrawlingBotService musicCrawlingBotService;
+    private SoundTrackService soundTrackService;
 
     //
     // 뮤직 크롤링 실행.md
@@ -30,7 +30,7 @@ public class MusicController
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (Integer.parseInt((String) request.getAttribute("userNum")) == 2 && key.equals("music_meet"))
         {
-            if (musicCrawlingBotService.start())
+            if (soundTrackService.start())
                 return new ResponseEntity<>(HttpStatus.OK);          // 성공
             else
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // 실패
@@ -48,7 +48,7 @@ public class MusicController
     // 음악 댓글 작성.md
     //
     @RequestMapping(path = "/music/comment", method = RequestMethod.POST)
-    public ResponseEntity<Object> createMusicComment(@RequestBody Map<String,String> requestMap)
+    public ResponseEntity<Object> createSoundTrackComment(@RequestBody Map<String,String> requestMap)
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null)
@@ -60,9 +60,28 @@ public class MusicController
         final int musicNum =  Integer.parseInt(requestMap.get("musicnum"));
 
 
-        musicCrawlingBotService.createMusicComment(usernum, musicNum, comment);
+        soundTrackService.createSoundTrackComment(usernum, musicNum, comment);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
+    //
+    // 음악 검색.md
+    //
+    @RequestMapping(path = "/music/search/{keyword}", method = RequestMethod.GET)
+    public ResponseEntity<Object> searchSoundTrack_Window(@PathVariable("keyword")final String keyword)
+    {
+        ArrayList<Response_searchSoundTrack_Window> musics = soundTrackService.searchSoundTrack_Window(keyword);
+
+        if (musics.size() == 0)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else
+            return new ResponseEntity<>(musics,HttpStatus.OK);
+    }
+
+
+
+
 
 
 

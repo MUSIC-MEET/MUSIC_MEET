@@ -1,10 +1,10 @@
 package com.example.music_meet.service;
 
 import com.example.music_meet.dto.MusicCrawlingSong;
+import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
+import com.example.music_meet.dto.Response.Response_searchSoundTrack_Window;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @NoArgsConstructor
 @Service
-public class MusicCrawlingBotService
+public class SoundTrackService
 {
     private ArrayList<MusicCrawlingSong> musicCrawlingSongs = new ArrayList<>();
     private Document doc;
@@ -217,10 +217,56 @@ public class MusicCrawlingBotService
     //
     // 음악 댓글 작성.md
     //
-    public boolean createMusicComment(int userNum, int musicNum, String comment)
+    public boolean createSoundTrackComment(int userNum, int musicNum, String comment)
     {
 
         return false;
     }
 
+
+    //
+    // 음악 검색_small
+    //
+    public ArrayList<Response_searchSoundTrack_Window> searchSoundTrack_Window(final String keyWord)
+    {
+        ArrayList<Response_searchSoundTrack_Window> response_searchSoundTrack_windows = new ArrayList<>();
+        try
+        {
+            sql = "SELECT musicnum, imgsrc, origin_title, origin_singer FROM music WHERE (singer LIKE ? OR title LIKE ?) AND state = 0";
+
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, "%" + keyWord.replaceAll(" ","") + "%");
+            pstmt.setString(2, "%" + keyWord.replaceAll(" ","") + "%");
+            rs = pstmt.executeQuery();
+
+            while(rs.next())
+            {
+                Response_searchSoundTrack_Window response_searchSoundTrack_window = new Response_searchSoundTrack_Window();
+                response_searchSoundTrack_window.setMusicNum(rs.getInt("musicnum"));
+                response_searchSoundTrack_window.setImgSrc(rs.getString("imgsrc"));
+                response_searchSoundTrack_window.setTitle(rs.getString( "origin_title"));
+                response_searchSoundTrack_window.setSinger(rs.getString("origin_singer"));
+                response_searchSoundTrack_windows.add(response_searchSoundTrack_window);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return response_searchSoundTrack_windows;
+    }
 }

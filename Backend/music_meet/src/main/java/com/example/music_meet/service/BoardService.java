@@ -219,7 +219,7 @@ public class BoardService
         ArrayList<Response_GetGenreBoardList> boards = new ArrayList<>();
         try
         {
-            sql = "SELECT a.title, a.usernum, a.boardnum, a.createdat, a.`view`, a.upvote, a.downvote, b.nickname FROM " + genreBoard +
+            sql = "SELECT a.title, a.usernum, a.boardnum, a.`view`, a.upvote, a.downvote, b.nickname, DATE_FORMAT(a.`createdat`, '%Y-%m-%d %T') AS createdat FROM " + genreBoard +
                     " a, user b WHERE a.usernum = b.usernum AND a.state = 0 ORDER BY a.boardnum DESC " +
                     " LIMIT ?,10";
             //
@@ -239,8 +239,7 @@ public class BoardService
                 response_getGenreBoardList.setUser(rs.getString("nickname"));
 
                 Timestamp tm = java.sql.Timestamp.valueOf(rs.getString("createdat"));
-                long createdat = tm.getTime();
-                long gapTime = System.currentTimeMillis() - createdat;
+                long gapTime = System.currentTimeMillis() - tm.getTime();
 
                 //System.out.println(gapTime / 1000);             // 초
                 //System.out.println(gapTime / (1000 * 60));      // 분
@@ -248,15 +247,15 @@ public class BoardService
 
                 if ( gapTime / 1000 < 60)                   // 60초 미만
                 {
-                    response_getGenreBoardList.setCreatedAt((gapTime / 1000) + " Sec");
+                    response_getGenreBoardList.setCreatedAt(gapTime / 1000 + "sec ago");
                 }
                 else if(gapTime / (1000 * 60) < 60)         // 60분 미만
                 {
-                    response_getGenreBoardList.setCreatedAt((gapTime / (1000 * 60)) + " Min");
+                    response_getGenreBoardList.setCreatedAt((gapTime / (1000 * 60)) + "min ago");
                 }
                 else if(gapTime / (1000 * 60 * 60) < 24)    // 24시간 미만
                 {
-                    response_getGenreBoardList.setCreatedAt((gapTime / (1000* 60*60)) + " Hour");
+                    response_getGenreBoardList.setCreatedAt((gapTime / (1000* 60*60)) + "hour ago");
                 }
                 else
                     response_getGenreBoardList.setCreatedAt(rs.getString("createdat"));
