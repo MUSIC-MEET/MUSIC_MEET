@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
 import Input from "components/common/Input";
-import Title from "components/common/Title";
 import Submit from "components/common/Submit";
 import SubMenu from "./SubMenu";
 import LoginStateToggle from "./LoginStateToggle";
@@ -48,7 +47,6 @@ function LoginForm(props) {
     const disabled = id.length === 0 || pw.length === 0;
     return (
         <article css={[style]}>
-            <Title>{t("title")}</Title>
             <Logo />
             <form css={css`width: 20rem; margin: 2.5rem 0;`} onSubmit={onSubmit}>
                 <Input
