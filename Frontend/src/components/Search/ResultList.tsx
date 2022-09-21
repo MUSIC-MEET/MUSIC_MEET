@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import React, { useEffect } from "react";
+import Music from "./Music";
 
 function ResultList({ result }: { result: string; }) {
     useEffect(() => {
@@ -7,7 +8,14 @@ function ResultList({ result }: { result: string; }) {
     }, [result]);
 
     return (
-        <section css={style}>{result}</section>
+        <section css={style}>
+            <Music
+                imgSrc={"http://naver.com"}
+                musicNum={"1"}
+                title={"title"}
+                singer={"singer"}
+            />
+        </section>
     );
 }
 
