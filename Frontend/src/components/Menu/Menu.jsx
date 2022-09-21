@@ -43,7 +43,7 @@ const navStyle = css`
     .logo {
         width: 10rem; // 160px  
         height: 3rem; // 48px
-        margin-right: 1rem; 
+        margin-right: 1rem;
     }
     
 `;

@@ -23,7 +23,7 @@ const style = css`
         width: 100%;
         height: 100%;
         object-fit: cover;
-        margin-right: 2rem;
+        
     }
 `;
 export default Logo;

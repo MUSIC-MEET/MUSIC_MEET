@@ -9,6 +9,7 @@ import LoginStateToggle from "./LoginStateToggle";
 import LoginFormState from "../../store/LoginForm";
 import { useRecoilState } from "recoil";
 import Error from "../common/Error";
+import Logo  from "components/common/Logo";
 
 function LoginForm(props) {
     const { 
@@ -48,6 +49,7 @@ function LoginForm(props) {
     return (
         <article css={[style]}>
             <Title>{t("title")}</Title>
+            <Logo />
             <form css={css`width: 20rem; margin: 2.5rem 0;`} onSubmit={onSubmit}>
                 <Input
                     input = {{
@@ -95,7 +97,9 @@ const style =  css`
     width: 100%;
     height: auto;
         
-
+    & > .title {
+        margin-top: 1rem;
+    }
     & > form {
         display:flex;
         flex-direction: column;
@@ -116,6 +120,11 @@ const style =  css`
 
     b {
         text-align: center;
+    }
+
+    & > .logo {
+        width: 15rem;
+        height: 6rem;
     }
     
 `;
