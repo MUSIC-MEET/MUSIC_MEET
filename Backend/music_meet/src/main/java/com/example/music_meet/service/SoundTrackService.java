@@ -2,6 +2,7 @@ package com.example.music_meet.service;
 
 import com.example.music_meet.dto.MusicCrawlingSong;
 import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
+import com.example.music_meet.dto.Response.Response_getSoundTrackInfo;
 import com.example.music_meet.dto.Response.Response_searchSoundTrack_Window;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -217,8 +218,38 @@ public class SoundTrackService
     //
     // 음악 댓글 작성.md
     //
-    public boolean createSoundTrackComment(int userNum, int musicNum, String comment)
+    public boolean createSoundTrackComment(final int userNum, final int musicNum, final String comment)
     {
+        try
+        {
+            sql = "INSERT INTO musicComment() VALUES ";
+
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            rs = pstmt.executeQuery();
+
+            while(rs.next())
+            {
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         return false;
     }
@@ -268,5 +299,51 @@ public class SoundTrackService
             }
         }
         return response_searchSoundTrack_windows;
+    }
+
+    public Response_getSoundTrackInfo getSoundTrackInfo(int musicNum)
+    {
+        Response_getSoundTrackInfo response_getSoundTrackInfo = new Response_getSoundTrackInfo();
+        try
+        {
+            sql = "SELECT a.imgsrc, a.origin_title, a.origin_singer, a.album, a.releaseDate, a.lyrics, a.vote, b.name" +
+                    " FROM music a, genrestate b WHERE a.genre = b.genre AND musicnum = ? AND state = 0";
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, musicNum);
+            rs = pstmt.executeQuery();
+
+            while(rs.next())
+            {
+                response_getSoundTrackInfo.setImgsrc(rs.getString("imgsrc"));
+                response_getSoundTrackInfo.setOrigin_title(rs.getString("origin_title"));
+                response_getSoundTrackInfo.setOrigin_singer(rs.getString("origin_singer"));
+                response_getSoundTrackInfo.setAlbum(rs.getString("album"));
+                response_getSoundTrackInfo.setReleaseDate(rs.getString("releaseDate"));
+                response_getSoundTrackInfo.setLyrics(rs.getString("lyrics"));
+                response_getSoundTrackInfo.setVote(rs.getInt("vote"));
+                response_getSoundTrackInfo.setGenre(rs.getString("name"));
+                System.out.println(response_getSoundTrackInfo.toString());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return response_getSoundTrackInfo;
+
+
     }
 }
