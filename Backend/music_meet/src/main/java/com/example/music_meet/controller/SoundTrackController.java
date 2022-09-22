@@ -1,5 +1,6 @@
 package com.example.music_meet.controller;
 
+import com.example.music_meet.dto.Response.Response_getSoundTrackInfo;
 import com.example.music_meet.dto.Response.Response_searchSoundTrack_Window;
 import com.example.music_meet.service.SoundTrackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class SoundTrackController
     //
     // 뮤직 크롤링 실행.md
     //
-    @RequestMapping(path = "/music/{get}", method = RequestMethod.GET)
+    @RequestMapping(path = "/music/crawling/{get}", method = RequestMethod.GET)
     public ResponseEntity<Object> startMusicCrawling(@PathVariable("get")final String key)
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -74,12 +75,26 @@ public class SoundTrackController
         ArrayList<Response_searchSoundTrack_Window> musics = soundTrackService.searchSoundTrack_Window(keyword);
 
         if (musics.size() == 0)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else
             return new ResponseEntity<>(musics,HttpStatus.OK);
     }
 
 
+    //
+    // 음악 정보 호출.md
+    //
+    @RequestMapping(path = "/music/{musicnum}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getSoundTrackInfo(@PathVariable("musicnum")final int musicNum)
+    {
+        Response_getSoundTrackInfo response_getSoundTrackInfo =  soundTrackService.getSoundTrackInfo(musicNum);
+
+
+        if (response_getSoundTrackInfo.getOrigin_title() == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else 
+            return new ResponseEntity<>(response_getSoundTrackInfo,HttpStatus.OK);
+    }
 
 
 
