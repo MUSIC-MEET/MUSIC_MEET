@@ -38,7 +38,7 @@ function Search() {
     const onCloseResultHandler = useCallback(() => {
         setResultShown(false);
         setKeyword("");
-
+        setResult([]);
     }, []);
 
     useEffect(() => {
@@ -62,6 +62,7 @@ function Search() {
             {resultShwon &&
                 <Result
                     result={result}
+                    onClose={onCloseResultHandler}
                 />
             }
 

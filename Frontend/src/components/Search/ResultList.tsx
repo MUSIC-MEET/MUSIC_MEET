@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Music from "./Music";
 import SearchMusicType from "components/Search/SearchMusicType";
 
-function ResultList({ result }: { result: SearchMusicType[]; }) {
+function ResultList({ result, onClose }: { result: SearchMusicType[]; onClose: () => void; }) {
     useEffect(() => {
         //
     }, [result]);
@@ -17,6 +17,7 @@ function ResultList({ result }: { result: SearchMusicType[]; }) {
                     musicNum={music.musicNum}
                     title={music.title}
                     singer={music.singer}
+                    onClose={onClose}
                 />
             ))}
 

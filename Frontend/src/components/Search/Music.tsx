@@ -3,11 +3,12 @@ import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchMusicType from "./SearchMusicType";
 
-function Music(props: SearchMusicType) {
-    const { musicNum, imgSrc, title, singer } = props;
+function Music(props: SearchMusicType & { onClose: () => void; }) {
+    const { musicNum, imgSrc, title, singer, onClose } = props;
     const navigator = useNavigate();
     const onClickHandler = useCallback(() => {
         navigator(`/music/${musicNum}`);
+        onClose();
     }, [musicNum, navigator]);
     return (
         <div css={style} onClick={onClickHandler}>
