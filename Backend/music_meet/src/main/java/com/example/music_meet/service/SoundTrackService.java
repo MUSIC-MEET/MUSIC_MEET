@@ -231,6 +231,7 @@ public class SoundTrackService
     //
     public boolean createSoundTrackComment(final int userNum, final int musicNum, final String comment)
     {
+        boolean result = false;
         java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
         try
         {
@@ -249,11 +250,10 @@ public class SoundTrackService
             pstmt.setString(3, comment);
             pstmt.setTimestamp(4, date);
 
-            rs = pstmt.executeQuery();
-
-            while(rs.next())
+            System.out.println(rsInt);
+            if (rsInt > 0 )
             {
-
+                result = true;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -261,7 +261,6 @@ public class SoundTrackService
             throw new RuntimeException(e);
         }finally {
             try {
-                rs.close();
                 pstmt.close();
                 conn.close();
             } catch (SQLException e) {
@@ -269,7 +268,7 @@ public class SoundTrackService
             }
         }
 
-        return false;
+        return result;
     }
 
 
@@ -349,7 +348,6 @@ public class SoundTrackService
                 response_getSoundTrackInfo.setLyrics(rs.getString("lyrics"));
                 response_getSoundTrackInfo.setVote(rs.getInt("vote"));
                 response_getSoundTrackInfo.setGenre(rs.getString("name"));
-                System.out.println(response_getSoundTrackInfo);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
