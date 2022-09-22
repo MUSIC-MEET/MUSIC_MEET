@@ -15,6 +15,7 @@ import UserFind from "./pages/Find/Index";
 import EmailAuth from "./pages/Auth/Index";
 import GenreBoard from "pages/GenreBoard/Index";
 import User from "./pages/User/Index";
+import Music from "./pages/Music/Index.tsx";
 import NotFoundPage from "./pages/NotFound/Index";
 
 const rootStyle = css`
@@ -71,6 +72,7 @@ function App() {
                             <Route path="/livechart/*" element={<LiveChart />} />
                             <Route path="/unauthorization" element={<h2>unauthorization</h2>} />
                             <Route path="/board/*" element={<GenreBoard />} />
+                            <Route path="/music/:musicNum" element={<Music />} /> 
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                 

@@ -5,11 +5,12 @@ import getList from "utils/RequestApis/EvaluationSearch/getList";
 import Result from "./ResultList";
 import { css } from "@emotion/react";
 import _ from "lodash";
+import SearchMusicType from "./SearchMusicType";
 
 
 function Search() {
     const [keyword, setKeyword] = useState<string>("");
-    const [result, setResult] = useState<string>("");
+    const [result, setResult] = useState<SearchMusicType[]>([]);
     const [resultShwon, setResultShown] = useState<boolean>(false);
 
     const { refetch } = useQuery(["autoKeyWord", keyword], () => getList({ keyword }), {
@@ -17,11 +18,8 @@ function Search() {
         useErrorBoundary: false,
         enabled: false,
         onSuccess: (res) => {
-            setResult("abcded");
+            setResult(res);
         },
-        onSettled: () => {
-            setResult(keyword);
-        }
     });
 
 
