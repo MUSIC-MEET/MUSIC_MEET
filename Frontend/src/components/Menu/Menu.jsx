@@ -39,9 +39,11 @@ const navStyle = css`
         width: 11rem;
         min-height: auto;
     }
+    
     .logo {
-        width: 10rem;
-        height: 3rem;
+        width: 10rem; // 160px  
+        height: 3rem; // 48px
+        margin-right: 1rem;
     }
     
 `;
