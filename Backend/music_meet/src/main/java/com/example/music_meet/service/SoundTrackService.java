@@ -225,7 +225,7 @@ public class SoundTrackService
 
 
     //
-    // 음악 검색_small
+    // 음악 검색창
     //
     public ArrayList<Response_searchSoundTrack_Window> searchSoundTrack_Window(final String keyWord)
     {
