@@ -1,20 +1,25 @@
 import { css } from "@emotion/react";
 import React, { useEffect } from "react";
 import Music from "./Music";
+import SearchMusicType from "components/Search/SearchMusicType";
 
-function ResultList({ result }: { result: string; }) {
+function ResultList({ result }: { result: SearchMusicType[]; }) {
     useEffect(() => {
         //
     }, [result]);
 
     return (
         <section css={style}>
-            <Music
-                imgSrc={"http://naver.com"}
-                musicNum={"1"}
-                title={"title"}
-                singer={"singer"}
-            />
+            {result.map((music) => (
+                <Music
+                    key={music.musicNum}
+                    imgSrc={music.imgSrc}
+                    musicNum={music.musicNum}
+                    title={music.title}
+                    singer={music.singer}
+                />
+            ))}
+
         </section>
     );
 }
