@@ -64,8 +64,10 @@ public class SoundTrackController
         final int musicNum =  Integer.parseInt(requestMap.get("musicnum"));
 
 
-        soundTrackService.createSoundTrackComment(usernum, musicNum, comment);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        if (soundTrackService.createSoundTrackComment(usernum, musicNum, comment))
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 

@@ -1598,7 +1598,7 @@ CREATE TABLE `MusicComment` (
 	`usernum` INT(10) NOT NULL,
 	`content` VARCHAR(200) NULL,
 	`createdAt` datetime NULL,
-	`state` INT(1) NOT NULL
+	`state` INT(1) NOT NULL DEFAULT 0
 );
 ALTER TABLE `MusicComment` ADD CONSTRAINT `FK_Music_TO_MusicComment_1` FOREIGN KEY (
 	`musicNum`
