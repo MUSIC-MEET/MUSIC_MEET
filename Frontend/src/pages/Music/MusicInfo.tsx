@@ -11,7 +11,7 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
 
     const { data } =
         useQuery(
-            ["musicInfo"],
+            ["musicInfo", musicNum],
             () => fetchMusicInfo({ musicNum }),
             {
                 retry: 0
