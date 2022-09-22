@@ -10,8 +10,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 public class SoundTrackService
 {
     private ArrayList<MusicCrawlingSong> musicCrawlingSongs = new ArrayList<>();
+
     private Document doc;
     private Elements song1;
     private String[] genreCode = {"GN0100", "GN0400", "GN0300", "GN0700", "GN1900", "GN0900", "GN1600", "GN0200", "GN1700", "GN1500"};
@@ -44,6 +47,14 @@ public class SoundTrackService
     private int rsInt = 0;
     private String sql;
 
+    @Value("${server.url}")
+    private String serverURL;
+
+    @Value("${server.port}")
+    private String serverPort;
+
+    //@Value("${file.image.temp}")
+    private String temp = System.getProperty("user.dir") + File.separator + "music" + File.separator;
 
     //
     // 크롤링 시작
@@ -220,9 +231,11 @@ public class SoundTrackService
     //
     public boolean createSoundTrackComment(final int userNum, final int musicNum, final String comment)
     {
+        java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
         try
         {
-            sql = "INSERT INTO musicComment() VALUES ";
+            sql = "INSERT INTO musicComment(musicnum, usernum, content, createdat)" +
+                    " VALUES(?,?,?,?)";
 
             //
             // DB구간
@@ -230,6 +243,11 @@ public class SoundTrackService
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, musicNum);
+            pstmt.setInt(2, userNum);
+            pstmt.setString(3, comment);
+            pstmt.setTimestamp(4, date);
 
             rs = pstmt.executeQuery();
 
@@ -301,12 +319,16 @@ public class SoundTrackService
         return response_searchSoundTrack_windows;
     }
 
+    
+    //
+    // 음악 정보 호출
+    //
     public Response_getSoundTrackInfo getSoundTrackInfo(int musicNum)
     {
         Response_getSoundTrackInfo response_getSoundTrackInfo = new Response_getSoundTrackInfo();
         try
         {
-            sql = "SELECT a.imgsrc, a.origin_title, a.origin_singer, a.album, a.releaseDate, a.lyrics, a.vote, b.name" +
+            sql = "SELECT a.imgSrc, a.origin_title, a.origin_singer, a.album, a.releaseDate, a.lyrics, a.vote, b.name" +
                     " FROM music a, genrestate b WHERE a.genre = b.genre AND musicnum = ? AND state = 0";
             //
             // DB구간
@@ -319,7 +341,7 @@ public class SoundTrackService
 
             while(rs.next())
             {
-                response_getSoundTrackInfo.setImgsrc(rs.getString("imgsrc"));
+                response_getSoundTrackInfo.setImgSrc(serverURL + ":" + serverPort + "/music/image/" + rs.getString("imgSrc"));
                 response_getSoundTrackInfo.setTitle(rs.getString("origin_title"));
                 response_getSoundTrackInfo.setSinger(rs.getString("origin_singer"));
                 response_getSoundTrackInfo.setAlbum(rs.getString("album"));
@@ -327,6 +349,7 @@ public class SoundTrackService
                 response_getSoundTrackInfo.setLyrics(rs.getString("lyrics"));
                 response_getSoundTrackInfo.setVote(rs.getInt("vote"));
                 response_getSoundTrackInfo.setGenre(rs.getString("name"));
+                System.out.println(response_getSoundTrackInfo);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

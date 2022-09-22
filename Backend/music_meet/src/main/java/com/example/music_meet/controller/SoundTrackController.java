@@ -4,6 +4,7 @@ import com.example.music_meet.dto.Response.Response_getSoundTrackInfo;
 import com.example.music_meet.dto.Response.Response_searchSoundTrack_Window;
 import com.example.music_meet.service.SoundTrackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -21,6 +23,7 @@ public class SoundTrackController
 {
     @Autowired
     private SoundTrackService soundTrackService;
+
 
     //
     // 뮤직 크롤링 실행.md
@@ -96,8 +99,29 @@ public class SoundTrackController
             return new ResponseEntity<>(response_getSoundTrackInfo,HttpStatus.OK);
     }
 
+    //
+    // 음악 이미지 파일 리턴.md
+    //
+    @RequestMapping(path = "/music/image/{imagename}", method = RequestMethod.GET)
+    public ResponseEntity<Object> returnSoundTrackImage(@PathVariable("imagename")final int imagename)
+    {
 
 
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    //
+    // 음악 파일 리턴.md
+    //
+    @RequestMapping(path = "/music/file/{filename}", method = RequestMethod.GET)
+    public ResponseEntity<Object> returnSoundTrackFile(@PathVariable("filename")final int filename)
+    {
+
+
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
