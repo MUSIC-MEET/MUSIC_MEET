@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class Response_getSoundTrackInfo
 {
-    private String imgsrc;
+    private String imgSrc;
     private String title;
     private String singer;
     private String album;
