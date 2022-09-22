@@ -66,7 +66,7 @@ public class SoundTrackController
 
 
     //
-    // 음악 검색.md
+    // 음악 검색창.md
     //
     @RequestMapping(path = "/music/search/{keyword}", method = RequestMethod.GET)
     public ResponseEntity<Object> searchSoundTrack_Window(@PathVariable("keyword")final String keyword)
