@@ -10,8 +10,8 @@ import lombok.*;
 public class Response_getSoundTrackInfo
 {
     private String imgsrc;
-    private String origin_title;
-    private String origin_singer;
+    private String title;
+    private String singer;
     private String album;
     private String releaseDate;
     private String lyrics;

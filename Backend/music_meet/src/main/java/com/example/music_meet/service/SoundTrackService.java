@@ -320,14 +320,13 @@ public class SoundTrackService
             while(rs.next())
             {
                 response_getSoundTrackInfo.setImgsrc(rs.getString("imgsrc"));
-                response_getSoundTrackInfo.setOrigin_title(rs.getString("origin_title"));
-                response_getSoundTrackInfo.setOrigin_singer(rs.getString("origin_singer"));
+                response_getSoundTrackInfo.setTitle(rs.getString("origin_title"));
+                response_getSoundTrackInfo.setSinger(rs.getString("origin_singer"));
                 response_getSoundTrackInfo.setAlbum(rs.getString("album"));
                 response_getSoundTrackInfo.setReleaseDate(rs.getString("releaseDate"));
                 response_getSoundTrackInfo.setLyrics(rs.getString("lyrics"));
                 response_getSoundTrackInfo.setVote(rs.getInt("vote"));
                 response_getSoundTrackInfo.setGenre(rs.getString("name"));
-                System.out.println(response_getSoundTrackInfo.toString());
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
