@@ -90,9 +90,9 @@ public class SoundTrackController
         Response_getSoundTrackInfo response_getSoundTrackInfo =  soundTrackService.getSoundTrackInfo(musicNum);
 
 
-        if (response_getSoundTrackInfo.getOrigin_title() == null)
+        if (response_getSoundTrackInfo.getTitle() == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else 
+        else
             return new ResponseEntity<>(response_getSoundTrackInfo,HttpStatus.OK);
     }
 
