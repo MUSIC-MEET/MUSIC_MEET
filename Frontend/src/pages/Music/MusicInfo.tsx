@@ -57,7 +57,7 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
                     :
                     <React.Fragment>
                         <Button
-                            value={"가사 보기"}
+                            value={t("musicInfo.showLyrics")}
                             onClick={() => setLyricsShown(true)}
                         />
                     </React.Fragment>

@@ -4,6 +4,7 @@ interface MusicPage {
         releaseDate: string;
         genre: string;
         lyrics: string;
+        showLyrics: string;
     }
 }
 
