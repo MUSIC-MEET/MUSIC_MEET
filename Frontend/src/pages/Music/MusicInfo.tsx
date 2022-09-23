@@ -6,6 +6,7 @@ import fetchMusicInfo from "utils/RequestApis/Music/fetchMusicInfo";
 import { useTranslation } from "react-i18next";
 import Vote from "./Vote";
 import ThemeContext from "store/ThemeContext";
+import Button from "components/common/Button";
 
 function MusicInfo({ musicNum }: { musicNum: string }) {
     const { t } = useTranslation<"musicPage">("musicPage");
@@ -23,6 +24,8 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
             {
                 retry: 0
             });
+
+
 
     return (
         <React.Fragment>
@@ -47,7 +50,19 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
             </SectionWrapper >
             <SectionWrapper style={lyricesStyle}>
                 <h2 className="lyrics-title">{t("musicInfo.lyrics")}</h2>
-                {data?.lyrics}
+                {lyricsShwon ?
+                    <React.Fragment>
+                        {data?.lyrics}
+                    </React.Fragment>
+                    :
+                    <React.Fragment>
+                        <Button
+                            value={"가사 보기"}
+                            onClick={() => setLyricsShown(true)}
+                        />
+                    </React.Fragment>
+                }
+
             </SectionWrapper>
         </React.Fragment>
     );
