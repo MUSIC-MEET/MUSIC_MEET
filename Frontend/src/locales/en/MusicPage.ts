@@ -7,6 +7,12 @@ const text: MusicPage = {
         genre: "Genre",
         lyrics: "lyrics",
         showLyrics: "Show lyrics"
+    },
+    comments: {
+        input: {
+            placeholder: "Enter your comment",
+            submit: "Submit"
+        }
     }
 };
 

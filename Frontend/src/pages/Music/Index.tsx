@@ -4,7 +4,7 @@ import Content from "components/UI/Content";
 import MusicInfo from "./MusicInfo";
 import Loading from "components/common/Loading";
 import Title from "components/common/Title";
-import Comment from "./Comment";
+import Comments from "./Comments";
 import ErrorBoundary from "./ErrorBoundary";
 import { css } from "@emotion/react";
 
@@ -23,7 +23,7 @@ function Index() {
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
                     <MusicInfo musicNum={musicNum} />
-                    <Comment />
+                    <Comments musicNum={musicNum} />
                 </Suspense>
             </ErrorBoundary>
         </Content>
