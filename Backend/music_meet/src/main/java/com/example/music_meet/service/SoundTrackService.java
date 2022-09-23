@@ -434,21 +434,15 @@ public class SoundTrackService
 
             System.out.println(userNum);
             System.out.println(musicNum);
-            sql = "SELECT musicNum FROM MusicVote WHERE userNum = 2 AND musicNum = ?";
+            sql = "SELECT musicNum FROM MusicVote WHERE userNum = ? AND musicNum = ?";
 
             pstmt = conn.prepareStatement(sql);
-            //pstmt.setInt(1, userNum);
-            pstmt.setInt(1, musicNum);
+            pstmt.setInt(1, userNum);
+            pstmt.setInt(2, musicNum);
             rs = pstmt.executeQuery();
 
             if(rs.next())
                 response_getSoundTrackInfo.setIsvote(true);
-            else
-                response_getSoundTrackInfo.setIsvote(false);
-
-
-
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -498,13 +492,14 @@ public class SoundTrackService
                     "(SELECT COUNT(userNum) FROM MusicVote WHERE musicNum = ?) " +
                     "WHERE musicNum = ?";
 
+            pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, musicNum);
             pstmt.setInt(2, musicNum);
 
-            if (rs.next()){
+            rsInt = pstmt.executeUpdate();
+            if (rsInt > 0){
                 result2 = true;
             }
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -512,7 +507,6 @@ public class SoundTrackService
             throw new RuntimeException(e);
         }finally {
             try {
-                rs.close();
                 pstmt.close();
                 conn.close();
             } catch (SQLException e) {
