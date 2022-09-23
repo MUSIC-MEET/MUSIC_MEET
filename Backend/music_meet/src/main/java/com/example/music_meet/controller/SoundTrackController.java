@@ -61,7 +61,7 @@ public class SoundTrackController
         }
         final int usernum = Integer.parseInt((String)request.getAttribute("userNum"));
         final String comment = requestMap.get("content");
-        final int musicNum =  Integer.parseInt(requestMap.get("musicnum"));
+        final int musicNum =  Integer.parseInt(requestMap.get("musicNum"));
 
 
         if (soundTrackService.createSoundTrackComment(usernum, musicNum, comment))
@@ -137,23 +137,14 @@ public class SoundTrackController
     @RequestMapping(path = "/music/{musicnum}", method = RequestMethod.GET)
     public ResponseEntity<Object> getSoundTrackInfo(@PathVariable("musicnum")final int musicNum)
     {
-        //
-        // 함수로 되는지 확인
-        //
+        int userNum;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null)
-        {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        final int usernum = Integer.parseInt((String)request.getAttribute("userNum"));
-        
-        
-        // 
-        // 유저 넘버로 음악에 좋아요 눌렀는지 확인하는거 필요
-        //
-        
-        Response_getSoundTrackInfo response_getSoundTrackInfo =  soundTrackService.getSoundTrackInfo(musicNum);
+            userNum = 0;
+        else
+            userNum = Integer.parseInt((String)request.getAttribute("userNum"));
 
+        Response_getSoundTrackInfo response_getSoundTrackInfo =  soundTrackService.getSoundTrackInfo(userNum, musicNum);
 
         if (response_getSoundTrackInfo.getTitle() == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -165,8 +156,8 @@ public class SoundTrackController
     //
     // 음악 정보 좋아요.md
     //
-    @RequestMapping(path = "/music/vote/{musicCommentNum}", method = RequestMethod.GET)
-    public ResponseEntity<Object> addMusicCommentVote(@PathVariable("musicCommentNum")final int musicCommentNum)
+    @RequestMapping(path = "/music/vote/{musicNum}", method = RequestMethod.GET)
+    public ResponseEntity<Object> addMusicCommentVote(@PathVariable("musicNum")final int musicNum)
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null)
@@ -175,7 +166,7 @@ public class SoundTrackController
         }
         final int usernum = Integer.parseInt((String)request.getAttribute("userNum"));
 
-        if (soundTrackService.addMusicCommentVote(usernum, musicCommentNum))
+        if (soundTrackService.addMusicCommentVote(usernum, musicNum))
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
