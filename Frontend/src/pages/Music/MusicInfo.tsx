@@ -1,13 +1,17 @@
 import { css } from "@emotion/react";
 import SectionWrapper from "components/common/SectionWrapper";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import fetchMusicInfo from "utils/RequestApis/Music/fetchMusicInfo";
 import { useTranslation } from "react-i18next";
 import Vote from "./Vote";
+import ThemeContext from "store/ThemeContext";
 
 function MusicInfo({ musicNum }: { musicNum: string }) {
     const { t } = useTranslation<"musicPage">("musicPage");
+    const ctx = useContext(ThemeContext);
+    const { color } = ctx.themeStyle.fontStyle2;
+    const [lyricsShwon, setLyricsShown] = useState<boolean>(false);
     useEffect(() => {
         //
     }, [musicNum]);
@@ -19,27 +23,33 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
             {
                 retry: 0
             });
-    return (
-        <SectionWrapper style={style}>
-            <figure>
-                <img src={data?.imgSrc} />
-            </figure>
-            <div className="text">
-                <span className="title">{data?.title}</span>
-                <span className="singer">{data?.singer}</span>
-                <span className="release small">
-                    {`${t("musicInfo.releaseDate")}: ${data?.releaseDate}`}
-                </span>
-                <span className="genre small">
-                    {`${t("musicInfo.genre")}: ${data?.genre}`}
-                </span>
-                <Vote
-                    count={data?.vote}
-                    isVote={false}
-                />
-            </div>
 
-        </SectionWrapper >
+    return (
+        <React.Fragment>
+            <SectionWrapper style={[style, css`.sub{ color: ${color}}`]}>
+                <figure>
+                    <img src={data?.imgSrc} />
+                </figure>
+                <div className="text">
+                    <span className="title">{data?.title}</span>
+                    <span className="singer">{data?.singer}</span>
+                    <span className="release sub">
+                        {`${t("musicInfo.releaseDate")}: ${data?.releaseDate}`}
+                    </span>
+                    <span className="genre sub">
+                        {`${t("musicInfo.genre")}: ${data?.genre}`}
+                    </span>
+                    <Vote
+                        count={data?.vote}
+                        isVote={true}
+                    />
+                </div>
+            </SectionWrapper >
+            <SectionWrapper style={lyricesStyle}>
+                <h2 className="lyrics-title">{t("musicInfo.lyrics")}</h2>
+                {data?.lyrics}
+            </SectionWrapper>
+        </React.Fragment>
     );
 }
 
@@ -50,7 +60,7 @@ const style = css`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    line-height: 1.2;
+    line-height: 1.4;
     figure {
         width: 10rem;
         height: 10rem;
@@ -74,10 +84,21 @@ const style = css`
             font-size: 1.3rem;
         }
 
-        .small {
+        .sub {
             font-size: 0.8rem;
         }
     }
 `;
 
+const lyricesStyle = css`
+    margin-top: 0.5rem;
+    width: 80vw;
+    overflow-y: scroll;
+
+    .lyrics-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+`;
 export default MusicInfo;

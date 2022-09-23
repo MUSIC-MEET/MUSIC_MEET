@@ -34,7 +34,8 @@ const DarkThemeInit = {
     sectionWrapper: { 
         background: "rgb(12,12,12)",
         borderColor: "rgb(88,88,88)"
-    }
+    },
+    fontStyle2: { color: "#b2b0b0" }
 };
 
 const LightThemeInit = {
@@ -69,7 +70,8 @@ const LightThemeInit = {
     sectionWrapper: { 
         background: "rgb(22,22,22)",
         borderColor: "rgb(88,88,88)"
-    }
+    },
+    fontStyle2: { color: "#b2b0b0" }
 };
 
 function ThemeContextProvider(props) {

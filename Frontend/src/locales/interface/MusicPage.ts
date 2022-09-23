@@ -3,6 +3,7 @@ interface MusicPage {
     musicInfo: {
         releaseDate: string;
         genre: string;
+        lyrics: string;
     }
 }
 
