@@ -5,19 +5,19 @@ import Submit from "components/common/Submit";
 import React from "react";
 
 
-interface InputFormProps {
-    comment: string;
+interface CommentInputFormProps {
+    value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     text: {
         placeholder: string;
         submit: string;
     }
-    isLogin: boolean;
+    isLogin?: boolean;
 }
 
-function InputForm(props: InputFormProps) {
-    const { comment, onChange, onSubmit, text, isLogin } = props;
+function CommentInputForm(props: CommentInputFormProps) {
+    const { value, onChange, onSubmit, text, isLogin } = props;
     return (
         <Form
             direction="row"
@@ -27,7 +27,7 @@ function InputForm(props: InputFormProps) {
             <Input
                 input={{
                     type: "text",
-                    value: comment,
+                    value: value,
                     onChange: onChange,
                     placeholder: text.placeholder,
                     disabled: !isLogin,
@@ -57,4 +57,4 @@ const formStyle = css`
     
 `;
 
-export default React.memo(InputForm);
+export default React.memo(CommentInputForm);

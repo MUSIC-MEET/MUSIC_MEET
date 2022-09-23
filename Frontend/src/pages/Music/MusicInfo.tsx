@@ -73,12 +73,12 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
 }
 
 const style = css`
-    width: 80vw;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     line-height: 1.4;
+    
     figure {
         width: 10rem;
         height: 10rem;
@@ -109,8 +109,6 @@ const style = css`
 `;
 
 const lyricesStyle = css`
-    margin-top: 0.5rem;
-    width: 80vw;
     overflow-y: scroll;
 
     .lyrics-title {
