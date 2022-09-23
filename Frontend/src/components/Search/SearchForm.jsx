@@ -4,13 +4,13 @@ import { css } from "@emotion/react";
 import ThemeContext from "../../store/ThemeContext";
 import SearchIcon from "@mui/icons-material/Search";
 
-function SearchForm({ keyword, onChange }) {
+function SearchForm({ keyword, onChange, onSubmit }) {
     const { t } = useTranslation("menu");
     const ctx = useContext(ThemeContext);
     const { fontColor, searchBackground } = ctx.themeStyle.menu;
 
     return (
-        <form css={style}>
+        <form css={style} onSubmit={onSubmit}>
             <SearchIcon className="search-icon" />
             <input
                 css={css`color: ${fontColor}; background: ${searchBackground};`}
