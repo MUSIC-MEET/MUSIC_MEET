@@ -70,7 +70,6 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
 
 const style = css`
     width: 80vw;
-    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
