@@ -10,7 +10,7 @@ export default {
         "menu4" : "DJ Remix",
     },
     search: {
-        "placeholder" : "Search MUSIC MEET"
+        "placeholder" : "Search MUSIC"
     },
     subRoutes: {
         "menu1" : "Settings"

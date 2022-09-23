@@ -28,7 +28,7 @@ function Menu(props) {
 
 const navStyle = css`
     width: 17.5rem;
-    height: 100vh;
+    min-height: 100vh;
     border-right: 2px solid #555555;
     display: flex;
     flex-direction: column;

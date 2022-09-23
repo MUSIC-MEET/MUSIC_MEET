@@ -6,12 +6,14 @@ import Result from "./ResultList";
 import { css } from "@emotion/react";
 import _ from "lodash";
 import SearchMusicType from "./SearchMusicType";
+import { useNavigate } from "react-router-dom";
 
 
 function Search() {
     const [keyword, setKeyword] = useState<string>("");
     const [result, setResult] = useState<SearchMusicType[]>([]);
     const [resultShwon, setResultShown] = useState<boolean>(false);
+    const navigator = useNavigate();
 
     const { refetch } = useQuery(["autoKeyWord", keyword], () => getList({ keyword }), {
         suspense: false,
@@ -20,9 +22,16 @@ function Search() {
         onSuccess: (res) => {
             setResult(res);
         },
+
+        onError: (err) => {
+            setResult([]);
+        }
     });
 
-
+    const onSubmint = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        navigator(`/music/${result[0].musicNum}`);
+    }, [navigator, result]);
 
     const debounceOnChange = useMemo(() => _.debounce(() => {
         refetch();
@@ -58,6 +67,7 @@ function Search() {
             <SearchForm
                 keyword={keyword}
                 onChange={onChangeKeyWord}
+                onSubmit={onSubmint}
             />
             {resultShwon &&
                 <Result

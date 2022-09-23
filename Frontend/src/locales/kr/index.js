@@ -16,3 +16,4 @@ export { default as genreBoardViewer } from "./GenreBoardViewer";
 export { default as newLoginAlertModal } from "./NewLoginAlertModal";
 export { default as duplicateVoteModal } from "./DuplicateVoteModal";
 export { default as genreBoardSearchPage } from "./GenreBoardSearchPage";
+export { default as musicPage } from "./MusicPage";

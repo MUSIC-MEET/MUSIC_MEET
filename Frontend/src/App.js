@@ -21,6 +21,7 @@ import NotFoundPage from "./pages/NotFound/Index";
 const rootStyle = css`
     display: flex;
     flex-direction: row;
+    width: 100%;
 `;
 
 const queryClient = new QueryClient({

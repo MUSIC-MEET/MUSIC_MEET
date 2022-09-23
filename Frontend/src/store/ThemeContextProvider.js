@@ -14,7 +14,8 @@ const DarkThemeInit = {
             background: "#222222"
         },
         clicked: "rgb(255, 210, 0)",
-        hover: "rgb(255,255,255)"
+        hover: "rgb(255,255,255)",
+        
     },
     content: {
         background: "rgb(22,22,22)",
@@ -29,6 +30,10 @@ const DarkThemeInit = {
     },
     secondFont: {
         fontColor: "#CCCCCC"
+    },
+    sectionWrapper: { 
+        background: "rgb(12,12,12)",
+        borderColor: "rgb(88,88,88)"
     }
 };
 
@@ -45,7 +50,7 @@ const LightThemeInit = {
             background: "rgb(250,249,250)"
         },
         clicked: "rgb(93, 191, 185)",
-        hover: "rgb(88, 88, 88)"
+        hover: "rgb(88, 88, 88)",
     },
     content: {
         background: "rgb(255,255,255)",
@@ -60,6 +65,10 @@ const LightThemeInit = {
     },
     secondFont: {
         fontColor: "#222222"
+    },
+    sectionWrapper: { 
+        background: "rgb(22,22,22)",
+        borderColor: "rgb(88,88,88)"
     }
 };
 
