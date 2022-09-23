@@ -273,6 +273,86 @@ public class SoundTrackService
 
 
     //
+    // 음악 댓글 수정
+    //
+    public boolean modifySoundTrackComment(int userNum, int musicCommentNum, String comment)
+    {
+        boolean result = false;
+        try
+        {
+            sql = "UPDATE musicComment SET content = ? WHERE musicCommentNum = ? AND userNum = ? AND state = 0";
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, comment);
+            pstmt.setInt(2, musicCommentNum);
+            pstmt.setInt(3, userNum);
+
+            rsInt = pstmt.executeUpdate();
+            if (rsInt > 0)
+            {
+                result = true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
+
+    //
+    // 음악 댓글 삭제
+    //
+    public boolean deleteSoundTrackComment(int userNum, int musicCommentNum)
+    {
+        boolean result = false;
+
+        try
+        {
+            sql = "UPDATE musicComment SET state = 1 WHERE musicCommentNum = ? AND userNum = ? AND state = 0";
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, musicCommentNum);
+            pstmt.setInt(2, userNum);
+
+            rsInt = pstmt.executeUpdate();
+            if (rsInt > 0)
+            {
+                result = true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
+
+    //
     // 음악 검색창
     //
     public ArrayList<Response_searchSoundTrack_Window> searchSoundTrack_Window(final String keyWord)
@@ -365,5 +445,52 @@ public class SoundTrackService
         return response_getSoundTrackInfo;
 
 
+    }
+
+
+    //
+    // 음악 정보 좋아요
+    //
+    public boolean addMusicCommentVote(final int usernum, final int musicCommentNum)
+    {
+        boolean result = false;
+        boolean result2 = false;
+        try
+        {
+            sql = "INSERT INTO MusicVote(MusicNum, userNum) VALUES(?,?)";
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, musicCommentNum);
+            pstmt.setInt(2, usernum);
+            rsInt = pstmt.executeUpdate();
+
+            if (rsInt > 0)
+            {
+                result = true;
+            }
+
+            //sql = "UPDATE Music SET vote WHERE"
+
+
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
     }
 }
