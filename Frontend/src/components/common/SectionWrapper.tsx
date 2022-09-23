@@ -21,7 +21,7 @@ function SectionWrapper(props: SectionWrapperProps) {
     );
 }
 
-const Section = styled.div<{ backgroundColor: string; }>`
+const Section = styled.section<{ backgroundColor: string; }>`
     background: ${(props) => props.backgroundColor};
     background: rgb(31, 31, 31);
     padding: 1rem;

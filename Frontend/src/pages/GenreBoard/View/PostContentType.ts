@@ -2,7 +2,7 @@
 interface PostContentType {
     title: string;
     content: string;
-    nickname: string;
+    user: string;
     upvote: string;
     downvote: string;
     imgSrc: string;

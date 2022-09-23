@@ -5,7 +5,8 @@ const text: MusicPage = {
     musicInfo: {
         releaseDate: "Release Date",
         genre: "Genre",
-        lyrics: "lyrics"
+        lyrics: "lyrics",
+        showLyrics: "Show lyrics"
     }
 };
 

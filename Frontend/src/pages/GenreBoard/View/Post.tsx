@@ -37,7 +37,7 @@ function Post() {
             <AdditionalInfo className="post-info" fontColor={fontColor}>
                 <div className="post-writer-info">
                     <img className="profile-img" src={data?.imgSrc} />
-                    <span className="post-writer">{data?.nickname}</span>
+                    <span className="post-writer">{data?.user}</span>
                 </div>
                 <div className="post-info">
                     <div className="post-date wrapper">
@@ -63,7 +63,7 @@ function Post() {
                 downvote={data?.downvote}
             />
             <MoreActions
-                writer={data!.nickname}
+                writer={data!.user}
                 genre={genre}
                 num={num}
             />
