@@ -16,6 +16,7 @@ public class Response_getSoundTrackInfo
     private String releaseDate;
     private String lyrics;
     private int vote;
+    private boolean isvote;
     private String genre;
 
 }

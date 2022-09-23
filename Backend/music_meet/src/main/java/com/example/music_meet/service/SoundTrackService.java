@@ -250,7 +250,8 @@ public class SoundTrackService
             pstmt.setString(3, comment);
             pstmt.setTimestamp(4, date);
 
-            System.out.println(rsInt);
+            rsInt = pstmt.executeUpdate();
+
             if (rsInt > 0 )
             {
                 result = true;
@@ -402,7 +403,7 @@ public class SoundTrackService
     //
     // 음악 정보 호출
     //
-    public Response_getSoundTrackInfo getSoundTrackInfo(int musicNum)
+    public Response_getSoundTrackInfo getSoundTrackInfo(final int userNum, final int musicNum)
     {
         Response_getSoundTrackInfo response_getSoundTrackInfo = new Response_getSoundTrackInfo();
         try
@@ -427,8 +428,28 @@ public class SoundTrackService
                 response_getSoundTrackInfo.setReleaseDate(rs.getString("releaseDate"));
                 response_getSoundTrackInfo.setLyrics(rs.getString("lyrics"));
                 response_getSoundTrackInfo.setVote(rs.getInt("vote"));
+                response_getSoundTrackInfo.setIsvote(false);
                 response_getSoundTrackInfo.setGenre(rs.getString("name"));
             }
+
+            System.out.println(userNum);
+            System.out.println(musicNum);
+            sql = "SELECT musicNum FROM MusicVote WHERE userNum = 2 AND musicNum = ?";
+
+            pstmt = conn.prepareStatement(sql);
+            //pstmt.setInt(1, userNum);
+            pstmt.setInt(1, musicNum);
+            rs = pstmt.executeQuery();
+
+            if(rs.next())
+                response_getSoundTrackInfo.setIsvote(true);
+            else
+                response_getSoundTrackInfo.setIsvote(false);
+
+
+
+
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -451,7 +472,7 @@ public class SoundTrackService
     //
     // 음악 정보 좋아요
     //
-    public boolean addMusicCommentVote(final int usernum, final int musicCommentNum)
+    public boolean addMusicCommentVote(final int usernum, final int musicNum)
     {
         boolean result = false;
         boolean result2 = false;
@@ -464,7 +485,7 @@ public class SoundTrackService
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, musicCommentNum);
+            pstmt.setInt(1, musicNum);
             pstmt.setInt(2, usernum);
             rsInt = pstmt.executeUpdate();
 
@@ -473,9 +494,16 @@ public class SoundTrackService
                 result = true;
             }
 
-            //sql = "UPDATE Music SET vote WHERE"
+            sql = "UPDATE Music SET vote = " +
+                    "(SELECT COUNT(userNum) FROM MusicVote WHERE musicNum = ?) " +
+                    "WHERE musicNum = ?";
 
+            pstmt.setInt(1, musicNum);
+            pstmt.setInt(2, musicNum);
 
+            if (rs.next()){
+                result2 = true;
+            }
 
 
         } catch (SQLException e) {
@@ -491,6 +519,6 @@ public class SoundTrackService
                 throw new RuntimeException(e);
             }
         }
-        return result;
+        return result && result2;
     }
 }
