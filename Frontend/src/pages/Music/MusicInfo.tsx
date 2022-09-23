@@ -17,6 +17,10 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
         //
     }, [musicNum]);
 
+    useEffect(() => {
+        setLyricsShown(false);
+    }, [musicNum]);
+
     const { data } =
         useQuery(
             ["musicInfo", musicNum],
