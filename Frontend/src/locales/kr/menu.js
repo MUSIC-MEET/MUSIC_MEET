@@ -10,7 +10,7 @@ export default {
         "menu4" : "DJ 리믹스",
     },
     search: {
-        "placeholder" : "MUSIC MEET 검색"
+        "placeholder" : "음악 검색"
     },
     subRoutes: {
         "menu1" : "환경설정"
