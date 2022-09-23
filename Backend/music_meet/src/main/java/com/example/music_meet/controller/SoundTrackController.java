@@ -72,6 +72,51 @@ public class SoundTrackController
 
 
     //
+    // 음악 댓글 수정.md
+    //
+    @RequestMapping(path = "/music/comment", method = RequestMethod.PUT)
+    public ResponseEntity<Object> modifySoundTrackComment(@RequestBody Map<String,String> requestMap)
+    {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int userNum = Integer.parseInt((String)request.getAttribute("userNum"));
+        final String comment = requestMap.get("content");
+        final int musicCommentNum =  Integer.parseInt(requestMap.get("musicCommentNum"));
+
+       if(soundTrackService.modifySoundTrackComment(userNum, musicCommentNum, comment))
+           return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+       else
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+
+    }
+
+
+    //
+    // 음악 댓글 삭제.md
+    //
+    @RequestMapping(path = "/music/comment", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteSoundTrackComment(@RequestBody Map<String,String> requestMap)
+    {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int userNum = Integer.parseInt((String)request.getAttribute("userNum"));
+        final int musicCommentNum =  Integer.parseInt(requestMap.get("musicCommentNum"));
+
+        if (soundTrackService.deleteSoundTrackComment(userNum, musicCommentNum))
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+
+    //
     // 음악 검색창.md
     //
     @RequestMapping(path = "/music/search/{keyword}", method = RequestMethod.GET)
@@ -92,6 +137,21 @@ public class SoundTrackController
     @RequestMapping(path = "/music/{musicnum}", method = RequestMethod.GET)
     public ResponseEntity<Object> getSoundTrackInfo(@PathVariable("musicnum")final int musicNum)
     {
+        //
+        // 함수로 되는지 확인
+        //
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int usernum = Integer.parseInt((String)request.getAttribute("userNum"));
+        
+        
+        // 
+        // 유저 넘버로 음악에 좋아요 눌렀는지 확인하는거 필요
+        //
+        
         Response_getSoundTrackInfo response_getSoundTrackInfo =  soundTrackService.getSoundTrackInfo(musicNum);
 
 
@@ -100,6 +160,28 @@ public class SoundTrackController
         else
             return new ResponseEntity<>(response_getSoundTrackInfo,HttpStatus.OK);
     }
+
+
+    //
+    // 음악 정보 좋아요.md
+    //
+    @RequestMapping(path = "/music/vote/{musicCommentNum}", method = RequestMethod.GET)
+    public ResponseEntity<Object> addMusicCommentVote(@PathVariable("musicCommentNum")final int musicCommentNum)
+    {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int usernum = Integer.parseInt((String)request.getAttribute("userNum"));
+
+        if (soundTrackService.addMusicCommentVote(usernum, musicCommentNum))
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+
 
     //
     // 음악 이미지 파일 리턴.md
