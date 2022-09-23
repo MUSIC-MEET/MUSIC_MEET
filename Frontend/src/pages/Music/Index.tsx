@@ -4,6 +4,10 @@ import Content from "components/UI/Content";
 import MusicInfo from "./MusicInfo";
 import Loading from "components/common/Loading";
 import Title from "components/common/Title";
+import Comments from "./Comments";
+import ErrorBoundary from "./ErrorBoundary";
+import { css } from "@emotion/react";
+
 
 function Index() {
     const params = useParams<{ musicNum: string; }>();
@@ -14,13 +18,24 @@ function Index() {
     }, [params.musicNum]);
 
     return (
-        <Content>
+        <Content css={style}>
             <Title>{"곡 정보"}</Title>
-            <Suspense fallback={<Loading />}>
-                <MusicInfo musicNum={musicNum} />
-            </Suspense>
+            <ErrorBoundary>
+                <Suspense fallback={<Loading />}>
+                    <MusicInfo musicNum={musicNum} />
+                    <Comments musicNum={musicNum} />
+                </Suspense>
+            </ErrorBoundary>
         </Content>
     );
 }
+
+const style = css`
+    .section-wrapper {
+        width: 80vw;
+        margin-bottom: 0.5rem;
+    }
+
+`;
 
 export default Index;

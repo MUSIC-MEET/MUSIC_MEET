@@ -6,6 +6,7 @@ import ThemeContext from "store/ThemeContext";
 interface SectionWrapperProps {
     children: React.ReactNode;
     style?: any;
+    className?: string
 }
 
 function SectionWrapper(props: SectionWrapperProps) {
@@ -13,6 +14,7 @@ function SectionWrapper(props: SectionWrapperProps) {
     const { backgroundColor } = ctx.themeStyle.sectionWrapper;
     return (
         <Section
+            className={`${props.className} section-wrapper`}
             backgroundColor={backgroundColor}
             css={[props.style]}
         >

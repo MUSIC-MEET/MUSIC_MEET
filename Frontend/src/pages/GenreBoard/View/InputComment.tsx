@@ -3,10 +3,11 @@ import React, { useCallback, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import writeComment from "utils/RequestApis/GenreBoard/writeComment";
-import InputForm from "./InputForm";
+
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
+import CommentInputForm from "components/common/CommentInputForm";
 
 function InputComment() {
     const params = useParams<{ genre: string; num: string }>();
@@ -37,8 +38,8 @@ function InputComment() {
     }, []);
     return (
         <React.Fragment>
-            <InputForm
-                comment={comment}
+            <CommentInputForm
+                value={comment}
                 onChange={onChange}
                 onSubmit={onSubmit}
                 text={{

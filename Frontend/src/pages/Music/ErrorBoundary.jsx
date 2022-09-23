@@ -1,9 +1,7 @@
-
 import React from "react";
-import NotFoundPost from "./View/NotFoundPost";
 import NewLoginAlertModal from "components/AlertModal/NewLoginAlertModal";
-import DeletePostAlert from "./View/DeletePostAlert";
 import DuplicateVoteModal from "../../components/AlertModal/DuplicateVoteModal";
+import NotFoundMusic from "./NotFoundMusic";
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -36,7 +34,7 @@ class ErrorBoundary extends React.Component {
         if (this.state.hasError && this.state.errorCode === "404") {
             // 폴백 UI를 커스텀하여 렌더링할 수 있습니다.
             return (
-                <NotFoundPost />
+                <NotFoundMusic />
             );
         }
         else if(this.state.hasError && this.state.errorCode === "401" ) {
@@ -49,7 +47,10 @@ class ErrorBoundary extends React.Component {
         }
         else if(this.state.hasError && this.state.errorCode === "400" ) {
             return(
-                <DeletePostAlert />
+                // <DeletePostAlert />
+                <div>
+                    aa
+                </div>
             );
         }
         else if(this.state.hasError && this.state.errorCode === "403" ) {
