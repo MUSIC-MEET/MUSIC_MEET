@@ -11,6 +11,7 @@ interface VoteProps {
 
 function Vote(props: VoteProps) {
     const { count, isVote, onClick } = props;
+    console.log(isVote);
     return (
         <div css={style} onClick={onClick}>
             {isVote ? <FavoriteIcon /> : <FavoriteBorderIcon />}
