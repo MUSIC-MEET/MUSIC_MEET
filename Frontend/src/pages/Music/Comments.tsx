@@ -1,17 +1,23 @@
 import SectionWrapper from "components/common/SectionWrapper";
 import React, { useCallback, useEffect, useState } from "react";
 import CommentInputForm from "components/common/CommentInputForm";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import writeComment from "utils/RequestApis/Music/writeComment";
 import { useTranslation } from "react-i18next";
 import CommentList from "./CommentList";
-import fetchMusicCommentList from "../../utils/RequestApis/Music/fetchCommentList";
 
 interface CommentsProps {
     musicNum: string;
     className?: string;
 }
 
+/**
+ * 음악 페이지 댓글 컴포넌트
+ * @param props 
+ * @param {string} props.musicNum 음악 번호
+ * @param {string} props.className
+ * @returns 
+ */
 function Comments(props: CommentsProps) {
     const { musicNum, className } = props;
     const [value, setValue] = useState<string>("");
@@ -20,14 +26,6 @@ function Comments(props: CommentsProps) {
     useEffect(() => {
         //
     }, [musicNum]);
-
-    const { data } = useQuery(["fetchMusicComment", musicNum],
-        () => fetchMusicCommentList({ musicNum }),
-        {
-            retry: 0,
-        }
-    );
-
 
     const { mutate } = useMutation(["writeMusicComment", musicNum], writeComment, {
         useErrorBoundary: true,
@@ -42,6 +40,7 @@ function Comments(props: CommentsProps) {
 
     const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (value.length === 0) return;
         mutate({ musicNum, comment: value });
         setValue(() => "");
     }, [musicNum, mutate, value]);
@@ -58,7 +57,9 @@ function Comments(props: CommentsProps) {
                 }}
                 isLogin={true}
             />
-            <CommentList />
+            <CommentList
+                musicNum={musicNum}
+            />
         </SectionWrapper>
     );
 }

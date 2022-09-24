@@ -9,6 +9,11 @@ import ThemeContext from "store/ThemeContext";
 import Button from "components/common/Button";
 import vote from "utils/RequestApis/Music/vote";
 
+/**
+ * 음악 페이지 음악 정보 컴포넌트
+ * @param {string} musicNum 음악 번호
+ * @returns 
+ */
 function MusicInfo({ musicNum }: { musicNum: string }) {
     const { t } = useTranslation<"musicPage">("musicPage");
     const ctx = useContext(ThemeContext);

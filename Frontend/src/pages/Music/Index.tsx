@@ -8,7 +8,10 @@ import Comments from "./Comments";
 import ErrorBoundary from "./ErrorBoundary";
 import { css } from "@emotion/react";
 
-
+/**
+ * 음악 페이지 메인
+ * @returns 
+ */
 function Index() {
     const params = useParams<{ musicNum: string; }>();
     const musicNum = params.musicNum ?? "-1";

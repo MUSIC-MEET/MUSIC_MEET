@@ -9,6 +9,13 @@ interface VoteProps {
     onClick?: () => void;
 }
 
+/**
+ * 음악 페이지 좋아요 컴포넌트
+ * @param props 
+ * @params {string} count 좋아요 수
+ * @params {boolean} isVote 좋아요 여부
+ * @returns 
+ */
 function Vote(props: VoteProps) {
     const { count, isVote, onClick } = props;
     console.log(isVote);

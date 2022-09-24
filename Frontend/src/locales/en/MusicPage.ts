@@ -13,7 +13,15 @@ const text: MusicPage = {
             placeholder: "Enter your comment",
             submit: "Submit"
         }
-    }
+    },
+    error: {
+        notFound: "Already deleted or not exist music"
+    },
+    deleteAlertModal: {
+        title: "Error",
+        content: "This music is already deleted",
+        confirm: "Confirm"
+    },
 };
 
 export default text;

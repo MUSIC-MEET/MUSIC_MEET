@@ -2,6 +2,7 @@ import React from "react";
 import NewLoginAlertModal from "components/AlertModal/NewLoginAlertModal";
 import DuplicateVoteModal from "../../components/AlertModal/DuplicateVoteModal";
 import NotFoundMusic from "./NotFoundMusic";
+import DeleteMusicAlert from "./DeleteMusicAlert";
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -47,9 +48,8 @@ class ErrorBoundary extends React.Component {
         }
         else if(this.state.hasError && this.state.errorCode === "400" ) {
             return(
-                // <DeletePostAlert />
                 <div>
-                    aa
+                    <DeleteMusicAlert />
                 </div>
             );
         }
