@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Response_getMusicComment
 {
+    private int musicCommentNum;
     private String comment;
     private String user;
     private Timestamp createAt;
