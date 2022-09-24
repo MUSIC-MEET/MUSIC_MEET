@@ -1,9 +1,11 @@
 import SectionWrapper from "components/common/SectionWrapper";
 import React, { useCallback, useEffect, useState } from "react";
 import CommentInputForm from "components/common/CommentInputForm";
-import { useMutation } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import writeComment from "utils/RequestApis/Music/writeComment";
 import { useTranslation } from "react-i18next";
+import CommentList from "./CommentList";
+import fetchMusicCommentList from "../../utils/RequestApis/Music/fetchCommentList";
 
 interface CommentsProps {
     musicNum: string;
@@ -14,15 +16,23 @@ function Comments(props: CommentsProps) {
     const { musicNum, className } = props;
     const [value, setValue] = useState<string>("");
     const { t } = useTranslation<"musicPage">("musicPage");
-
+    const queryClient = useQueryClient();
     useEffect(() => {
         //
     }, [musicNum]);
 
+    const { data } = useQuery(["fetchMusicComment", musicNum],
+        () => fetchMusicCommentList({ musicNum }),
+        {
+            retry: 0,
+        }
+    );
+
+
     const { mutate } = useMutation(["writeMusicComment", musicNum], writeComment, {
         useErrorBoundary: true,
         onSuccess: () => {
-            //
+            queryClient.invalidateQueries("fetchMusicComment");
         }
     });
 
@@ -48,6 +58,7 @@ function Comments(props: CommentsProps) {
                 }}
                 isLogin={true}
             />
+            <CommentList />
         </SectionWrapper>
     );
 }

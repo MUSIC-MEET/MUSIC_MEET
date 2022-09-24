@@ -26,6 +26,7 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
             {
                 retry: 0
             });
+
     const { mutate } =
         useMutation(
             ["musicVote", musicNum],
@@ -33,13 +34,16 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
             {
                 useErrorBoundary: true,
                 retry: 0,
+                onSuccess: () => {
+                    queryClient.invalidateQueries("musicInfo");
+
+                }
             }
         );
 
     const voteOnClickHandler = useCallback(() => {
         mutate({ musicNum });
-        queryClient.invalidateQueries(["musicInfo", musicNum]);
-    }, [musicNum, mutate, queryClient]);
+    }, [musicNum, mutate]);
 
     return (
         <React.Fragment>
