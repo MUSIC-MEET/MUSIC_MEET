@@ -1,9 +1,10 @@
+import MusicCommentType from "pages/Music/MusicCommentType";
 import customAxios from "../../customAxios";
-import MusicType from "pages/Music/MusicType";
+
 const fetchMusicCommentList = 
     ({ 
         musicNum
-    }: {musicNum: string;}): Promise<MusicType> => {
+    }: {musicNum: string;}): Promise<MusicCommentType[]> => {
         const axios = customAxios();
         return axios({
             method: "GET",
