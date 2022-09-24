@@ -161,6 +161,7 @@ public class SoundTrackController
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null)
         {
+            System.out.println("dadarqdggergefgeew");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 

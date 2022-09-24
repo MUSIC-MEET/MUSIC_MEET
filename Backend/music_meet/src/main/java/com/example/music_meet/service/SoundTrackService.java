@@ -412,13 +412,14 @@ public class SoundTrackService
         try
         {
             sql = "SELECT a.imgSrc, a.origin_title, a.origin_singer, a.album, a.releaseDate, a.lyrics, a.vote, b.name" +
-                    " FROM music a, genrestate b WHERE a.genre = b.genre AND musicnum = ? AND state = 0";
+                    " FROM music a, genrestate b WHERE a.genre = b.genre AND a.musicnum = ? AND a.state = 0";
             //
             // DB구간
             //
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
+
             pstmt.setInt(1, musicNum);
             rs = pstmt.executeQuery();
 
@@ -630,7 +631,7 @@ public class SoundTrackService
         ArrayList<Response_getMusicComment> response_getMusicComments = new ArrayList<>();
         try
         {
-            sql = "SELECT b.content, b.createdAt, a.nickname FROM user a, musicComment b WHERE b.musicNum = ? AND b.state = 0 AND a.userNum = b.userNum";
+            sql = "SELECT b.musicCommentNum, b.content, b.createdAt, a.nickname FROM user a, musicComment b WHERE b.musicNum = ? AND b.state = 0 AND a.userNum = b.userNum";
             //
             // DB구간
             //
@@ -645,6 +646,7 @@ public class SoundTrackService
             while (rs.next())
             {
                 Response_getMusicComment response_getMusicComment = new Response_getMusicComment();
+                response_getMusicComment.setMusicCommentNum(rs.getInt("musicCommentNum"));
                 response_getMusicComment.setComment(rs.getString("content"));
                 response_getMusicComment.setUser(rs.getString("nickname"));
                 response_getMusicComment.setCreateAt(rs.getTimestamp("createdAt"));
