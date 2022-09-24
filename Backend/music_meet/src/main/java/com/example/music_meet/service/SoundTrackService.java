@@ -381,7 +381,7 @@ public class SoundTrackService
             {
                 Response_searchSoundTrack_Window response_searchSoundTrack_window = new Response_searchSoundTrack_Window();
                 response_searchSoundTrack_window.setMusicNum(rs.getInt("musicnum"));
-                response_searchSoundTrack_window.setImgSrc(rs.getString("imgsrc"));
+                response_searchSoundTrack_window.setImgSrc(serverURL + ":" + serverPort + "/music/image/"+ rs.getString("imgsrc"));
                 response_searchSoundTrack_window.setTitle(rs.getString( "origin_title"));
                 response_searchSoundTrack_window.setSinger(rs.getString("origin_singer"));
                 response_searchSoundTrack_windows.add(response_searchSoundTrack_window);
@@ -631,7 +631,7 @@ public class SoundTrackService
         ArrayList<Response_getMusicComment> response_getMusicComments = new ArrayList<>();
         try
         {
-            sql = "SELECT b.musicCommentNum, b.content, b.createdAt, a.nickname FROM user a, musicComment b WHERE b.musicNum = ? AND b.state = 0 AND a.userNum = b.userNum";
+            sql = "SELECT b.musicCommentNum, b.content, b.createdAt, a.nickname, a.userimage FROM user a, musicComment b WHERE b.musicNum = ? AND b.state = 0 AND a.userNum = b.userNum";
             //
             // DB구간
             //
@@ -646,10 +646,11 @@ public class SoundTrackService
             while (rs.next())
             {
                 Response_getMusicComment response_getMusicComment = new Response_getMusicComment();
-                response_getMusicComment.setMusicCommentNum(rs.getInt("musicCommentNum"));
+                response_getMusicComment.setCommentNum(rs.getInt("musicCommentNum"));
                 response_getMusicComment.setComment(rs.getString("content"));
                 response_getMusicComment.setUser(rs.getString("nickname"));
                 response_getMusicComment.setCreateAt(rs.getTimestamp("createdAt"));
+                response_getMusicComment.setImgSrc(serverURL + ":" + serverPort + "/board" + "/image/" + rs.getString("userImage"));
                 response_getMusicComments.add(response_getMusicComment);
                 i++;
             }

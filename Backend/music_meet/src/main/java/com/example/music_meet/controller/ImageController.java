@@ -31,12 +31,13 @@ public class ImageController {
 
     //@Value("${file.image.temp}")
     final private String temp = System.getProperty("user.dir") + File.separator + "temp" + File.separator;
+    final private String music_image = System.getProperty("user.dir") + File.separator + "music_image" + File.separator;
 
     //
     // 유저 프로필 이미지 출력.md
     //
     @RequestMapping(path="/user/image/{imageName}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> sendImage(@PathVariable("imageName") String imageName) throws IOException
+    public ResponseEntity<byte[]> sendImage(@PathVariable("imageName") final String imageName) throws IOException
     {
         InputStream imageStream = new FileInputStream(profileimage + imageName);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -48,12 +49,28 @@ public class ImageController {
     // 게시판 이미지 출력.md
     //
     @RequestMapping(path = "/board/image/{imageName}", method = RequestMethod.GET)
-    public ResponseEntity<Object> returnBoardImage(@PathVariable("imageName") String imageName) throws IOException
+    public ResponseEntity<Object> returnBoardImage(@PathVariable("imageName") final String imageName) throws IOException
     {
+
         InputStream imageStream = new FileInputStream(temp + imageName);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
     }
+
+
+    //
+    // 음악 이미지 출력.md
+    //
+    @RequestMapping(path = "/music/image/{imageName}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<Object> returnMusicImage(@PathVariable("imageName") final String imageName) throws IOException
+    {
+
+        InputStream imageStream = new FileInputStream(music_image + imageName);
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
+    }
+
 
 }
