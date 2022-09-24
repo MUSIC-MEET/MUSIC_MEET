@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import deleteComment from "utils/RequestApis/Music/deleteComment";
+import editComment from "utils/RequestApis/Music/editComment";
 import fetchMusicCommentList from "utils/RequestApis/Music/fetchCommentList";
 import Comment from "./Comment";
 function CommentList({ musicNum }: { musicNum: string; }) {
@@ -27,14 +28,22 @@ function CommentList({ musicNum }: { musicNum: string; }) {
         }
     );
 
+    const { mutate: editMutate } = useMutation(["editMusicComment", musicNum], editComment,
+        {
+            useErrorBoundary: true,
+            onSuccess: () => {
+                queryClient.invalidateQueries("fetchMusicComment");
+            }
+        }
+    );
+
     const onDeleteHandler = useCallback((commentNum: string) => {
-        console.log("delete", commentNum);
         deleteMutate({ commentNum });
     }, [deleteMutate]);
 
-    const onEditHandler = useCallback((commentNum: string) => {
-        console.log("edit", commentNum);
-    }, []);
+    const onEditHandler = useCallback((commentNum: string, newComment: string) => {
+        editMutate({ commentNum, newComment });
+    }, [editMutate]);
     return (
         <ul>
             {data?.map((comment) => (

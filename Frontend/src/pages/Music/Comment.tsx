@@ -39,11 +39,12 @@ function Comment(props: MusicCommentType & ActionHandlerType) {
         setNewComment(() => e.target.value);
     }, []);
 
-    // const editCommentHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     editMutate({ genre, commentNum, newComment });
-    //     changEditMode();
-    // }, [changEditMode, commentNum, editMutate, genre, newComment]);
+    const editCommentHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (newComment.length === 0) return;
+        onEdit(commentNum, newComment);
+        changEditMode();
+    }, [changEditMode, commentNum, newComment, onEdit]);
 
     return (
         <li css={style}>
@@ -75,7 +76,7 @@ function Comment(props: MusicCommentType & ActionHandlerType) {
                 {isEditMode ?
                     <React.Fragment>
                         <Form
-                            onSubmit={() => {/* TODO */ }}
+                            onSubmit={editCommentHandler}
                             direction="row"
                         >
                             <Input
