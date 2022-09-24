@@ -83,9 +83,9 @@ public class SoundTrackController
         }
         final int userNum = Integer.parseInt((String)request.getAttribute("userNum"));
         final String comment = requestMap.get("content");
-        final int musicCommentNum =  Integer.parseInt(requestMap.get("musicCommentNum"));
+        final int commentNum =  Integer.parseInt(requestMap.get("commentNum"));
 
-       if(soundTrackService.modifySoundTrackComment(userNum, musicCommentNum, comment))
+       if(soundTrackService.modifySoundTrackComment(userNum, commentNum, comment))
            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
        else
            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -106,9 +106,9 @@ public class SoundTrackController
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         final int userNum = Integer.parseInt((String)request.getAttribute("userNum"));
-        final int musicCommentNum =  Integer.parseInt(requestMap.get("musicCommentNum"));
+        final int commentNum =  Integer.parseInt(requestMap.get("commentNum"));
 
-        if (soundTrackService.deleteSoundTrackComment(userNum, musicCommentNum))
+        if (soundTrackService.deleteSoundTrackComment(userNum, commentNum))
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -161,7 +161,6 @@ public class SoundTrackController
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null)
         {
-            System.out.println("dadarqdggergefgeew");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
@@ -184,10 +183,6 @@ public class SoundTrackController
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-
-
-
-
     }
 
 
@@ -197,27 +192,12 @@ public class SoundTrackController
     @RequestMapping(path = "/music/comment/{musicNum}", method = RequestMethod.GET)
     public ResponseEntity<Object> getMusicComment(@PathVariable("musicNum")final int musicNum)
     {
-
         ArrayList<Response_getMusicComment> response_getMusicComments = soundTrackService.getMusicComment(musicNum);
 
         if (response_getMusicComments.size() == 0)
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            return new ResponseEntity<>(response_getMusicComments, HttpStatus.OK);
         else
             return new ResponseEntity<>(response_getMusicComments, HttpStatus.OK);
-    }
-
-
-
-    //
-    // 음악 이미지 파일 리턴.md
-    //
-    @RequestMapping(path = "/music/image/{imagename}", method = RequestMethod.GET)
-    public ResponseEntity<Object> returnSoundTrackImage(@PathVariable("imagename")final int imagename)
-    {
-
-
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
