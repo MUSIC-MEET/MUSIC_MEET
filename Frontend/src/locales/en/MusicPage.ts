@@ -13,6 +13,9 @@ const text: MusicPage = {
             placeholder: "Enter your comment",
             submit: "Submit"
         }
+    },
+    error: {
+        notFound: "Already deleted or not exist music"
     }
 };
 

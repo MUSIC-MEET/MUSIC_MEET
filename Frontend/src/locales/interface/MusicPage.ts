@@ -12,6 +12,10 @@ interface MusicPage {
             submit: string;
         }
     }
+
+    error: {
+        notFound: string;
+    }
 }
 
 export default MusicPage;

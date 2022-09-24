@@ -13,6 +13,9 @@ const text: MusicPage = {
             placeholder: "댓글을 입력하세요",
             submit: "등록"
         }
+    },
+    error: {
+        notFound: "삭제된 음악이거나 존재하지 않는 음악입니다"
     }
 };
 
