@@ -16,6 +16,12 @@ interface MusicPage {
     error: {
         notFound: string;
     }
+
+    deleteAlertModal: {
+        title: string;
+        content: string;
+        confirm: string;
+    },
 }
 
 export default MusicPage;
