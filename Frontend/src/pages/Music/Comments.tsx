@@ -11,6 +11,13 @@ interface CommentsProps {
     className?: string;
 }
 
+/**
+ * 음악 페이지 댓글 컴포넌트
+ * @param props 
+ * @param {string} props.musicNum 음악 번호
+ * @param {string} props.className
+ * @returns 
+ */
 function Comments(props: CommentsProps) {
     const { musicNum, className } = props;
     const [value, setValue] = useState<string>("");

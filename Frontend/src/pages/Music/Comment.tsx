@@ -19,8 +19,8 @@ interface ActionHandlerType {
 }
 
 /**
- * 음악 댓글 컴포넌트
- * @param props CoommentType
+ * 음악 댓글 아이템 컴포넌트
+ * @param props CommentType
  * @returns 
  */
 function Comment(props: MusicCommentType & ActionHandlerType) {

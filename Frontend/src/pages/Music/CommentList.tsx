@@ -4,8 +4,14 @@ import deleteComment from "utils/RequestApis/Music/deleteComment";
 import editComment from "utils/RequestApis/Music/editComment";
 import fetchMusicCommentList from "utils/RequestApis/Music/fetchCommentList";
 import Comment from "./Comment";
-function CommentList({ musicNum }: { musicNum: string; }) {
 
+/**
+ * 음악 페이지 댓글 리스트 컴포넌트
+ * @param props
+ * @param {string} props.musicNum 음악 번호
+ * @returns 
+ */
+function CommentList({ musicNum }: { musicNum: string; }) {
     useEffect(() => {
         //
     }, [musicNum]);
@@ -44,6 +50,7 @@ function CommentList({ musicNum }: { musicNum: string; }) {
     const onEditHandler = useCallback((commentNum: string, newComment: string) => {
         editMutate({ commentNum, newComment });
     }, [editMutate]);
+
     return (
         <ul>
             {data?.map((comment) => (

@@ -1,3 +1,6 @@
+/**
+ * 음악 페이지 음악 타입
+ */
 interface MusicType {
     imgSrc: string;
     title: string;
