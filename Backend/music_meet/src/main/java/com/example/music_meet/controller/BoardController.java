@@ -93,6 +93,7 @@ public class BoardController
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
 
+
     //
     //  장르 게시판 글 수정.md
     //
@@ -120,6 +121,7 @@ public class BoardController
         }
     }
 
+
     //
     //  장르 게시판 글 삭제.md
     //
@@ -139,6 +141,7 @@ public class BoardController
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+
     //
     // 장르게시판 글 목록 호출.md
     //
@@ -149,6 +152,7 @@ public class BoardController
         genreboards = boardService.getGenreBoarList(new Request_GetGenreBoardList(genre, page));
         return new ResponseEntity<>(genreboards, HttpStatus.OK);
     }
+
 
     //
     // 장르 게시판 글 호출.md
@@ -177,6 +181,7 @@ public class BoardController
             return new ResponseEntity<>(response_getGenreBoardForGenreNum, HttpStatus.OK);
         }
     }
+
 
     //
     // 장르 게시판 추천,비추천 선택.md
@@ -231,6 +236,7 @@ public class BoardController
             return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
 
+
     //
     // 장르 게시판 글 제목으로 검색.md
     //
@@ -245,6 +251,7 @@ public class BoardController
             return new ResponseEntity<>(genreboards,HttpStatus.OK);
     }
 
+
     //
     // 장르 게시판 글 닉네임으로 검색.md
     //
@@ -257,6 +264,7 @@ public class BoardController
         else
             return new ResponseEntity<>(genreboards,HttpStatus.OK);
     }
+
 
     //
     // 장르 게시판 글 제목+닉네임으로 검색.md
