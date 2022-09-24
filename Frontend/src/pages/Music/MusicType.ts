@@ -5,6 +5,7 @@ interface MusicType {
     releaseDate: string;
     lyrics: string;
     vote: string;
+    isVote: boolean;
     genre: string;
 }
 

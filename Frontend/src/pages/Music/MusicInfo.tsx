@@ -48,7 +48,7 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
                     </span>
                     <Vote
                         count={data?.vote}
-                        isVote={true}
+                        isVote={data?.isVote}
                     />
                 </div>
             </SectionWrapper >

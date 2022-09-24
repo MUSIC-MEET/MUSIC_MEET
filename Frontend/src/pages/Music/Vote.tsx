@@ -5,7 +5,7 @@ import { css } from "@emotion/react";
 
 interface VoteProps {
     count?: string;
-    isVote: boolean;
+    isVote?: boolean;
     onClick?: () => void;
 }
 
