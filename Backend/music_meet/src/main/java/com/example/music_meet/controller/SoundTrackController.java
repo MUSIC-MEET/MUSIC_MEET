@@ -1,5 +1,7 @@
 package com.example.music_meet.controller;
 
+import com.example.music_meet.dto.Response.Response_getMusicComment;
+import com.example.music_meet.dto.Response.Response_getMusicComment_2;
 import com.example.music_meet.dto.Response.Response_getSoundTrackInfo;
 import com.example.music_meet.dto.Response.Response_searchSoundTrack_Window;
 import com.example.music_meet.service.SoundTrackService;
@@ -166,10 +168,43 @@ public class SoundTrackController
         }
         final int usernum = Integer.parseInt((String)request.getAttribute("userNum"));
 
-        if (soundTrackService.addMusicCommentVote(usernum, musicNum))
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if (soundTrackService.isSelectVote(usernum, musicNum))
+        {
+            if (soundTrackService.deleteMusicCommentVote(usernum, musicNum))
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            else
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
         else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        {
+            if (soundTrackService.addMusicCommentVote(usernum, musicNum))
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            else
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+
+
+
+    }
+
+
+    //
+    // 댓글 호출.md
+    //
+    @RequestMapping(path = "/music/comment/{musicNum}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMusicComment(@PathVariable("musicNum")final int musicNum)
+    {
+
+        ArrayList<Response_getMusicComment> getMusicComments = soundTrackService.getMusicComment(musicNum);
+        Response_getMusicComment_2 response_getMusicComment_2 = new Response_getMusicComment_2();
+        response_getMusicComment_2.setMusicComments(getMusicComments);
+        if (getMusicComments.size() == 0)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(response_getMusicComment_2, HttpStatus.OK);
     }
 
 
