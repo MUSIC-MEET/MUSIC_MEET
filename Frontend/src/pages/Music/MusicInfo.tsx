@@ -1,22 +1,20 @@
 import { css } from "@emotion/react";
 import SectionWrapper from "components/common/SectionWrapper";
-import React, { useContext, useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import fetchMusicInfo from "utils/RequestApis/Music/fetchMusicInfo";
 import { useTranslation } from "react-i18next";
 import Vote from "./Vote";
 import ThemeContext from "store/ThemeContext";
 import Button from "components/common/Button";
+import vote from "utils/RequestApis/Music/vote";
 
 function MusicInfo({ musicNum }: { musicNum: string }) {
     const { t } = useTranslation<"musicPage">("musicPage");
     const ctx = useContext(ThemeContext);
     const { color } = ctx.themeStyle.fontStyle2;
     const [lyricsShwon, setLyricsShown] = useState<boolean>(false);
-    useEffect(() => {
-        //
-    }, [musicNum]);
-
+    const queryClient = useQueryClient();
     useEffect(() => {
         setLyricsShown(false);
     }, [musicNum]);
@@ -28,8 +26,20 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
             {
                 retry: 0
             });
+    const { mutate } =
+        useMutation(
+            ["musicVote", musicNum],
+            vote,
+            {
+                useErrorBoundary: true,
+                retry: 0,
+            }
+        );
 
-
+    const voteOnClickHandler = useCallback(() => {
+        mutate({ musicNum });
+        queryClient.invalidateQueries(["musicInfo", musicNum]);
+    }, [musicNum, mutate, queryClient]);
 
     return (
         <React.Fragment>
@@ -47,8 +57,9 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
                         {`${t("musicInfo.genre")}: ${data?.genre}`}
                     </span>
                     <Vote
-                        count={data?.vote}
-                        isVote={true}
+                        count={data?.voteCount}
+                        isVote={data?.isVote}
+                        onClick={voteOnClickHandler}
                     />
                 </div>
             </SectionWrapper >

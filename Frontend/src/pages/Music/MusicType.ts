@@ -4,7 +4,8 @@ interface MusicType {
     singer: string;
     releaseDate: string;
     lyrics: string;
-    vote: string;
+    voteCount: string;
+    isVote: boolean;
     genre: string;
 }
 

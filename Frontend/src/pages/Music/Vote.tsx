@@ -5,12 +5,13 @@ import { css } from "@emotion/react";
 
 interface VoteProps {
     count?: string;
-    isVote: boolean;
+    isVote?: boolean;
     onClick?: () => void;
 }
 
 function Vote(props: VoteProps) {
     const { count, isVote, onClick } = props;
+    console.log(isVote);
     return (
         <div css={style} onClick={onClick}>
             {isVote ? <FavoriteIcon /> : <FavoriteBorderIcon />}

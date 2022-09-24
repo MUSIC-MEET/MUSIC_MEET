@@ -1,5 +1,5 @@
 import SectionWrapper from "components/common/SectionWrapper";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CommentInputForm from "components/common/CommentInputForm";
 import { useMutation } from "react-query";
 import writeComment from "utils/RequestApis/Music/writeComment";
@@ -14,6 +14,10 @@ function Comments(props: CommentsProps) {
     const { musicNum, className } = props;
     const [value, setValue] = useState<string>("");
     const { t } = useTranslation<"musicPage">("musicPage");
+
+    useEffect(() => {
+        //
+    }, [musicNum]);
 
     const { mutate } = useMutation(["writeMusicComment", musicNum], writeComment, {
         useErrorBoundary: true,
