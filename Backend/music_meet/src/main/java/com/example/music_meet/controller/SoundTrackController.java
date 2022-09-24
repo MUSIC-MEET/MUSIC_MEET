@@ -1,12 +1,10 @@
 package com.example.music_meet.controller;
 
 import com.example.music_meet.dto.Response.Response_getMusicComment;
-import com.example.music_meet.dto.Response.Response_getMusicComment_2;
 import com.example.music_meet.dto.Response.Response_getSoundTrackInfo;
 import com.example.music_meet.dto.Response.Response_searchSoundTrack_Window;
 import com.example.music_meet.service.SoundTrackService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,7 +13,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -158,15 +155,17 @@ public class SoundTrackController
     //
     // 음악 정보 좋아요.md
     //
-    @RequestMapping(path = "/music/vote/{musicNum}", method = RequestMethod.GET)
-    public ResponseEntity<Object> addMusicCommentVote(@PathVariable("musicNum")final int musicNum)
+    @RequestMapping(path = "/music/vote", method = RequestMethod.PUT)
+    public ResponseEntity<Object> addMusicCommentVote(@RequestBody Map<String, String> requestMap)
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null)
         {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
         final int usernum = Integer.parseInt((String)request.getAttribute("userNum"));
+        final int musicNum = Integer.parseInt(requestMap.get("musicNum"));
 
         if (soundTrackService.isSelectVote(usernum, musicNum))
         {
@@ -198,13 +197,12 @@ public class SoundTrackController
     public ResponseEntity<Object> getMusicComment(@PathVariable("musicNum")final int musicNum)
     {
 
-        ArrayList<Response_getMusicComment> getMusicComments = soundTrackService.getMusicComment(musicNum);
-        Response_getMusicComment_2 response_getMusicComment_2 = new Response_getMusicComment_2();
-        response_getMusicComment_2.setMusicComments(getMusicComments);
-        if (getMusicComments.size() == 0)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        ArrayList<Response_getMusicComment> response_getMusicComments = soundTrackService.getMusicComment(musicNum);
+
+        if (response_getMusicComments.size() == 0)
+            return new ResponseEntity<>(null, HttpStatus.OK);
         else
-            return new ResponseEntity<>(response_getMusicComment_2, HttpStatus.OK);
+            return new ResponseEntity<>(response_getMusicComments, HttpStatus.OK);
     }
 
 

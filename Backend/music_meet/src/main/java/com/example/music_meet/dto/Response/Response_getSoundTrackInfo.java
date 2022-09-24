@@ -15,8 +15,18 @@ public class Response_getSoundTrackInfo
     private String album;
     private String releaseDate;
     private String lyrics;
-    private int vote;
-    private boolean isvote;
+    private int voteCount;
+    private boolean isVote;
     private String genre;
+
+    public boolean getIsVote() {
+        return this.isVote;
+    }
+
+    public void setIsVote(boolean b){
+        this.isVote = b;
+    }
+
+
 
 }

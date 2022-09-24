@@ -430,22 +430,23 @@ public class SoundTrackService
                 response_getSoundTrackInfo.setAlbum(rs.getString("album"));
                 response_getSoundTrackInfo.setReleaseDate(rs.getString("releaseDate"));
                 response_getSoundTrackInfo.setLyrics(rs.getString("lyrics"));
-                response_getSoundTrackInfo.setVote(rs.getInt("vote"));
-                response_getSoundTrackInfo.setIsvote(false);
+                response_getSoundTrackInfo.setVoteCount(rs.getInt("vote"));
+                response_getSoundTrackInfo.setIsVote(false);
                 response_getSoundTrackInfo.setGenre(rs.getString("name"));
             }
 
-            System.out.println(userNum);
-            System.out.println(musicNum);
             sql = "SELECT musicNum FROM MusicVote WHERE userNum = ? AND musicNum = ?";
 
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, userNum);
             pstmt.setInt(2, musicNum);
+
             rs = pstmt.executeQuery();
 
-            if(rs.next())
-                response_getSoundTrackInfo.setIsvote(true);
+            if(rs.next()) 
+            {
+                response_getSoundTrackInfo.setIsVote(true);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -466,8 +467,53 @@ public class SoundTrackService
     }
 
 
+
+
+
     //
-    // 음악 정보 좋아요
+    // musicVote 테이블에서 중복 확인
+    //
+    public boolean isSelectVote(int userNum, int musicNum)
+    {
+        boolean result = false;
+        try
+        {
+            sql = "SELECT musicNum FROM MusicVote WHERE userNum = ? AND musicNum = ?";
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userNum);
+            pstmt.setInt(2, musicNum);
+            rs = pstmt.executeQuery();
+
+            if (rs.next())
+            {
+                result = true;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return result;
+    }
+
+
+    //
+    // 음악 정보 좋아요 추가
     //
     public boolean addMusicCommentVote(final int userNum, final int musicNum)
     {
@@ -520,46 +566,6 @@ public class SoundTrackService
     }
 
 
-    //
-    // musicVote 테이블에서 검색
-    //
-    public boolean isSelectVote(int userNum, int musicNum)
-    {
-        boolean result = false;
-        try
-        {
-            sql = "SELECT musicNum FROM MusicVote WHERE userNum = ? AND musicNum = ?";
-            //
-            // DB구간
-            //
-            Class.forName(classForName);
-            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, userNum);
-            pstmt.setInt(2, musicNum);
-            rs = pstmt.executeQuery();
-
-            if (rs.next())
-            {
-                result = true;
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }finally {
-            try {
-                rs.close();
-                pstmt.close();
-                conn.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return result;
-    }
-
 
     //
     // musicvote 테이블에서 좋아요 삭제
@@ -567,6 +573,7 @@ public class SoundTrackService
     public boolean deleteMusicCommentVote(int userNum, int musicNum)
     {
         boolean result = false;
+        boolean result2 = false;
         try
         {
             sql = "DELETE FROM musicVote WHERE userNum = ? AND musicNum = ?";
@@ -585,6 +592,20 @@ public class SoundTrackService
                 result = true;
             }
 
+            sql = "UPDATE Music SET vote = " +
+                    "(SELECT COUNT(userNum) FROM MusicVote WHERE musicNum = ?) " +
+                    "WHERE musicNum = ?";
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, musicNum);
+            pstmt.setInt(2, musicNum);
+
+            rsInt = pstmt.executeUpdate();
+            if (rsInt > 0){
+                result2 = true;
+            }
+
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -597,7 +618,7 @@ public class SoundTrackService
                 throw new RuntimeException(e);
             }
         }
-        return result;
+        return result && result2;
     }
 
 

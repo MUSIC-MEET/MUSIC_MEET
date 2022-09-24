@@ -173,6 +173,7 @@ public class BoardService
         return responseBoolean;
     }
 
+
     //
     //  해당 글 삭제
     //
@@ -207,6 +208,7 @@ public class BoardService
             }
         }
     }
+
 
     //
     // 장르 게시판 글 목록 호출
