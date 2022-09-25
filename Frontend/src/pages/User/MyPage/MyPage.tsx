@@ -8,7 +8,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import Loading from "../../../components/common/Loading";
 import LoginState from "store/LoginState";
 import ErrorBoundary from "components/common/ErrorBoundary";
-import EvalutionMusic from "./EvaluationMusic";
+import EvaluationMusic from "./EvaluationMusic";
 import { css } from "@emotion/react";
 
 function MyPage() {
@@ -24,7 +24,7 @@ function MyPage() {
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
                     <UserEdit />
-                    <EvalutionMusic />
+                    <EvaluationMusic />
                 </Suspense>
             </ErrorBoundary>
         </Content>

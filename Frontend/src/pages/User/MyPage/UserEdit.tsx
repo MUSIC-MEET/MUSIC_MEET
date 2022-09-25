@@ -4,25 +4,15 @@ import ValuesEdit from "./ValuesEdit";
 import ImageEdit from "./ImageEdit";
 import { useQuery } from "react-query";
 import getMyInfo from "../../../utils/RequestApis/MyPage/getMyInfo";
-import { useRecoilValue } from "recoil";
-import LoginState from "store/LoginState";
 import SectionWrapper from "components/common/SectionWrapper";
 
 function UserEdit() {
-    const state = useRecoilValue(LoginState);
-    const { data } = useQuery(["myinfo", state], () => getMyInfo(),
+    const { data } = useQuery(["myinfo"], () => getMyInfo(),
         {
-            suspense: true,
-            useErrorBoundary: true,
-            retry: 1,
-            onError: (err: any) => {
-                if (err.response.status === 401) {
-                    throw "401";
-                }
-            }
+
         }
     );
-    const myInfo = data.data;
+    const myInfo = data?.data;
     const { image } = myInfo;
     return (
         <SectionWrapper css={[articleStyle]}>

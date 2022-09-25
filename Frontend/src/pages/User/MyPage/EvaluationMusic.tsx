@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
  */
 function EvaluationMusic() {
     const { data } = useQuery(["evalutionMusic"], () => fetchEvaluation(), {
-        retry: 0,
+
     });
 
     const { t } = useTranslation<"myPage">("myPage");

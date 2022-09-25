@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useEffect } from "react";
 import EvalutionMusicItem from "./EvaluationMusicItem";
 import LatestEvaluationMusic from "./LatestEvaluationType";
 /**
@@ -7,6 +7,12 @@ import LatestEvaluationMusic from "./LatestEvaluationType";
  * @returns 
  */
 function EvaluationMusicList({ list }: { list?: LatestEvaluationMusic[] }) {
+
+    useEffect(() => {
+        console.log(list);
+        console.log("re-redner");
+    }, [list]);
+
     return (
         <ul css={style}>
             {
