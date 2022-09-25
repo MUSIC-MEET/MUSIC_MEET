@@ -7,12 +7,14 @@ import com.example.music_meet.dto.Response.Response_getSoundTrackInfo;
 import com.example.music_meet.dto.Response.Response_searchSoundTrack_Window;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Synchronized;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.sql.*;
@@ -408,6 +410,7 @@ public class SoundTrackService
     //
     // 음악 정보 호출
     //
+    @Synchronized
     public Response_getSoundTrackInfo getSoundTrackInfo(final int userNum, final int musicNum)
     {
         Response_getSoundTrackInfo response_getSoundTrackInfo = new Response_getSoundTrackInfo();
@@ -625,14 +628,15 @@ public class SoundTrackService
 
     //
     // 음악 댓글 호출
-    // 
+    //
+    @Synchronized
     public ArrayList<Response_getMusicComment> getMusicComment(final int musicNum)
     {
         ArrayList<Response_getMusicComment> response_getMusicComments = new ArrayList<>();
         try
         {
             sql = "SELECT b.musicCommentNum, b.content, b.createdAt, a.nickname, a.userimage FROM user a, musicComment b " +
-                    " WHERE b.musicNum = ? AND b.state = 0 AND a.userNum = b.userNum ORDER BY createdAt DESC";
+                    " WHERE b.musicNum = ? AND b.state = 0 AND a.userNum = b.userNum ORDER BY b.createdAt DESC";
             //
             // DB구간
             //
@@ -662,6 +666,7 @@ public class SoundTrackService
             throw new RuntimeException(e);
         }finally {
             try {
+                rs.close();
                 pstmt.close();
                 conn.close();
             } catch (SQLException e) {
