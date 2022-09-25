@@ -31,7 +31,7 @@ REFERENCES `VisibleState` (
 
 INSERT INTO `Music`(`ImgSrc`,`origin_title`,`origin_singer`,`title`, `singer`,`album`,`releaseDate`,`lyrics`,`filename`,`length`,`Genre`) 
 VALUES(
-'https://cdnimg.melon.co.kr/cm/album/images/010/93/562/1093562_500.jpg/melon/resize/282/quality/80/optimize',
+'좋은날.jpg',
 '좋은 날',
 '아이유(IU)',
 '좋은날',
@@ -58,7 +58,7 @@ VALUES(
 
 INSERT INTO `Music`(`ImgSrc`,`origin_title`,`origin_singer`,`title`, `singer`,`album`,`releaseDate`,`lyrics`,`filename`,`length`,`Genre`) 
 VALUES(
-'https://cdnimg.melon.co.kr/cm2/album/images/108/97/407/10897407_20220323150744_500.jpg?389545aadd50ead38a260c8438fc5924/melon/resize/282/quality/80/optimize',
+'내가아니라도.jpg',
 '내가 아니라도',
 '주호',
 '내가아니라도',
@@ -109,7 +109,7 @@ VALUES(
 
 INSERT INTO `Music`(`ImgSrc`,`origin_title`,`origin_singer`,`title`, `singer`,`album`,`releaseDate`,`lyrics`,`filename`,`length`,`Genre`) 
 VALUES(
-'https://cdnimg.melon.co.kr/cm2/album/images/104/26/648/10426648_20200506153340_500.jpg?0ed92b652a9149e26387233529a32781/melon/resize/282/quality/80/optimize',
+'에잇(Prod.&Feat.SUGAofBTS).jpg',
 '에잇(Prod.&Feat. SUGA of BTS)',
 '아이유(IU)',
 '에잇(Prod.&Feat.SUGAofBTS)',
