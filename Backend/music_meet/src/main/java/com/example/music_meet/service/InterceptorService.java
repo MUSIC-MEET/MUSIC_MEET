@@ -3,6 +3,7 @@ package com.example.music_meet.service;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ public class InterceptorService implements HandlerInterceptor
     private JwtService jwtService = new JwtService();
 
     @Override
+    @Synchronized
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
     {
         final String jwt = request.getHeader("authorization");

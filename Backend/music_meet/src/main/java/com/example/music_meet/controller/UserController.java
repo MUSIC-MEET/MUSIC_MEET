@@ -10,7 +10,9 @@ import com.example.music_meet.service.JwtService;
 import com.example.music_meet.service.MailService;
 import com.example.music_meet.service.UserService;
 import com.example.music_meet.util.AES256Util;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.Synchronize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -266,6 +268,7 @@ public class UserController
     //
     //  내 정보.md
     //
+    @Synchronized
     @RequestMapping(path="/user/myinfo", method = RequestMethod.GET)
     public ResponseEntity<Object> callUserInfo()
     {
@@ -290,6 +293,7 @@ public class UserController
     //
     // 마이페이지 유저 음악 평가 댓글 호출.md
     //
+    @Synchronized
     @RequestMapping(path="/user/evaluation", method = RequestMethod.GET)
     public ResponseEntity<Object> callUserevaluation()
     {
