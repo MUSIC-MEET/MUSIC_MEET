@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import React, { useCallback, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import deleteComment from "utils/RequestApis/Music/deleteComment";
@@ -52,7 +53,7 @@ function CommentList({ musicNum }: { musicNum: string; }) {
     }, [editMutate]);
 
     return (
-        <ul>
+        <ul css={css`margin-top: 1rem;`}>
             {data?.map((comment) => (
                 <Comment
                     key={comment.commentNum}

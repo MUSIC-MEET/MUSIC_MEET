@@ -32,6 +32,9 @@ interface MyPageType {
             button: string;
         }
     }
+    evaluation: {
+        title: string;
+    }
 }
 
 export default MyPageType;

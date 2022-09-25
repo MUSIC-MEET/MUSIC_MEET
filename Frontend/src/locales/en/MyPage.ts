@@ -34,6 +34,9 @@ const text: MyPageType = {
         img: {
             button: "Select Change Image"
         }
+    },
+    evaluation: {
+        title: "Latest Evaluation Music"
     }
 };
 

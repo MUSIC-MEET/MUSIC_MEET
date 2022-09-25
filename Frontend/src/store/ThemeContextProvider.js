@@ -32,7 +32,7 @@ const DarkThemeInit = {
         fontColor: "#CCCCCC"
     },
     sectionWrapper: { 
-        background: "rgb(12,12,12)",
+        backgroundColor: "rgb(31,31,31)",
         borderColor: "rgb(88,88,88)"
     },
     fontStyle2: { color: "#b2b0b0" }
@@ -68,7 +68,7 @@ const LightThemeInit = {
         fontColor: "#222222"
     },
     sectionWrapper: { 
-        background: "rgb(22,22,22)",
+        backgroundColor: "rgb(244,246,247)",
         borderColor: "rgb(88,88,88)"
     },
     fontStyle2: { color: "#b2b0b0" }

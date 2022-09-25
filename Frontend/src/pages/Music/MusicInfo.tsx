@@ -104,6 +104,12 @@ const style = css`
         height: 10rem;
     }
 
+    figure > img {
+        width: 100%;
+        width: 100%;
+        object-fit: fill;
+    }
+
     .text {
         display: flex;
         flex-direction: column;
