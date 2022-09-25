@@ -650,7 +650,7 @@ public class SoundTrackService
                 response_getMusicComment.setComment(rs.getString("content"));
                 response_getMusicComment.setUser(rs.getString("nickname"));
                 response_getMusicComment.setCreateAt(rs.getTimestamp("createdAt"));
-                response_getMusicComment.setImgSrc(serverURL + ":" + serverPort + "/board" + "/image/" + rs.getString("userImage"));
+                response_getMusicComment.setImgSrc(serverURL + ":" + serverPort + "/user" + "/image/" + rs.getString("userImage"));
                 response_getMusicComments.add(response_getMusicComment);
                 i++;
             }

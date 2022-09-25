@@ -3,6 +3,7 @@
 package com.example.music_meet.controller;
 
 import com.example.music_meet.dto.ResetPw;
+import com.example.music_meet.dto.Response.Response_callUserComment;
 import com.example.music_meet.dto.User;
 import com.example.music_meet.error.SignupErrorForm;
 import com.example.music_meet.service.JwtService;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +65,7 @@ public class UserController
 
     //@Value("${file.image.profileimage}")
     private String profileimage = System.getProperty("user.dir") + File.separator + "profileimage" + File.separator;
+
 
 
 
@@ -261,33 +264,48 @@ public class UserController
     }
 
     //
-    //  마이페이지에 아이디, 이메일, 닉네임, 이미지 출력해주는 컨트롤러
+    //  내 정보.md
     //
     @RequestMapping(path="/user/myinfo", method = RequestMethod.GET)
     public ResponseEntity<Object> callUserInfo()
     {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        final String authorization = request.getHeader("authorization");
-
         if (request.getAttribute("userNum") == null)
         {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+        final int userNum = Integer.parseInt((String)request.getAttribute("userNum"));
 
-        Map<String, String> userMap;
-        userMap = jwtService.getClaimsFromJwt(authorization); // userMap에 userNum 추가
-        userMap.putAll(userService.findUserInfo(userMap.get("userNum"))); // usernum으로 아이디 닉네임 이메일 닉네임 이미지 조회
+        Map<String, String> userMap = new HashMap<>();
+        userMap.putAll(userService.findUserInfo(String.valueOf(userNum))); // usernum으로 아이디 닉네임 이메일 닉네임 이미지 조회
 
         Map<String,String> findEmailFuncRequestMap = new HashMap<>();
-        findEmailFuncRequestMap.put("userNum",userMap.get("userNum"));
-        findEmailFuncRequestMap.put("email",null);
+        findEmailFuncRequestMap.put("userNum", String.valueOf(userNum));
+        userMap.put("email", userService.findEmailFunc(findEmailFuncRequestMap));
 
-        final String email = userService.findEmailFunc(findEmailFuncRequestMap);
-        userMap.remove("userNum");
-        userMap.put("email", email);
-
-        return new ResponseEntity<>(userMap,HttpStatus.OK);
+        return new ResponseEntity<>(userMap, HttpStatus.OK);
     }
+
+
+    //
+    // 마이페이지 회원 음악 평가 댓글 호출.md
+    //
+    @RequestMapping(path="/user/evaluation", method = RequestMethod.GET)
+    public ResponseEntity<Object> callUserevaluation()
+    {
+        ArrayList<Response_callUserComment> userComments;
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int userNum = Integer.parseInt((String)request.getAttribute("userNum"));
+
+        userComments = userService.callMusicComment(userNum);
+
+        return new ResponseEntity<>(userComments, HttpStatus.OK);
+    }
+
 
     //
     // 이메일 바꾸는 API

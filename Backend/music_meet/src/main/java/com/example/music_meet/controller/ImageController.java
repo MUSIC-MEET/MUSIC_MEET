@@ -33,6 +33,7 @@ public class ImageController {
     final private String temp = System.getProperty("user.dir") + File.separator + "temp" + File.separator;
     final private String music_image = System.getProperty("user.dir") + File.separator + "music_image" + File.separator;
 
+
     //
     // 유저 프로필 이미지 출력.md
     //
@@ -44,6 +45,7 @@ public class ImageController {
         imageStream.close();
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
     }
+
 
     //
     // 게시판 이미지 출력.md

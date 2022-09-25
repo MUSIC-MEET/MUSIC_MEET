@@ -1,11 +1,8 @@
 package com.example.music_meet.service;
 
-import com.example.music_meet.bot.Song;
-import com.example.music_meet.dto.ResponseChart;
-import com.example.music_meet.dto.ResponseSong;
+import com.example.music_meet.dto.Response.Response_callUserComment;
 import com.example.music_meet.util.AES256Util;
 import com.example.music_meet.util.SHA256;
-import com.example.music_meet.dto.ResetPw;
 import com.example.music_meet.dto.User;
 import com.example.music_meet.validate.Validate;
 import lombok.AllArgsConstructor;
@@ -15,18 +12,13 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.Multipart;
 import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -76,6 +68,7 @@ public class UserService {
     private String serverPort;
 
     final private String serverFolder = "profileimage";
+
 
 
     //
@@ -999,6 +992,9 @@ public class UserService {
     }
 
 
+    //
+    // DB에서 유저 이미지 명 교체
+    //
     public void changeUserImnagePath(String userNum,String file)
     {
         sql = "update user set userimage = ? where usernum = ?";
@@ -1028,6 +1024,55 @@ public class UserService {
 
     }
 
+
+    //
+    //
+    //
+    public ArrayList<Response_callUserComment> callMusicComment(final int userNum)
+    {
+        ArrayList<Response_callUserComment> response_callUserComments = new ArrayList<>();
+
+        sql = "SELECT a.musicNum, a.createdAt, a.content, b.origin_title, b.origin_singer ,b.imgSrc FROM musicComment a, music b WHERE a.musicNum = b.musicNum AND a.state = 0 AND a.userNum = ?";
+        try {
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, userNum);
+
+            rs = pstmt.executeQuery();
+
+            int i = 0;
+            while (rs.next()){
+                Response_callUserComment response_callUserComment = new Response_callUserComment();
+                response_callUserComment.setMusicNum(rs.getInt("musicNum"));
+                response_callUserComment.setCreatedAt(rs.getString("createdAt"));
+                response_callUserComment.setContent(rs.getString("content"));
+                response_callUserComment.setImgSrc(serverURL + ":" + serverPort + "/music/image/" +  rs.getString("imgSrc"));
+                response_callUserComment.setTitle(rs.getString("origin_title"));
+                response_callUserComment.setSinger(rs.getString("origin_singer"));
+                response_callUserComments.add(response_callUserComment);
+                i++;
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("callMusicComment()에서 예외처리로 빠짐");
+            e.printStackTrace();
+        }
+        finally
+        {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return response_callUserComments;
+    }
 }
 
 
