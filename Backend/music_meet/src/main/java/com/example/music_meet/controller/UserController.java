@@ -288,7 +288,7 @@ public class UserController
 
 
     //
-    // 마이페이지 회원 음악 평가 댓글 호출.md
+    // 마이페이지 유저 음악 평가 댓글 호출.md
     //
     @RequestMapping(path="/user/evaluation", method = RequestMethod.GET)
     public ResponseEntity<Object> callUserevaluation()

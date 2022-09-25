@@ -13,6 +13,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -58,15 +59,20 @@ public class SoundTrackController
         {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        final int usernum = Integer.parseInt((String)request.getAttribute("userNum"));
-        final String comment = requestMap.get("content");
-        final int musicNum =  Integer.parseInt(requestMap.get("musicNum"));
-
-
-        if (soundTrackService.createSoundTrackComment(usernum, musicNum, comment))
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        else
+        else if (requestMap.get("content").getBytes().length >= 99){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        else {
+            final int usernum = Integer.parseInt((String) request.getAttribute("userNum"));
+            final String comment = requestMap.get("content");
+            final int musicNum = Integer.parseInt(requestMap.get("musicNum"));
+
+
+            if (soundTrackService.createSoundTrackComment(usernum, musicNum, comment))
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -81,15 +87,19 @@ public class SoundTrackController
         {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        final int userNum = Integer.parseInt((String)request.getAttribute("userNum"));
-        final String comment = requestMap.get("content");
-        final int commentNum =  Integer.parseInt(requestMap.get("commentNum"));
+        else if (requestMap.get("content").getBytes().length >= 99 ){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        else {
+            final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
+            final String comment = requestMap.get("content");
+            final int commentNum = Integer.parseInt(requestMap.get("commentNum"));
 
-       if(soundTrackService.modifySoundTrackComment(userNum, commentNum, comment))
-           return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-       else
-           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
+            if (soundTrackService.modifySoundTrackComment(userNum, commentNum, comment))
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            else
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
     }
 

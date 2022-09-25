@@ -229,6 +229,8 @@ public class SoundTrackService
     }
 
 
+
+
     //
     // 음악 댓글 작성.md
     //
@@ -469,8 +471,6 @@ public class SoundTrackService
 
 
 
-
-
     //
     // musicVote 테이블에서 중복 확인
     //
@@ -631,7 +631,8 @@ public class SoundTrackService
         ArrayList<Response_getMusicComment> response_getMusicComments = new ArrayList<>();
         try
         {
-            sql = "SELECT b.musicCommentNum, b.content, b.createdAt, a.nickname, a.userimage FROM user a, musicComment b WHERE b.musicNum = ? AND b.state = 0 AND a.userNum = b.userNum";
+            sql = "SELECT b.musicCommentNum, b.content, b.createdAt, a.nickname, a.userimage FROM user a, musicComment b " +
+                    " WHERE b.musicNum = ? AND b.state = 0 AND a.userNum = b.userNum ORDER BY createdAt DESC";
             //
             // DB구간
             //
