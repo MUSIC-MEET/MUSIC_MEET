@@ -7,11 +7,11 @@ import { useMutation, useQueryClient } from "react-query";
 import chnageImage from "utils/RequestApis/MyPage/ChangeImage";
 import ButtonWrapper from "./ButtonWrapper";
 
-function ImageEdit({ image }: { image: string }) {
+function ImageEdit({ image }: { image?: string }) {
     const { t } = useTranslation<"myPage">("myPage");
     const imgRef = React.createRef<HTMLInputElement>();
     const [isSelected, setIsSelected] = useState<boolean>(false);
-    const [imgSrc, setImgSrc] = useState<string>(image);
+    const [imgSrc, setImgSrc] = useState<string>(image ?? "");
     const [newImg, setNewImg] = useState<Blob | string>("");
     const queryClient = useQueryClient();
 
@@ -49,7 +49,7 @@ function ImageEdit({ image }: { image: string }) {
 
     const onCancelHandler = useCallback(() => {
         setNewImg("");
-        setImgSrc(image);
+        setImgSrc(image!);
         setIsSelected(false);
     }, [image]);
 

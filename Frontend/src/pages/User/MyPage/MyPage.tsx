@@ -5,9 +5,9 @@ import { useTranslation } from "react-i18next";
 import UserEdit from "./UserEdit";
 import CurrentPage from "store/CurrentPage";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import Loading from "../../../components/common/Loading";
+import Loading from "components/common/Loading";
 import LoginState from "store/LoginState";
-import ErrorBoundary from "components/common/ErrorBoundary";
+import ErrorBoundary from "./ErrorBoundary";
 import EvaluationMusic from "./EvaluationMusic";
 import { css } from "@emotion/react";
 

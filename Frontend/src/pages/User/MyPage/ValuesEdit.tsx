@@ -13,11 +13,9 @@ import { Axios, AxiosResponse } from "axios";
 import BottomButton from "./BottomButton";
 
 interface Props {
-    myInfo: {
-        id: string;
-        nickname: string;
-        email: string;
-    }
+    id?: string;
+    nickname?: string;
+    email?: string;
 }
 
 interface AlertModal {
@@ -29,7 +27,6 @@ interface AlertModal {
 }
 
 function ValuesEdit(props: Props) {
-    const { myInfo } = props;
     const { t } = useTranslation<"myPage">("myPage");
     const [isOpenNicknameModal, setIsOpenNicknameModal] = useState<boolean>(false);
     const [isOpenEmailModal, setIsOpenEmailModal] = useState<boolean>(false);
@@ -57,7 +54,7 @@ function ValuesEdit(props: Props) {
     });
 
     const { values, valuesChangeHandler, error } = useForm({
-        initValues: myInfo,
+        initValues: props,
         validator: SignUpValidator
     });
     const { email, nickname } = values;
@@ -91,7 +88,7 @@ function ValuesEdit(props: Props) {
             input: {
                 id: "id",
                 name: "id",
-                value: myInfo.id,
+                value: props.id,
                 type: "text",
                 placeholder: t("edit.values.placeholder.id"),
                 disabled: "disabled",
