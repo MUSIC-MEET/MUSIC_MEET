@@ -33,6 +33,9 @@ const text: MyPageType = {
         img: {
             button: "변경할 이미지를 선택해주세요."
         }
+    },
+    evaluation: {
+        title: "최근 평가한 음악"
     }
 };
 
