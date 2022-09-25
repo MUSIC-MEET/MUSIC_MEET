@@ -1026,13 +1026,15 @@ public class UserService {
 
 
     //
-    //
+    // 유저 음악 평가 댓글 호출
     //
     public ArrayList<Response_callUserComment> callMusicComment(final int userNum)
     {
         ArrayList<Response_callUserComment> response_callUserComments = new ArrayList<>();
 
-        sql = "SELECT a.musicNum, a.createdAt, a.content, b.origin_title, b.origin_singer ,b.imgSrc FROM musicComment a, music b WHERE a.musicNum = b.musicNum AND a.state = 0 AND a.userNum = ?";
+        sql = "SELECT a.musicNum, a.createdAt, a.content, b.origin_title, b.origin_singer ,b.imgSrc " +
+                "FROM musicComment a, music b WHERE a.musicNum = b.musicNum AND a.state = 0 AND a.userNum = ? " +
+                "ORDER BY createdAt DESC LIMIT 0,5";
         try {
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
