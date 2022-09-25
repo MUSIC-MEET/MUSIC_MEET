@@ -26,11 +26,6 @@ function Index() {
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
                     <MusicInfo musicNum={musicNum} />
-                </Suspense>
-            </ErrorBoundary>
-
-            <ErrorBoundary>
-                <Suspense fallback={<Loading />}>
                     <Comments musicNum={musicNum} />
                 </Suspense>
             </ErrorBoundary>
