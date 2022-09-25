@@ -159,7 +159,6 @@ const CommentBody = React.memo(styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    min-height: 4.5rem;
     .vote {
         width: 3rem;
         height: 2.5rem;
