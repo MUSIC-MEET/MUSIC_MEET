@@ -8,6 +8,8 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import Loading from "../../../components/common/Loading";
 import LoginState from "store/LoginState";
 import ErrorBoundary from "components/common/ErrorBoundary";
+import EvalutionMusic from "./EvaluationMusic";
+import { css } from "@emotion/react";
 
 function MyPage() {
     const { t } = useTranslation<"myPage">("myPage");
@@ -17,15 +19,23 @@ function MyPage() {
         setCurrentPage(-1);
     }, [isLogIn, setCurrentPage]);
     return (
-        <Content>
+        <Content css={[style]}>
             <Title>{t("title")}</Title>
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
                     <UserEdit />
+                    <EvalutionMusic />
                 </Suspense>
             </ErrorBoundary>
         </Content>
     );
 }
+
+const style = css`
+    & > .section-wrapper {
+        width: 80vw;
+        margin-bottom: 0.5rem;
+    }
+`;
 
 export default MyPage;

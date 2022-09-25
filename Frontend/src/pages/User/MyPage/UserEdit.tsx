@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import getMyInfo from "../../../utils/RequestApis/MyPage/getMyInfo";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
+import SectionWrapper from "components/common/SectionWrapper";
 
 function UserEdit() {
     const state = useRecoilValue(LoginState);
@@ -24,19 +25,18 @@ function UserEdit() {
     const myInfo = data.data;
     const { image } = myInfo;
     return (
-        <article css={[articleStyle]}>
+        <SectionWrapper css={[articleStyle]}>
             <ImageEdit
                 image={image}
             />
             <ValuesEdit
                 myInfo={myInfo}
             />
-        </article>
+        </SectionWrapper>
     );
 }
 
 const articleStyle = css`
-    width: 70vw;
     min-height: 20vh;
     display: flex;
     flex-direction: row;
