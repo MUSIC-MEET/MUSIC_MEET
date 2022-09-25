@@ -12,15 +12,13 @@ function UserEdit() {
 
         }
     );
-    const myInfo = data?.data;
-    const { image } = myInfo;
     return (
         <SectionWrapper css={[articleStyle]}>
             <ImageEdit
-                image={image}
+                image={data?.image}
             />
             <ValuesEdit
-                myInfo={myInfo}
+                {...data}
             />
         </SectionWrapper>
     );

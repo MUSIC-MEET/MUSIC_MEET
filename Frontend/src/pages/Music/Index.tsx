@@ -29,7 +29,7 @@ function Index() {
                     <Comments musicNum={musicNum} />
                 </Suspense>
             </ErrorBoundary>
-        </Content>
+        </Content >
     );
 }
 

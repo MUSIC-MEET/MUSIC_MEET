@@ -1,7 +1,7 @@
 import customAxios from "../../customAxios";
-import { AxiosResponse } from "axios";
+import MyInfoType from "pages/User/MyPage/MyInfoType";
 
-const getMyInfo = async (): Promise<any> => {
+const getMyInfo = (): Promise<MyInfoType> => {
     const axios = customAxios();
     const token = localStorage.getItem("token") ?? "";
     return axios({
@@ -10,7 +10,7 @@ const getMyInfo = async (): Promise<any> => {
         headers: {
             authorization: token
         }
-    });
+    }).then(res => res.data);
 };
 
 export default getMyInfo;
