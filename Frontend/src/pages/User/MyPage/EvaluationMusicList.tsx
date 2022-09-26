@@ -9,8 +9,7 @@ import LatestEvaluationMusic from "./LatestEvaluationType";
 function EvaluationMusicList({ list }: { list?: LatestEvaluationMusic[] }) {
 
     useEffect(() => {
-        console.log(list);
-        console.log("re-redner");
+        //
     }, [list]);
 
     return (

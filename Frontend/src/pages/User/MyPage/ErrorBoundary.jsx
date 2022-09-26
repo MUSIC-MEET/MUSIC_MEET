@@ -21,11 +21,12 @@ class ErrorBoundary extends React.Component {
             return (
                 <div>
                     <NewLoginAlertModal />
-                    {this.props.children}
+                    {/* {this.props.children} */}
                 </div>
+                
             );
         }
-        return this.props.children;
+        else return this.props.children;
     }
 }
 

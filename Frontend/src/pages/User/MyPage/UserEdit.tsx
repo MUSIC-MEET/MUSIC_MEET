@@ -9,7 +9,8 @@ import SectionWrapper from "components/common/SectionWrapper";
 function UserEdit() {
     const { data } = useQuery(["myinfo"], () => getMyInfo(),
         {
-
+            suspense: true,
+            useErrorBoundary: true
         }
     );
     return (
@@ -39,4 +40,4 @@ const articleStyle = css`
     }
 `;
 
-export default React.memo(UserEdit);
+export default UserEdit;
