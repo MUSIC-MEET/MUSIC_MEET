@@ -22,6 +22,10 @@ const rootStyle = css`
     display: flex;
     flex-direction: row;
     width: 100%;
+
+    @media screen and (max-width: 1023px) {
+        flex-direction: column; 
+    }
 `;
 
 const queryClient = new QueryClient({

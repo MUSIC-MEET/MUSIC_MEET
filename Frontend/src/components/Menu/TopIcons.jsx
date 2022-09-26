@@ -26,7 +26,7 @@ function TopIcons(props) {
         setBoxShown((prevState) => !prevState);
     },[]);
     return (
-        <section css={style}>
+        <section css={style} className={`${props.className}`}>
             <MoreVertIcon 
                 onClick={onChangeFirstBoxState}
             />

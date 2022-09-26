@@ -6,7 +6,15 @@ import  ThemeContext  from "store/ThemeContext";
 const style = css`
     margin-bottom: 1rem;
     cursor: pointer;
-    width: auto;
+    @media screen and (max-width: 1023px){
+        margin-bottom: 0;
+        padding: 0.8rem;
+        width: 100vw;
+        text-align: center;
+        &:hover {
+            background: rgba(88, 88, 88, 0.1);
+        }
+    }
 `;
 function RouteItem(props) {
     const navigator = useNavigate();
@@ -35,7 +43,7 @@ function RouteItem(props) {
             `]} 
         onClick={navigaterHandler}
         >
-            <span>{name}</span>
+            {name}
         </li>
     );
 }

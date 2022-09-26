@@ -32,6 +32,17 @@ const style = css`
     & > span {
         cursor: pointer;
     }
+
+    @media screen and (max-width: 1023px) {
+        flex-direction: row;
+        span {
+            margin-top: 0;
+        }
+
+        span:nth-child(1) {
+            margin-right: 1rem;
+        }
+    }
 `;
 
 export default NotLoginMenu;

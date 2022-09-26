@@ -3,12 +3,12 @@ import Llogo from "assets/Llogo.png";
 import Dlogo from "assets/Dlogo.png";
 import { css } from "@emotion/react";
 import ThemeContext from "store/ThemeContext";
-function Logo() {
+function Logo({ className }: { className?: string }) {
     const ctx = useContext(ThemeContext);
     const theme = ctx.theme;
     const logo = useMemo(() => theme === "dark" ? Dlogo : Llogo, [theme]);
     return (
-        <article css={style} className={`logo`}>
+        <article css={style} className={`${className} logo`}>
             <img src={logo} />
         </article>
 
