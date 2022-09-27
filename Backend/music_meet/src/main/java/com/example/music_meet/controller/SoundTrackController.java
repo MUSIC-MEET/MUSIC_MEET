@@ -4,6 +4,7 @@ import com.example.music_meet.dto.Response.Response_getMusicComment;
 import com.example.music_meet.dto.Response.Response_getSoundTrackInfo;
 import com.example.music_meet.dto.Response.Response_searchSoundTrack_Window;
 import com.example.music_meet.service.SoundTrackService;
+import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -166,6 +167,7 @@ public class SoundTrackController
     //
     // 음악 정보 좋아요.md
     //
+    @Synchronized
     @RequestMapping(path = "/music/vote", method = RequestMethod.PUT)
     public ResponseEntity<Object> addMusicCommentVote(@RequestBody Map<String, String> requestMap)
     {
