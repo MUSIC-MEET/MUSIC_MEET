@@ -3,6 +3,7 @@ package com.example.music_meet.controller;
 import com.example.music_meet.dto.Request.*;
 import com.example.music_meet.dto.Response.*;
 import com.example.music_meet.service.BoardService;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
