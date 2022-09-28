@@ -15,7 +15,7 @@ class ZoomOutPageTransformer : ViewPager2.PageTransformer {
             when {
                 position < -1 -> { // [-Infinity,-1)
                     // This page is way off-screen to the left.
-                    alpha = 0f
+                    alpha = 0.5f    //원래 0임 에러뜨면 고칠 것
                 }
                 position <= 1 -> { // [-1,1]
                     // Modify the default slide transition to shrink the page as well

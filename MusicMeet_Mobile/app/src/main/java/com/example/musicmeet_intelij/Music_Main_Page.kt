@@ -21,9 +21,12 @@ class Music_Main_Activity : AppCompatActivity() {
             adapter = ViewPagerAdapter(context as FragmentActivity)
         }
 
+
         //탭 레이아웃 연결
         LayoutTab().apply { }
     }
+
+
 
     private fun LayoutTab() {
 
@@ -39,4 +42,5 @@ class Music_Main_Activity : AppCompatActivity() {
         }.attach()
 
     }
+
 }

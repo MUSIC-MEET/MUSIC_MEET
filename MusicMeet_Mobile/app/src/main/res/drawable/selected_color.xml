@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:color="@color/icon_click_color"
+          android:state_selected="true" />
+
+    <item android:color="@color/silver_color" />
+</layer-list>

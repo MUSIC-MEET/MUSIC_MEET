@@ -41,7 +41,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이름"
+            android:text="아이디"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="14sp"
@@ -55,13 +55,13 @@
     <EditText
             android:layout_width="370sp"
             android:layout_height="wrap_content"
-            android:hint="이름을 입력해주세요"
+            android:hint="아이디을 입력해주세요"
             android:inputType="text"
-            android:textColor="@color/member_page_color"
+            android:textColor="@color/edit_text_color"
             android:textColorHint="@color/edit_text_color"
-            android:backgroundTint="@color/member_page_color"
+            android:background="@drawable/edit_under_line"
             android:textSize="16sp"
-            android:id="@+id/members_name"
+            android:id="@+id/members_id"
             android:nextFocusDown="@id/members_email"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,9 +90,9 @@
             android:layout_width="370sp"
             android:layout_height="wrap_content"
             android:hint="이메일 입력"
-            android:textColor="@color/member_page_color"
+            android:textColor="@color/edit_text_color"
             android:textColorHint="@color/edit_text_color"
-            android:backgroundTint="@color/member_page_color"
+            android:background="@drawable/edit_under_line"
             android:textSize="16sp"
             android:id="@+id/members_email"
             android:inputType="textEmailAddress"
@@ -119,32 +119,34 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:layout_constraintVertical_bias="0.472"/>
 
+
+    <!--전화번호-->
+
     <EditText
             android:layout_width="370sp"
             android:layout_height="wrap_content"
             android:hint="비밀번호 (8~20)"
             android:inputType="text"
-            android:textColor="@color/member_page_color"
+            android:textColor="@color/edit_text_color"
             android:textColorHint="@color/edit_text_color"
-            android:backgroundTint="@color/member_page_color"
+            android:background="@drawable/edit_under_line"
             android:textSize="16sp"
             android:id="@+id/members_pw"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:layout_constraintBottom_toTopOf="@+id/member_ok"
-            app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintVertical_bias="0.535"/>
-
+            app:layout_constraintHorizontal_bias="0.463"
+            app:layout_constraintVertical_bias="0.512"/>
 
     <EditText
             android:layout_width="370sp"
             android:layout_height="wrap_content"
             android:hint="비밀번호 재입력"
             android:inputType="text"
-            android:textColor="@color/member_page_color"
+            android:textColor="@color/edit_text_color"
             android:textColorHint="@color/edit_text_color"
-            android:backgroundTint="@color/member_page_color"
+            android:background="@drawable/edit_under_line"
             android:textSize="16sp"
             android:id="@+id/members_pw_ok"
             android:nextFocusDown="@id/members_nick"
@@ -152,10 +154,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:layout_constraintBottom_toTopOf="@+id/member_ok"
-            app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintVertical_bias="0.625"/>
+            app:layout_constraintHorizontal_bias="0.463"
+            app:layout_constraintVertical_bias="0.571"/>
 
-    <!--전화번호-->
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="8자 이상 16자 이하(특수기호, 대문자 포함)"
+            android:textSize="11dp"
+            android:textColor="@color/icon_click_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/member_ok"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.093"
+            app:layout_constraintVertical_bias="0.658"/>
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -168,16 +182,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:layout_constraintBottom_toTopOf="@+id/member_ok"
-            app:layout_constraintHorizontal_bias="0.055"
-            app:layout_constraintVertical_bias="0.753"/>
+            app:layout_constraintHorizontal_bias="0.053"
+            app:layout_constraintVertical_bias="0.815"/>
 
     <EditText
             android:layout_width="370sp"
             android:layout_height="wrap_content"
             android:hint="닉네임을 입력해주세요"
-            android:textColor="@color/member_page_color"
+            android:textColor="@color/edit_text_color"
             android:textColorHint="@color/edit_text_color"
-            android:backgroundTint="@color/member_page_color"
+            android:background="@drawable/edit_under_line"
             android:textSize="16sp"
             android:id="@+id/members_nick"
             android:inputType="text"
@@ -186,7 +200,7 @@
             app:layout_constraintBottom_toTopOf="@+id/member_ok"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintVertical_bias="0.831"/>
+            app:layout_constraintVertical_bias="0.857"/>
 
     <android.widget.Button
             android:id="@+id/member_ok"
