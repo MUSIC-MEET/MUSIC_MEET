@@ -14,6 +14,7 @@
     <color name="icon_click_color">#ff5500</color>    <!--아이콘 클릭시 색상-->
     <color name="text_click_color">#000000</color>
     <color name="edit_text_color">#6a6a6a</color>
+    <color name="silver_color">#6a6a6a</color>
     <color name="edit_color">#f37e4e</color>
     <color name="tranparent">#00000000</color>
     <color name="Tab_Bar_Color">#0d0907</color>

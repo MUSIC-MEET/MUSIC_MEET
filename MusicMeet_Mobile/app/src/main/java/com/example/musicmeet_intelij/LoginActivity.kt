@@ -18,13 +18,17 @@ import retrofit2.http.POST
 
 lateinit var bindingLogin: ActivityLoginBinding
 
+
 class Login_Activity : AppCompatActivity() {
 
     lateinit var id: EditText
     lateinit var pw: EditText
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         bindingLogin = ActivityLoginBinding.inflate(layoutInflater)
         val view = bindingLogin.root
@@ -39,16 +43,13 @@ class Login_Activity : AppCompatActivity() {
         }
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.219.110:8080")
+            .baseUrl("http://192.168.219.109:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val LoginService = retrofit.create(LoginService::class.java)
 
-
-
-        bindingLogin.LoginOk.setOnClickListener {
-
+            bindingLogin.LoginOk.setOnClickListener {
 
             var login_D = LoginData()
 
@@ -58,10 +59,11 @@ class Login_Activity : AppCompatActivity() {
             LoginService.login(login_D).enqueue(object : Callback<LoginResponse> {
                 override fun onResponse(call: retrofit2.Call<LoginResponse>, response: Response<LoginResponse>) {
                     MainMusicPage().apply { }
-                    Toast.makeText(this@Login_Activity, "로그인 하였습니다.\n잠시만 기다려주세요.", Toast.LENGTH_SHORT).show()
+                   /* Toast.makeText(this@Login_Activity, "로그인 하였습니다.\n잠시만 기다려주세요.", Toast.LENGTH_SHORT).show()*/
+
                     println(response.body()?.token)
                     println(response.body()?.nickname)
-
+                    Toast.makeText(this@Login_Activity, "로그인 되었습니다.\n환영합니다.", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onFailure(call: retrofit2.Call<LoginResponse>, t: Throwable) {

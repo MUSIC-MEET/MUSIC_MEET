@@ -34,15 +34,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:id="@+id/tabs"
-                android:background="@color/black"
+                app:tabMode="fixed"
+                android:background="@color/silver_color"
                 app:tabTextColor="@color/Black"
-                app:tabIconTint="@color/icon_click_color"
-                app:tabSelectedTextColor="@color/icon_click_color"
                 app:tabIndicatorColor="@color/icon_click_color"
-                app:tabRippleColor="@color/icon_click_color"
-
-
-                />
+                app:tabRippleColor="@color/icon_click_color"/>
 
 
 
