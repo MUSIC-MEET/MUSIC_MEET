@@ -1420,17 +1420,17 @@ REFERENCES `ostComment` (
 
 
 CREATE TABLE `Music` (
-	`MusicNum` INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
-	`ImgSrc`	 VARCHAR(250) NULL,
+	`musicnum` INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	`imgsrc`	 VARCHAR(250) NULL,
 	`origin_title` VARCHAR(50) NULL,
 	`origin_singer` VARCHAR(30) NULL,
 	`singer` VARCHAR(30) NULL,
 	`title` VARCHAR(50) NULL,
-	`Album` VARCHAR(50) NULL,
-	`releaseDate` VARCHAR(50) NULL,
+	`album` VARCHAR(50) NULL,
+	`releasedate` VARCHAR(50) NULL,
 	`lyrics` VARCHAR(1500) NULL,
-	`FileName` VARCHAR(100) NULL,
-	`Length` INT(1) NULL,
+	`filename` VARCHAR(100) NULL,
+	`length` INT(1) NULL,
 	`vote` INT(10) NULL default 0,
 	`genre` INT(2) NOT NULL,
 	`state` INT(1) NOT NULL default 0
@@ -1449,7 +1449,7 @@ REFERENCES `VisibleState` (
 );
 
 
-INSERT INTO `Music`(`ImgSrc`,`origin_title`,`origin_singer`,`title`, `singer`,`album`,`releaseDate`,`lyrics`,`filename`,`length`,`Genre`) 
+INSERT INTO `Music`(`imgsrc`,`origin_title`,`origin_singer`,`title`, `singer`,`album`,`releasedate`,`lyrics`,`filename`,`length`,`genre`) 
 VALUES(
 '좋은날.jpg',
 '좋은 날',
@@ -1476,7 +1476,7 @@ VALUES(
 );
 
 
-INSERT INTO `Music`(`ImgSrc`,`origin_title`,`origin_singer`,`title`, `singer`,`album`,`releaseDate`,`lyrics`,`filename`,`length`,`Genre`) 
+INSERT INTO `Music`(`imgsrc`,`origin_title`,`origin_singer`,`title`, `singer`,`album`,`releasedate`,`lyrics`,`filename`,`length`,`Genre`) 
 VALUES(
 '내가아니라도.jpg',
 '내가 아니라도',
@@ -1527,7 +1527,7 @@ VALUES(
 0);
 
 
-INSERT INTO `Music`(`ImgSrc`,`origin_title`,`origin_singer`,`title`, `singer`,`album`,`releaseDate`,`lyrics`,`filename`,`length`,`Genre`) 
+INSERT INTO `Music`(`imgsrc`,`origin_title`,`origin_singer`,`title`, `singer`,`album`,`releasedate`,`lyrics`,`filename`,`length`,`genre`) 
 VALUES(
 '에잇(Prod.&Feat.SUGAofBTS).jpg',
 '에잇(Prod.&Feat. SUGA of BTS)',
