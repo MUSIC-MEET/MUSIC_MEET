@@ -46,18 +46,13 @@ public class UserController
     @Autowired
     private MailService mailService;
 
-
-
     @Autowired
     private JwtService jwtService;
 
-
-
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;// 암호화 객체
+    private BCryptPasswordEncoder bCryptPasswordEncoder;// 비밀번호 암호화 객체
 
-
-    private AES256Util aes256Util;
+    private AES256Util aes256Util; // 이메일 암호화
 
     @Value("${server.url}")
     private String serverURL;
@@ -67,8 +62,6 @@ public class UserController
 
     //@Value("${file.image.profileimage}")
     private String profileimage = System.getProperty("user.dir") + File.separator + "profileimage" + File.separator;
-
-
 
 
     //
