@@ -72,7 +72,7 @@ function Login(props) {
     },[refetch]);
 
     return (    
-        <article css={[style]}>
+        <article css={[style]} className={`${props.className}`}>
             {
                 formShown && 
                 <Modal onClose={onCloseLoginModal}>
@@ -110,6 +110,11 @@ const style=css`
     }
     margin-bottom: 1rem;
     
+
+    @media screen and (max-width: 1023px) {
+        margin-bottom: 0;
+        border: none;
+    }
 `;
 
 export default Login;

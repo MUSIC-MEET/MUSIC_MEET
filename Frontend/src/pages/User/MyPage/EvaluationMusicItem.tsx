@@ -14,21 +14,21 @@ function EvaluationMusicItem(props: LatestEvaluationMusic) {
     const navigator = useNavigate();
 
     const onClickHanlder = useCallback(() => {
-        navigator(`/music/${props.musicNum}`);
+        navigator(`/music/${props?.musicNum}`);
     }, [navigator, props.musicNum]);
 
     return (
         <li css={style} onClick={onClickHanlder}>
             <figure>
-                <img src={props.imgSrc} alt="" />
+                <img src={props?.imgSrc} alt="" />
             </figure>
             <div className="text-box">
                 <div className="music-info info">
-                    <span className="title">{props.title}</span>
-                    <span className="singer">{props.singer}</span>
+                    <span className="title">{props?.title}</span>
+                    <span className="singer">{props?.singer}</span>
                 </div>
                 <div className="comment-info info">
-                    <p className="comment">{props.content}</p>
+                    <p className="comment">{props?.content}</p>
                     <span css={css`color: ${color};`} className="date">{props.createdAt}</span>
                 </div>
             </div>

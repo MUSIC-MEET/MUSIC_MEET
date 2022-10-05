@@ -12,7 +12,8 @@ import { useTranslation } from "react-i18next";
  */
 function EvaluationMusic() {
     const { data } = useQuery(["evalutionMusic"], () => fetchEvaluation(), {
-
+        suspense: true,
+        useErrorBoundary: true
     });
 
     const { t } = useTranslation<"myPage">("myPage");

@@ -5,7 +5,6 @@ import LoginModalShownState from "store/LoginModalShown";
 import { useTranslation } from "react-i18next";
 
 function NewLoginAlertModal() {
-
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const setLoginFormShown = useSetRecoilState(LoginModalShownState);
     const handleClose = () => {

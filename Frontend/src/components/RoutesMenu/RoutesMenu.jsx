@@ -4,8 +4,9 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import CurrentPage from "../../store/CurrentPage";
 import { useRecoilState } from "recoil";
+import { css } from "@emotion/react";
 
-function RoutesMenu() {
+function RoutesMenu({ className }) {
     const { t } = useTranslation("menu");
     const navigater = useNavigate();
     const [ currentPage, setCurrentPage ] = useRecoilState(CurrentPage);
@@ -27,7 +28,7 @@ function RoutesMenu() {
 
     return ( 
         <nav>
-            <ul>
+            <ul css={style} className={className}>
                 {ROUTES.map((route,index) =>(
                     <RouteItem 
                         clicked={currentPage === index}
@@ -43,5 +44,10 @@ function RoutesMenu() {
         </nav>
     );
 }
+
+const style = css`
+    display: flex;
+    flex-direction: column;
+`;
 
 export default React.memo(RoutesMenu);

@@ -9,7 +9,7 @@ import SearchMusicType from "./SearchMusicType";
 import { useNavigate } from "react-router-dom";
 
 
-function Search() {
+function Search(props: { className?: string }) {
     const [keyword, setKeyword] = useState<string>("");
     const [result, setResult] = useState<SearchMusicType[]>([]);
     const [resultShwon, setResultShown] = useState<boolean>(false);
@@ -63,7 +63,7 @@ function Search() {
     }, [onCloseResultHandler]);
 
     return (
-        <article css={style}>
+        <article css={style} className={`${props.className}`}>
             <SearchForm
                 keyword={keyword}
                 onChange={onChangeKeyWord}
@@ -85,6 +85,9 @@ const style = css`
     margin-top: -1.5rem;
     margin-bottom: 1.5rem;
 
+    @media screen and (max-width: 1023px) {
+        margin-bottom: 0;
+    }
 `;
 
 export default Search;
