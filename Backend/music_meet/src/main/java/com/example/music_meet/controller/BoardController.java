@@ -1,9 +1,9 @@
 package com.example.music_meet.controller;
 
+import com.example.music_meet.bean.BeanConfig;
 import com.example.music_meet.dto.Request.*;
 import com.example.music_meet.dto.Response.*;
 import com.example.music_meet.service.BoardService;
-import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.sql.Timestamp;
 import java.util.*;
 
 @Controller
@@ -37,8 +36,9 @@ public class BoardController
     @Value("${server.port}")
     private String serverPort;
 
-    //@Value("${file.image.temp}")
-    private String temp = System.getProperty("user.dir") + File.separator + "temp" + File.separator;
+    @Autowired
+    private BeanConfig beanconfig;
+
 
     //
     //  장르 게시판 글 작성.md
@@ -81,7 +81,7 @@ public class BoardController
 
         final String file = new Date().getTime() + "_" + image.getOriginalFilename();
 
-        File newFile = new File(temp + file);
+        File newFile = new File(beanconfig.TEMP + file);
         try{
             image.transferTo(newFile);
         } catch (Exception e) {

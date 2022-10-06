@@ -1,6 +1,6 @@
 package com.example.music_meet.service;
 
-import com.example.music_meet.bean.beanConfig;
+import com.example.music_meet.bean.BeanConfig;
 import com.example.music_meet.dto.Response.Response_callUserComment;
 import com.example.music_meet.util.AES256Util;
 import com.example.music_meet.util.SHA256;
@@ -67,9 +67,9 @@ public class UserService {
     private String serverPort;
 
     @Autowired
-    private com.example.music_meet.bean.beanConfig beanConfig;
+    private BeanConfig beanConfig;
 
-    final private String serverFolder = "profileimage";
+    //final private String serverFolder = "profileimage";
 
 
 
@@ -1080,15 +1080,21 @@ public class UserService {
     }
 
 
-    //
-    //
-    //
+    /**
+     * 개별 회원 업로드
+     * upload 폴더에 유저의 넘어온 파일을 저장하고 upload 테이블에 값을 삽입하는 함수
+     * @param userNum 유저 번호
+     * @param title   업로드 글 제목
+     * @param comment 업로드 한 줄 코멘트
+     * @param mp3File MultipartFile 타입의 mp3 파일
+     * @return Request로 넘어온 mp3 파일을 성공적으로 upload 폴더에 저장하고 upload 테이블에 삽입까지 했다면 true 리턴, 실패시 false 리턴
+     */
     public boolean userUpload(int userNum, String title, String comment, MultipartFile mp3File) {
 
         boolean result = false;
         final String fileName = new Date().getTime() + "_" + mp3File.getOriginalFilename().replaceAll(" ", "");
 
-        sql = "INSERT INTO upload VALUES(?,?,?,?,?)";
+        sql = "INSERT INTO upload(`usernum`, `title`, `comment`, `file`, `state`) VALUES(?,?,?,?,?)";
         try {
             File newFile = new File(beanConfig.UPLOAD_MP3FILE_PATH + fileName);
             mp3File.transferTo(newFile);
