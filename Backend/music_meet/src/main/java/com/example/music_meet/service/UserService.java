@@ -1,5 +1,6 @@
 package com.example.music_meet.service;
 
+import com.example.music_meet.bean.beanConfig;
 import com.example.music_meet.dto.Response.Response_callUserComment;
 import com.example.music_meet.util.AES256Util;
 import com.example.music_meet.util.SHA256;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -64,7 +66,11 @@ public class UserService {
     @Value("${server.port}")
     private String serverPort;
 
+    @Autowired
+    private com.example.music_meet.bean.beanConfig beanConfig;
+
     final private String serverFolder = "profileimage";
+
 
 
 
@@ -1071,6 +1077,51 @@ public class UserService {
             }
         }
         return response_callUserComments;
+    }
+
+
+    //
+    //
+    //
+    public boolean userUpload(int userNum, String title, String comment, MultipartFile mp3File) {
+
+        boolean result = false;
+        final String fileName = new Date().getTime() + "_" + mp3File.getOriginalFilename().replaceAll(" ", "");
+
+        sql = "INSERT INTO upload VALUES(?,?,?,?,?)";
+        try {
+            File newFile = new File(beanConfig.UPLOAD_MP3FILE_PATH + fileName);
+            mp3File.transferTo(newFile);
+
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1,userNum);
+            pstmt.setString(2, title);
+            pstmt.setString(3, comment);
+            pstmt.setString(4, fileName);
+            pstmt.setInt(5, 0);
+
+            rsInt = pstmt.executeUpdate();
+            if (rsInt >= 1){
+                result = true;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
     }
 }
 

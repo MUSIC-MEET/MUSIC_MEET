@@ -1657,3 +1657,29 @@ Insert into `admin`(`id`, `pw`, `authority`)
  VALUES('test0', '$2a$10$yWOOUfM./LNZRsVpYg1LROrElep86.WnQmbpNV2vC0XeZtSqbv7gC', 3);
 Insert into `admin`(`id`, `pw`, `authority`)
  VALUES('kjr123', '$2a$10$/O3IYxMkpnlKBD2opoxvGeJy5622lmcYkbI926QkII9KooOPb/EbC', 3);
+
+
+
+CREATE TABLE `Upload` (
+	`usernum` INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	`title` VARCHAR(150) NOT NULL,
+	`comment` VARCHAR(300) NOT NULL,
+	`file` VARCHAR(150) NOT NULL,
+	`state` INT(1) NOT NULL DEFAULT 0
+);
+
+ALTER TABLE `Upload` ADD CONSTRAINT `FK_User_TO_Upload_1` FOREIGN KEY (
+	`usernum`
+)
+REFERENCES `User` (
+	`usernum`
+);
+
+ALTER TABLE `Upload` ADD CONSTRAINT `FK_VisibleState_TO_Upload_1` FOREIGN KEY (
+	`state`
+)
+REFERENCES `VisibleState` (
+	`state`
+);
+
+

@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.io.File;
 import java.util.Properties;
 
 @Configuration
@@ -54,6 +55,11 @@ public class beanConfig implements WebMvcConfigurer
 
     @Value("${spring.mail.protocol}")
     private String mailProtocol;
+
+    public final  String UPLOAD_MP3FILE_PATH = System.getProperty("user.dir") + File.separator + "upload" + File.separator;
+
+
+
 
     @Bean
     public JavaMailSender javaMailSender() {
