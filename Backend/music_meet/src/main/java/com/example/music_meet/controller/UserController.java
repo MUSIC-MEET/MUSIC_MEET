@@ -60,8 +60,8 @@ public class UserController
     @Value("${server.port}")
     private String serverPort;
 
-    //@Value("${file.image.profileimage}")
-    private String profileimage = System.getProperty("user.dir") + File.separator + "profileimage" + File.separator;
+    private final String profileimage = System.getProperty("user.dir") + File.separator + "profileimage" + File.separator;
+
 
 
     //
@@ -424,7 +424,7 @@ public class UserController
     }
 
     //
-    // 회원탈퇴 API
+    // 회원탈퇴.md
     //
     @RequestMapping(path = "/user", method = RequestMethod.DELETE)
     public ResponseEntity<Object> userExit(@RequestBody Map<String, String> password)
@@ -452,6 +452,28 @@ public class UserController
     }
 
 
+    //
+    // 회원 개별 업로드.md
+    //
+    @RequestMapping(value = "/users/{id}/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> userUpload(@PathVariable("id") final String id,
+                                             @RequestParam("title") final String title,
+                                             @RequestParam("comment")final String comment,
+                                             @RequestParam("mp3File")final MultipartFile mp3File) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int userNum = Integer.parseInt((String)request.getAttribute("userNum"));
+
+
+
+        userService.userUpload(userNum, title, comment, mp3File);
+
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 }
 
