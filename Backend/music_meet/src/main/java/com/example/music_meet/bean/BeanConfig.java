@@ -21,7 +21,7 @@ import java.util.Properties;
 @PropertySource("classpath:application.properties")
 @Getter
 @Setter
-public class beanConfig implements WebMvcConfigurer
+public class BeanConfig implements WebMvcConfigurer
 {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -56,7 +56,10 @@ public class beanConfig implements WebMvcConfigurer
     @Value("${spring.mail.protocol}")
     private String mailProtocol;
 
-    public final  String UPLOAD_MP3FILE_PATH = System.getProperty("user.dir") + File.separator + "upload" + File.separator;
+
+    public final String PROFILE_IMAGE = System.getProperty("user.dir") + File.separator + "profileimage" + File.separator;
+    public final String UPLOAD_MP3FILE_PATH = System.getProperty("user.dir") + File.separator + "upload" + File.separator;
+    public final String TEMP = System.getProperty("user.dir") + File.separator + "temp" + File.separator;
 
 
 

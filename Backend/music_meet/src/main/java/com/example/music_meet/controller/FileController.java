@@ -15,7 +15,7 @@ import java.io.*;
 @Controller
 @CrossOrigin("*")
 @Slf4j
-public class ImageController {
+public class FileController {
 
     //@Value("${file.image.profileimage}")
     final private String profileimage = System.getProperty("user.dir") + File.separator + "profileimage" + File.separator;
@@ -64,6 +64,9 @@ public class ImageController {
         imageStream.close();
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
     }
+
+    
+
 
 
 }

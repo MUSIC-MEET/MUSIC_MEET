@@ -2,6 +2,7 @@
 
 package com.example.music_meet.controller;
 
+import com.example.music_meet.bean.BeanConfig;
 import com.example.music_meet.dto.ResetPw;
 import com.example.music_meet.dto.Response.Response_callUserComment;
 import com.example.music_meet.dto.User;
@@ -60,7 +61,8 @@ public class UserController
     @Value("${server.port}")
     private String serverPort;
 
-    private final String profileimage = System.getProperty("user.dir") + File.separator + "profileimage" + File.separator;
+    @Autowired
+    private BeanConfig beanconfig;
 
 
 
@@ -406,7 +408,7 @@ public class UserController
         final String userNum = (String) request.getAttribute("userNum");
         final String file = new Date().getTime() + "_" + image.getOriginalFilename().replaceAll(" ", "");
 
-        File newFile = new File(profileimage + file);
+        File newFile = new File( beanconfig.PROFILE_IMAGE + file);
 
         try{
             image.transferTo(newFile);
@@ -466,13 +468,12 @@ public class UserController
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         final int userNum = Integer.parseInt((String)request.getAttribute("userNum"));
-
-
-
-        userService.userUpload(userNum, title, comment, mp3File);
-
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        if (userService.userUpload(userNum, title, comment, mp3File)){
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
