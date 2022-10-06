@@ -11,6 +11,7 @@ import vote from "utils/RequestApis/Music/vote";
 
 /**
  * 음악 페이지 음악 정보 컴포넌트
+ * 음원 사진 아티스트 및 여러 정보 표시
  * @param {string} musicNum 음악 번호
  * @returns 
  */
@@ -18,7 +19,7 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
     const { t } = useTranslation<"musicPage">("musicPage");
     const ctx = useContext(ThemeContext);
     const { color } = ctx.themeStyle.fontStyle2;
-    const [lyricsShwon, setLyricsShown] = useState<boolean>(false);
+    const [lyricsShwon, setLyricsShown] = useState<boolean>(true);
     const queryClient = useQueryClient();
     useEffect(() => {
         setLyricsShown(false);
@@ -50,6 +51,15 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
         mutate({ musicNum });
     }, [musicNum, mutate]);
 
+    const autoResizeTextarea = () => {
+        const textarea = document.querySelector(".autoTextarea");
+
+        if (textarea) {
+            const height = textarea.scrollHeight; // 높이
+            textarea.classList.add(`style: ${height + 8}px`);
+        }
+    };
+
     return (
         <React.Fragment>
             <SectionWrapper style={[style, css`.sub{ color: ${color}}`]}>
@@ -75,9 +85,9 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
             <SectionWrapper style={lyricesStyle}>
                 <h2 className="lyrics-title">{t("musicInfo.lyrics")}</h2>
                 {lyricsShwon ?
-                    <React.Fragment>
-                        {data?.lyrics}
-                    </React.Fragment>
+                    <p style={{ "whiteSpace": "pre-wrap", "lineHeight": "1.3" }}>
+                        {`${data?.lyrics}`}
+                    </p>
                     :
                     <React.Fragment>
                         <Button
@@ -87,8 +97,8 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
                     </React.Fragment>
                 }
 
-            </SectionWrapper>
-        </React.Fragment>
+            </SectionWrapper >
+        </React.Fragment >
     );
 }
 
@@ -108,6 +118,10 @@ const style = css`
         width: 100%;
         width: 100%;
         object-fit: fill;
+    }
+
+    & > textarea {
+        border: none;
     }
 
     .text {
