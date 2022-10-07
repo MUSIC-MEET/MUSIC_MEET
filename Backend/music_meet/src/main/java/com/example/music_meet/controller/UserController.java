@@ -457,7 +457,7 @@ public class UserController
     //
     // 회원 개별 업로드.md
     //
-    @RequestMapping(value = "/users/cover", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping(value = "/cover", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> userUpload(@RequestParam("title") final String title,
                                              @RequestParam("comment")final String comment,
                                              @RequestParam("mp3File")final MultipartFile mp3File) {
