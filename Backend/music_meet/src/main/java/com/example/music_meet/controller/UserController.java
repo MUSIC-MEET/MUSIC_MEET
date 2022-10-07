@@ -413,7 +413,7 @@ public class UserController
         try{
             image.transferTo(newFile);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         // DB에 해당 유저의 이미지 경로 수정

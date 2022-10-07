@@ -1091,10 +1091,12 @@ public class UserService {
      */
     public boolean userUpload(int userNum, String title, String comment, MultipartFile mp3File) {
 
+
         boolean result = false;
         final String fileName = new Date().getTime() + "_" + mp3File.getOriginalFilename().replaceAll(" ", "");
 
-        sql = "INSERT INTO upload(`usernum`, `title`, `comment`, `file`, `state`) VALUES(?,?,?,?,?)";
+        sql = "INSERT INTO upload(`usernum`, `title`, `origin_title`, `comment`, `file`, `origin_file`, `createdat`, `vote`,`state`)" +
+                " VALUES(?,?,?,?,?,?,?,?,?)";
         try {
             File newFile = new File(beanConfig.UPLOAD_MP3FILE_PATH + fileName);
             mp3File.transferTo(newFile);
@@ -1104,10 +1106,14 @@ public class UserService {
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setInt(1,userNum);
-            pstmt.setString(2, title);
-            pstmt.setString(3, comment);
-            pstmt.setString(4, fileName);
-            pstmt.setInt(5, 0);
+            pstmt.setString(2, title.replaceAll(" ",""));
+            pstmt.setString(3, title);
+            pstmt.setString(4, comment);
+            pstmt.setString(5, fileName.replaceAll(" ", ""));
+            pstmt.setString(6, fileName);
+            pstmt.setTimestamp(7, date);
+            pstmt.setInt(8, 0);
+            pstmt.setInt(9,0);
 
             rsInt = pstmt.executeUpdate();
             if (rsInt >= 1){

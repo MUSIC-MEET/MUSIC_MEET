@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,7 +70,7 @@ public class FileController {
     //
     // 회원 개별 업로드 MP3 파일 재생
     //
-    @RequestMapping(path = "{type}/play/{mp3filename}", method = RequestMethod.GET, produces = {MediaType.ALL_VALUE})
+    @RequestMapping(path = "{type}/play/{mp3filename}", method = RequestMethod.GET)
     public ResponseEntity<Object> returnMP3File(@PathVariable("type")final String type,
                                                 @PathVariable("mp3filename") final String mp3FileName) throws Exception{
         File file;
@@ -84,25 +85,11 @@ public class FileController {
         byte[] imageByteArray = IOUtils.toByteArray(inputStream);
         inputStream.close();
 
-
-        /*long length = file.length();
-        InputStreamResource inputStreamResource = new InputStreamResource( new FileInputStream(file));
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentLength(length);
+        httpHeaders.setContentType(MediaType.asMediaType(MimeType.valueOf("audio/mpeg")));
         httpHeaders.setCacheControl(CacheControl.noCache().getHeaderValue());
-*/
 
-        // 테스트해서 안되면 이거 써볼것  http://yoonbumtae.com/?p=2878
-        /*Clip clip = AudioSystem.getClip();
-        clip.open(AudioSystem.getAudioInputStream(file));
-        clip.start();*/
-
-
-
-
-
-        return new ResponseEntity<>(imageByteArray,HttpStatus.OK);
-        //return new ResponseEntity<>(inputStreamResource,httpHeaders,HttpStatus.OK);
+        return new ResponseEntity<>(imageByteArray, httpHeaders, HttpStatus.OK);
     }
 
 
