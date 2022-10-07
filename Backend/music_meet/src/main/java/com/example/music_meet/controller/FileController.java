@@ -69,7 +69,7 @@ public class FileController {
     //
     // 회원 개별 업로드 MP3 파일 재생
     //
-    @RequestMapping(path = "{type}/play/{mp3filename}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE })
+    @RequestMapping(path = "{type}/play/{mp3filename}", method = RequestMethod.GET, produces = {MediaType.ALL_VALUE})
     public ResponseEntity<Object> returnMP3File(@PathVariable("type")final String type,
                                                 @PathVariable("mp3filename") final String mp3FileName) throws Exception{
         File file;
