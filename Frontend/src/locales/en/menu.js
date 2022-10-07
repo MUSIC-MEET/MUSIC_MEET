@@ -7,7 +7,7 @@ export default {
         "menu1" : "Show Chart",
         "menu2" : "Genre Board",
         "menu3" : "Latest Album",
-        "menu4" : "DJ Remix",
+        "menu4" : "Cover Board",
     },
     search: {
         "placeholder" : "Search MUSIC"
