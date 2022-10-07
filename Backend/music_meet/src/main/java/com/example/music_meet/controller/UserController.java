@@ -459,7 +459,7 @@ public class UserController
     //
     @RequestMapping(value = "/cover", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> userUpload(@RequestParam("title") final String title,
-                                             @RequestParam("comment")final String comment,
+                                             @RequestParam("description")final String comment,
                                              @RequestParam("mp3File")final MultipartFile mp3File) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null)
