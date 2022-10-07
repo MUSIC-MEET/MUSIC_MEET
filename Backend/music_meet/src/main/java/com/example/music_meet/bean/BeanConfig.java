@@ -60,8 +60,7 @@ public class BeanConfig implements WebMvcConfigurer
     public final String PROFILE_IMAGE = System.getProperty("user.dir") + File.separator + "profileimage" + File.separator;
     public final String UPLOAD_MP3FILE_PATH = System.getProperty("user.dir") + File.separator + "upload" + File.separator;
     public final String TEMP = System.getProperty("user.dir") + File.separator + "temp" + File.separator;
-
-
+    public final String MUSIC_IMAGE = System.getProperty("user.dir") + File.separator + "music_image" + File.separator;
 
 
     @Bean

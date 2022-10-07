@@ -457,9 +457,8 @@ public class UserController
     //
     // 회원 개별 업로드.md
     //
-    @RequestMapping(value = "/users/{id}/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> userUpload(@PathVariable("id") final String id,
-                                             @RequestParam("title") final String title,
+    @RequestMapping(value = "/users/cover", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> userUpload(@RequestParam("title") final String title,
                                              @RequestParam("comment")final String comment,
                                              @RequestParam("mp3File")final MultipartFile mp3File) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
