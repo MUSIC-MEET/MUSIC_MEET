@@ -17,6 +17,7 @@ import GenreBoard from "pages/GenreBoard/Index";
 import User from "./pages/User/Index";
 import Music from "./pages/Music/Index.tsx";
 import NotFoundPage from "./pages/NotFound/Index";
+import Cover from "./pages/Cover/Index";
 
 const rootStyle = css`
     display: flex;
@@ -79,9 +80,9 @@ function App() {
                             <Route path="/unauthorization" element={<h2>unauthorization</h2>} />
                             <Route path="/board/*" element={<GenreBoard />} />
                             <Route path="/music/:musicNum" element={<Music />} /> 
+                            <Route path="/cover/*" element={<Cover />} />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
-                
                     </Content>
                 </div>
             </ThemeContextProvider>
