@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -96,6 +99,60 @@ public class UploadService {
         return upload;
 
     }
+
+    /**
+     * 회원 개별 업로드 글 목록을 페이지 단위로 보여주는 함수
+     * @param page 보여줄 페이지 번호
+     * @return
+     */
+    public ArrayList<Map<String,String>> getUploadList(final int page) {
+        ArrayList<Map<String,String>> uploads = new ArrayList<>();
+
+        sql = "select a.`uploadnum`, a.`title`, b.`nickname`, a.`vote`, a.`view`, DATE_FORMAT(a.`createdat`, '%Y-%m-%d') AS createdat, b.`userimage`"+
+                " FROM upload a, user b WHERE a.`state` = 0 AND a.`usernum` = b.`usernum` ORDER BY a.`createdat` DESC LIMIT ?,10";
+        try {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, (page - 1) * 10);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Map<String, String> map = new HashMap<>();
+                map.put("id", String.valueOf(rs.getInt("uploadnum")));
+                map.put("title", rs.getString("title"));
+                map.put("user", rs.getString("nickname"));
+                map.put("createdAt", rs.getString("createdat"));
+                map.put("view", String.valueOf(rs.getInt("view")));
+                map.put("vote", String.valueOf(rs.getInt("vote")));
+                map.put("imgSrc", beanConfig.getServerUrl() + ":" + beanConfig.getServerPort()
+                        + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
+                uploads.add(map);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return uploads;
+    }
+
+
+
+
+
+
+
 
     /**
      * uploadVote 테이블에서 해당 업로드 번호와 유저 번호가 매칭되는 값이 있는지 확인하는 함수
@@ -235,4 +292,9 @@ public class UploadService {
         }
 
     }
+
+
+
+
+
 }

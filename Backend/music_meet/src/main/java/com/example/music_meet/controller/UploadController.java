@@ -11,6 +11,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 @Controller
 @CrossOrigin("*")
@@ -18,8 +19,6 @@ public class UploadController {
 
     @Autowired
     private UploadService uploadService;
-
-
 
 
     //
@@ -45,6 +44,17 @@ public class UploadController {
             return new ResponseEntity<>(upload ,HttpStatus.OK);
         }
     }
+
+
+    //
+    // 개별 업로드 글 목록 조회
+    //
+    @RequestMapping(value = "/cover/list/{page}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getUserUploadList(@PathVariable("page") final int page){
+        return new ResponseEntity<>(uploadService.getUploadList(page), HttpStatus.OK);
+    }
+
+
 
 
     //
