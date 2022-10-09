@@ -4,10 +4,10 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import fetchMusicInfo from "utils/RequestApis/Music/fetchMusicInfo";
 import { useTranslation } from "react-i18next";
-import Vote from "./Vote";
 import ThemeContext from "store/ThemeContext";
 import Button from "components/common/Button";
 import vote from "utils/RequestApis/Music/vote";
+import HeartVote from "components/common/HeartVote";
 
 /**
  * 음악 페이지 음악 정보 컴포넌트
@@ -75,7 +75,7 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
                     <span className="genre sub">
                         {`${t("musicInfo.genre")}: ${data?.genre}`}
                     </span>
-                    <Vote
+                    <HeartVote
                         count={data?.voteCount}
                         isVote={data?.isVote}
                         onClick={voteOnClickHandler}
