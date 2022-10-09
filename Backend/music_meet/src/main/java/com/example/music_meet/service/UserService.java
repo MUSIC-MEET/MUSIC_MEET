@@ -1090,10 +1090,9 @@ public class UserService {
      * @return Request로 넘어온 mp3 파일을 성공적으로 upload 폴더에 저장하고 upload 테이블에 삽입까지 했다면 true 리턴, 실패시 false 리턴
      */
     public boolean userUpload(int userNum, String title, String comment, MultipartFile mp3File) {
-
-
         boolean result = false;
         final String fileName = new Date().getTime() + "_" + mp3File.getOriginalFilename().replaceAll(" ", "");
+        date = new java.sql.Timestamp(new java.util.Date().getTime());
 
         sql = "INSERT INTO upload(`usernum`, `title`, `origin_title`, `comment`, `file`, `origin_file`, `createdat`, `vote`,`state`)" +
                 " VALUES(?,?,?,?,?,?,?,?,?)";
