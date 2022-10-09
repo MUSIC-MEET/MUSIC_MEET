@@ -10,6 +10,7 @@ import RedButton from "components/common/RedButton";
 import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 import CoverType from "../CoverType";
+import ValueEmptyModal from "components/AlertModal/ValueEmptyModal";
 
 interface InputFormPros {
     onSubmit: (obj: CoverType) => void;
@@ -25,6 +26,8 @@ function InputForm(props: InputFormPros) {
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [mp3File, setMp3File] = useState<Blob>(new Blob());
+    const [isEmpty, setIsEmpty] = useState<boolean>(false);
+
     const titleChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(() => e.target.value);
     }, []);
@@ -40,10 +43,15 @@ function InputForm(props: InputFormPros) {
 
     const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (title.length === 0 || description.length === 0 || mp3File.size === 0) {
+            setIsEmpty(() => true);
+            return;
+        }
         props.onSubmit({ title, description, mp3File });
     }, [description, mp3File, props, title]);
     return (
         <SectionWrapper css={style}>
+            {isEmpty && <ValueEmptyModal callback={() => setIsEmpty(() => false)} />}
             <form onSubmit={onSubmitHandler}>
                 <InputTitle
                     className="wrapper"
@@ -112,8 +120,7 @@ const style = css`
         padding: 1rem;
         margin-left: 0.5rem;
     }
-    }
-    
+}
 `;
 
 export default InputForm;

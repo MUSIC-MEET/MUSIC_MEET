@@ -18,3 +18,4 @@ export { default as duplicateVoteModal } from "./DuplicateVoteModal";
 export { default as genreBoardSearchPage } from "./GenreBoardSearchPage";
 export { default as musicPage } from "./MusicPage";
 export { default as coverUploadPage } from "./CoverUploadPage";
+export { default as valueEmptyModal } from "./ValueEmptyModal";
