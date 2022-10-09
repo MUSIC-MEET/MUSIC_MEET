@@ -10,7 +10,7 @@ interface FileUploaderProps {
 function FileUploader(props: FileUploaderProps) {
     const [fileName, setFileName] = useState<string>("");
     const fileChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setFileName(() => e.target.value);
+        setFileName(e.target.files![0].name);
         props.onChange(e);
     }, [props]);
     return (
