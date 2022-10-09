@@ -1,5 +1,4 @@
 import React from "react";
-import SectionWrapper from "components/common/SectionWrapper";
 import Input from "components/common/Input";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";

@@ -2,6 +2,9 @@ import Title from "components/common/Title";
 import React, { useCallback } from "react";
 import InputForm from "./InputForm";
 import { useTranslation } from "react-i18next";
+import { useMutation } from "react-query";
+import uploadCoverMusic from "utils/RequestApis/Cover/uploadCoverMusic";
+import CoverType from "../CoverType";
 
 /**
  * /cover/upload Route Component
@@ -9,14 +12,17 @@ import { useTranslation } from "react-i18next";
  */
 function Upload() {
     const { t } = useTranslation<"coverUploadPage">("coverUploadPage");
-    const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-    }, []);
+    const { mutate } = useMutation(["uploadCover"], uploadCoverMusic, {
+        useErrorBoundary: true
+    });
+    const onSubmitHandler = useCallback(({ title, description, mp3File }: CoverType) => {
+        mutate({ title, description, mp3File });
+    }, [mutate]);
     return (
         <React.Fragment>
             <Title>{t("title")}</Title>
             <InputForm
-                onSubmit={() => { /* TODO */ }}
+                onSubmit={onSubmitHandler}
             />
         </React.Fragment>
     );

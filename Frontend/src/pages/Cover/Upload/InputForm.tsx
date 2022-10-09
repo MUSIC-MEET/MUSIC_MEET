@@ -38,13 +38,13 @@ function InputForm(props: InputFormPros) {
 
     }, []);
 
-    const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        /* TODO  */
-    }, []);
+        props.onSubmit({ title, description, mp3File });
+    }, [description, mp3File, props, title]);
     return (
         <SectionWrapper css={style}>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmitHandler}>
                 <InputTitle
                     className="wrapper"
                     title={title}
