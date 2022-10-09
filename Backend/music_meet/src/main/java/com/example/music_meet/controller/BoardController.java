@@ -81,7 +81,7 @@ public class BoardController
 
         final String file = new Date().getTime() + "_" + image.getOriginalFilename();
 
-        File newFile = new File(beanconfig.TEMP + file);
+        File newFile = new File(beanconfig.TEMP_PATH + file);
         try{
             image.transferTo(newFile);
         } catch (Exception e) {

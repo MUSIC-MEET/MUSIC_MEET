@@ -33,7 +33,7 @@ public class FileController {
     @RequestMapping(path="/user/image/{imageName}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> sendImage(@PathVariable("imageName") final String imageName) throws IOException
     {
-        InputStream imageStream = new FileInputStream(beanConfig.PROFILE_IMAGE + imageName);
+        InputStream imageStream = new FileInputStream(beanConfig.PROFILE_IMAGE_PATH + imageName);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class FileController {
     public ResponseEntity<Object> returnBoardImage(@PathVariable("imageName") final String imageName) throws IOException
     {
 
-        InputStream imageStream = new FileInputStream(beanConfig.TEMP + imageName);
+        InputStream imageStream = new FileInputStream(beanConfig.TEMP_PATH + imageName);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
@@ -61,7 +61,7 @@ public class FileController {
     public ResponseEntity<Object> returnMusicImage(@PathVariable("imageName") final String imageName) throws IOException
     {
 
-        InputStream imageStream = new FileInputStream(beanConfig.MUSIC_IMAGE + imageName);
+        InputStream imageStream = new FileInputStream(beanConfig.MUSIC_IMAGE_PATH + imageName);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);

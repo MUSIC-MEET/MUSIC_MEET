@@ -408,7 +408,7 @@ public class UserController
         final String userNum = (String) request.getAttribute("userNum");
         final String file = new Date().getTime() + "_" + image.getOriginalFilename().replaceAll(" ", "");
 
-        File newFile = new File( beanconfig.PROFILE_IMAGE + file);
+        File newFile = new File( beanconfig.PROFILE_IMAGE_PATH + file);
 
         try{
             image.transferTo(newFile);
