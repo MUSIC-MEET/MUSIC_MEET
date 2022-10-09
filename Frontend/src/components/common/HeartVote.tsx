@@ -3,7 +3,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { css } from "@emotion/react";
 
-interface VoteProps {
+interface HeartVoteProps {
     count?: string;
     isVote?: boolean;
     onClick?: () => void;
@@ -16,7 +16,7 @@ interface VoteProps {
  * @params {boolean} isVote 좋아요 여부
  * @returns 
  */
-function Vote(props: VoteProps) {
+function HeartVote(props: HeartVoteProps) {
     const { count, isVote, onClick } = props;
     console.log(isVote);
     return (
@@ -43,4 +43,4 @@ const style = css`
     }
 `;
 
-export default Vote;
+export default HeartVote;
