@@ -39,7 +39,7 @@ function InputDescription(props: InputDescriptionProps) {
 
 const style = css`
     width: 100%;
-    height: 15rem;
+    height: 30rem;
     &:focus {
         outline: none;
     }
