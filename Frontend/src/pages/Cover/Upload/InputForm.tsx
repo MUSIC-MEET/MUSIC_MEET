@@ -7,17 +7,19 @@ import InputDescription from "./InputDescription";
 import FileUploader from "components/common/FileUploader";
 import GreenButton from "components/common/GreenButton";
 import RedButton from "components/common/RedButton";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 import CoverType from "../CoverType";
+import ValueEmptyModal from "components/AlertModal/ValueEmptyModal";
 
 interface InputFormPros {
     onSubmit: (obj: CoverType) => void;
+    navigator: (path: string) => void;
 }
 
 /**
  * Upload Form Component 입력값들을 받아서 onSubmit으로 전달
  * @param props.onSubmit - submit 함수
+ * @param props.navigator - react-router-dom의 navigate 함수
  * @returns 
  */
 function InputForm(props: InputFormPros) {
@@ -25,6 +27,7 @@ function InputForm(props: InputFormPros) {
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [mp3File, setMp3File] = useState<Blob>(new Blob());
+    const [isEmpty, setIsEmpty] = useState<boolean>(false);
     const titleChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(() => e.target.value);
     }, []);
@@ -38,13 +41,20 @@ function InputForm(props: InputFormPros) {
 
     }, []);
 
-    const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        /* TODO  */
-    }, []);
+        if (title.length === 0 || description.length === 0 || mp3File.size === 0) {
+            setIsEmpty(() => true);
+            return;
+        }
+        props.onSubmit({ title, description, mp3File });
+    }, [description, mp3File, props, title]);
+
+
     return (
         <SectionWrapper css={style}>
-            <form onSubmit={onSubmit}>
+            {isEmpty && <ValueEmptyModal callback={() => setIsEmpty(() => false)} />}
+            <form onSubmit={onSubmitHandler}>
                 <InputTitle
                     className="wrapper"
                     title={title}
@@ -66,6 +76,7 @@ function InputForm(props: InputFormPros) {
                     <RedButton
                         type="button"
                         value={t("form.Cancel")}
+                        onClick={() => props.navigator("/cover/list")}
                     />
                 </div>
             </form>
@@ -112,8 +123,7 @@ const style = css`
         padding: 1rem;
         margin-left: 0.5rem;
     }
-    }
-    
+}
 `;
 
 export default InputForm;
