@@ -15,11 +15,13 @@ function CoverInfo() {
     return (
         <React.Fragment>
             <SectionWrapper css={infoStyle}>
-                <Img />
+                <Img imgSrc={data?.imgSrc} />
                 <TextInfo
                     {...data}
                 />
-                <Player />
+                <Player
+                    mp3Src={data?.mp3Src}
+                />
             </SectionWrapper>
             <SectionWrapper>
                 <Description
