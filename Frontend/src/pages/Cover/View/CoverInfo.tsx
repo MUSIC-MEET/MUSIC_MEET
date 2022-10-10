@@ -4,26 +4,26 @@ import { useParams } from "react-router-dom";
 import { css } from "@emotion/react";
 import Img from "./Img";
 import TextInfo from "./TextInfo";
-import Lyrics from "./Lyrics";
 import Player from "./Player";
+import { useQuery } from "react-query";
+import fetchCover from "utils/RequestApis/Cover/fetchCover";
+import Description from "./Description";
 
 function CoverInfo() {
     const { id } = useParams<{ id: string }>();
-
+    const { data } = useQuery(["fetchCover", id], () => fetchCover(id ?? "0"));
     return (
         <React.Fragment>
             <SectionWrapper css={infoStyle}>
                 <Img />
                 <TextInfo
-                    title="호빵호빵 호빵맨"
-                    user="호빵이"
-                    createdAt="2021-08-01"
+                    {...data}
                 />
                 <Player />
             </SectionWrapper>
             <SectionWrapper>
-                <Lyrics
-                    lyrics="호빵\\n호Qkd ghQKd \n ghQKdaos"
+                <Description
+                    description={data?.description}
                 />
             </SectionWrapper>
         </React.Fragment>
