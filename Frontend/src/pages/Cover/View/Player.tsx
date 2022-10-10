@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import NotStartedIcon from "@mui/icons-material/NotStarted";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
-import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 
-function Player() {
+function Player({ mp3Src }: { mp3Src?: string }) {
+    const audio = useMemo(() => new Audio(mp3Src ?? ""), [mp3Src]);
+
+    const playHandler = useCallback(() => {
+        audio.play();
+    }, [audio]);
+
+    const stopHandler = useCallback(() => {
+        audio.pause();
+    }, [audio]);
+
     return (
         <div className="player">
-            <NotStartedIcon />
-            <StopCircleIcon />
+            <NotStartedIcon onClick={playHandler} />
+            <StopCircleIcon onClick={stopHandler} />
         </div>
     );
 }
