@@ -5,7 +5,8 @@ import CommentInputForm from "components/common/CommentInputForm";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
-import CommentList from "./CommentList";
+import { useMutation } from "react-query";
+import submitComment from "utils/RequestApis/Cover/submitComment";
 
 /**
  * 커버 댓글 컴포넌트
@@ -17,13 +18,24 @@ function Comments() {
     const { t } = useTranslation<"coverViewPage">("coverViewPage");
     const { isLogIn } = useRecoilValue(LoginState);
 
+    const { mutate: submitMutate } = useMutation(["coverCommentSubmit"], submitComment, {
+        useErrorBoundary: true,
+        onSuccess: (response) => {
+            if (response.status === 201) {
+                setValue("");
+            }
+        }
+    });
+
     const valueChangeHandler = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(() => event.target.value);
     }, []);
 
     const commentSubmitHandler = useCallback((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-    }, []);
+        if (value.length == 0) return;
+        submitMutate({ id: id ?? "-1", comment: value });
+    }, [id, submitMutate, value]);
 
     return (
         <SectionWrapper>
@@ -38,7 +50,7 @@ function Comments() {
                 isLogin={isLogIn}
             />
             {/* <CommentList /> */}
-        </SectionWrapper>
+        </SectionWrapper >
     );
 }
 
