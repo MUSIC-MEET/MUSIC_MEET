@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import fetchCoverCommentList from "utils/RequestApis/Cover/fetchCoverCommentList";
 import Comment from "components/common/Comment";
 import editCoverComment from "utils/RequestApis/Cover/editCoverComment";
+import deleteCoverComment from "utils/RequestApis/Cover/deleteCoverComment";
 
 interface CommentListProps {
     id?: string;
@@ -24,9 +25,18 @@ function CommentList(props: CommentListProps) {
             }
         }
     });
+
+    const { mutate: deleteMutate } = useMutation(["deleteCoverComment", props.id], deleteCoverComment, {
+        useErrorBoundary: true,
+        onSuccess: (response) => {
+            if (response.status === 204) {
+                queryClient.invalidateQueries("fetchCoverCommentList");
+            }
+        }
+    });
     const onDeleteHandler = useCallback((commentNum: string) => {
-        // TODO
-    }, []);
+        deleteMutate(commentNum);
+    }, [deleteMutate]);
 
     const onEditHandler = useCallback((commentNum: string, newComment: string) => {
         editMutate({ id: commentNum, comment: newComment });

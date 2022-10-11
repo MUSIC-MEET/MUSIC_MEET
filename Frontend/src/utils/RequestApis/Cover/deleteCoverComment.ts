@@ -2,13 +2,17 @@
 import customAxios from "../../customAxios";
 import { AxiosResponse } from "axios";
 
-const editComment =
+const deleteCoverComment =
     (id: string): Promise<AxiosResponse> => {
         const axios = customAxios();
+        const token = localStorage.getItem("token");
         return axios({
-            method: "PUT",
+            method: "DELETE",
             url: `/cover/comment/${id}`,
+            headers: {
+                "authorization": `${token}`
+            }
         });
     };
 
-export default editComment;
+export default deleteCoverComment;
