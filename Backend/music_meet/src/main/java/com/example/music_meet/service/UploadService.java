@@ -3,10 +3,7 @@ package com.example.music_meet.service;
 import JPA.Upload;
 import JPA.UploadRepository;
 import com.example.music_meet.bean.BeanConfig;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -52,6 +49,7 @@ public class UploadService {
      * @param uploadNum upload number
      * @return 정상적으로 찾아올시 true, 글이 없거나 비정상 작동시 false
      */
+    @Synchronized
     public Upload getUserUpload(final int uploadNum, final int userNum) {
         Upload upload = new Upload();
 
@@ -439,6 +437,7 @@ public class UploadService {
      * @param uploadNum 업로드 글 번호
      * @return
      */
+    @Synchronized
     public ArrayList<Map<String, String>> getUploadComment(final int uploadNum) {
         ArrayList<Map<String, String>> comments = new ArrayList<>();
 
@@ -452,16 +451,14 @@ public class UploadService {
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt =  conn.prepareStatement(sql);
-
             pstmt.setInt(1, uploadNum);
-
             rs = pstmt.executeQuery();
 
-            if (rs.next()){
+            while (rs.next()){
                 Map<String, String> comment = new HashMap<>();
                 comment.put("user", rs.getString("nickname"));
                 comment.put("comment", rs.getString("comment"));
-                comment.put("uploadCommentNum", String.valueOf(rs.getInt("uploadCommentNum")));
+                comment.put("id", String.valueOf(rs.getInt("uploadCommentNum")));
                 comment.put("imgSrc", beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
                 comments.add(comment);
             }
