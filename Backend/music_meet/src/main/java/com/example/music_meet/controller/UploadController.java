@@ -175,4 +175,21 @@ public class UploadController {
     //
     // 개별 업로드 댓글 삭제.md
     //
+    @RequestMapping(value = "/cover/comment/{uploadCommentNum}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteUploadComment(@PathVariable("uploadCommentNum") final int uploadCommentNum){
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
+        if (uploadService.deleteUploadComment(uploadCommentNum, userNum)){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

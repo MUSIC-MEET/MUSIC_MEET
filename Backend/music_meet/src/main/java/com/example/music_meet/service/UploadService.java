@@ -478,8 +478,13 @@ public class UploadService {
     }
 
 
-
-
+    /**
+     * 업로드 댓글 고유 번호를 인자로 넘겨받아 해당 댓글의 내용을 수정하는 함수
+     * @param uploadCommentNum 업로드 댓글 고유 번호
+     * @param userNum 유저의 고유 번호
+     * @param comment 변경할 내용
+     * @return 정상 처리시 true, 비 정상처리시 false
+     */
     public Boolean modifyUploadCommentState(int uploadCommentNum, int userNum, String comment) {
         boolean result;
 
@@ -496,6 +501,42 @@ public class UploadService {
             pstmt.setInt(3, userNum);
 
 
+            rsInt = pstmt.executeUpdate();
+
+            if (rsInt >= 1) {
+                result = true;
+            }else {
+                result = false;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
+    public boolean deleteUploadComment(final int uploadCommentNum, final int userNum) {
+
+        boolean result;
+        sql = "UPDATE uploadComment SET state = ? WHERE uploadCommentNum = ? AND usernum = ? AND state = 0";
+        try {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, 1);
+            pstmt.setInt(2, uploadCommentNum);
+            pstmt.setInt(3, userNum);
             rsInt = pstmt.executeUpdate();
 
             if (rsInt >= 1) {
