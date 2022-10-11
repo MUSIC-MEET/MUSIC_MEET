@@ -435,7 +435,7 @@ public class UploadService {
     /**
      * 해당 업로드 글의 댓글들을 호출하는 함수
      * @param uploadNum 업로드 글 번호
-     * @return
+     * @return 해당 게시글의 활성화된 모든 댓글들
      */
     @Synchronized
     public ArrayList<Map<String, String>> getUploadComment(final int uploadNum) {
@@ -475,5 +475,45 @@ public class UploadService {
             }
         }
         return comments;
+    }
+
+
+
+
+    public Boolean modifyUploadCommentState(int uploadCommentNum, int userNum, String comment) {
+        boolean result;
+
+        sql = "UPDATE uploadComment SET comment = ? WHERE uploadCommentNum = ? AND usernum = ? AND state = 0";
+        try {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, comment);
+            pstmt.setInt(2, uploadCommentNum);
+            pstmt.setInt(3, userNum);
+
+
+            rsInt = pstmt.executeUpdate();
+
+            if (rsInt >= 1) {
+                result = true;
+            }else {
+                result = false;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
     }
 }
