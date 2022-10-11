@@ -56,12 +56,10 @@ public class UploadController {
     }
 
 
-
-
     //
     // 개별 업로드 글 삭제.md
     //
-    @RequestMapping(value = "/cover/{uploadNum}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/cover/{uploadNum}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> changeUploadState(@PathVariable("uploadNum") final int uploadNum){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null)
@@ -118,6 +116,7 @@ public class UploadController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+
     //
     // 개별 업로드 글 댓글 작성.md
     //
@@ -141,17 +140,56 @@ public class UploadController {
 
 
 
-
-
-
     //
     // 개별 업로드 댓글 호출.md
     //
     @RequestMapping(value = "/cover/{uploadNum}/comment", method = RequestMethod.GET)
     public ResponseEntity<Object> getUploadComment(@PathVariable("uploadNum") final int uploadNum){
-
         return new ResponseEntity<>(uploadService.getUploadComment(uploadNum) , HttpStatus.OK);
     }
 
+    //
+    // 개별 업로드 댓글 수정.md
+    //
+    @RequestMapping(value = "/cover/comment/{uploadCommentNum}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> changeUploadComment(@PathVariable("uploadCommentNum") final int uploadCommentNum,
+                                                      @RequestBody final Map<String, String> requestMap){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
+        final String comment = requestMap.get("comment");
+
+        if (uploadService.modifyUploadCommentState(uploadCommentNum, userNum,comment)){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+
+
+    //
+    // 개별 업로드 댓글 삭제.md
+    //
+    @RequestMapping(value = "/cover/comment/{uploadCommentNum}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteUploadComment(@PathVariable("uploadCommentNum") final int uploadCommentNum){
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
+        if (uploadService.deleteUploadComment(uploadCommentNum, userNum)){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

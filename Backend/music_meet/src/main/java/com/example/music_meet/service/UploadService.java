@@ -3,10 +3,7 @@ package com.example.music_meet.service;
 import JPA.Upload;
 import JPA.UploadRepository;
 import com.example.music_meet.bean.BeanConfig;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -52,6 +49,7 @@ public class UploadService {
      * @param uploadNum upload number
      * @return 정상적으로 찾아올시 true, 글이 없거나 비정상 작동시 false
      */
+    @Synchronized
     public Upload getUserUpload(final int uploadNum, final int userNum) {
         Upload upload = new Upload();
 
@@ -437,8 +435,9 @@ public class UploadService {
     /**
      * 해당 업로드 글의 댓글들을 호출하는 함수
      * @param uploadNum 업로드 글 번호
-     * @return
+     * @return 해당 게시글의 활성화된 모든 댓글들
      */
+    @Synchronized
     public ArrayList<Map<String, String>> getUploadComment(final int uploadNum) {
         ArrayList<Map<String, String>> comments = new ArrayList<>();
 
@@ -452,16 +451,14 @@ public class UploadService {
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt =  conn.prepareStatement(sql);
-
             pstmt.setInt(1, uploadNum);
-
             rs = pstmt.executeQuery();
 
-            if (rs.next()){
+            while (rs.next()){
                 Map<String, String> comment = new HashMap<>();
                 comment.put("user", rs.getString("nickname"));
                 comment.put("comment", rs.getString("comment"));
-                comment.put("uploadCommentNum", String.valueOf(rs.getInt("uploadCommentNum")));
+                comment.put("id", String.valueOf(rs.getInt("uploadCommentNum")));
                 comment.put("imgSrc", beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
                 comments.add(comment);
             }
@@ -478,5 +475,86 @@ public class UploadService {
             }
         }
         return comments;
+    }
+
+
+    /**
+     * 업로드 댓글 고유 번호를 인자로 넘겨받아 해당 댓글의 내용을 수정하는 함수
+     * @param uploadCommentNum 업로드 댓글 고유 번호
+     * @param userNum 유저의 고유 번호
+     * @param comment 변경할 내용
+     * @return 정상 처리시 true, 비 정상처리시 false
+     */
+    public Boolean modifyUploadCommentState(int uploadCommentNum, int userNum, String comment) {
+        boolean result;
+
+        sql = "UPDATE uploadComment SET comment = ? WHERE uploadCommentNum = ? AND usernum = ? AND state = 0";
+        try {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, comment);
+            pstmt.setInt(2, uploadCommentNum);
+            pstmt.setInt(3, userNum);
+
+
+            rsInt = pstmt.executeUpdate();
+
+            if (rsInt >= 1) {
+                result = true;
+            }else {
+                result = false;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
+    public boolean deleteUploadComment(final int uploadCommentNum, final int userNum) {
+
+        boolean result;
+        sql = "UPDATE uploadComment SET state = ? WHERE uploadCommentNum = ? AND usernum = ? AND state = 0";
+        try {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, 1);
+            pstmt.setInt(2, uploadCommentNum);
+            pstmt.setInt(3, userNum);
+            rsInt = pstmt.executeUpdate();
+
+            if (rsInt >= 1) {
+                result = true;
+            }else {
+                result = false;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
     }
 }
