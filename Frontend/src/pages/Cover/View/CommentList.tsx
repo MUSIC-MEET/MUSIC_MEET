@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import fetchCoverCommentList from "utils/RequestApis/Cover/fetchCoverCommentList";
 import Comment from "components/common/Comment";
+import editCoverComment from "utils/RequestApis/Cover/editCoverComment";
 
 interface CommentListProps {
     id?: string;
@@ -14,14 +15,22 @@ interface CommentListProps {
  */
 function CommentList(props: CommentListProps) {
     const { data } = useQuery(["fetchCoverCommentList"], () => fetchCoverCommentList(props.id ?? "-1"));
-
+    const queryClient = useQueryClient();
+    const { mutate: editMutate } = useMutation(["editCoverComment", props.id], editCoverComment, {
+        useErrorBoundary: true,
+        onSuccess: (response) => {
+            if (response.status === 204) {
+                queryClient.invalidateQueries("fetchCoverCommentList");
+            }
+        }
+    });
     const onDeleteHandler = useCallback((commentNum: string) => {
         // TODO
     }, []);
 
     const onEditHandler = useCallback((commentNum: string, newComment: string) => {
-        // TODO
-    }, []);
+        editMutate({ id: commentNum, comment: newComment });
+    }, [editMutate]);
     return (
         <ul style={{ "marginTop": "1rem" }}>
             {data?.map((comment) => (
