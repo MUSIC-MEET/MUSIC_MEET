@@ -41,6 +41,8 @@ public class UploadService {
     @Autowired
     private BeanConfig beanConfig;
 
+    @Autowired
+    private java.sql.Timestamp date;
 
     /**
      * 회원 개별 업로드에서 사용
@@ -74,10 +76,10 @@ public class UploadService {
                 upload.setUser(rs.getString("nickname"));
                 upload.setDescription(rs.getString("comment"));
                 upload.setMp3Src(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.MP3_FILE_API_URL + rs.getString("file"));
-                upload.setVote(rs.getInt("vote"));
-                upload.setCount(rs.getInt("view"));
+                upload.setVoteCount(rs.getInt("vote"));
+                upload.setViewCount(rs.getInt("view"));
                 upload.setImgSrc(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
-                upload.setCreatedat(rs.getString("createdat"));
+                upload.setCreatedAt(rs.getString("createdat"));
                 upload.setIsVote(rs.getInt("isvote"));
             }
             else {
@@ -126,8 +128,8 @@ public class UploadService {
                 map.put("title", rs.getString("title"));
                 map.put("user", rs.getString("nickname"));
                 map.put("createdAt", rs.getString("createdat"));
-                map.put("view", String.valueOf(rs.getInt("view")));
-                map.put("vote", String.valueOf(rs.getInt("vote")));
+                map.put("viewCount", String.valueOf(rs.getInt("view")));
+                map.put("voteCount", String.valueOf(rs.getInt("vote")));
                 map.put("imgSrc", beanConfig.getServerUrl() + ":" + beanConfig.getServerPort()
                         + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
                 uploads.add(map);
@@ -294,7 +296,131 @@ public class UploadService {
     }
 
 
+    /**
+     * uploadNum에 해당하는 글의 state를 변경함
+     * @param userNum 해당 유저 번호
+     * @param uploadNum 업로드 번호
+     * @param state 변경할 상태 값
+     * @return 정상 처리시 true, 비정상 처리시 false
+     */
+    public boolean changUploadState(int userNum, int uploadNum, int state) {
+        boolean result;
+
+        sql = "UPDATE upload set state = ? WHERE uploadnum = ? AND usernum = ?";
+        try
+        {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt =  conn.prepareStatement(sql);
+            pstmt.setInt(1, state);
+            pstmt.setInt(2, uploadNum);
+            pstmt.setInt(3, userNum);
+            rsInt = pstmt.executeUpdate();
+            if (rsInt == 1){
+                result = true;
+            }
+            else {
+                result = false;
+            }
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * upload 테이블에서 해당 업로드 글의 상태값을 가져오는 함수
+     * @param uploadNum 특정 업로드 글 번호
+     * @return 해당 글의 상태 코드
+     */
+    public int getUploadState(final int uploadNum) {
+        int result = 0;
+
+        sql = "SELECT state FROM upload WHERE uploadNum = ?";
+        try
+        {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt =  conn.prepareStatement(sql);
+            pstmt.setInt(1, uploadNum);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                result = rs.getInt("state");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
 
 
 
+    /**
+     * 회원 개별 업로드에 댓글을 작성하는 함수
+     * @param userNum 유저 고유 번호
+     * @param uploadNum 업로드 글 고유 번호
+     * @param comment 내용
+     * @return 정상 처리시 true, 비정상 처리시 false 리턴
+     */
+    public boolean addUploadComment(int userNum, int uploadNum, String comment) {
+        boolean result;
+        sql = "INSERT INTO uploadcomment(usernum, uploadnum, comment,createdat) VALUES (?,?,?,?)";
+        date = new java.sql.Timestamp(new java.util.Date().getTime());
+        try
+        {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt =  conn.prepareStatement(sql);
+            pstmt.setInt(1, userNum);
+            pstmt.setInt(2, uploadNum);
+            pstmt.setString(3, comment);
+            pstmt.setTimestamp(4, date);
+            rsInt = pstmt.executeUpdate();
+
+            if (rsInt == 1){
+                result = true;
+            }
+            else {
+                result = false;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
 }

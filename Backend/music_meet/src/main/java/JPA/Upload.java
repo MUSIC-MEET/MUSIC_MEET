@@ -24,10 +24,10 @@ public class Upload {
     private String description;
     private String mp3Src;
     private String origin_file;
-    private int vote;
+    private int voteCount;
     private int isVote;
-    private int count;
-    private String createdat;
+    private int viewCount;
+    private String createdAt;
     private int state;
 
     private String imgSrc;
