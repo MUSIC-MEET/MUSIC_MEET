@@ -23,12 +23,13 @@ function CommentList(props: CommentListProps) {
         // TODO
     }, []);
     return (
-        <ul>
+        <ul style={{ "marginTop": "1rem" }}>
             {data?.map((comment) => (
                 <Comment
                     key={comment.id}
                     imgSrc={comment.imgSrc}
                     id={comment.id}
+                    user={comment.user}
                     comment={comment.comment}
                     onDelete={onDeleteHandler}
                     onEdit={onEditHandler}

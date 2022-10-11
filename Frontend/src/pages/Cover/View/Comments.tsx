@@ -5,8 +5,9 @@ import CommentInputForm from "components/common/CommentInputForm";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import submitComment from "utils/RequestApis/Cover/submitComment";
+import CommentList from "./CommentList";
 
 /**
  * 커버 댓글 컴포넌트
@@ -17,12 +18,13 @@ function Comments() {
     const [value, setValue] = useState<string>("");
     const { t } = useTranslation<"coverViewPage">("coverViewPage");
     const { isLogIn } = useRecoilValue(LoginState);
-
+    const queryClient = useQueryClient();
     const { mutate: submitMutate } = useMutation(["coverCommentSubmit"], submitComment, {
         useErrorBoundary: true,
         onSuccess: (response) => {
             if (response.status === 201) {
                 setValue("");
+                queryClient.invalidateQueries(["fetchCoverCommentList"]);
             }
         }
     });
@@ -49,7 +51,9 @@ function Comments() {
                 }}
                 isLogin={isLogIn}
             />
-            {/* <CommentList /> */}
+            <CommentList
+                id={id}
+            />
         </SectionWrapper >
     );
 }
