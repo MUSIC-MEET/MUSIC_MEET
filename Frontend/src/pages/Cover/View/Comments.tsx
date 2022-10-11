@@ -5,7 +5,7 @@ import CommentInputForm from "components/common/CommentInputForm";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
-import CommentList from "pages/GenreBoard/View/CommentList";
+import CommentList from "./CommentList";
 
 /**
  * 커버 댓글 컴포넌트
@@ -37,7 +37,7 @@ function Comments() {
                 }}
                 isLogin={isLogIn}
             />
-            <CommentList />
+            {/* <CommentList /> */}
         </SectionWrapper>
     );
 }

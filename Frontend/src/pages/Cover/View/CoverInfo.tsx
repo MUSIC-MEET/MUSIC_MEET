@@ -15,7 +15,7 @@ function CoverInfo() {
     const queryClient = useQueryClient();
     const { id } = useParams<{ id: string }>();
     const { data } = useQuery(["fetchCover", id], () => fetchCover(id ?? "0"));
-
+    console.log("CoverInfo");
     const { mutate } = useMutation(["voteCover"], voteCover, {
         useErrorBoundary: true,
         onSuccess: (response) => {
