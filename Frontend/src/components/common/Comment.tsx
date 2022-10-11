@@ -14,8 +14,8 @@ import CommentType from "./CommentType";
 
 
 interface ActionHandlerType {
-    onDelete: (commentNum: string | number) => void;
-    onEdit: (commentNum: string | number, newComment: string) => void;
+    onDelete: (commentNum: string) => void;
+    onEdit: (commentNum: string, newComment: string) => void;
 }
 
 /**
@@ -28,7 +28,6 @@ function Comment(props: CommentType & ActionHandlerType) {
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
     const [newComment, setNewComment] = useState<string>(props.comment ?? "");
     const { t } = useTranslation<"genreBoardViewer">("genreBoardViewer");
-
     const changEditMode = useCallback(() => {
         setIsEditMode(() => !isEditMode);
     }, [isEditMode]);
@@ -60,7 +59,7 @@ function Comment(props: CommentType & ActionHandlerType) {
                                     onClick={changEditMode}
                                 />
                                 <DeleteIconButton
-                                    onClick={() => props.onDelete(props.id ?? "")}
+                                    onClick={() => props.onDelete(props.id ?? " ")}
                                 />
                             </React.Fragment>
                             :

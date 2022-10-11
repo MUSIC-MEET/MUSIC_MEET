@@ -1,5 +1,5 @@
 type CommentType = {
-    id?: number | string;
+    id?: string;
     comment ?: string;
     user ?: string;
     createdAt?: string;
