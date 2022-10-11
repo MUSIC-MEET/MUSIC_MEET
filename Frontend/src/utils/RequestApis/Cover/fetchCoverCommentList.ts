@@ -7,7 +7,7 @@ const fetchCover =
         const axios = customAxios();
         return axios({
             method: "GET",
-            url: `/cover/comment/${id}`,
+            url: `/cover/${id}/comment`,
         }).then(res => res.data);
     };
 

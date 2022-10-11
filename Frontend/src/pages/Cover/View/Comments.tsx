@@ -5,6 +5,8 @@ import CommentInputForm from "components/common/CommentInputForm";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
+import { useMutation, useQueryClient } from "react-query";
+import submitComment from "utils/RequestApis/Cover/submitComment";
 import CommentList from "./CommentList";
 
 /**
@@ -16,6 +18,16 @@ function Comments() {
     const [value, setValue] = useState<string>("");
     const { t } = useTranslation<"coverViewPage">("coverViewPage");
     const { isLogIn } = useRecoilValue(LoginState);
+    const queryClient = useQueryClient();
+    const { mutate: submitMutate } = useMutation(["coverCommentSubmit"], submitComment, {
+        useErrorBoundary: true,
+        onSuccess: (response) => {
+            if (response.status === 201) {
+                setValue("");
+                queryClient.invalidateQueries(["fetchCoverCommentList"]);
+            }
+        }
+    });
 
     const valueChangeHandler = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(() => event.target.value);
@@ -23,7 +35,9 @@ function Comments() {
 
     const commentSubmitHandler = useCallback((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-    }, []);
+        if (value.length == 0) return;
+        submitMutate({ id: id ?? "-1", comment: value });
+    }, [id, submitMutate, value]);
 
     return (
         <SectionWrapper>
@@ -37,8 +51,10 @@ function Comments() {
                 }}
                 isLogin={isLogIn}
             />
-            {/* <CommentList /> */}
-        </SectionWrapper>
+            <CommentList
+                id={id}
+            />
+        </SectionWrapper >
     );
 }
 
