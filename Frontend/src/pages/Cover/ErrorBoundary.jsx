@@ -1,7 +1,8 @@
 import React from "react";
 import NewLoginAlertModal from "components/AlertModal/NewLoginAlertModal";
 import DuplicateVoteModal from "../../components/AlertModal/DuplicateVoteModal";
-// import DeleteMusicAlert from "./DeleteMusicAlert";
+import NotFoundCover from "./View/NotFoundCover";
+
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -14,10 +15,10 @@ class ErrorBoundary extends React.Component {
             console.log(400);
             return { hasError: true, errorCode: "400" };
         }
-        // if(response.status === 404) {
-        //     console.log(404);
-        //     return { hasError: true, errorCode: "404" };
-        // }
+        if(response.status === 404) {
+            console.log(404);
+            return { hasError: true, errorCode: "404" };
+        }
         else if(response.status === 401) {
             console.log(401);
             return { hasError: true, errorCode: "401" };
@@ -31,12 +32,12 @@ class ErrorBoundary extends React.Component {
 
 
     render() {
-        // if (this.state.hasError && this.state.errorCode === "404") {
-        //     // 폴백 UI를 커스텀하여 렌더링할 수 있습니다.
-        //     return (
-        //         <NotFoundMusic />
-        //     );
-        // }
+        if (this.state.hasError && this.state.errorCode === "404") {
+            // 폴백 UI를 커스텀하여 렌더링할 수 있습니다.
+            return (
+                <NotFoundCover />
+            );
+        }
         if(this.state.hasError && this.state.errorCode === "401" ) {
             return (
                 <div>

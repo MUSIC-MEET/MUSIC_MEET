@@ -9,7 +9,8 @@ interface TextInfoProps {
     user?: string;
     createdAt?: string;
     isVote?: boolean;
-    count?: string;
+    voteCount?: string;
+    vote: () => void;
 }
 
 function TextInfo(props: TextInfoProps) {
@@ -18,11 +19,12 @@ function TextInfo(props: TextInfoProps) {
     return (
         <div css={style}>
             <h2 className="title">{props.title}</h2>
-            <span className="user">{props.user}{props.user}</span>
+            <span className="user">{props.user}</span>
             <span className="createdat">{t("createdAt")}: {props.createdAt}</span>
             <HeartVote
-                count={"0"}
+                count={props.voteCount}
                 isVote={props.isVote}
+                onClick={props.vote}
             />
         </div>
     );

@@ -2,13 +2,13 @@ import { css } from "@emotion/react";
 import React from "react";
 
 interface ImgProps {
-    src?: string;
+    imgSrc?: string;
 }
 
 function Img(props: ImgProps) {
     return (
         <figure css={style}>
-            <img src={props.src} alt="" />
+            <img src={props.imgSrc} alt="" />
         </figure >
     );
 }

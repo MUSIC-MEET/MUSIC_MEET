@@ -5,6 +5,7 @@ import CoverInfo from "./CoverInfo";
 import ErrorBoundary from "../ErrorBoundary";
 import Loading from "components/common/Loading";
 import { css } from "@emotion/react";
+import Comments from "./Comments";
 
 function View() {
 
@@ -14,6 +15,7 @@ function View() {
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
                     <CoverInfo />
+                    <Comments />
                 </Suspense>
             </ErrorBoundary >
         </Content>

@@ -10,7 +10,7 @@ import Form from "components/common/Form";
 import Input from "components/common/Input";
 import Submit from "components/common/Submit";
 import { useTranslation } from "react-i18next";
-import MusicCommentType from "./MusicCommentType";
+import CommentType from "./CommentType";
 
 
 interface ActionHandlerType {
@@ -19,18 +19,15 @@ interface ActionHandlerType {
 }
 
 /**
- * 음악 댓글 아이템 컴포넌트
+ * comment Item Component
  * @param props CommentType
  * @returns 
  */
-function Comment(props: MusicCommentType & ActionHandlerType) {
-    const { commentNum, comment, user, createdAt, imgSrc, onDelete, onEdit } =
-        props;
+function Comment(props: CommentType & ActionHandlerType) {
     const { nickname: loginNickname } = useRecoilValue<{ nickname: string }>(LoginState);
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
-    const [newComment, setNewComment] = useState<string>(comment);
+    const [newComment, setNewComment] = useState<string>(props.comment ?? "");
     const { t } = useTranslation<"genreBoardViewer">("genreBoardViewer");
-
     const changEditMode = useCallback(() => {
         setIsEditMode(() => !isEditMode);
     }, [isEditMode]);
@@ -42,27 +39,27 @@ function Comment(props: MusicCommentType & ActionHandlerType) {
     const editCommentHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (newComment.length === 0) return;
-        onEdit(commentNum, newComment);
+        props.onEdit(props.id ?? "", newComment);
         changEditMode();
-    }, [changEditMode, commentNum, newComment, onEdit]);
+    }, [changEditMode, newComment, props]);
 
     return (
         <li css={style}>
             <CommentTop>
                 <div className="writer-profile comment-wrapper">
-                    <img src={imgSrc} alt={"img"} />
-                    <span className="nickname">{user}</span>
-                    <p className="createdAt">{createdAt}</p>
+                    <img src={props.imgSrc} alt={"img"} />
+                    <span className="nickname">{props.user}</span>
+                    <p className="createdAt">{props.createdAt}</p>
                 </div>
                 <div className="more-actions comment-wrapper">
                     {
-                        loginNickname === user ?
+                        loginNickname === props.user ?
                             <React.Fragment>
                                 <EditIconButton
                                     onClick={changEditMode}
                                 />
                                 <DeleteIconButton
-                                    onClick={() => onDelete(commentNum)}
+                                    onClick={() => props.onDelete(props.id ?? " ")}
                                 />
                             </React.Fragment>
                             :
@@ -90,7 +87,7 @@ function Comment(props: MusicCommentType & ActionHandlerType) {
                     </React.Fragment>
                     :
                     <React.Fragment>
-                        <p>{comment}</p>
+                        <p>{props.comment}</p>
                     </React.Fragment>
                 }
             </CommentBody>

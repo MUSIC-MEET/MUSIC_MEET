@@ -4,8 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import deleteComment from "utils/RequestApis/Music/deleteComment";
 import editComment from "utils/RequestApis/Music/editComment";
 import fetchMusicCommentList from "utils/RequestApis/Music/fetchCommentList";
-import Comment from "./Comment";
-
+import Comment from "components/common/Comment";
 /**
  * 음악 페이지 댓글 리스트 컴포넌트
  * @param props
@@ -58,7 +57,7 @@ function CommentList({ musicNum }: { musicNum: string; }) {
                 <Comment
                     key={comment.commentNum}
                     imgSrc={comment.imgSrc}
-                    commentNum={comment.commentNum}
+                    id={comment.commentNum}
                     comment={comment.comment}
                     user={comment.user}
                     createdAt={comment.createdAt}

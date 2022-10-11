@@ -6,7 +6,7 @@ interface DescriptionProps {
 
 function Description(props: DescriptionProps) {
     return (
-        <p style={{ "whiteSpace": "pre-wrap" }}>
+        <p style={{ "whiteSpace": "pre-wrap", "lineHeight": "1.2" }}>
             {props.description}
         </p>
     );
