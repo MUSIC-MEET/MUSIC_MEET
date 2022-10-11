@@ -44,6 +44,8 @@ public class UploadService {
     @Autowired
     private java.sql.Timestamp date;
 
+
+
     /**
      * 회원 개별 업로드에서 사용
      * upload 번호를 입력받아 해당 업로드 글을 가져오는 함수
@@ -102,6 +104,8 @@ public class UploadService {
 
     }
 
+
+
     /**
      * 회원 개별 업로드 글 목록을 페이지 단위로 보여주는 함수
      * @param page 보여줄 페이지 번호
@@ -151,11 +155,6 @@ public class UploadService {
 
 
 
-
-
-
-
-
     /**
      * uploadVote 테이블에서 해당 업로드 번호와 유저 번호가 매칭되는 값이 있는지 확인하는 함수
      * @param uploadNum 업로드 번호
@@ -200,6 +199,8 @@ public class UploadService {
         return result;
     }
 
+
+
     /**
      * uploadVote 테이블에 값을 추가하는 함수
      * @param uploadNum 업로드 번호
@@ -233,6 +234,8 @@ public class UploadService {
 
     }
 
+
+
     /**
      * uploadvote 테이블에서 uploadNum과 userNum을 AND 조건으로 같은 같은 값을 삭제하는 함수
      * @param uploadNum
@@ -264,6 +267,8 @@ public class UploadService {
 
     }
 
+
+
     /**
      * upload 테이블의 vote 값을 넘어온 정수형 변수 만큼 추가함
      * @param i 추가할 값
@@ -294,6 +299,7 @@ public class UploadService {
         }
 
     }
+
 
 
     /**
@@ -339,6 +345,8 @@ public class UploadService {
         }
         return result;
     }
+
+
 
     /**
      * upload 테이블에서 해당 업로드 글의 상태값을 가져오는 함수
@@ -388,8 +396,8 @@ public class UploadService {
      */
     public boolean addUploadComment(int userNum, int uploadNum, String comment) {
         boolean result;
-        sql = "INSERT INTO uploadcomment(usernum, uploadnum, comment,createdat) VALUES (?,?,?,?)";
         date = new java.sql.Timestamp(new java.util.Date().getTime());
+        sql = "INSERT INTO uploadcomment(usernum, uploadnum, comment,createdat) VALUES (?,?,?,?)";
         try
         {
             //
@@ -422,5 +430,53 @@ public class UploadService {
             }
         }
         return result;
+    }
+
+
+
+    /**
+     * 해당 업로드 글의 댓글들을 호출하는 함수
+     * @param uploadNum 업로드 글 번호
+     * @return
+     */
+    public ArrayList<Map<String, String>> getUploadComment(final int uploadNum) {
+        ArrayList<Map<String, String>> comments = new ArrayList<>();
+
+        sql = "SELECT a.`uploadCommentNum`, a.`comment`, b.`nickname`, b.`userimage` FROM uploadComment a, user b " +
+                " WHERE a.`uploadnum` = ? AND a.`state` = 0 AND a.usernum = b.usernum ORDER BY a.`createdat` DESC";
+        try
+        {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt =  conn.prepareStatement(sql);
+
+            pstmt.setInt(1, uploadNum);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                Map<String, String> comment = new HashMap<>();
+                comment.put("user", rs.getString("nickname"));
+                comment.put("comment", rs.getString("comment"));
+                comment.put("uploadCommentNum", String.valueOf(rs.getInt("uploadCommentNum")));
+                comment.put("imgSrc", beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
+                comments.add(comment);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return comments;
     }
 }
