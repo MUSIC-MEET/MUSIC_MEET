@@ -147,7 +147,11 @@ public class UploadController {
     //
     // 개별 업로드 댓글 호출.md
     //
+    @RequestMapping(value = "/cover/{uploadNum}/comment", method = RequestMethod.GET)
+    public ResponseEntity<Object> getUploadComment(@PathVariable("uploadNum") final int uploadNum){
 
+        return new ResponseEntity<>(uploadService.getUploadComment(uploadNum) , HttpStatus.OK);
+    }
 
 
 }
