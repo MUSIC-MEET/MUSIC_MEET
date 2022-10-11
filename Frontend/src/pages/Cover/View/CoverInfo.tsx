@@ -1,23 +1,41 @@
-import React from "react";
+import React, { useCallback } from "react";
 import SectionWrapper from "components/common/SectionWrapper";
 import { useParams } from "react-router-dom";
 import { css } from "@emotion/react";
 import Img from "./Img";
 import TextInfo from "./TextInfo";
 import Player from "./Player";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import fetchCover from "utils/RequestApis/Cover/fetchCover";
 import Description from "./Description";
+import voteCover from "utils/RequestApis/Cover/voteCover";
 
 function CoverInfo() {
+
+    const queryClient = useQueryClient();
     const { id } = useParams<{ id: string }>();
     const { data } = useQuery(["fetchCover", id], () => fetchCover(id ?? "0"));
+
+    const { mutate } = useMutation(["voteCover"], voteCover, {
+        useErrorBoundary: true,
+        onSuccess: (response) => {
+            if (response.status === 204) {
+                queryClient.invalidateQueries(["fetchCover", id]);
+            }
+        }
+    });
+
+    const voteHandler = useCallback(() => {
+        mutate(id ?? "0");
+    }, [id, mutate]);
     return (
         <React.Fragment>
             <SectionWrapper css={infoStyle}>
                 <Img imgSrc={data?.imgSrc} />
                 <TextInfo
                     {...data}
+                    voteCount={data?.voteCount}
+                    vote={voteHandler}
                 />
                 <Player
                     mp3Src={data?.mp3Src}
