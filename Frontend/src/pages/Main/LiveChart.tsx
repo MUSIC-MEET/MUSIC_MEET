@@ -2,7 +2,7 @@ import { Wrap } from "components/AlertModal/Wrap";
 import SectionWrapper from "components/common/SectionWrapper";
 import Chart from "pages/LiveChart/Chart";
 import ChartList from "pages/LiveChart/ChartList";
-import TopText from "pages/LiveChart/TopText";
+import TopText from "pages/LiveChart/SubText";
 import React, { useState } from "react";
 
 function LiveChart() {
