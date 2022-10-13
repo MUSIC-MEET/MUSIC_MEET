@@ -4,6 +4,7 @@ import CoverInfo from "./CoverInfo";
 import ErrorBoundary from "../ErrorBoundary";
 import Loading from "components/common/Loading";
 import Comments from "./Comments";
+import { css } from "@emotion/react";
 
 function View() {
     return (
@@ -11,12 +12,20 @@ function View() {
             <Title>{"커버 조회"}</Title>
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
-                    <CoverInfo />
-                    <Comments />
+                    <article css={article}>
+                        <CoverInfo />
+                        <Comments />
+                    </article>
                 </Suspense>
             </ErrorBoundary >
         </React.Fragment>
     );
 }
 
+
+const article = css`
+    & > .section-wrapper {
+        width: 80vw;
+    }
+`;
 export default View;

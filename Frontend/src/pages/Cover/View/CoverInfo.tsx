@@ -71,7 +71,6 @@ const infoStyle = css`
     align-items: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
-
     figure{
         width: 10rem;
         height: 10rem;
