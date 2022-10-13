@@ -27,7 +27,7 @@ const rootStyle = css`
     align-items: flex-start;
     width: 100%;
     min-height: 100vh;
-
+    padding: 0rem;
     @media screen and (max-width: 1023px) {
         flex-direction: column; 
     }
