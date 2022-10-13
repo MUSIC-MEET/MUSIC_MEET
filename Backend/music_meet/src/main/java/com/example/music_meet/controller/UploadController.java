@@ -4,13 +4,16 @@ import JPA.Upload;
 import com.example.music_meet.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -84,10 +87,53 @@ public class UploadController {
     }
 
 
+
     //
-    // 개별 업로드 글 수정.md
+    // 개별 업로드 글 조회_요약.md
     //
 
+
+
+
+    /**
+     * 개별 업로드 글 수정.md
+     * @param uploadNum 업로드 글 고유 번호
+     * @param title 업로드 글 제목
+     * @param description 글 내용(설명)
+     * @param mp3File fileObject (없을 수도 있음)
+     * @param fileName String 타입의 파일 이름(무조건 존재 DB에서 origin_file) 따로 가공해야됨
+     * @return
+     */
+    @RequestMapping(value = "/cover/{uploadNum}", method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> modifyUpload(@PathVariable("uploadNum") final int uploadNum,
+                                               @RequestParam("title")final String title,
+                                               @RequestParam("description")final String description,
+                                               @RequestParam("mp3File")final MultipartFile mp3File,
+                                               @RequestParam("fileName")final String fileName) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
+
+        Map<String, String> map = uploadService.getFileName(userNum, uploadNum, fileName);
+
+        if (map.get("origin_file").equals(fileName)){
+            uploadService.modifyUpload(userNum, uploadNum, title, description, mp3File,null);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else {
+            
+            if (uploadService.deleteMp3File(map.get("file")) &&
+                    uploadService.modifyUpload(userNum, uploadNum, title, description, mp3File, fileName)){
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
 
 
 

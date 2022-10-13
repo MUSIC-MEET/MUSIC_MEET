@@ -1092,6 +1092,7 @@ public class UserService {
     public boolean userUpload(int userNum, String title, String comment, MultipartFile mp3File) {
         boolean result = false;
         final String fileName = new Date().getTime() + "_" + mp3File.getOriginalFilename().replaceAll(" ", "");
+        final String originFileName = mp3File.getOriginalFilename().replaceAll(" ", "");
         date = new java.sql.Timestamp(new java.util.Date().getTime());
 
         sql = "INSERT INTO upload(`usernum`, `title`, `origin_title`, `comment`, `file`, `origin_file`, `createdat`, `vote`,`state`)" +
@@ -1108,8 +1109,8 @@ public class UserService {
             pstmt.setString(2, title.replaceAll(" ",""));
             pstmt.setString(3, title);
             pstmt.setString(4, comment);
-            pstmt.setString(5, fileName.replaceAll(" ", ""));
-            pstmt.setString(6, fileName);
+            pstmt.setString(5, fileName.replaceAll(" ", "")); // file
+            pstmt.setString(6, originFileName);       // origin_file
             pstmt.setTimestamp(7, date);
             pstmt.setInt(8, 0);
             pstmt.setInt(9,0);

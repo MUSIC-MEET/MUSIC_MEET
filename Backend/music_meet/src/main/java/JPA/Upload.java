@@ -3,6 +3,7 @@ package JPA;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -33,5 +34,6 @@ public class Upload {
     private String imgSrc;
     private String user;
 
+    private MultipartFile multipartFile;
 
 }

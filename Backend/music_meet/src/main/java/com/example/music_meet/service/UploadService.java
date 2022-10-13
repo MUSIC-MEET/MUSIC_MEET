@@ -1,18 +1,19 @@
 package com.example.music_meet.service;
 
 import JPA.Upload;
-import JPA.UploadRepository;
 import com.example.music_meet.bean.BeanConfig;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @Getter
@@ -522,6 +523,14 @@ public class UploadService {
         return result;
     }
 
+
+
+    /**
+     * 업로드 댓글 고유 번호를 인자로 넘겨받아 해당 댓글을 삭제하는 함수
+     * @param uploadCommentNum 업로드 댓글 고유 번호
+     * @param userNum 유저 고유 번호
+     * @return 정상 처리시 true, 비정상 처리시 false
+     */
     public boolean deleteUploadComment(final int uploadCommentNum, final int userNum) {
 
         boolean result;
@@ -557,4 +566,135 @@ public class UploadService {
         }
         return result;
     }
+
+
+    /**
+     * 회원 업로드 글을 수정하는 함수
+     * @param uploadNum 유저 고유 번호
+     * @param title 바꿀 제목
+     * @param description 바꿀 설명
+     * @param fileName 파일의 이름
+     * @return 정상 처리시 true, 비정상 처리시 false 반환
+     */
+    public boolean modifyUpload(int userNum, int uploadNum, String title, String description, MultipartFile mp3File,String fileName) {
+        boolean result;
+        long nowDate = new Date().getTime();
+        if (fileName == null) {
+            sql = "UPDATE upload SET title = ?, comment = ? , origin_title = ? WHERE uploadNum = ? AND usernum = ? AND state = 0";
+        }else {
+            sql = "UPDATE upload SET title = ?, comment = ?, origin_title = ? ,file = ?, origin_file = ? WHERE uploadNum = ? AND usernum = ? AND state = 0";
+        }
+
+        try {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            if (fileName == null){
+                pstmt.setString(1,title);
+                pstmt.setString(2, description);
+                pstmt.setString(3, title.replaceAll(" ", ""));
+                pstmt.setInt(4,uploadNum);
+                pstmt.setInt(5, userNum);
+            }else {
+                File newFile = new File(beanConfig.UPLOAD_MP3FILE_PATH +
+                        nowDate +
+                        "_" +
+                        mp3File.getOriginalFilename().replaceAll(" ", ""));
+                mp3File.transferTo(newFile);
+
+
+                pstmt.setString(1,title);
+                pstmt.setString(2, description);
+                pstmt.setString(3,title.replaceAll(" ", ""));
+                pstmt.setString(4, nowDate + "_" + fileName.replaceAll(" ", ""));
+                pstmt.setString(5, fileName);
+                pstmt.setInt(6,uploadNum);
+                pstmt.setInt(7, userNum);
+            }
+            rsInt = pstmt.executeUpdate();
+
+            if (rsInt >= 1) {
+                result = true;
+            }else {
+                result = false;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
+
+    /**
+     * upload 테이블에서 인자로 넘겨받은 filename과 origin_file을 비교하는 함수
+     * @param userNum 유저 고유 번호
+     * @param uploadNum 업로드 글 고유 번호
+     * @param fileName 확인할 file 이름
+     * @return 있으면 true, 없으면 false
+     */
+    public Map<String, String> getFileName(int userNum, int uploadNum, String fileName) {
+
+        Map<String, String> result = new HashMap<>();
+
+        sql = "SELECT origin_file, file FROM upload WHERE usernum = ? AND uploadnum = ? AND state = 0";
+        try {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, userNum);
+            pstmt.setInt(2, uploadNum);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                result.put("file", rs.getString("file"));
+                result.put("origin_file", rs.getString("origin_file"));
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
+
+    /**
+     * upload 폴더의 해당 파일을 지우는 함수
+     * @param deleteFile 지울 파일의 이름
+     * @return 정상 처리시 true, 비정상 처리시 false 반환
+     */
+    public boolean deleteMp3File(String deleteFile) {
+        try {
+            File newFile = new File(beanConfig.UPLOAD_MP3FILE_PATH + deleteFile);
+            newFile.delete();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
