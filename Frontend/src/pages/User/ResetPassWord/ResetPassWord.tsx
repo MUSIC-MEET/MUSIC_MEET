@@ -1,5 +1,4 @@
 import Title from "components/common/Title";
-import Content from "components/UI/Content";
 import React, { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -82,10 +81,10 @@ function ResetPassWord() {
     // 로딩
     if (keyIsLoading || changeRquestIsLoading) {
         return (
-            <Content>
+            <React.Fragment>
                 <Title>{t("title")}</Title>
                 <Loading />
-            </Content >
+            </React.Fragment >
         );
     }
 
@@ -96,7 +95,7 @@ function ResetPassWord() {
         changeRequestIsError
     ) {
         return (
-            <Content>
+            <React.Fragment>
                 <Title>{t("title")}</Title>
                 {changeRequestIsSuccess &&
                     <React.Fragment>
@@ -110,24 +109,24 @@ function ResetPassWord() {
                         <p>{t("error")}</p>
                     </React.Fragment>
                 }
-            </Content>
+            </React.Fragment>
         );
     }
 
     // 비회원 인증키도 알맞지않고 회원이 아닐때 유효하지 않다는걸 알려주는 화면 렌더링
     if (keyIsError && !isLogIn) {
         return (
-            <Content>
+            <React.Fragment>
                 <Title>{t("title")}</Title>
                 <p>{t("keyError")}</p>
-            </Content>
+            </React.Fragment>
         );
     }
 
     // 비회원 인증키가 유효하거나 회원일때 새 비밀번호 입력하는 폼 렌더링
     if (keyIsSuccess || isLogIn) {
         return (
-            <Content>
+            <React.Fragment>
                 <Title>{t("title")}</Title>
                 <ResetPassWordForm
                     onSubmit={onSubmit}
@@ -136,7 +135,7 @@ function ResetPassWord() {
                     valuesChangeHandler={valuesChangeHandler}
                     matchs={matchs}
                 />
-            </Content >
+            </React.Fragment>
         );
     }
 
