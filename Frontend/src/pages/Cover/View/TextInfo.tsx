@@ -1,7 +1,8 @@
 import { css } from "@emotion/react";
+import ConfirmModal from "components/AlertModal/ConfirmModal";
 import DeleteIconButton from "components/common/ActionButton/DeleteIconButton";
 import HeartVote from "components/common/HeartVote";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 
@@ -12,17 +13,32 @@ interface TextInfoProps {
     isVote?: boolean;
     voteCount?: string;
     vote: () => void;
+    delete: () => void;
 }
+
+/**
+ * 커버 뷰 페이지 텍스트 정보들을 보여주는 컴포넌트
+ * @param props.title - title
+ * @param props.user - user
+ * @param props.createdAt - createdAt
+ * @param props.isVote - isVote
+ * @param props.voteCount - voteCount
+ * @param props.vote - vote
+ * @param props.delete - delete
+ * @returns 
+ */
 
 function TextInfo(props: TextInfoProps) {
     const { t } = useTranslation<"coverViewPage">("coverViewPage");
-
+    const [deleteModalShown, setDeleteModalShown] = useState<boolean>(false);
     return (
         <div css={style}>
             <h2 className="title">{props.title}</h2>
             <div className="row">
                 <span className="user">{props.user}</span>
-                <DeleteIconButton />
+                <DeleteIconButton
+                    onClick={() => setDeleteModalShown(() => true)}
+                />
             </div>
 
             <span className="createdat">{t("createdAt")}: {props.createdAt}</span>
@@ -31,6 +47,17 @@ function TextInfo(props: TextInfoProps) {
                 isVote={props.isVote}
                 onClick={props.vote}
             />
+            {deleteModalShown &&
+                <ConfirmModal
+                    title={t("deleteModal.title")}
+                    content={t("deleteModal.content")}
+                    confirmButtonText={t("deleteModal.confirm")}
+                    cancelButtonText={t("deleteModal.cancel")}
+                    onConfirm={props.delete}
+                    onCancel={() => setDeleteModalShown(() => false)}
+                    onClose={() => setDeleteModalShown(() => false)}
+                />
+            }
         </div>
     );
 }

@@ -8,6 +8,12 @@ const text: CoverViewPage = {
             placeholder: "댓글을 입력하세요",
             submit: "등록"
         }
+    },
+    deleteModal: {
+        title: "경고",
+        content: "정말로 이 커버를 삭제하시겠습니까?",
+        cancel: "취소",
+        confirm: "삭제"
     }
 };
 

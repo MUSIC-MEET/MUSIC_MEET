@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import SectionWrapper from "components/common/SectionWrapper";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { css } from "@emotion/react";
 import Img from "./Img";
 import TextInfo from "./TextInfo";
@@ -9,9 +9,10 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import fetchCover from "utils/RequestApis/Cover/fetchCover";
 import Description from "./Description";
 import voteCover from "utils/RequestApis/Cover/voteCover";
+import deleteCover from "utils/RequestApis/Cover/deleteCover";
 
 function CoverInfo() {
-
+    const navigator = useNavigate();
     const queryClient = useQueryClient();
     const { id } = useParams<{ id: string }>();
     const { data } = useQuery(["fetchCover", id], () => fetchCover(id ?? "0"));
@@ -24,9 +25,22 @@ function CoverInfo() {
         }
     });
 
+    const { mutate: deleteMutate } = useMutation(["coverDelete"], deleteCover, {
+        useErrorBoundary: true,
+        onSuccess: (response) => {
+            if (response.status === 204) {
+                navigator("/cover/list");
+            }
+        }
+    });
+
     const voteHandler = useCallback(() => {
         mutate(id ?? "0");
     }, [id, mutate]);
+
+    const deleteHandler = useCallback(() => {
+        deleteMutate(id ?? "0");
+    }, [deleteMutate, id]);
     return (
         <React.Fragment>
             <SectionWrapper css={infoStyle}>
@@ -35,6 +49,7 @@ function CoverInfo() {
                     {...data}
                     voteCount={data?.voteCount}
                     vote={voteHandler}
+                    delete={deleteHandler}
                 />
                 <Player
                     mp3Src={data?.mp3Src}
