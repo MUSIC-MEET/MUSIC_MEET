@@ -33,7 +33,7 @@ function Id() {
     return (
         <React.Fragment>
             <Title>{t(`id.title`)}</Title>
-            <p>{t("ment")}</p>
+            <p style={{ "marginBottom": "1rem" }}>{t("ment")}</p>
             {init &&
                 <FindIdForm
                     onSubmit={submitHandler}

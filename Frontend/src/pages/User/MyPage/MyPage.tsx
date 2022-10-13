@@ -10,6 +10,7 @@ import LoginState from "store/LoginState";
 import ErrorBoundary from "./ErrorBoundary";
 import EvaluationMusic from "./EvaluationMusic";
 import { css } from "@emotion/react";
+// import React from "../../Cover/Upload/Upload";
 
 function MyPage() {
     const { t } = useTranslation<"myPage">("myPage");
@@ -19,7 +20,7 @@ function MyPage() {
         setCurrentPage(-1);
     }, [isLogIn, setCurrentPage]);
     return (
-        <Content css={[style]}>
+        <React.Fragment>
             <Title>{t("title")}</Title>
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
@@ -27,7 +28,7 @@ function MyPage() {
                     <EvaluationMusic />
                 </Suspense>
             </ErrorBoundary>
-        </Content>
+        </React.Fragment>
     );
 }
 

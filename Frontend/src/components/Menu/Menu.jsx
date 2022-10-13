@@ -28,6 +28,7 @@ function Menu(props) {
     if(isDesktop) {
         return (
             <aside 
+                className={`${props.className}`}
                 css={[navStyle, deskTopStyle, css` background: ${background}; color: ${fontColor};`]}
             >
                 <TopIcons className={"icons"} onMenuClose={onMenuClose}/>
@@ -54,7 +55,7 @@ function Menu(props) {
                 </div>
                 {mobileMenuShown && 
                     <div className="bottom">
-                        <RoutesMenu className={"menu"}/>
+                        <RoutesMenu />
                         <Login className={"login"} navigator={navigator}/>
                         {/* <TopIcons className={"icons"} onMenuClose={onMenuClose}/> */}
                     </div>
@@ -73,7 +74,7 @@ const navStyle = css`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center; 
-
+    height: 100%;
     
     .logo {
         width: 10rem; // 160px  
