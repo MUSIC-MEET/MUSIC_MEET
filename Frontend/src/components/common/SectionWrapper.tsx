@@ -25,10 +25,10 @@ function SectionWrapper(props: SectionWrapperProps) {
 
 const Section = styled.section<{ backgroundColor: string; }>`
     background: ${(props) => props.backgroundColor};
-    width: 99%;
+    margin-left: 1rem;
+    margin-right: 1rem;
     margin-bottom: 0.5rem;
     padding: 1rem;
-    margin-bottom: 1rem;
     border-radius: 10px;
 `;
 export default SectionWrapper;

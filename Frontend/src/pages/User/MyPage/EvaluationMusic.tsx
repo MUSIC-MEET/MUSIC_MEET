@@ -28,6 +28,7 @@ function EvaluationMusic() {
 }
 
 const style = css`
+    width: 80vw;
     & > h2 {
         font-size: 1.3rem;
         font-weight: 400;
