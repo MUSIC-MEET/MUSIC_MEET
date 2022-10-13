@@ -6,6 +6,7 @@ function Title(props: { children: string }) {
 }
 
 const style = css`
+    margin-top: 2rem;
     font-weight: 700;
     font-size: 2.6rem;
     margin-bottom: 50px;
