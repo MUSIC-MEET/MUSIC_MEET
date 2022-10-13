@@ -1,6 +1,5 @@
 import Title from "components/common/Title";
 import React, { useCallback, useEffect, useState } from "react";
-import style from "../SectionStyle";
 import { useTranslation } from "react-i18next";
 import GenreSelector from "../GenreSelector";
 import { useNavigate, useParams } from "react-router-dom";
@@ -45,7 +44,7 @@ function Search() {
     }, [mutate, genre, type]);
 
     return (
-        <section css={style}>
+        <React.Fragment>
             <Title>{t("title")}</Title>
             <GenreSelector
                 search={true}
@@ -62,7 +61,7 @@ function Search() {
                 list={data}
             />
             <MoreButton />
-        </section>
+        </React.Fragment>
     );
 }
 
