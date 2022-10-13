@@ -10,6 +10,7 @@ import LiveChart from "./pages/LiveChart/Index";
 import GuestRoute from "./components/common/GuestRoute";
 import { QueryClientProvider, QueryClient }  from "react-query";
 
+import Main from "./pages/Main/Index";
 import SignUp from "./pages/SignUp/Index";
 import UserFind from "./pages/Find/Index";
 import EmailAuth from "./pages/Auth/Index";
@@ -65,7 +66,7 @@ function App() {
                         />
                         }
                         <Routes>
-                            <Route path="/" element={<h2>hello</h2>} />
+                            <Route path="/" element={<Main />} />
                             <Route 
                                 path="/signup/*"
                                 element={
