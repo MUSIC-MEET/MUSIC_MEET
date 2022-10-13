@@ -32,11 +32,5 @@ function MyPage() {
     );
 }
 
-const style = css`
-    & > .section-wrapper {
-        width: 80vw;
-        margin-bottom: 0.5rem;
-    }
-`;
 
 export default MyPage;

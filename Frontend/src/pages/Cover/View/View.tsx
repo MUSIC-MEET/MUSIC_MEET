@@ -1,16 +1,13 @@
 import React, { Suspense } from "react";
-import Content from "components/UI/Content";
 import Title from "components/common/Title";
 import CoverInfo from "./CoverInfo";
 import ErrorBoundary from "../ErrorBoundary";
 import Loading from "components/common/Loading";
-import { css } from "@emotion/react";
 import Comments from "./Comments";
 
 function View() {
-
     return (
-        <Content css={style}>
+        <React.Fragment>
             <Title>{"커버 조회"}</Title>
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
@@ -18,15 +15,8 @@ function View() {
                     <Comments />
                 </Suspense>
             </ErrorBoundary >
-        </Content>
+        </React.Fragment>
     );
 }
-
-const style = css`
-    & > .section-wrapper {
-        width: 80vw;
-        margin-bottom: 0.5rem;
-    }
-`;
 
 export default View;
