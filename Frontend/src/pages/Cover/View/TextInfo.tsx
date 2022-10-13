@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import DeleteIconButton from "components/common/ActionButton/DeleteIconButton";
 import HeartVote from "components/common/HeartVote";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -19,7 +20,11 @@ function TextInfo(props: TextInfoProps) {
     return (
         <div css={style}>
             <h2 className="title">{props.title}</h2>
-            <span className="user">{props.user}</span>
+            <div className="row">
+                <span className="user">{props.user}</span>
+                <DeleteIconButton />
+            </div>
+
             <span className="createdat">{t("createdAt")}: {props.createdAt}</span>
             <HeartVote
                 count={props.voteCount}
@@ -43,9 +48,19 @@ const style = css`
         margin-bottom: 1.5rem;
     }
 
-    & > .user {
-        font-weight: 600;
-        font-size: 1.3rem;
+    .row {
+        display: flex;
+        flex-direction: row;
+        .user {
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+        .delete-button {
+            margin-left: 0.2rem;
+            font-size: 0.5rem;
+            transform: scale(0.7);
+        }
+
     }
 
     & > .createdat {
