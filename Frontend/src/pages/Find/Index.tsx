@@ -16,7 +16,7 @@ const Index = () => {
     }, [setCurrentPage]);
 
     return (
-        <Content css={css`p { margin-bottom: 1rem;}`}>
+        <React.Fragment>
             <Routes>
                 <Route
                     path="id"
@@ -32,7 +32,7 @@ const Index = () => {
                 />
                 <Route path="*" element={"xx"} />
             </Routes>
-        </Content >
+        </React.Fragment>
     );
 
 };

@@ -17,6 +17,7 @@ const songStyle = css`
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
     margin-bottom: 1rem;
 
     &:hover { 

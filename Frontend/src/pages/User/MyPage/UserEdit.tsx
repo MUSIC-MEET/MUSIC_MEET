@@ -26,9 +26,11 @@ function UserEdit() {
 }
 
 const articleStyle = css`
+    width: 80vw;
     min-height: 20vh;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
     section {

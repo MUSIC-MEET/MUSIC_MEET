@@ -6,7 +6,7 @@ import CurrentPage from "../../store/CurrentPage";
 import { useRecoilState } from "recoil";
 import { css } from "@emotion/react";
 
-function RoutesMenu({ className }) {
+function RoutesMenu() {
     const { t } = useTranslation("menu");
     const navigater = useNavigate();
     const [ currentPage, setCurrentPage ] = useRecoilState(CurrentPage);
@@ -28,7 +28,7 @@ function RoutesMenu({ className }) {
 
     return ( 
         <nav>
-            <ul css={style} className={className}>
+            <ul css={style} >
                 {ROUTES.map((route,index) =>(
                     <RouteItem 
                         clicked={currentPage === index}

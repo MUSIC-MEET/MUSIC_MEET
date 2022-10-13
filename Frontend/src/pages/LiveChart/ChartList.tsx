@@ -58,7 +58,6 @@ function ChartList({ service, rank }: ChartListProps) {
 
 const listStyle = css`
     margin-top: 5rem;
-    width: 91rem;
 `;
 
 export default React.memo(ChartList);

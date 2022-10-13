@@ -1,13 +1,17 @@
 import styled from "@emotion/styled";
-import React, { useState } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Chart from "./Chart";
-import TopText from "./TopText";
+import MainText from "./MainText";
+import SubText from "./SubText";
 
 function Index() {
     return (
         <Wrap>
-            <TopText />
+            <Section>
+                <MainText />
+                <SubText />
+            </Section>
             <Routes>
                 <Route path=":service/:rank" element={<Chart />} />
                 <Route path=":service" element={<Chart />} />
@@ -22,5 +26,12 @@ const Wrap = styled.div`
     min-height: 100vh;
     margin-top: 7.5rem;
 `;
+
+const Section = React.memo(styled.section`
+    & > h1 { margin-bottom: 0.8rem };
+    & > * {
+        margin-bottom: 0.8rem;
+    }
+`);
 
 export default React.memo(Index);

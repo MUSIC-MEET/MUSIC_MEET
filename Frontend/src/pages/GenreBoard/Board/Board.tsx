@@ -33,7 +33,7 @@ function Board() {
     }, [genre]);
 
     return (
-        <div css={style}  >
+        <React.Fragment>
             <Title>{t("title")}</Title>
             <GenreSelector
                 board={true}
@@ -56,7 +56,7 @@ function Board() {
 
 
             <MoreButton />
-        </div>
+        </React.Fragment>
     );
 }
 

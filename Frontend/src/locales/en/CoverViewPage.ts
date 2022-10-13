@@ -8,6 +8,12 @@ const text: CoverViewPage = {
             placeholder: "Enter comment",
             submit: "Submit"
         }
+    },
+    deleteModal: {
+        title: "Warning",
+        content: "Are you sure you want to delete this cover?",
+        cancel: "Cancel",
+        confirm: "Delete"
     }
 };
 

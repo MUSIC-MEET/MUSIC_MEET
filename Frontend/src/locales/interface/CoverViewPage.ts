@@ -8,6 +8,13 @@ interface CoverViewPage {
             submit: string;
         }
     }
+
+    deleteModal: {
+        title: string;
+        content: string;
+        cancel: string;
+        confirm: string;
+    }
 }
 
 export default CoverViewPage;

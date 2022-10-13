@@ -17,7 +17,7 @@ function Index() {
         setCurrentPage(2);
     }, [setCurrentPage]);
     return (
-        <Content>
+        <React.Fragment>
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
                     <Routes>
@@ -31,7 +31,7 @@ function Index() {
                     </Routes>
                 </Suspense>
             </ErrorBoundary>
-        </Content >
+        </React.Fragment>
 
     );
 }

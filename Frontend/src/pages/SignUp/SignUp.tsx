@@ -85,7 +85,7 @@ function SignUp() {
     }
 
     return (
-        <Content>
+        <React.Fragment>
             <Title>{t("title")}</Title>
             <SignUpForm
                 values={values}
@@ -95,7 +95,7 @@ function SignUp() {
                 disabled={!clear}
             />
             {status.isError && <h2>{errorMsg}</h2>}
-        </Content>
+        </React.Fragment>
     );
 }
 

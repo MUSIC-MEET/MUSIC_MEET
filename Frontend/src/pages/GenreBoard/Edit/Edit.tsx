@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import InputForm from "../InputForm";
-import style from "../SectionStyle";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import getEditPost from "utils/RequestApis/GenreBoard/getEditPost";
 import { Editor } from "@toast-ui/react-editor";
@@ -82,7 +81,7 @@ function Edit() {
 
 
     return (
-        <section css={style}>
+        <React.Fragment>
             <Title>{t("update")}</Title>
             {isDeleted && <DeletePostAlert />}
             <InputForm
@@ -97,7 +96,7 @@ function Edit() {
                 setTitle={setTitle}
                 setContent={setContent}
             />
-        </section>
+        </React.Fragment>
     );
 
 

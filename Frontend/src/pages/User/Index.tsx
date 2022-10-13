@@ -9,7 +9,7 @@ import PrivateRoute from "components/common/PrivateRoute";
 
 function Index() {
     return (
-        <div>
+        <React.Fragment>
             <Routes>
                 <Route path="resetpw/:key" element={<ResetPassWord />} />
                 <Route path="resetpw" element={<ResetPassWord />} />
@@ -24,7 +24,7 @@ function Index() {
                 }
                 />
             </Routes>
-        </div>
+        </React.Fragment>
     );
 }
 

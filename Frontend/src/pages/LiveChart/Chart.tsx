@@ -7,6 +7,7 @@ import CurrentPage from "store/CurrentPage";
 import { useTranslation } from "react-i18next";
 import Error from "components/common/Error";
 import { css } from "@emotion/react";
+
 function Chart() {
     const { t } = useTranslation<"liveChartPage">("liveChartPage");
     const params =

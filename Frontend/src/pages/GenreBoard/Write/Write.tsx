@@ -2,7 +2,6 @@ import Title from "components/common/Title";
 import React, { useCallback, useRef, useState } from "react";
 import GenreSelector from "../GenreSelector";
 import { useNavigate, useParams } from "react-router-dom";
-import style from "../SectionStyle";
 import InputForm from "../InputForm";
 import { useTranslation } from "react-i18next";
 import { Editor } from "@toast-ui/react-editor";
@@ -78,7 +77,7 @@ function Write() {
     }, [content, genre, mutate, title]);
 
     return (
-        <section css={style}>
+        <React.Fragment>
             <Title>{t("title")}</Title>
             <GenreSelector
                 write={true}
@@ -96,7 +95,7 @@ function Write() {
                 goBackHandler={goBackHandler}
                 editorRef={editorRef}
             />
-        </section >
+        </React.Fragment>
     );
 }
 

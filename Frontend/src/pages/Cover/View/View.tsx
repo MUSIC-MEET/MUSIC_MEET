@@ -1,32 +1,31 @@
 import React, { Suspense } from "react";
-import Content from "components/UI/Content";
 import Title from "components/common/Title";
 import CoverInfo from "./CoverInfo";
 import ErrorBoundary from "../ErrorBoundary";
 import Loading from "components/common/Loading";
-import { css } from "@emotion/react";
 import Comments from "./Comments";
+import { css } from "@emotion/react";
 
 function View() {
-
     return (
-        <Content css={style}>
+        <React.Fragment>
             <Title>{"커버 조회"}</Title>
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
-                    <CoverInfo />
-                    <Comments />
+                    <article css={article}>
+                        <CoverInfo />
+                        <Comments />
+                    </article>
                 </Suspense>
             </ErrorBoundary >
-        </Content>
+        </React.Fragment>
     );
 }
 
-const style = css`
+
+const article = css`
     & > .section-wrapper {
         width: 80vw;
-        margin-bottom: 0.5rem;
     }
 `;
-
 export default View;

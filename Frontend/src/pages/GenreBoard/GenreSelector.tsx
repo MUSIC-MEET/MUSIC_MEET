@@ -49,7 +49,7 @@ function GenreSelector({ board, write, search, searchType }
 }
 
 const List = React.memo(styled.ul`
-    width: 100vw;
+    width: 100%;
     min-height: 3rem;
     height: auto;
     display: flex;

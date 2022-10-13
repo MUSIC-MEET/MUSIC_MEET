@@ -4,12 +4,12 @@ import SignUp from "./SignUp";
 import Success from "./Success";
 function Index() {
     return (
-        <div>
+        <React.Fragment>
             <Routes>
                 <Route path="/" element={<SignUp />} />
                 <Route path="/success" element={<Success />} /> 
             </Routes>
-        </div>
+        </React.Fragment>
     );
 }
 

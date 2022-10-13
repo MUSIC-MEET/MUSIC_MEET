@@ -10,6 +10,7 @@ import LiveChart from "./pages/LiveChart/Index";
 import GuestRoute from "./components/common/GuestRoute";
 import { QueryClientProvider, QueryClient }  from "react-query";
 
+import Main from "./pages/Main/Index";
 import SignUp from "./pages/SignUp/Index";
 import UserFind from "./pages/Find/Index";
 import EmailAuth from "./pages/Auth/Index";
@@ -22,10 +23,31 @@ import Cover from "./pages/Cover/Index";
 const rootStyle = css`
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
     width: 100%;
-
+    min-height: 100vh;
+    padding: 0rem;
     @media screen and (max-width: 1023px) {
         flex-direction: column; 
+    }
+
+    .menu {
+        width: 12%;
+        min-height: 100vh;
+    }
+
+    .menu-icon {
+        width: 2%;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100%;
     }
 `;
 
@@ -51,21 +73,21 @@ function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <ThemeContextProvider>
-                <div css={rootStyle}>
-                    { menu && <Menu 
+                <Content css={rootStyle}>
+                    { menu ? <Menu 
+                        className="menu"
                         navigator={navigator}
                         onMenuClose={menuVisibleHandler}
-                    />}
-                    <Content>
-                        {
-                            !menu && 
+                    />:
                         <MenuIcon
+                            className="menu-icon"
                             style={{ alignSelf : "flex-start" }}
                             onClick={menuVisibleHandler}
                         />
-                        }
+                    }
+                    <div className="container">
                         <Routes>
-                            <Route path="/" element={<h2>hello</h2>} />
+                            <Route path="/" element={<Main />} />
                             <Route 
                                 path="/signup/*"
                                 element={
@@ -83,11 +105,13 @@ function App() {
                             <Route path="/cover/*" element={<Cover />} />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
-                    </Content>
-                </div>
+                    </div>
+                    
+                </Content>
             </ThemeContextProvider>
         </QueryClientProvider>
     );
 }
 
 export default App;
+

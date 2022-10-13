@@ -12,11 +12,11 @@ function Success() {
         navigate("/");
     }, [navigate]);
     return (
-        <Content>
+        <React.Fragment>
             <Title>{t("success.title")}</Title>
             <p>{t("success.ment")}</p>
             <a onClick={onClickHandler} css={css`margin-top: 1rem; cursor: pointer;`}> {t("success.go")}</a>
-        </Content>
+        </React.Fragment>
     );
 }
 
