@@ -20,7 +20,6 @@ class Fragment_home : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val bindingfragmenthome = FragmentHomeBinding.inflate(inflater, container, false)
-
         return bindingfragmenthome.root
 
     }

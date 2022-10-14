@@ -5,14 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.gson.annotations.SerializedName
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 
@@ -27,7 +21,7 @@ class Fragment_info : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_info, container, false)
 
 
-        var Textid: TextView = view.findViewById(R.id.info_id)
+       /* var Textid: TextView = view.findViewById(R.id.info_id)
         var Textemail:TextView = view.findViewById(R.id.info_email)
         var imageup: ImageView = view.findViewById(R.id.My_image)
 
@@ -58,14 +52,14 @@ class Fragment_info : Fragment() {
             }
 
             override fun onFailure(call: retrofit2.Call<InfoResponse>, t: Throwable) {
-              /*  Log.d("정보 못가져옴", t.localizedMessage)*/
+              *//*  Log.d("정보 못가져옴", t.localizedMessage)*//*
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                 t.printStackTrace()
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
             }
-        })
+        })*/
         return view
     }
 }

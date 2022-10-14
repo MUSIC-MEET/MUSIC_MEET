@@ -14,4 +14,12 @@
         <item>@drawable/back10</item>
         <item>@drawable/back11</item>
     </array>
+
+    <string-array name="spinner_item">
+        <item>Melon</item>
+        <item>Genie</item>
+        <item>Bugs</item>
+
+
+    </string-array>
 </resources>

@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
-    private val NUM_PAGES = 4
+    private val NUM_PAGES = 3
 
     override fun getItemCount(): Int = NUM_PAGES
 
@@ -18,16 +18,14 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             }
 
             1 -> {
-                Fragment_chart().apply {  }
-            }
-
-            2 -> {
                 Fragment_wish().apply {  }
             }
 
             else -> {
                 Fragment_info().apply {  }
             }
+
+
         }
 
     }
