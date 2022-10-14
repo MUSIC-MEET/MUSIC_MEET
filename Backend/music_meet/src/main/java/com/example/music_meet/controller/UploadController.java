@@ -51,6 +51,28 @@ public class UploadController {
 
 
     //
+    // 개별 업로드 글 조회_요약.md
+    //
+    @RequestMapping(value = "/cover/summary/{uploadNum}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getUserUploadSmall(@PathVariable("uploadNum") final int uploadNum){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null)
+        {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
+
+        Map<String, String> map = uploadService.getUserUploadSmall(userNum, uploadNum);
+        if (map.get("title") == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+    }
+
+
+
+    //
     // 개별 업로드 글 목록 조회.md
     //
     @RequestMapping(value = "/cover/list/{page}", method = RequestMethod.GET)
@@ -71,27 +93,13 @@ public class UploadController {
         }
         final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
 
-        int voteState;
-        if (uploadService.getUploadState(uploadNum) == 0){
-            voteState = 1;
-        }else {
-            voteState = 0;
-        }
-        System.out.println(voteState);
-        if (uploadService.changUploadState(userNum, uploadNum, voteState)){
+        if (uploadService.changUploadState(userNum, uploadNum)){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }
-
-
-
-    //
-    // 개별 업로드 글 조회_요약.md
-    //
-
 
 
 
@@ -121,13 +129,13 @@ public class UploadController {
 
         if (map.get("origin_file").equals(fileName)){
             uploadService.modifyUpload(userNum, uploadNum, title, description, mp3File,null);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         else {
             
             if (uploadService.deleteMp3File(map.get("file")) &&
                     uploadService.modifyUpload(userNum, uploadNum, title, description, mp3File, fileName)){
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -185,7 +193,6 @@ public class UploadController {
     }
 
 
-
     //
     // 개별 업로드 댓글 호출.md
     //
@@ -193,6 +200,9 @@ public class UploadController {
     public ResponseEntity<Object> getUploadComment(@PathVariable("uploadNum") final int uploadNum){
         return new ResponseEntity<>(uploadService.getUploadComment(uploadNum) , HttpStatus.OK);
     }
+
+
+
 
     //
     // 개별 업로드 댓글 수정.md
