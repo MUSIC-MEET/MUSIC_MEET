@@ -8,18 +8,18 @@ import java.net.URL
 interface melon{
     @GET("/livechart/melon/100")
 
-    fun MelonLiveChart():
-            Call<melonsonginfo>
+    fun MelonLiveChart(): Call<melonSongs>
 }
-data class melonsonginfo (
-    var songs: ArrayList<melonimgurl>
+data class melonSongs (
+    val updateTime : String,
+    var songs: ArrayList<songType>
 )
 
-data class melonimgurl(
+class songType(
     var title: String? = null,
     var singer: String? = null,
     var rank: String? = null,
-    var imgSrc: URL? =null
+    var imgSrc: String? = null
 )
 
 //지니 차트100
@@ -30,10 +30,10 @@ interface genie{
             Call<geniesonginfo>
 }
 data class geniesonginfo (
-    var songs: ArrayList<geineimgurl>
+    var geniesongs: ArrayList<genieimgurl>
 )
 
-data class geineimgurl(
+data class genieimgurl(
     var title: String? = null,
     var singer: String? = null,
     var rank: String? = null,
@@ -45,10 +45,10 @@ interface bugs{
     @GET("/livechart/bugs/100")
 
     fun bugsLiveChart():
-            Call<geniesonginfo>
+            Call<bugssonginfo>
 }
 data class bugssonginfo (
-    var songs: ArrayList<bugsimgurl>
+    var bugssongs: ArrayList<bugsimgurl>
 )
 
 data class bugsimgurl(

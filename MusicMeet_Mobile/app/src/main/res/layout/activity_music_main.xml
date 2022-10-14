@@ -8,10 +8,47 @@
         android:background="@color/Black"
         tools:context=".Music_Main_Activity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/Musicchart"
+            android:src="@drawable/music_chart"
+            app:fabSize="mini"
+            app:layout_constraintTop_toTopOf="@id/fabMain"
+            app:layout_constraintBottom_toBottomOf="@id/fabMain"
+            app:layout_constraintStart_toStartOf="@id/fabMain"
+            app:layout_constraintEnd_toEndOf="@id/fabMain"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/bulleanboard"
+            android:src="@drawable/main_page_chart"
+            app:fabSize="mini"
+            app:layout_constraintTop_toTopOf="@id/fabMain"
+            app:layout_constraintBottom_toBottomOf="@id/fabMain"
+            app:layout_constraintStart_toStartOf="@id/fabMain"
+            app:layout_constraintEnd_toEndOf="@id/fabMain"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="72dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/icon_click_color"
+            android:src="@drawable/all_view"
+            app:borderWidth="0dp"
+            android:layout_gravity="right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
     <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="416dp"
+            android:layout_height="666dp"
             app:layout_constraintWidth_percent="1"
             app:layout_constraintHeight_percent=".9"
             app:layout_constraintStart_toStartOf="parent"
@@ -20,6 +57,7 @@
             app:layout_constraintBottom_toTopOf="@+id/appbarlayout"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintVertical_bias="0.23"/>
+
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -39,9 +77,6 @@
                 app:tabTextColor="@color/Black"
                 app:tabIndicatorColor="@color/icon_click_color"
                 app:tabRippleColor="@color/icon_click_color"/>
-
-
-
 
     </com.google.android.material.appbar.AppBarLayout>
 

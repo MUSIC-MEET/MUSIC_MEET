@@ -8,4 +8,20 @@
     <string name="member_no">회원가입에 실패하였습니다.\n다시한번 확인해주세요.</string>
     <string name="sign_in">로그인 성공\n잠시만 기다려주세요.</string>
     <string name="sign_no">로그인 실패\n다시 한번 확인해주세요.</string>
+
+    <!--실시간 음악차트 리스트-->
+    <string-array name="spinner_array">
+        <item>Melon</item>
+        <item>Genie</item>
+        <item>Bugs</item>
+    </string-array>
+    <string name="title_activity_ex">ex</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

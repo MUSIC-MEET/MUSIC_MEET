@@ -6,39 +6,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/Black"
-        tools:context=".Fragment_info">
-
-
-    <!-- TODO: Update blank fragment layout -->
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="뮤직 리스트"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="52dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/Music_List_Text"
-            tools:layout_editor_absoluteY="0dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintBaseline_toBaselineOf="@+id/Resycler_view"/>
-
+        tools:context=".geniefragment">
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             tools:layout_editor_absoluteX="0dp"
             android:scrollbars="vertical"
-            android:id="@+id/Resycler_view"
+            android:id="@+id/Resycler_view_genie"
             android:nestedScrollingEnabled="false"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             tools:listitem="@layout/recycler_view_music_list"
-            app:layout_constraintTop_toBottomOf="@+id/Music_List_Text"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>
