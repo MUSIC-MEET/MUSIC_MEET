@@ -14,6 +14,9 @@ import ValueEmptyModal from "components/AlertModal/ValueEmptyModal";
 interface InputFormPros {
     onSubmit: (obj: CoverType) => void;
     navigator: (path: string) => void;
+    title?: string;
+    description?: string;
+    fileName?: string;
 }
 
 /**
@@ -24,10 +27,10 @@ interface InputFormPros {
  */
 function InputForm(props: InputFormPros) {
     const { t } = useTranslation<"coverUploadPage">("coverUploadPage");
-    const [title, setTitle] = useState<string>("");
-    const [description, setDescription] = useState<string>("");
+    const [title, setTitle] = useState<string>(props?.title ?? "");
+    const [description, setDescription] = useState<string>(props?.description ?? "");
     const [mp3File, setMp3File] = useState<Blob>(new Blob());
-    const [fileName, setFileName] = useState<string>("");
+    const [fileName, setFileName] = useState<string>(props?.fileName ?? "");
     const [isEmpty, setIsEmpty] = useState<boolean>(false);
     const titleChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(() => e.target.value);
@@ -44,12 +47,12 @@ function InputForm(props: InputFormPros) {
 
     const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (title.length === 0 || description.length === 0 || mp3File.size === 0 || fileName.length === 0) {
+        if (title.length === 0 || description.length === 0 || fileName.length === 0) {
             setIsEmpty(() => true);
             return;
         }
         props.onSubmit({ title, description, mp3File, fileName });
-    }, [description, fileName.length, mp3File, props, title]);
+    }, [description, fileName, mp3File, props, title]);
 
 
     return (
@@ -64,6 +67,7 @@ function InputForm(props: InputFormPros) {
                 <FileUploader
                     className="file-uploader"
                     onChange={mp3FileOnChangeHandler}
+                    fileName={fileName}
                 />
                 <InputDescription
                     description={description}

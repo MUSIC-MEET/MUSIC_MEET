@@ -1,5 +1,5 @@
 type CoverType = {
-    id?: number;
+    id?: number | string;
     title?: string;
     user?: string;
     description?: string;
