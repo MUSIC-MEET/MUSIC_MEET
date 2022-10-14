@@ -305,10 +305,9 @@ public class UploadService {
      * uploadNum에 해당하는 글의 state를 변경함
      * @param userNum 해당 유저 번호
      * @param uploadNum 업로드 번호
-     * @param state 변경할 상태 값
      * @return 정상 처리시 true, 비정상 처리시 false
      */
-    public boolean changUploadState(int userNum, int uploadNum, int state) {
+    public boolean changUploadState(int userNum, int uploadNum) {
         boolean result;
 
         sql = "UPDATE upload set state = ? WHERE uploadnum = ? AND usernum = ?";
@@ -320,7 +319,7 @@ public class UploadService {
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt =  conn.prepareStatement(sql);
-            pstmt.setInt(1, state);
+            pstmt.setInt(1, 1);
             pstmt.setInt(2, uploadNum);
             pstmt.setInt(3, userNum);
             rsInt = pstmt.executeUpdate();
@@ -697,4 +696,47 @@ public class UploadService {
         }
     }
 
+
+
+    /**
+     * 인자로 넘어온 업로드 고유 번호를 조회하여 정보를 약식으로 가져옴
+     * @param uploadNum 업로드 고유 번호
+     * @return
+     */
+    public Map<String, String> getUserUploadSmall(final int userNum, final int uploadNum) {
+
+        Map<String, String> map = new HashMap<>();
+        sql = "SELECT title, comment, origin_file FROM upload WHERE usernum = ? AND uploadnum = ? AND state = 0";
+        try {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userNum);
+            pstmt.setInt(2, uploadNum);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                map.put("title", rs.getString("title"));
+                map.put("description", rs.getString("comment"));
+                map.put("fileName", rs.getString("origin_file"));
+            }
+            else {
+                map.put("title", null);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return map;
+    }
 }
