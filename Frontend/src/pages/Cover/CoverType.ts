@@ -5,6 +5,7 @@ type CoverType = {
     description?: string;
     mp3File?: Blob;
     mp3Src?: string;
+    fileName?: string;
     imgSrc?: string;
     isVote?: boolean;
     createdAt?: string;

@@ -1,6 +1,6 @@
 import Title from "components/common/Title";
 import React, { useCallback } from "react";
-import InputForm from "./InputForm";
+import InputForm from "../InputForm";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 import uploadCoverMusic from "utils/RequestApis/Cover/uploadCoverMusic";
@@ -22,8 +22,8 @@ function Upload() {
             }
         }
     });
-    const onSubmitHandler = useCallback(({ title, description, mp3File }: CoverType) => {
-        mutate({ title, description, mp3File });
+    const onSubmitHandler = useCallback(({ title, description, mp3File, fileName }: CoverType) => {
+        mutate({ title, description, mp3File, fileName });
     }, [mutate]);
     return (
         <React.Fragment>

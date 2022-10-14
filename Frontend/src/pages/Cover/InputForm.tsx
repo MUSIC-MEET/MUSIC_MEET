@@ -8,7 +8,7 @@ import FileUploader from "components/common/FileUploader";
 import GreenButton from "components/common/GreenButton";
 import RedButton from "components/common/RedButton";
 import { useTranslation } from "react-i18next";
-import CoverType from "../CoverType";
+import CoverType from "./CoverType";
 import ValueEmptyModal from "components/AlertModal/ValueEmptyModal";
 
 interface InputFormPros {
@@ -27,6 +27,7 @@ function InputForm(props: InputFormPros) {
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [mp3File, setMp3File] = useState<Blob>(new Blob());
+    const [fileName, setFileName] = useState<string>("");
     const [isEmpty, setIsEmpty] = useState<boolean>(false);
     const titleChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(() => e.target.value);
@@ -38,17 +39,17 @@ function InputForm(props: InputFormPros) {
 
     const mp3FileOnChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setMp3File(() => e.target.files![0] ?? new Blob());
-
+        setFileName(() => e.target.files![0].name ?? "");
     }, []);
 
     const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (title.length === 0 || description.length === 0 || mp3File.size === 0) {
+        if (title.length === 0 || description.length === 0 || mp3File.size === 0 || fileName.length === 0) {
             setIsEmpty(() => true);
             return;
         }
-        props.onSubmit({ title, description, mp3File });
-    }, [description, mp3File, props, title]);
+        props.onSubmit({ title, description, mp3File, fileName });
+    }, [description, fileName.length, mp3File, props, title]);
 
 
     return (
