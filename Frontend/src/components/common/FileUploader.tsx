@@ -4,11 +4,12 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 
 interface FileUploaderProps {
     className?: string;
+    fileName?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function FileUploader(props: FileUploaderProps) {
-    const [fileName, setFileName] = useState<string>("");
+    const [fileName, setFileName] = useState<string>(props.fileName ?? "");
     const fileChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setFileName(e.target.files![0].name);
         props.onChange(e);
