@@ -21,7 +21,7 @@ function Index() {
     }, [params.musicNum]);
 
     return (
-        <Content css={style}>
+        <React.Fragment>
             <Title>{"곡 정보"}</Title>
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
@@ -29,16 +29,9 @@ function Index() {
                     <Comments musicNum={musicNum} />
                 </Suspense>
             </ErrorBoundary>
-        </Content >
+        </React.Fragment>
     );
 }
 
-const style = css`
-    .section-wrapper {
-        width: 80vw;
-        margin-bottom: 0.5rem;
-    }
-
-`;
 
 export default Index;

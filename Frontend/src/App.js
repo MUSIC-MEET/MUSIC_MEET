@@ -49,6 +49,10 @@ const rootStyle = css`
         width: 100%;
         min-height: 100%;
     }
+
+    .section-wrapper, .main-wrapper {
+        width: 80vw;
+    }
 `;
 
 const queryClient = new QueryClient({

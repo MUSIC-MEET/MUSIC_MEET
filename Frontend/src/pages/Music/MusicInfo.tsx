@@ -108,7 +108,7 @@ const style = css`
     justify-content: flex-start;
     align-items: center;
     line-height: 1.4;
-    
+    width: 80vw;
     figure {
         width: 10rem;
         height: 10rem;
