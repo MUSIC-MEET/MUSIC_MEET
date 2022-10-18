@@ -14,6 +14,7 @@ function Player({ mp3Src }: { mp3Src?: string }) {
     useEffect(() => {
         return (
             () => {
+                setIsPlaying(() => false);
                 audio.pause();
                 audio.currentTime = 0;
             }
