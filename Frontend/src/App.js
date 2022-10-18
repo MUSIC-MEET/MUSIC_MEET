@@ -53,6 +53,11 @@ const rootStyle = css`
     .section-wrapper, .main-wrapper {
         width: 80vw;
     }
+
+    .main-wrapper {
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+    }
 `;
 
 const queryClient = new QueryClient({
