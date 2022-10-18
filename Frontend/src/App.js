@@ -50,7 +50,7 @@ const rootStyle = css`
         min-height: 100%;
     }
 
-    .section-wrapper {
+    .section-wrapper, .main-wrapper {
         width: 80vw;
     }
 `;

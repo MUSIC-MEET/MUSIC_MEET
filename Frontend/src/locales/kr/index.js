@@ -21,3 +21,4 @@ export { default as coverUploadPage } from "./CoverUploadPage";
 export { default as valueEmptyModal } from "./ValueEmptyModal";
 export { default as coverViewPage } from "./CoverViewPage";
 export { default as coverEditPage } from "./CoverEditPage";
+export { default as mainPage } from "./MainPage";

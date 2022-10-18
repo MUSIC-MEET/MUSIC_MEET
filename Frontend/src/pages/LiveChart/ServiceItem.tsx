@@ -4,14 +4,16 @@ import { useNavigate } from "react-router-dom";
 import ThemeContext from "store/ThemeContext";
 import { ServiceItemType } from "./ServiceSelector";
 
-function ServiceItem(props: ServiceItemType & { isSelected: boolean }) {
-    const { isSelected, darkImg, lightImg, alt, name, selectedColor } = props;
+function ServiceItem(props: ServiceItemType & { isSelected: boolean } & { callback?: (item: string) => void }) {
+    const { isSelected, darkImg, lightImg, alt, selectedColor } = props;
     const navigator = useNavigate();
     const ctx = useContext(ThemeContext);
 
     const itemClickHandler = useCallback(() => {
-        navigator(`/livechart/${name}/100`);
-    }, [name, navigator]);
+        if (props.url !== "")
+            navigator(`${props.url}`);
+        props.callback?.(props.name);
+    }, [navigator, props]);
 
     const renderImage = useCallback((): string => {
         if (ctx.theme === "dark")
