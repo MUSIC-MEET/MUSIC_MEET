@@ -5,12 +5,14 @@ import ErrorBoundary from "../ErrorBoundary";
 import Loading from "components/common/Loading";
 import Comments from "./Comments";
 import { css } from "@emotion/react";
+import { useTranslation } from "react-i18next";
 
 function View() {
+    const { t } = useTranslation<"coverViewPage">("coverViewPage");
     return (
         <React.Fragment>
-            <Title>{"커버 조회"}</Title>
-            <ErrorBoundary>
+            <Title>{t("title")}</Title>
+            < ErrorBoundary >
                 <Suspense fallback={<Loading />}>
                     <article css={article}>
                         <CoverInfo />
