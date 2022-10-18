@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import NotStartedIcon from "@mui/icons-material/NotStarted";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
@@ -11,6 +11,9 @@ import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 function Player({ mp3Src }: { mp3Src?: string }) {
     const audio = useMemo(() => new Audio(mp3Src ?? ""), [mp3Src]);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    useEffect(() => {
+        //
+    }, []);
     const playHandler = useCallback(() => {
         audio.play();
         setIsPlaying(() => true);
