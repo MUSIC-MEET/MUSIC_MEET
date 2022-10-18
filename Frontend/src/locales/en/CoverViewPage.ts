@@ -3,6 +3,7 @@ import CoverViewPage from "locales/interface/CoverViewPage";
 const text: CoverViewPage = {
     createdAt: "date",
     notFound: "This cover does not exist or has been deleted.",
+    title: "Cover View",
     comment: {
         input: {
             placeholder: "Enter comment",

@@ -4,6 +4,8 @@ import DeleteIconButton from "components/common/ActionButton/DeleteIconButton";
 import HeartVote from "components/common/HeartVote";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useRecoilValue } from "recoil";
+import LoginState from "store/LoginState";
 
 
 interface TextInfoProps {
@@ -31,14 +33,18 @@ interface TextInfoProps {
 function TextInfo(props: TextInfoProps) {
     const { t } = useTranslation<"coverViewPage">("coverViewPage");
     const [deleteModalShown, setDeleteModalShown] = useState<boolean>(false);
+    const { nickname } = useRecoilValue<{ nickname: string }>(LoginState);
     return (
         <div css={style}>
             <h2 className="title">{props.title}</h2>
             <div className="row">
                 <span className="user">{props.user}</span>
-                <DeleteIconButton
-                    onClick={() => setDeleteModalShown(() => true)}
-                />
+                {
+                    props.user === nickname &&
+                    <DeleteIconButton
+                        onClick={() => setDeleteModalShown(() => true)}
+                    />
+                }
             </div>
 
             <span className="createdat">{t("createdAt")}: {props.createdAt}</span>

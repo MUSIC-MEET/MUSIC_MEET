@@ -1,7 +1,7 @@
 interface CoverViewPage {
     createdAt: string;
     notFound: string;
-
+    title: string;
     comment: {
         input: {
             placeholder: string;
