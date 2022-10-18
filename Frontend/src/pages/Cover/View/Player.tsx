@@ -12,8 +12,13 @@ function Player({ mp3Src }: { mp3Src?: string }) {
     const audio = useMemo(() => new Audio(mp3Src ?? ""), [mp3Src]);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     useEffect(() => {
-        //
-    }, []);
+        return (
+            () => {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        );
+    }, [audio]);
     const playHandler = useCallback(() => {
         audio.play();
         setIsPlaying(() => true);
