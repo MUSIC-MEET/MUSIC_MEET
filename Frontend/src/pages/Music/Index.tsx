@@ -7,6 +7,7 @@ import Title from "components/common/Title";
 import Comments from "./Comments";
 import ErrorBoundary from "./ErrorBoundary";
 import { css } from "@emotion/react";
+import { useTranslation } from "react-i18next";
 
 /**
  * 음악 페이지 메인
@@ -15,14 +16,14 @@ import { css } from "@emotion/react";
 function Index() {
     const params = useParams<{ musicNum: string; }>();
     const musicNum = params.musicNum ?? "-1";
-
+    const { t } = useTranslation<"musicPage">("musicPage");
     useEffect(() => {
         //
     }, [params.musicNum]);
 
     return (
         <React.Fragment>
-            <Title>{"곡 정보"}</Title>
+            <Title>{t("title")}</Title>
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
                     <MusicInfo musicNum={musicNum} />
