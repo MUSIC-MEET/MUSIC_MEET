@@ -8,14 +8,18 @@ import LiveChartSub from "./LiveChartSub";
 function Index() {
     const { t } = useTranslation<"mainPage">("mainPage");
     return (
-        <Content>
+        <React.Fragment>
             <MainWrapper
-                title={"실시간 차트"}
+                title="음악"
+
+            />
+            <MainWrapper
+                title={t("title.liveChart")}
                 subMenu={<LiveChartSub />}
             >
                 <LiveChart />
             </MainWrapper>
-        </Content>
+        </React.Fragment>
     );
 }
 
