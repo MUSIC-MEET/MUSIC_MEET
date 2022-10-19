@@ -39,6 +39,7 @@ const container = css`
         width: 100%;
         position: relative;
         overflow-X: scroll;
+        scrollbar-width: auto;
     }
 
     ul .item {

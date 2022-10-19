@@ -56,6 +56,8 @@ const List = React.memo(styled.ul`
     flex-direction: row;
     justify-content:  center;
     align-items: center;
+    scrollbar-width: none;
+    overflow-y: scroll;
 `);
 
 export default GenreSelector;
