@@ -65,6 +65,8 @@ public class BeanConfig implements WebMvcConfigurer
     public final String USER_IMAGE_API_URL = "/user/image/";
     public final String MP3_FILE_API_URL = "/upload/play/";
 
+    public final String MUSIC_IMAGE_URL = "/music/image/";
+
     public final String PROFILE_IMAGE_PATH = System.getProperty("user.dir") + File.separator + "profileimage" + File.separator;
     public final String UPLOAD_MP3FILE_PATH = System.getProperty("user.dir") + File.separator + "upload" + File.separator;
     public final String TEMP_PATH = System.getProperty("user.dir") + File.separator + "temp" + File.separator;
