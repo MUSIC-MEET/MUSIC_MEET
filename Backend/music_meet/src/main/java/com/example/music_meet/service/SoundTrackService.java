@@ -1,5 +1,6 @@
 package com.example.music_meet.service;
 
+import com.example.music_meet.bean.BeanConfig;
 import com.example.music_meet.dto.MusicCrawlingSong;
 import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
 import com.example.music_meet.dto.Response.Response_getMusicComment;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -57,8 +59,9 @@ public class SoundTrackService
     @Value("${server.port}")
     private String serverPort;
 
-    //@Value("${file.image.temp}")
-    private String temp = System.getProperty("user.dir") + File.separator + "music" + File.separator;
+    @Autowired
+    private BeanConfig beanConfig;
+
 
 
     //
@@ -675,5 +678,75 @@ public class SoundTrackService
             }
         }
         return response_getMusicComments;
+    }
+
+
+    /**
+     *
+     * @param num
+     * @return
+     */
+
+
+    /**
+     *메인페이지에 표시할 음원 목록 호출을 좋아요 순으로 num개 호출하는 함수
+     * @param num 호출할 갯수
+     * @param type popular, latest 중에 하나를 받는 변수
+     * @return ArrayList<Map<String, String>> 타입
+     */
+    @Synchronized
+    public ArrayList<Map<String, String>> getMusicList(int num, String type) {
+        ArrayList<Map<String, String>> musics = new ArrayList<>();
+
+        if (type.equals("popular")){
+            sql = "SELECT musicnum, imgsrc, origin_title, origin_singer FROM music WHERE state = 0 ORDER BY vote DESC" +
+                    " LIMIT ?,?";
+        }
+        else if (type.equals("latest")){
+
+        } else {
+            sql = "SELECT musicnum, imgsrc, origin_title, origin_singer FROM music WHERE state = 0 ORDER BY releasedate DESC" +
+                    " LIMIT ?,?";
+        }
+        if (num > 20){
+            num = 10;
+        }
+
+        try
+        {
+
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, 0);
+            pstmt.setInt(2, num);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Map<String, String> map = new HashMap<>();
+                map.put("id", String.valueOf(rs.getInt("musicnum")));
+                map.put("imgSrc", serverURL + ":" + serverPort + beanConfig.MUSIC_IMAGE_URL + rs.getString("imgsrc"));
+                map.put("title", rs.getString("origin_title"));
+                map.put("artist", rs.getString("origin_singer"));
+                musics.add(map);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return musics;
     }
 }

@@ -215,15 +215,22 @@ public class SoundTrackController
 
 
     //
-    // 음악 파일 리턴.md
+    // 메인페이지 음원 업로드 호출_인기.md
     //
-    @RequestMapping(path = "/music/file/{filename}", method = RequestMethod.GET)
-    public ResponseEntity<Object> returnSoundTrackFile(@PathVariable("filename")final int filename)
-    {
-
-
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    @RequestMapping(value = "/music/popular/{num}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMusicListVote(@PathVariable("num") final int num){
+        ArrayList<Map<String, String>> musics = soundTrackService.getMusicList(num, "popular");
+        return new ResponseEntity<>(musics, HttpStatus.OK);
     }
+
+    //
+    // 메인페이지 음원 업로드 호출_최신.md
+    //
+    @RequestMapping(value = "/music/latest/{num}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMusicListLatest(@PathVariable("num") final int num){
+        ArrayList<Map<String, String>> musics = soundTrackService.getMusicList(num, "latest");
+        return new ResponseEntity<>(musics, HttpStatus.OK);
+    }
+
 
 }
