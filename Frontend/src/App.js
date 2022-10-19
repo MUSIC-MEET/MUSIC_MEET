@@ -46,7 +46,7 @@ const rootStyle = css`
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 100%;
+        width: 100vw;
         min-height: 100%;
     }
 

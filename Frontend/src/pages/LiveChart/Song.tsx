@@ -36,6 +36,10 @@ const songStyle = css`
 
     & > .title {
         min-width: 30rem;
+        max-width: 30rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         margin-right: 8rem;
     }
 `;
