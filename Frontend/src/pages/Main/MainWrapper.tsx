@@ -24,6 +24,7 @@ function MainWrapper(props: MainWrapperProps) {
 const style = css`
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
     h3 {
         font-size: 1.5rem;
         font-weight: 800;
