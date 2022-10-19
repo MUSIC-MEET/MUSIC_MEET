@@ -1,45 +1,50 @@
 import { css } from "@emotion/react";
-import styled from "@emotion/styled";
 import MusicItem from "components/common/MusicItem";
 import React from "react";
 
 interface MusicListProps {
     list: any[];
-    itemWidth: string;
-    itemHeight: string;
 }
 
 function MusicList(props: MusicListProps) {
-
     return (
-        <Ul
-            itemWidth={props.itemWidth}
-            itemHeight={props.itemHeight}
-        >
-            {
-                props.list.map((item) => (
-                    <MusicItem
-                        key={item.musicNum}
-                        className="item"
-                        imgSrc={item.imgSrc}
-                        title={item.title}
-                        singer={item.artist}
-                    />
-                ))
-            }
-        </Ul>
+        <div css={container}>
+            <ul>
+                {
+                    props.list.map((item) => (
+                        <MusicItem
+                            key={item.musicNum}
+                            className="item"
+                            imgSrc={item.imgSrc}
+                            title={item.title}
+                            singer={item.artist}
+                        />
+                    ))
+                }
+            </ul>
+        </div >
+
     );
 }
 
-const Ul = styled.ul<{ itemWidth: string; itemHeight: string; }>`
+const container = css`
     display: flex;
-    flex-direction: row;
-    width: 200%;
-    .item {
-        margin-right: 0.5rem;
-        margin-left: 0.5rem;
-        width: ${props => props.itemWidth};
-        height: ${props => props.itemHeight};
+    position: relative;
+    justify-content: center;
+    align-items: center;
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        position: relative;
+        overflow-X: scroll;
+    }
+
+    ul .item {
+        width: 8rem;
+        height: 8rem;
+        margin: 0 1rem;
     }
 `;
 

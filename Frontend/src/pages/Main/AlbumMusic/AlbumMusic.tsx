@@ -27,8 +27,6 @@ function AlbumMusicList() {
         <React.Fragment>
             <MusicList
                 list={dump}
-                itemWidth={"8rem"}
-                itemHeight={"8rem"}
             />
         </React.Fragment>
     );

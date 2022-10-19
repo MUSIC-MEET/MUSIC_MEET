@@ -57,6 +57,7 @@ const style = css`
         background-color: rgba(0, 0, 0, 0.5);
         position: absolute;
         bottom: 0;
+        color: white;
         width: 100%;
         height: 20%;
         
@@ -69,6 +70,7 @@ const style = css`
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
+        color: white;
     }
     &:hover {
         .detail-box {
