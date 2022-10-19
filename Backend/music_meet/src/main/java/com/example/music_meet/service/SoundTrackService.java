@@ -682,13 +682,6 @@ public class SoundTrackService
 
 
     /**
-     *
-     * @param num
-     * @return
-     */
-
-
-    /**
      *메인페이지에 표시할 음원 목록 호출을 좋아요 순으로 num개 호출하는 함수
      * @param num 호출할 갯수
      * @param type popular, latest 중에 하나를 받는 변수
@@ -703,7 +696,8 @@ public class SoundTrackService
                     " LIMIT ?,?";
         }
         else if (type.equals("latest")){
-
+            sql = "SELECT musicnum, imgsrc, origin_title, origin_singer FROM music WHERE state = 0 ORDER BY releasedate DESC" +
+                    " LIMIT ?,?";
         } else {
             sql = "SELECT musicnum, imgsrc, origin_title, origin_singer FROM music WHERE state = 0 ORDER BY releasedate DESC" +
                     " LIMIT ?,?";

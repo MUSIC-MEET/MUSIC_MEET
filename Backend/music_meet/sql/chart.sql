@@ -1,7 +1,7 @@
 create table `melonChart` (
 	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
 	`time`	 datetime	 NULL,
-	`title`	 VARCHAR(70)	 NULL,
+	`title`	 VARCHAR(200)	 NULL,
 	`singer`	 VARCHAR(50)	 NULL,
 	`img_src`	 VARCHAR(200)	 NULL,
 	`sitecode`	 INT(1)	 NOT NULL
@@ -16,7 +16,7 @@ REFERENCES `ChartSite` (
 create table `genieChart` (
 	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
 	`time`	 datetime	 NULL,
-	`title`	 VARCHAR(70)	 NULL,
+	`title`	 VARCHAR(200)	 NULL,
 	`singer`	 VARCHAR(50)	 NULL,
 	`img_src`	 VARCHAR(200)	 NULL,
 	`sitecode`	 INT(1)	 NOT NULL
@@ -32,7 +32,7 @@ REFERENCES `ChartSite` (
 create table `bugsChart` (
 	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
 	`time`	 datetime	 NULL,
-	`title`	 VARCHAR(70)	 NULL,
+	`title`	 VARCHAR(200)	 NULL,
 	`singer`	 VARCHAR(50)	 NULL,
 	`img_src`	 VARCHAR(200)	 NULL,
 	`sitecode`	 INT(1)	 NOT NULL
@@ -48,7 +48,7 @@ REFERENCES `ChartSite` (
 create table `floChart` (
 	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
 	`time`	 datetime	 NULL,
-	`title`	 VARCHAR(70)	 NULL,
+	`title`	 VARCHAR(200)	 NULL,
 	`singer`	 VARCHAR(50)	 NULL,
 	`img_src`	 VARCHAR(200)	 NULL,
 	`sitecode`	 INT(1)	 NOT NULL
