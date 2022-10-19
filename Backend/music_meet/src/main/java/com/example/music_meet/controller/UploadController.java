@@ -248,4 +248,26 @@ public class UploadController {
         }
     }
 
+
+
+    //
+    // 메인페이지 유저 업로드 인기.md
+    //
+    @RequestMapping(value = "/cover/popular/{num}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getUploadListVote(@PathVariable("num") final int num){
+        ArrayList<Map<String , String>> uploads;
+        uploads = uploadService.getUploadListForMain(num, "popular");
+        return new ResponseEntity<>(uploads, HttpStatus.OK);
+    }
+
+    //
+    // 메인페이지 유저 업로드 최신.md
+    //
+    @RequestMapping(value = "/cover/latest/{num}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getUploadList(@PathVariable("num") final int num){
+        ArrayList<Map<String , String>> uploads;
+        uploads = uploadService.getUploadListForMain(num, "latest");
+        return new ResponseEntity<>(uploads, HttpStatus.OK);
+    }
+
 }

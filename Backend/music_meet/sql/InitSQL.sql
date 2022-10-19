@@ -82,7 +82,7 @@ insert into chartSite values(4, '플로');
 create table `melonChart` (
 	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
 	`time`	 datetime	 NULL,
-	`title`	 VARCHAR(70)	 NULL,
+	`title`	 VARCHAR(200)	 NULL,
 	`singer`	 VARCHAR(50)	 NULL,
 	`img_src`	 VARCHAR(200)	 NULL,
 	`sitecode`	 INT(1)	 NOT NULL
@@ -98,7 +98,7 @@ REFERENCES `ChartSite` (
 create table `genieChart` (
 	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
 	`time`	 datetime	 NULL,
-	`title`	 VARCHAR(70)	 NULL,
+	`title`	 VARCHAR(200)	 NULL,
 	`singer`	 VARCHAR(50)	 NULL,
 	`img_src`	 VARCHAR(200)	 NULL,
 	`sitecode`	 INT(1)	 NOT NULL
@@ -114,7 +114,7 @@ REFERENCES `ChartSite` (
 create table `bugsChart` (
 	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
 	`time`	 datetime	 NULL,
-	`title`	 VARCHAR(70)	 NULL,
+	`title`	 VARCHAR(200)	 NULL,
 	`singer`	 VARCHAR(50)	 NULL,
 	`img_src`	 VARCHAR(200)	 NULL,
 	`sitecode`	 INT(1)	 NOT NULL
@@ -130,7 +130,7 @@ REFERENCES `ChartSite` (
 create table `floChart` (
 	`rank`	 INT(3)	 NOT NULL  PRIMARY KEY,
 	`time`	 datetime	 NULL,
-	`title`	 VARCHAR(70)	 NULL,
+	`title`	 VARCHAR(200)	 NULL,
 	`singer`	 VARCHAR(50)	 NULL,
 	`img_src`	 VARCHAR(200)	 NULL,
 	`sitecode`	 INT(1)	 NOT NULL
@@ -1420,17 +1420,17 @@ REFERENCES `ostComment` (
 
 
 CREATE TABLE `Music` (
-	`musicnum` INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
-	`imgsrc`	 VARCHAR(250) NULL,
-	`origin_title` VARCHAR(50) NULL,
-	`origin_singer` VARCHAR(30) NULL,
-	`singer` VARCHAR(30) NULL,
-	`title` VARCHAR(50) NULL,
-	`album` VARCHAR(50) NULL,
-	`releasedate` VARCHAR(50) NULL,
+	`MusicNum` INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	`ImgSrc`	 VARCHAR(250) NULL,
+	`origin_title` VARCHAR(200) NULL,
+	`origin_singer` VARCHAR(50) NULL,
+	`singer` VARCHAR(50) NULL,
+	`title` VARCHAR(200) NULL,
+	`Album` VARCHAR(50) NULL,
+	`releaseDate` VARCHAR(50) NULL,
 	`lyrics` VARCHAR(2500) NULL,
-	`filename` VARCHAR(100) NULL,
-	`length` INT(1) NULL,
+	`FileName` VARCHAR(200) NULL,
+	`Length` INT(1) NULL,
 	`vote` INT(10) NULL default 0,
 	`genre` INT(2) NOT NULL,
 	`state` INT(1) NOT NULL default 0
@@ -1521,8 +1521,8 @@ CREATE TABLE `Upload` (
 	`title` VARCHAR(150) NOT NULL,
 	`origin_title` VARCHAR(150) NOT NULL,
 	`comment` VARCHAR(300) NOT NULL,
-	`file` VARCHAR(150) NOT NULL,
-	`origin_file` VARCHAR(150) NOT NULL,
+	`file` VARCHAR(200) NOT NULL,
+	`origin_file` VARCHAR(200) NOT NULL,
 	`vote` INT(1) NOT NULL DEFAULT 0,
 	`createdat` DATETIME NOT NULL,
 	`view` INT(10) NOT NULL DEFAULT 0,

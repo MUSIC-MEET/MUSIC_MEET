@@ -739,4 +739,61 @@ public class UploadService {
         }
         return map;
     }
+
+
+    public ArrayList<Map<String, String>> getUploadListForMain( int num, final String type) {
+
+        ArrayList<Map<String, String>> uploads = new ArrayList<>();
+
+        if (type.equals("popular")){
+            sql = "SELECT a.uploadnum, b.userimage, a.origin_title, b.nickname FROM upload a, user b WHERE a.state = 0 AND a.usernum = b.usernum ORDER BY a.vote DESC" +
+                    " LIMIT ?,?";
+        }
+        else if (type.equals("latest")){
+            sql = "SELECT a.uploadnum, b.userimage, a.origin_title, b.nickname FROM upload a, user b WHERE a.state = 0 AND a.usernum = b.usernum ORDER BY a.createdat DESC" +
+                    " LIMIT ?,?";
+        } else {
+            sql = "SELECT a.uploadnum, b.userimage, a.origin_title, b.nickname FROM upload a, user b WHERE a.state = 0 AND a.usernum = b.usernum ORDER BY a.createdat DESC" +
+                    " LIMIT ?,?";
+        }
+        if (num > 20){
+            num = 10;
+        }
+
+        try
+        {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, 0);
+            pstmt.setInt(2, num);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Map<String, String> map = new HashMap<>();
+                map.put("id", String.valueOf(rs.getInt("uploadnum")));
+                map.put("imgSrc", beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.getUSER_IMAGE_API_URL() + rs.getString("userimage"));
+                map.put("title", rs.getString("origin_title"));
+                map.put("user", rs.getString("nickname"));
+                uploads.add(map);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return uploads;
+    }
 }
