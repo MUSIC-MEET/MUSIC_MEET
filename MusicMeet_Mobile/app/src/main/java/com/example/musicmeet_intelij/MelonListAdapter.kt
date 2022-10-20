@@ -23,7 +23,7 @@ class MelonListAdapter(val imgurl:ArrayList<songType>, val context: Context)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(imgurl[position], context)
+        holder.songinfo(imgurl[position], context)
     }
 
     override fun getItemCount(): Int {
@@ -39,7 +39,7 @@ class MelonListAdapter(val imgurl:ArrayList<songType>, val context: Context)
         val imgSrc = itemView?.findViewById<ImageView>(R.id.imgSrcimage)
 
         //url 앨범표지 안나옴 찾아볼것
-        fun bind(itemsonginfo: songType, context: Context) {
+        fun songinfo(itemsonginfo: songType, context: Context) {
 
             title?.text = itemsonginfo.title
             rank?.text = itemsonginfo.rank

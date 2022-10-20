@@ -1,36 +1,46 @@
 package com.example.musicmeet_intelij
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.musicmeet_intelij.databinding.FragmentHomeBinding
 
+//자동검색기능 어댑터
 class Fragment_home : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private lateinit var fcontext: Context
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        fcontext = context as Activity
 
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val bindingfragmenthome = FragmentHomeBinding.inflate(inflater, container, false)
-        return bindingfragmenthome.root
+    ): View {
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        //뮤직 findActivity 이동
+        val findImage = view.findViewById<ImageView>(R.id.serchImage)
+        val findAutoText = view.findViewById<TextView>(R.id.autoTextView)
+        val findMusicActvityIntent = Intent(context, FindMusicActivity::class.java)
+
+        findImage.setOnClickListener{
+            startActivity(findMusicActvityIntent)
+        }
+
+        findAutoText.setOnClickListener{
+            startActivity(findMusicActvityIntent)
+        }
+
+        return view
     }
-    //binding 에러뜨면 null 처리
-    override fun onDestroyView() {
 
-        super.onDestroyView()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-    }
 }
