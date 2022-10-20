@@ -14,6 +14,9 @@
             android:theme="@style/Theme.MusicMeet_InteliJ"
             android:usesCleartextTraffic="true">
         <activity
+                android:name=".FindMusicActivity"
+                android:exported="true"/>
+        <activity
                 android:name=".MusicLiveChartActivity"
                 android:exported="true"/>
         <activity

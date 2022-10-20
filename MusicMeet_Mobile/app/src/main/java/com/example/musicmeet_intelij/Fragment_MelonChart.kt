@@ -47,7 +47,7 @@ class Fragment_melonchart : Fragment() {
 
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.219.106:8080")
+            .baseUrl("http://10.107.3.150:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -77,14 +77,5 @@ class Fragment_melonchart : Fragment() {
         return view
     }
 
- /*   //binding 에러뜨면 null 처리
-    override fun onDestroyView() {
 
-        super.onDestroyView()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-    }*/
 }

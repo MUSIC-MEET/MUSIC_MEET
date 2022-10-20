@@ -1,19 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/Black"
-             tools:context=".Fragment_info">
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/Black"
+        tools:context=".Fragment_info">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/autoTextView"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:id="@+id/textview"
-            android:layout_gravity="center"
-            android:textColor="@color/icon_click_color"
-            android:textSize="50sp"
+            android:hint="검색할 음악을 입력하세요"
+            android:inputType="textAutoComplete"
+            android:background="@drawable/auto_music_radius"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColorHint="@color/white"
             android:gravity="center"
-            android:text="홈 화면"/>
-</FrameLayout>
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.738"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.004"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+            android:id="@+id/serchImage"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/magnifier"
+            app:layout_constraintStart_toStartOf="@+id/autoTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.989"
+            app:layout_constraintTop_toTopOf="@+id/autoTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/autoTextView"
+            app:layout_constraintVertical_bias="0.0"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

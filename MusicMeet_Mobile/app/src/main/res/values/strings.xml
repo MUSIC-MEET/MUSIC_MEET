@@ -15,6 +15,10 @@
         <item>Genie</item>
         <item>Bugs</item>
     </string-array>
+
+    <string-array name="AutoTextViewArray">
+    </string-array>
+
     <string name="title_activity_ex">ex</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

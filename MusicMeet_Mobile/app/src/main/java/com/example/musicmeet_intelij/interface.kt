@@ -1,7 +1,9 @@
 package com.example.musicmeet_intelij
 
+import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 import java.net.URL
 
 //멜론 차트100
@@ -51,9 +53,31 @@ data class bugssonginfo (
     var bugssongs: ArrayList<bugsimgurl>
 )
 
-data class bugsimgurl(
+class bugsimgurl(
     var title: String? = null,
     var singer: String? = null,
     var rank: String? = null,
     var imgSrc: URL? =null
+)
+interface autoCompleteTextView
+{
+@GET("/music/search/{keyword}")
+    fun serch(@Path("keyword") keyword : String):
+        Call<ArrayList<SerchMusic>>
+
+
+
+}
+data class SerchMusic(
+    val musicInfo:ArrayList<Music>
+)
+data class Music(
+    @SerializedName("musicNum")
+    var musicNum : String? = null,
+    @SerializedName("imgSrc")
+    var imgSrc : String? = null,
+    @SerializedName("title")
+    var title: String? = null,
+    @SerializedName("singer")
+    var singer:String? = null
 )
