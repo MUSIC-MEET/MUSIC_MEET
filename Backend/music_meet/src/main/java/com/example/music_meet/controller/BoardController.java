@@ -283,13 +283,20 @@ public class BoardController
 
 
     //
-    // 메인페이지 장르게시판 인기, 최신 호출.md
+    // 메인페이지 장르게시판 인기 호출.md
     //
-    @RequestMapping(path = "/boards/{genre}/{type}/{page}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getMainGenreBoard(@PathVariable("genre")final String genre,
-                                                    @PathVariable("type")final String type,
-                                                    @PathVariable("page")final int page)
+    @RequestMapping(path = "/boards/{genre}/popular", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMainGenreBoardVote(@PathVariable("genre")final String genre)
     {
-        return new ResponseEntity<>(boardService.getMainGenreBoard(genre, type, page), HttpStatus.OK);
+        return new ResponseEntity<>(boardService.getMainGenreBoard(genre, "popular"), HttpStatus.OK);
+    }
+
+    //
+    // 메인페이지 장르게시판 최신순 호출.md
+    //
+    @RequestMapping(path = "/boards/{genre}/latest", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMainGenreBoardCreatedat(@PathVariable("genre")final String genre)
+    {
+        return new ResponseEntity<>(boardService.getMainGenreBoard(genre, "latest"), HttpStatus.OK);
     }
 }
