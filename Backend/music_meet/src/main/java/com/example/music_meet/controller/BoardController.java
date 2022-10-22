@@ -281,4 +281,15 @@ public class BoardController
             return new ResponseEntity<>(genreboards, HttpStatus.OK);
     }
 
+
+    //
+    // 메인페이지 장르게시판 인기, 최신 호출.md
+    //
+    @RequestMapping(path = "/boards/{genre}/{type}/{page}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getMainGenreBoard(@PathVariable("genre")final String genre,
+                                                    @PathVariable("type")final String type,
+                                                    @PathVariable("page")final int page)
+    {
+        return new ResponseEntity<>(boardService.getMainGenreBoard(genre, type, page), HttpStatus.OK);
+    }
 }

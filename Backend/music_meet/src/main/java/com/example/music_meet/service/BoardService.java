@@ -620,4 +620,54 @@ public class BoardService
         }
         return response_searchGenreBoards;
     }
+
+    public ArrayList<Map<String, String>> getMainGenreBoard(String genre, String type, int page) {
+        ArrayList<Map<String, String>> responseMap = new ArrayList<>();
+        final String genreBoard = genre + "board";
+        if (type.equals("popular")){
+            sql = "SELECT a.boardNum, b.nickname, a.title FROM " + genreBoard + " a, user b WHERE a.usernum = b.usernum AND a.state = 0 ORDER BY a.upvote - a.downvote DESC LIMIT ?,?";
+        } else if (type.equals("latest")) {
+            sql = "SELECT a.boardNum, b.nickname, a.title FROM " + genreBoard + " a, user b WHERE a.usernum = b.usernum AND a.state = 0 ORDER BY a.createdat DESC LIMIT ?,?";
+        } else {
+            sql = "SELECT a.boardNum, b.nickname, a.title FROM " + genreBoard + " a, user b WHERE a.usernum = b.usernum AND a.state = 0 ORDER BY a.createdat DESC LIMIT ?,?";
+        }
+        if (page > 20){
+            page = 10;
+        }
+        try
+        {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            System.out.println(sql);
+            pstmt.setInt(1, 0);
+            pstmt.setInt(2, page);
+
+            rs = pstmt.executeQuery();
+            for(int i = 0; rs.next(); i++)
+            {
+                Map<String, String> map = new HashMap<>();
+                map.put("id", String.valueOf(rs.getInt("boardnum")));
+                map.put("user", rs.getString("nickname"));
+                map.put("title", rs.getString("title"));
+                responseMap.add(map);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return responseMap;
+    }
 }
