@@ -621,19 +621,23 @@ public class BoardService
         return response_searchGenreBoards;
     }
 
-    public ArrayList<Map<String, String>> getMainGenreBoard(String genre, String type, int page) {
+    /**
+     * 메인페이지 장르게시판 인기, 최신에서 호출. type의 값에 따라 호출 기준 정렬 가능
+     * @param genre 장르 (kpop, ost, hiphop 등등)
+     * @param type 인기순(popular), 작성일(latest) 분류하는 변수
+     * @return
+     */
+    public ArrayList<Map<String, String>> getMainGenreBoard(String genre, String type) {
         ArrayList<Map<String, String>> responseMap = new ArrayList<>();
         final String genreBoard = genre + "board";
-        if (type.equals("popular")){
+        if (type.equals("popular")) {
             sql = "SELECT a.boardNum, b.nickname, a.title FROM " + genreBoard + " a, user b WHERE a.usernum = b.usernum AND a.state = 0 ORDER BY a.upvote - a.downvote DESC LIMIT ?,?";
         } else if (type.equals("latest")) {
             sql = "SELECT a.boardNum, b.nickname, a.title FROM " + genreBoard + " a, user b WHERE a.usernum = b.usernum AND a.state = 0 ORDER BY a.createdat DESC LIMIT ?,?";
         } else {
-            sql = "SELECT a.boardNum, b.nickname, a.title FROM " + genreBoard + " a, user b WHERE a.usernum = b.usernum AND a.state = 0 ORDER BY a.createdat DESC LIMIT ?,?";
+            sql = "SELECT a.boardNum, b.nickname, a.title FROM " + genreBoard + " a, user b WHERE a.usernum = b.usernum AND a.state = -1 ORDER BY a.createdat DESC LIMIT ?,?";
         }
-        if (page > 20){
-            page = 10;
-        }
+
         try
         {
             //
@@ -642,13 +646,12 @@ public class BoardService
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
-            System.out.println(sql);
-            pstmt.setInt(1, 0);
-            pstmt.setInt(2, page);
+
+            pstmt.setInt(1,0);
+            pstmt.setInt(2,5);
 
             rs = pstmt.executeQuery();
-            for(int i = 0; rs.next(); i++)
-            {
+            for (int i = 0; rs.next(); i++) {
                 Map<String, String> map = new HashMap<>();
                 map.put("id", String.valueOf(rs.getInt("boardnum")));
                 map.put("user", rs.getString("nickname"));
