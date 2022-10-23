@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import MusicType from "pages/Main/AlbumMusic/MusicType";
+import MusicType from "pages/Main/MusicType";
 
 
 

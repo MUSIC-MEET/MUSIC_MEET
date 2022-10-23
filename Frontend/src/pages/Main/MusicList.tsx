@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import MusicItem from "components/common/MusicItem";
 import React, { useCallback, useMemo, useState } from "react";
-import MusicType from "./AlbumMusic/MusicType";
+import MusicType from "./MusicType";
 
 interface MusicListProps {
     list?: MusicType[]

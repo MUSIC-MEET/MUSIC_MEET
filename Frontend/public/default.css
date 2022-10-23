@@ -164,12 +164,14 @@ input[type="submit"]:foucs {
 /* chrome 여기 수정해서 가리기 */
 ::-webkit-scrollbar {
     display: none;
-    overflow-y: hiddenl
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 body {
     scrollbar-width: none;
-    overflow-y: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 

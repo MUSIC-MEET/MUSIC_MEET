@@ -8,7 +8,7 @@ const fetchAlbumMusic =
         const axios = customAxios();
         return axios({
             method: "GET",
-            url: `/music/${type}/${count}`,
+            url: `/cover/${type}/${count}`,
         }).then(res=> res.data);
     };
 
