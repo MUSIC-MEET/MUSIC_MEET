@@ -1,32 +1,18 @@
 import React, { useCallback, useState } from "react";
+import { useQuery } from "react-query";
 import MusicList from "../MusicList";
+import fetchAlbumMusic from "utils/RequestApis/Main/fetchAlbumMusic";
 
-function AlbumMusicList() {
+interface AlbumMusicListProps {
+    type: "latest" | "popular";
+}
 
-    const dump = [
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-        { imgSrc: "https://i.ytimg.com/vi/1Q8fG0TtVAY/maxresdefault.jpg", title: "test", artist: "test", musicNum: "1" },
-
-
-    ];
+function AlbumMusicList(props: AlbumMusicListProps) {
+    const { data } = useQuery(["fetchAlbumMusic", props.type], () => fetchAlbumMusic({ type: props.type, count: 20 }));
     return (
         <React.Fragment>
             <MusicList
-                list={dump}
+                list={data}
             />
         </React.Fragment>
     );

@@ -25,6 +25,7 @@ const style = css`
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    position: relative;
     h3 {
         font-size: 1.5rem;
         font-weight: 800;

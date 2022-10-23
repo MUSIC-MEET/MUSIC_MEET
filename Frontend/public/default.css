@@ -161,23 +161,16 @@ input[type="submit"]:foucs {
 }
 
 
-/* chrome */
-body::-webkit-scrollbar {
+/* chrome 여기 수정해서 가리기 */
+::-webkit-scrollbar {
     display: none;
+    overflow-y: hiddenl
 }
-
-* {
-    scrollbar-width: none;
-
-}
-
-
 
 body {
-
-    /* Firefox */
+    scrollbar-width: none;
+    overflow-y: hidden;
 }
-
 
 
 

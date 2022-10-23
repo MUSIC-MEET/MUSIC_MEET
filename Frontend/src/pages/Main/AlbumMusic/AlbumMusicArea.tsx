@@ -20,7 +20,9 @@ function AlbumMusicArea() {
                     />
                 }
             >
-                <AlbumMusic />
+                <AlbumMusic
+                    type={type}
+                />
             </MainWrapper>
         </React.Fragment>
     );

@@ -10,8 +10,8 @@ interface MusicItemProps {
 
 function MusicItem(props: MusicItemProps) {
     return (
-        <li css={style}>
-            <figure className={`${props.className} container `}>
+        <li className={`${props.className}`} css={style}>
+            <figure>
                 <img src={props.imgSrc} alt="" />
                 <div className="singer-box">
                     <p className="singer">{props.singer}</p>
@@ -21,13 +21,16 @@ function MusicItem(props: MusicItemProps) {
                     <p className="singer">{props.singer}</p>
                 </div>
             </figure>
-        </li>
+        </li >
 
     );
 }
 
 const style = css`
+
     figure {
+        width: 100%;
+        height: 100%;   
         position: relative;
     }
 
@@ -45,11 +48,12 @@ const style = css`
         font-size: 0.8rem;
     }
 
-    img { 
+    img {
         width: 100%;
         height: 100%;
         object-fit: fill;
     }
+
     .singer-box {
         display: flex;
         justify-content: center;
@@ -60,7 +64,7 @@ const style = css`
         color: white;
         width: 100%;
         height: 20%;
-        
+
     }
 
     .detail-box {
@@ -76,7 +80,7 @@ const style = css`
         .detail-box {
             display: flex;
             position: absolute;
-            flex-direction:  column;
+            flex-direction: column;
             top: 0;
             cursor: pointer;
             justify-content: center;
@@ -89,7 +93,6 @@ const style = css`
             display: none;
         }
     }
-
 `;
 
 export default MusicItem;
