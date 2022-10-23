@@ -17,6 +17,8 @@ function LiveChartSub() {
 }
 
 const style = css`
+    position: absolute;
+    right: 0;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -26,7 +28,3 @@ const style = css`
     }
 `;
 export default LiveChartSub;
-
-function useCallbacK(arg0: () => void, arg1: never[]) {
-    throw new Error("Function not implemented.");
-}

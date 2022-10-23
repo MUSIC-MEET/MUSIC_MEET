@@ -36,8 +36,12 @@ const style = css`
 
     .top {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
+
+        h3 {
+            margin-right: 1rem;
+        }
     }
 
 `;
