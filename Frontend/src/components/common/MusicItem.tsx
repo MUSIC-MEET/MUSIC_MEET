@@ -1,24 +1,22 @@
 import { css } from "@emotion/react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import MusicType from "pages/Main/AlbumMusic/MusicType";
 
-interface MusicItemProps {
-    className?: string;
-    imgSrc?: string;
-    title?: string;
-    singer?: string;
-}
 
-function MusicItem(props: MusicItemProps) {
+
+function MusicItem(props: MusicType & { className?: string }) {
+    const navigator = useNavigate();
     return (
-        <li className={`${props.className}`} css={style}>
+        <li className={`${props.className}`} css={style} onClick={() => navigator(`/music/${props.id}`)}>
             <figure>
                 <img src={props.imgSrc} alt="" />
                 <div className="singer-box">
-                    <p className="singer">{props.singer}</p>
+                    <p className="singer">{props.artist}</p>
                 </div>
                 <div className="detail-box">
                     <p className="title">{props.title}</p>
-                    <p className="singer">{props.singer}</p>
+                    <p className="singer">{props.artist}</p>
                 </div>
             </figure>
         </li >

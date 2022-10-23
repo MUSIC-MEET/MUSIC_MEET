@@ -39,9 +39,7 @@ function MusicList(props: MusicListProps) {
                         <MusicItem
                             key={item.id}
                             className="item"
-                            imgSrc={item.imgSrc}
-                            title={item.title}
-                            singer={item.artist}
+                            {...item}
                         />
                     ))
                 }
@@ -88,7 +86,7 @@ const controlBtnWrapperStyle = css`
         all: unset;
         cursor: pointer;
         color: white;
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(0, 0, 0, 0.5);
         border-radius: 50%;
         padding: 0.5rem;
         font-weight: 700;
