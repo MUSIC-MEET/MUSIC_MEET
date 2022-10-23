@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import MainWrapper from "../MainWrapper";
-import AlbumMusicList from "./AlbumMusicList";
 import MusicListSub from "../MusicListSub";
+import CoverMusicList from "./CoverMusicList";
 
-function AlbumMusicArea() {
+function CoverMusicArea() {
     const { t } = useTranslation<"mainPage">("mainPage");
     const [type, setType] = useState<"latest" | "popular">("latest");
     const typeChangeHandler = useCallback((type: "latest" | "popular") => {
@@ -13,14 +13,14 @@ function AlbumMusicArea() {
     return (
         <React.Fragment>
             <MainWrapper
-                title={t("title.albumMusic")}
+                title={t("title.coverMusic")}
                 subMenu={
                     <MusicListSub
                         onChange={typeChangeHandler}
                     />
                 }
             >
-                <AlbumMusicList
+                <CoverMusicList
                     type={type}
                 />
             </MainWrapper>
@@ -28,4 +28,4 @@ function AlbumMusicArea() {
     );
 }
 
-export default AlbumMusicArea;
+export default CoverMusicArea;

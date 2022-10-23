@@ -1,33 +1,34 @@
 import { css } from "@emotion/react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import MusicType from "pages/Main/MusicType";
 
-interface MusicItemProps {
-    className?: string;
-    imgSrc?: string;
-    title?: string;
-    singer?: string;
-}
 
-function MusicItem(props: MusicItemProps) {
+
+function MusicItem(props: MusicType & { className?: string }) {
+    const navigator = useNavigate();
     return (
-        <li css={style}>
-            <figure className={`${props.className} container `}>
+        <li className={`${props.className}`} css={style} onClick={() => navigator(`/music/${props.id}`)}>
+            <figure>
                 <img src={props.imgSrc} alt="" />
                 <div className="singer-box">
-                    <p className="singer">{props.singer}</p>
+                    <p className="singer">{props.artist}</p>
                 </div>
                 <div className="detail-box">
                     <p className="title">{props.title}</p>
-                    <p className="singer">{props.singer}</p>
+                    <p className="singer">{props.artist}</p>
                 </div>
             </figure>
-        </li>
+        </li >
 
     );
 }
 
 const style = css`
+
     figure {
+        width: 100%;
+        height: 100%;   
         position: relative;
     }
 
@@ -45,11 +46,12 @@ const style = css`
         font-size: 0.8rem;
     }
 
-    img { 
+    img {
         width: 100%;
         height: 100%;
         object-fit: fill;
     }
+
     .singer-box {
         display: flex;
         justify-content: center;
@@ -60,7 +62,7 @@ const style = css`
         color: white;
         width: 100%;
         height: 20%;
-        
+
     }
 
     .detail-box {
@@ -76,7 +78,7 @@ const style = css`
         .detail-box {
             display: flex;
             position: absolute;
-            flex-direction:  column;
+            flex-direction: column;
             top: 0;
             cursor: pointer;
             justify-content: center;
@@ -89,7 +91,6 @@ const style = css`
             display: none;
         }
     }
-
 `;
 
 export default MusicItem;

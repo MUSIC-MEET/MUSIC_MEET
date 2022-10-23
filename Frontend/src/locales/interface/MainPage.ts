@@ -2,6 +2,7 @@ interface MainPage {
     more: string;
     title: {
         albumMusic: string;
+        coverMusic: string;
         liveChart: string;
     }
 

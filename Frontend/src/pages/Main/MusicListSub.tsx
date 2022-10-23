@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-function AlbumMusicSub(props: { onChange: (type: "latest" | "popular") => void }) {
+function MusicListSub(props: { onChange: (type: "latest" | "popular") => void }) {
     const { t } = useTranslation<"mainPage">("mainPage");
     return (
         <div css={style}>
@@ -31,4 +31,4 @@ const style = css`
     }
 `;
 
-export default AlbumMusicSub;
+export default MusicListSub;
