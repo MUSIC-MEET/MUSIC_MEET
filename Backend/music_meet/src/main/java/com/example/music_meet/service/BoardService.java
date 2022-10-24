@@ -5,6 +5,7 @@ import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
 import com.example.music_meet.dto.Response.Response_searchGenreBoard;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -627,6 +628,7 @@ public class BoardService
      * @param type 인기순(popular), 작성일(latest) 분류하는 변수
      * @return
      */
+    @Synchronized
     public ArrayList<Map<String, String>> getMainGenreBoard(String genre, String type) {
         ArrayList<Map<String, String>> responseMap = new ArrayList<>();
         final String genreBoard = genre + "board";

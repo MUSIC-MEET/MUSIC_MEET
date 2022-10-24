@@ -741,6 +741,13 @@ public class UploadService {
     }
 
 
+    /**
+     *
+     * @param num
+     * @param type
+     * @return
+     */
+    @Synchronized
     public ArrayList<Map<String, String>> getUploadListForMain( int num, final String type) {
 
         ArrayList<Map<String, String>> uploads = new ArrayList<>();
@@ -777,7 +784,7 @@ public class UploadService {
                 map.put("id", String.valueOf(rs.getInt("uploadnum")));
                 map.put("imgSrc", beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.getUSER_IMAGE_API_URL() + rs.getString("userimage"));
                 map.put("title", rs.getString("origin_title"));
-                map.put("user", rs.getString("nickname"));
+                map.put("artist", rs.getString("nickname"));
                 uploads.add(map);
             }
 
