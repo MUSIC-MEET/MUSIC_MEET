@@ -14,11 +14,10 @@ import { css } from "@emotion/react";
 
 function MyPage() {
     const { t } = useTranslation<"myPage">("myPage");
-    const { isLogIn } = useRecoilValue<{ isLogIn: boolean }>(LoginState);
     const setCurrentPage = useSetRecoilState(CurrentPage);
     useLayoutEffect(() => {
         setCurrentPage(-1);
-    }, [isLogIn, setCurrentPage]);
+    }, [setCurrentPage]);
     return (
         <React.Fragment>
             <Title>{t("title")}</Title>

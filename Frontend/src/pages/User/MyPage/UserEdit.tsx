@@ -5,9 +5,12 @@ import ImageEdit from "./ImageEdit";
 import { useQuery } from "react-query";
 import getMyInfo from "../../../utils/RequestApis/MyPage/getMyInfo";
 import SectionWrapper from "components/common/SectionWrapper";
+import { useRecoilValue } from "recoil";
+import LoginState from "store/LoginState";
 
 function UserEdit() {
-    const { data } = useQuery(["myinfo"], () => getMyInfo(),
+    const { nickname } = useRecoilValue<{ nickname: string }>(LoginState);
+    const { data } = useQuery(["myinfo", nickname], () => getMyInfo(),
         {
             suspense: true,
             useErrorBoundary: true
