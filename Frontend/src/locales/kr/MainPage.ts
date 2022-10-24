@@ -5,6 +5,7 @@ const text: MainPage =  {
     title: {
         liveChart: "실시간 차트",
         coverMusic: "커버 음악",
+        genreBoard: "게시판",
         albumMusic: "앨범 음악"
     },
     type: {

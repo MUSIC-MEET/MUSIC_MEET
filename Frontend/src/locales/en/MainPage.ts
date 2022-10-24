@@ -5,6 +5,7 @@ const text: MainPage =  {
     title: {
         liveChart: "Live Chart",
         coverMusic: "Cover Music",
+        genreBoard: "Genre Board",
         albumMusic: "Album Music"
     },
     type: {
