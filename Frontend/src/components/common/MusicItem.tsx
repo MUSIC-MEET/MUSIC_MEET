@@ -3,12 +3,15 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import MusicType from "pages/Main/MusicType";
 
+interface MusicItemProps {
+    className?: string;
+    type?: string;
+}
 
-
-function MusicItem(props: MusicType & { className?: string }) {
+function MusicItem(props: MusicType & MusicItemProps) {
     const navigator = useNavigate();
     return (
-        <li className={`${props.className}`} css={style} onClick={() => navigator(`/music/${props.id}`)}>
+        <li className={`${props.className}`} css={style} onClick={() => navigator(`/${props.type}/${props.id}`)}>
             <figure>
                 <img src={props.imgSrc} alt="" />
                 <div className="singer-box">

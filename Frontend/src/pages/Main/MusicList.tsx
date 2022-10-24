@@ -5,6 +5,7 @@ import MusicType from "./MusicType";
 
 interface MusicListProps {
     list?: MusicType[]
+    type: string;
 }
 
 function MusicList(props: MusicListProps) {
@@ -38,6 +39,7 @@ function MusicList(props: MusicListProps) {
                     props.list?.map((item) => (
                         <MusicItem
                             key={item.id}
+                            type={props.type}
                             className="item"
                             {...item}
                         />
