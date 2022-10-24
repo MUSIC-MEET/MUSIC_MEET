@@ -69,7 +69,7 @@ const container = css`
         position: relative;
         min-width: 20%;
         width: 20%;
-        height: 10rem;
+        height: 12rem;
         overflow-y: hidden;
     }
     scrollbar-width: 0;
