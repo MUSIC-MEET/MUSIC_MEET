@@ -13,7 +13,7 @@ function MainWrapper(props: MainWrapperProps) {
         <section className={`${props.className} main-wrapper`} css={style}>
             <div className="top">
                 <h3>{props.title}</h3>
-                {props.subMenu}
+                <div className="sub">{props.subMenu}</div>
             </div>
             <hr style={{ "color": "white" }} />
             {props.children}
@@ -35,12 +35,17 @@ const style = css`
     }
 
     .top {
+        position: relative;
         display: flex;
         justify-content: flex-start;
         align-items: center;
 
-        h3 {
+        h3 {    
             margin-right: 1rem;
+        }
+
+        .sub {
+            flex: 1;
         }
     }
 
