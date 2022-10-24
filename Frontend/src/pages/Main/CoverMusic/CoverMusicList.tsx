@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import MusicList from "../MusicList";
 import fetchCoverMusic from "utils/RequestApis/Main/fetchCoverMusic";

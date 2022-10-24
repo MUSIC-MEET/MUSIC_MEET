@@ -3,6 +3,7 @@ interface MainPage {
     title: {
         albumMusic: string;
         coverMusic: string;
+        genreBoard: string;
         liveChart: string;
     }
 

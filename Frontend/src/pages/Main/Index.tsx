@@ -7,6 +7,7 @@ import Loading from "components/common/Loading";
 
 import AlbumMusicArea from "./AlbumMusic/AlbumMusicArea";
 import CoverMusicArea from "./CoverMusic/CoverMusicArea";
+import GenreBoardArea from "./GenreBoard/GenreBoardArea";
 
 function Index() {
     const { t } = useTranslation<"mainPage">("mainPage");
@@ -15,6 +16,7 @@ function Index() {
             <Suspense fallback={<Loading />}>
                 <AlbumMusicArea />
                 <CoverMusicArea />
+                <GenreBoardArea />
                 <MainWrapper
                     title={t("title.liveChart")}
                     subMenu={<LiveChartSub />}
