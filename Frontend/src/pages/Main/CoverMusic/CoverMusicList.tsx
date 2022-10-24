@@ -13,6 +13,7 @@ function CoverMusicList(props: CoverMusicListProps) {
         <React.Fragment>
             <MusicList
                 list={data}
+                type={"cover"}
             />
         </React.Fragment>
     );

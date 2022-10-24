@@ -23,7 +23,7 @@ function Index() {
                         <Route path="edit/:id" element={
                             <PrivateRoute RouteComponent={Edit} />
                         } />
-                        <Route path="view/:id" element={<View />} />
+                        <Route path=":id" element={<View />} />
                     </Routes>
                 </Suspense>
             </ErrorBoundary>

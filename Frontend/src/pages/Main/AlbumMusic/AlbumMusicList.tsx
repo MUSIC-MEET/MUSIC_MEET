@@ -13,6 +13,7 @@ function AlbumMusicList(props: AlbumMusicListProps) {
         <React.Fragment>
             <MusicList
                 list={data}
+                type={"music"}
             />
         </React.Fragment>
     );
