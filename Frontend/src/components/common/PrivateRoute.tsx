@@ -14,7 +14,7 @@ function Login() {
     const { t } = useTranslation<"privateRoute">("privateRoute");
     useEffect(() => {
         setShown(true);
-    }, []);
+    }, [setShown]);
     return <Content>{t("ment")}</Content>;
 }
 

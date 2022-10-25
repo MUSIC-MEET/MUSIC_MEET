@@ -9,8 +9,8 @@ import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
 
 function UserEdit() {
-    const { nickname } = useRecoilValue<{ nickname: string }>(LoginState);
-    const { data } = useQuery(["myinfo", nickname], () => getMyInfo(),
+    const { nickname, key } = useRecoilValue<{ nickname: string; key: string }>(LoginState);
+    const { data } = useQuery(["myinfo", nickname, key], () => getMyInfo(),
         {
             suspense: true,
             useErrorBoundary: true
