@@ -3,6 +3,17 @@ import React, { useContext, useEffect } from "react";
 import Music from "./Music";
 import SearchMusicType from "components/Search/SearchMusicType";
 import ThemeContext from "store/ThemeContext";
+import ReactDOM from "react-dom";
+
+const portalElement: any = document.getElementById("overlay");
+
+
+const BackDrop = (props: { onClose: () => void }) => {
+    return (
+        <div className="backdrop" css={backdropStyle} onClick={props.onClose}></div>
+    );
+};
+
 
 function ResultList({ result, onClose }: { result: SearchMusicType[]; onClose: () => void; }) {
     const ctx = useContext(ThemeContext);
@@ -14,6 +25,9 @@ function ResultList({ result, onClose }: { result: SearchMusicType[]; onClose: (
 
     return (
         <section css={[style, css`color: ${fontColor}; background:${searchBackground};`]}>
+            {
+                ReactDOM.createPortal(<BackDrop onClose={onClose} />, portalElement)
+            }
             <ul>
                 {result.map((music) => (
                     <Music
@@ -58,8 +72,16 @@ const style = css`
     & > li:last-child {
         margin-bottom: 0;
     }
-
     
+`;
+
+const backdropStyle = css`
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    z-index: 99;
+    background-color: white;
+    background: rgba(255, 255, 255, 0);
 `;
 
 export default ResultList;
