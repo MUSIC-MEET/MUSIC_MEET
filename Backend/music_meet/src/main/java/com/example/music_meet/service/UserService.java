@@ -18,10 +18,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @Getter
@@ -1042,12 +1040,10 @@ public class UserService {
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
-
             pstmt.setInt(1, userNum);
-
             rs = pstmt.executeQuery();
 
-            int i = 0;
+
             while (rs.next()){
                 Response_callUserComment response_callUserComment = new Response_callUserComment();
                 response_callUserComment.setMusicNum(rs.getInt("musicNum"));
@@ -1057,9 +1053,28 @@ public class UserService {
                 response_callUserComment.setTitle(rs.getString("origin_title"));
                 response_callUserComment.setSinger(rs.getString("origin_singer"));
                 response_callUserComments.add(response_callUserComment);
-                i++;
             }
 
+            sql = "SELECT a.uploadnum, c.userimage, a.title, c.nickname, b.createdat, b.comment " +
+                    "FROM upload a, uploadComment b, user c WHERE a.uploadNum = b.uploadNum AND a.userNum = c.userNum AND a.state = 0 AND b.userNum = ? " +
+                    "ORDER BY createdAt DESC LIMIT 0,5";
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userNum);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()){
+                Response_callUserComment response_callUserComment = new Response_callUserComment();
+                response_callUserComment.setMusicNum(rs.getInt("uploadNum"));
+                response_callUserComment.setCreatedAt(rs.getString("createdAt"));
+                response_callUserComment.setContent(rs.getString("comment"));
+                response_callUserComment.setImgSrc(serverURL + ":" + serverPort + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
+                response_callUserComment.setTitle(rs.getString("title"));
+                response_callUserComment.setSinger(rs.getString("nickname"));
+                response_callUserComments.add(response_callUserComment);
+            }
+
+            //Collections.sort(response_callUserComments, "createdAt");
         }
         catch (Exception e)
         {

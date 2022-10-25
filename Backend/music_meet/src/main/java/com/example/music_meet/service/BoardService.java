@@ -629,7 +629,7 @@ public class BoardService
      * @return
      */
     @Synchronized
-    public ArrayList<Map<String, String>> getMainGenreBoard(String genre, String type) {
+    public ArrayList<Map<String, String>> getMainGenreBoard(String genre, String type, int num) {
         ArrayList<Map<String, String>> responseMap = new ArrayList<>();
         final String genreBoard = genre + "board";
         if (type.equals("popular")) {
@@ -650,7 +650,7 @@ public class BoardService
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setInt(1,0);
-            pstmt.setInt(2,5);
+            pstmt.setInt(2,num);
 
             rs = pstmt.executeQuery();
             for (int i = 0; rs.next(); i++) {
