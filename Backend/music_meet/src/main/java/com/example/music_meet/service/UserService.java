@@ -1073,8 +1073,12 @@ public class UserService {
                 response_callUserComment.setSinger(rs.getString("nickname"));
                 response_callUserComments.add(response_callUserComment);
             }
-
-            //Collections.sort(response_callUserComments, "createdAt");
+            Collections.sort(response_callUserComments, new Comparator<Response_callUserComment>() {
+                @Override
+                public int compare(Response_callUserComment o1, Response_callUserComment o2) {
+                    return o1.getCreatedAt().compareTo(o2.getCreatedAt());
+                }
+            });
         }
         catch (Exception e)
         {
