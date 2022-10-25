@@ -14,17 +14,18 @@ function ResultList({ result, onClose }: { result: SearchMusicType[]; onClose: (
 
     return (
         <section css={[style, css`color: ${fontColor}; background:${searchBackground};`]}>
-            {result.map((music) => (
-                <Music
-                    key={music.musicNum}
-                    imgSrc={music.imgSrc}
-                    musicNum={music.musicNum}
-                    title={music.title}
-                    singer={music.singer}
-                    onClose={onClose}
-                />
-            ))}
-
+            <ul>
+                {result.map((music) => (
+                    <Music
+                        key={music.musicNum}
+                        imgSrc={music.imgSrc}
+                        musicNum={music.musicNum}
+                        title={music.title}
+                        singer={music.singer}
+                        onClose={onClose}
+                    />
+                ))}
+            </ul>
         </section>
     );
 }
@@ -34,8 +35,9 @@ const style = css`
     border: 1px solid gray;
 
     width: 200%;
-    min-height: 30px;
-    max-height: 400px;
+    max-height: 32rem;
+    overflow-y: scroll;
+    max-height: 15rem;
     border-radius: 5px;
     padding: 1rem;
     margin-top: 1rem;
@@ -44,16 +46,16 @@ const style = css`
     color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    overflow-y: scroll;
+    
     z-index: 100;
 
-    & > section {
+    & > li {
         margin-bottom: 1rem;
     }
 
-    & > section:last-child {
+    & > li:last-child {
         margin-bottom: 0;
     }
 
