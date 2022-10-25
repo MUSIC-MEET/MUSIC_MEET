@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import MainWrapper from "../MainWrapper";
+import GenreBoards from "./GenreBoards";
 import GenreBoardSub from "./GenreBoardSub";
 
 /**
@@ -23,7 +24,9 @@ function GenreBoardArea() {
                     />
                 }
             >
-
+                <GenreBoards
+                    genre={genre}
+                />
             </MainWrapper>
         </React.Fragment>
     );

@@ -40,7 +40,7 @@ function GenreBoardSub(props: { onChange: (type: string) => void }) {
             </ul>
             <span
                 onClick={() => navigator("/board/kpop")}
-
+                css={spanStyle}
             >
                 {t("more")}
             </span>
@@ -52,6 +52,7 @@ const style = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 
 `;
 const ulStyle = css`
@@ -72,10 +73,8 @@ const ulStyle = css`
         content: "";
     }
 `;
-// const spanStyle = css`
-//     position: absolute;
-//     right: 0;
-//     cursor: pointer;
-// `;
+const spanStyle = css`
+    cursor: pointer;
+`;
 
 export default GenreBoardSub;
