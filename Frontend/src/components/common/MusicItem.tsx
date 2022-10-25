@@ -96,4 +96,4 @@ const style = css`
     }
 `;
 
-export default MusicItem;
+export default React.memo(MusicItem);
