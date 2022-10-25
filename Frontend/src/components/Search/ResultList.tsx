@@ -47,7 +47,7 @@ const style = css`
     justify-content: center;
     align-items: center;
     overflow-y: scroll;
-
+    z-index: 100;
 
     & > section {
         margin-bottom: 1rem;
