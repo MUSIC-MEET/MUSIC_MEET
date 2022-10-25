@@ -12,6 +12,7 @@ import NotLoginMenu from "./NotLoginMenu";
 import LoginMenu from "./LoginMenu";
 import { useQuery } from "react-query";
 import LoginRequest from "../../utils/RequestApis/Login/LoginRequest";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 
@@ -26,6 +27,8 @@ function Login(props) {
     const [errorStatus, setErrorStatus] = useState("");
     const [keepLoginState, setKeepLoginState] = useState(false);
     const { isLogIn } = useRecoilValue(LoginState);
+    const navigator = useNavigate();
+    const location = useLocation();
     const setLoginState = useSetRecoilState(LoginState);
     const values = useRecoilValue(LoginFormState);
     const { refetch } = useQuery(
@@ -39,6 +42,8 @@ function Login(props) {
                     localStorage.setItem("keepLoginState", true);
                 }
                 onCloseLoginModal();
+                console.log(location.pathname);
+                navigator(`${location.pathname}`);
             },
             onError: (err) => {
                 setErrorStatus(err.response.status);

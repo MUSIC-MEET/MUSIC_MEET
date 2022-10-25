@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import MainWrapper from "../MainWrapper";
+import GenreBoards from "./GenreBoards";
 import GenreBoardSub from "./GenreBoardSub";
 
 /**
@@ -9,15 +10,23 @@ import GenreBoardSub from "./GenreBoardSub";
  */
 function GenreBoardArea() {
     const { t } = useTranslation<"mainPage">("mainPage");
+    const [genre, setGenre] = useState<string>("balad");
+    const genreChangeHandler = useCallback((_genre: string) => {
+        setGenre(() => _genre);
+    }, []);
     return (
         <React.Fragment>
             <MainWrapper
                 title={t("title.genreBoard")}
                 subMenu={
-                    <GenreBoardSub />
+                    <GenreBoardSub
+                        onChange={genreChangeHandler}
+                    />
                 }
             >
-
+                <GenreBoards
+                    genre={genre}
+                />
             </MainWrapper>
         </React.Fragment>
     );

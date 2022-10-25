@@ -11,7 +11,7 @@ function Music(props: SearchMusicType & { onClose: () => void; }) {
         onClose();
     }, [musicNum, navigator]);
     return (
-        <section css={style} onClick={onClickHandler}>
+        <li css={style} onClick={onClickHandler}>
             <figure>
                 <img src={imgSrc} alt="music" />
             </figure>
@@ -19,7 +19,7 @@ function Music(props: SearchMusicType & { onClose: () => void; }) {
                 <span>{title}</span>
                 <span>{singer}</span>
             </div>
-        </section>
+        </li>
     );
 }
 

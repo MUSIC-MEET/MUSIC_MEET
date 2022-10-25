@@ -25,6 +25,8 @@ function MusicList(props: MusicListProps) {
         setTrans((prev) => prev + 100);
         setCurrentPage((prev) => prev - 1);
     }, [currentPage]);
+
+
     return (
         <div css={wrapper}>
             <div css={controlBtnWrapperStyle} className="control-btns">
@@ -100,4 +102,4 @@ const controlBtnWrapperStyle = css`
     }
 `;
 
-export default MusicList;
+export default React.memo(MusicList);

@@ -2,13 +2,10 @@ import styled from "@emotion/styled";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import Genre from "./Genre";
 import GenreButton from "./GenreButton";
 
-interface GenreType {
-    id: number;
-    name: string;
-    text: string;
-}
+
 
 function GenreSelector({ board, write, search, searchType }
     : { board?: boolean, write?: boolean, search?: boolean; searchType?: "title" | "user" }) {
@@ -16,7 +13,7 @@ function GenreSelector({ board, write, search, searchType }
     const params = useParams<{ genre: string }>();
     const genre = params.genre ?? "kpop";
 
-    const genreList: GenreType[] = useMemo(() => [
+    const genreList: Genre[] = useMemo(() => [
         { id: 0, name: "balad", text: t("genre.balad") },
         { id: 1, name: "rnb", text: t("genre.rnb") },
         { id: 2, name: "hiphop", text: t("genre.hiphop") },

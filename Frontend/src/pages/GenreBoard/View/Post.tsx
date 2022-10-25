@@ -22,14 +22,12 @@ function Post() {
     const genre = params.genre ?? "kpop";
     const num = params.num ?? "0";
 
-    const { data } = useQuery<PostContentType, AxiosError>(["genreBoardPost"], () => getPost({ genre, num }), {
+    const { data } = useQuery<PostContentType, AxiosError>(["genreBoardPost", num], () => getPost({ genre, num }), {
         suspense: true,
         useErrorBoundary: true,
     });
 
-    useEffect(() => {
-        //
-    }, [data]);
+
     const vote = data!.upvote + (-data!.downvote);
     return (
         <Article fontColor={viewerFontColor}>
