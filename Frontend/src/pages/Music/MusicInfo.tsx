@@ -8,6 +8,7 @@ import ThemeContext from "store/ThemeContext";
 import Button from "components/common/Button";
 import vote from "utils/RequestApis/Music/vote";
 import HeartVote from "components/common/HeartVote";
+import Player from "pages/Cover/View/Player";
 
 /**
  * 음악 페이지 음악 정보 컴포넌트
@@ -81,6 +82,9 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
                         onClick={voteOnClickHandler}
                     />
                 </div>
+                <Player
+                    mp3Src={data?.mp3Src}
+                />
             </SectionWrapper >
             <SectionWrapper style={lyricesStyle}>
                 <h2 className="lyrics-title">{t("musicInfo.lyrics")}</h2>
@@ -105,10 +109,10 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
 const style = css`
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
     line-height: 1.4;
-    width: 80vw;
+    
     figure {
         width: 10rem;
         height: 10rem;
@@ -144,6 +148,19 @@ const style = css`
 
         .sub {
             font-size: 0.8rem;
+        }
+    }
+
+    .player {
+        margin-left: auto;
+        margin-right: 3rem;
+        justify-content: flex-end;
+        margin-top: 1rem;
+        transform: scale(2);
+
+        svg {
+            margin-left: 0.4rem;
+            cursor: pointer;
         }
     }
 `;

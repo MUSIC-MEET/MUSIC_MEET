@@ -17,13 +17,14 @@ function Index() {
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
                     <Routes>
+                        <Route path=":id" element={<View />} />
                         <Route path="upload" element={
                             <PrivateRoute RouteComponent={Upload} />
                         } />
                         <Route path="edit/:id" element={
                             <PrivateRoute RouteComponent={Edit} />
                         } />
-                        <Route path=":id" element={<View />} />
+                        <Route path="list" element={<h1>list</h1>} />
                     </Routes>
                 </Suspense>
             </ErrorBoundary>
