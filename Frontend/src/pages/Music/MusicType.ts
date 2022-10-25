@@ -10,6 +10,7 @@ interface MusicType {
     voteCount: string;
     isVote: boolean;
     genre: string;
+    mp3Src: string;
 }
 
 export default MusicType;

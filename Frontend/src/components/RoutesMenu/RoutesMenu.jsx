@@ -23,7 +23,7 @@ function RoutesMenu() {
         { name : t("routes.menu1"), link: "/livechart" },
         { name : t("routes.menu2"), link: "/board/kpop" },
         { name : t("routes.menu3"), link: "/cover/upload" },
-        { name : t("routes.menu4"), link: "/cover/view/1" },
+        { name : t("routes.menu4"), link: "/cover/list" },
     ],[t]);
 
     return ( 
