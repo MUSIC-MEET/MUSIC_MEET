@@ -1,14 +1,17 @@
 import { css } from "@emotion/react";
 import ConfirmModal from "components/AlertModal/ConfirmModal";
 import DeleteIconButton from "components/common/ActionButton/DeleteIconButton";
+import EditIconButton from "components/common/ActionButton/EditIconButton";
 import HeartVote from "components/common/HeartVote";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
 
 
 interface TextInfoProps {
+    id?: number | string;
     title?: string;
     user?: string;
     createdAt?: string;
@@ -34,6 +37,7 @@ function TextInfo(props: TextInfoProps) {
     const { t } = useTranslation<"coverViewPage">("coverViewPage");
     const [deleteModalShown, setDeleteModalShown] = useState<boolean>(false);
     const { nickname } = useRecoilValue<{ nickname: string }>(LoginState);
+    const navigator = useNavigate();
     return (
         <div css={style}>
             <h2 className="title">{props.title}</h2>
@@ -41,9 +45,15 @@ function TextInfo(props: TextInfoProps) {
                 <span className="user">{props.user}</span>
                 {
                     props.user === nickname &&
-                    <DeleteIconButton
-                        onClick={() => setDeleteModalShown(() => true)}
-                    />
+                    <React.Fragment>
+                        <EditIconButton
+                            onClick={() => navigator(`/cover/edit/${props.id}`)}
+                        />
+                        <DeleteIconButton
+                            onClick={() => setDeleteModalShown(() => true)}
+                        />
+                    </React.Fragment>
+
                 }
             </div>
 
@@ -88,7 +98,7 @@ const style = css`
             font-weight: 600;
             font-size: 1.3rem;
         }
-        .delete-button {
+        .delete-button, .edit-button {
             margin-left: 0.2rem;
             font-size: 0.5rem;
             transform: scale(0.7);
