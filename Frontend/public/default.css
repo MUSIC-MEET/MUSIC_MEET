@@ -204,3 +204,11 @@ body {
 html {
     height: 100vh;
 }
+
+span,
+p,
+h1,
+h2,
+h3 {
+    white-space: pre;
+}
