@@ -419,7 +419,7 @@ public class SoundTrackService
         Response_getSoundTrackInfo response_getSoundTrackInfo = new Response_getSoundTrackInfo();
         try
         {
-            sql = "SELECT a.imgSrc, a.origin_title, a.origin_singer, a.album, a.releaseDate, a.lyrics, a.vote, b.name" +
+            sql = "SELECT a.imgSrc, a.origin_title, a.origin_singer, a.album, a.releaseDate, a.lyrics, a.vote, b.name, a.filename" +
                     " FROM music a, genrestate b WHERE a.genre = b.genre AND a.musicnum = ? AND a.state = 0";
             //
             // DB구간
@@ -433,7 +433,8 @@ public class SoundTrackService
 
             while(rs.next())
             {
-                response_getSoundTrackInfo.setImgSrc(serverURL + ":" + serverPort + "/music/image/" + rs.getString("imgSrc"));
+                response_getSoundTrackInfo.setImgSrc(serverURL + ":" + serverPort + beanConfig.MUSIC_IMAGE_URL + rs.getString("imgSrc"));
+                response_getSoundTrackInfo.setMp3Src(serverURL + ":" + serverPort + beanConfig.MUSIC_MP3_URL + rs.getString("filename"));
                 response_getSoundTrackInfo.setTitle(rs.getString("origin_title"));
                 response_getSoundTrackInfo.setSinger(rs.getString("origin_singer"));
                 response_getSoundTrackInfo.setAlbum(rs.getString("album"));

@@ -73,6 +73,9 @@ public class FileController {
         if (type.equals("uploads")){
             file = new File(beanConfig.UPLOAD_MP3FILE_PATH + mp3FileName);
         }
+        else if (type.equals("musics")){
+            file = new File(beanConfig.MUSIC_MP3_PATH + mp3FileName);
+        }
         else {
             file = new File(beanConfig.UPLOAD_MP3FILE_PATH + mp3FileName);
         }
