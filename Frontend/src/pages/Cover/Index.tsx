@@ -7,6 +7,7 @@ import Loading from "components/common/Loading";
 import Upload from "./Upload/Upload";
 import View from "./View/View";
 import Edit from "./Edit/Edit";
+import List from "./List/List";
 /**
  * /Cover Route Component
  * @returns 
@@ -24,7 +25,7 @@ function Index() {
                         <Route path="edit/:id" element={
                             <PrivateRoute RouteComponent={Edit} />
                         } />
-                        <Route path="list" element={<h1>list</h1>} />
+                        <Route path="list" element={<List />} />
                     </Routes>
                 </Suspense>
             </ErrorBoundary>
