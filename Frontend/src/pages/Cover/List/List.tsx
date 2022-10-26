@@ -10,18 +10,20 @@ function List() {
     const { data, fetchNextPage } =
         useInfiniteQuery(["fetchCoverMusicList"], ({ pageParam = 1 }) => fetchCoverMusicList(pageParam), {
             getNextPageParam: (lastPage, allPages) => {
-                return lastPage.currentPage + 1;
+                if (lastPage.currentPage < lastPage.endPage) return lastPage.currentPage + 1;
+
             },
         });
+    console.log(data);
     return (
         <React.Fragment >
             <Title>{t("title")}</Title>
             <CardMusicList
-                list={data}
+                list={data?.pages.map((page) => page.data).flat()}
+                type={"cover"}
             />
-            <button onClick={() => fetchNextPage()}></button>
+            <button onClick={() => fetchNextPage()}>더보기</button>
         </React.Fragment >
     );
 }
-
 export default List;
