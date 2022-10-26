@@ -85,6 +85,7 @@ const style = css`
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
+    white-space: pre;
     & > h2 {
         font-weight: 800;
         font-size: 2.5rem;
