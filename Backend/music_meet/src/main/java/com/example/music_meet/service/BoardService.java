@@ -622,6 +622,7 @@ public class BoardService
         return response_searchGenreBoards;
     }
 
+
     /**
      * 메인페이지 장르게시판 인기, 최신에서 호출. type의 값에 따라 호출 기준 정렬 가능
      * @param genre 장르 (kpop, ost, hiphop 등등)

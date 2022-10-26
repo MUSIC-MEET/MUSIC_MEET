@@ -18,6 +18,7 @@ public class Response_getSoundTrackInfo
     private int voteCount;
     private boolean isVote;
     private String genre;
+    private String mp3Src;
 
     public boolean getIsVote() {
         return this.isVote;

@@ -29,7 +29,8 @@ public class UploadController {
     // 개별 업로드 글 조회.md
     //
     @RequestMapping(value = "/cover/{uploadNum}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getUserUpload(@PathVariable("uploadNum") final int uploadNum){
+    public ResponseEntity<Object> getUserUpload(@PathVariable("uploadNum") final int uploadNum) {
+
         int usernum;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null)
@@ -41,7 +42,8 @@ public class UploadController {
         }
 
         Upload upload = uploadService.getUserUpload(uploadNum, usernum);
-        if (upload.getId() == -100){
+        uploadService.addUppoadView(uploadNum);
+        if (upload.getId() == -100) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         else{
@@ -64,7 +66,7 @@ public class UploadController {
 
         Map<String, String> map = uploadService.getUserUploadSmall(userNum, uploadNum);
         if (map.get("title") == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
@@ -249,6 +251,17 @@ public class UploadController {
     }
 
 
+    //
+    // 개별 업로드 글 검색.md
+    //
+    @RequestMapping(value = "/cover/{type}/search/{keyword}", method = RequestMethod.GET)
+    public ResponseEntity<Object> SearchUpload(@PathVariable("type")final String TYPE,
+                                               @PathVariable("keyword")final String KEYWORD){
+
+
+
+        return new ResponseEntity<>(uploadService.SearchUpload(TYPE, KEYWORD), HttpStatus.OK);
+    }
 
     //
     // 메인페이지 유저 업로드 인기.md
