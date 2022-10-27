@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { useSetRecoilState } from "recoil";
 import LoginModalShownState from "store/LoginModalShown";
 
-import Content from "components/UI/Content";
 import Title from "components/common/Title";
 import { css } from "@emotion/react";
 import CurrentPage from "store/CurrentPage";
@@ -44,11 +43,11 @@ function Index() {
     const description = result ? t("emailauth.success.description") : t("emailauth.fail.description");
 
     return (
-        <Content>
+        <React.Fragment>
             <Title>{title}</Title>
             <p>{description}</p>
             {result && <p css={css`margin-top: 1rem;`} onClick={goLoginHandler}>{t("emailauth.success.go")}</p>}
-        </Content>
+        </React.Fragment>
     );
 }
 
