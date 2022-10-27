@@ -1,20 +1,31 @@
+import AnimationMoreButton from "components/common/AnimationMoreButton";
 import CardMusicList from "components/common/CardMusicList";
 import Title from "components/common/Title";
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useInfiniteQuery } from "react-query";
+import { useSetRecoilState } from "recoil";
+import CurrentPage from "store/CurrentPage";
 import fetchCoverMusicList from "utils/RequestApis/Cover/fetchCoverMusicList";
 
 function List() {
+
     const { t } = useTranslation<"coverListPage">("coverListPage");
-    const { data, fetchNextPage } =
+    const { data, fetchNextPage, hasNextPage, } =
         useInfiniteQuery(["fetchCoverMusicList"], ({ pageParam = 1 }) => fetchCoverMusicList(pageParam), {
             getNextPageParam: (lastPage, allPages) => {
                 if (lastPage.currentPage < lastPage.endPage) return lastPage.currentPage + 1;
 
             },
         });
-    console.log(data);
+    const setCurrentPage = useSetRecoilState(CurrentPage);
+    // const queryClient = useQueryClient();
+    useEffect(() => {
+        setCurrentPage(4);
+        return () => {
+            // queryClient.removeQueries("fetchCoverMusicList");
+        };
+    }, [setCurrentPage]);
     return (
         <React.Fragment >
             <Title>{t("title")}</Title>
@@ -22,7 +33,10 @@ function List() {
                 list={data?.pages.map((page) => page.data).flat()}
                 type={"cover"}
             />
-            <button onClick={() => fetchNextPage()}>더보기</button>
+            <AnimationMoreButton
+                hasNext={hasNextPage}
+                onClick={() => fetchNextPage()}
+            />
         </React.Fragment >
     );
 }
