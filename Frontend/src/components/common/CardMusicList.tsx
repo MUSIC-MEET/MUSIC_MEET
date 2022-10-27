@@ -27,8 +27,8 @@ function CardMusicList(props: CardMusicListProps) {
 const style = css`
     width: 100%;
     height: auto;
+    margin: 3rem 0;
     margin-left: 3rem;
-
     & > .item {
         margin-bottom: 1rem;
     }
