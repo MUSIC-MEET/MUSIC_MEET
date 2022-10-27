@@ -1,6 +1,7 @@
 package com.example.music_meet.service;
 
 import com.example.music_meet.bean.BeanConfig;
+import com.example.music_meet.dto.Music;
 import com.example.music_meet.dto.MusicCrawlingSong;
 import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
 import com.example.music_meet.dto.Response.Response_getMusicComment;
@@ -743,5 +744,68 @@ public class SoundTrackService
             }
         }
         return musics;
+    }
+
+    /**
+     * 음악 목록 호출
+     * @param page 호출할 페이지 번호
+     * @return ArrayList<Music> 타입의 변수
+     */
+    public Object getMusicListToPage(int page) {
+
+        ArrayList<Music> musics = new ArrayList<>();
+        int totalPage = 0;
+        sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`"+
+                " FROM music WHERE `state` = 0 ORDER BY `releasedate` DESC LIMIT ?,10";
+        try {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, (page - 1) * 10);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Music music = new Music();
+                music.setMusicNum(rs.getInt("musicnum"));
+                music.setOriginTitle(rs.getString("origin_title"));
+                music.setOriginSinger(rs.getString("origin_singer"));
+                music.setVote(rs.getInt("vote"));
+                music.setReleasedate(rs.getString("releasedate"));
+                music.setImgSrc(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.MUSIC_IMAGE_URL + rs.getString("imgsrc"));
+                musics.add(music);
+            }
+
+            sql = "SELECT COUNT(musicNum) AS totalPage FROM music WHERE state = 0";
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                totalPage = rs.getInt("totalPage");
+                if (totalPage % 10 == 0){
+                    totalPage = totalPage / 10;
+                }
+                else{
+                    totalPage = (totalPage/ 10) + 1;
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("endPage", totalPage);
+        map.put("musics", musics);
+        return map;
     }
 }
