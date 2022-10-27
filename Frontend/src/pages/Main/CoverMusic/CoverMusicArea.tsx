@@ -18,6 +18,7 @@ function CoverMusicArea() {
                 subMenu={
                     <MusicListSub
                         onChange={typeChangeHandler}
+                        type={"cover"}
                     />
                 }
             >
