@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useLayoutEffect } from "react";
 import Title from "components/common/Title";
-import Content from "components/UI/Content";
 import { useTranslation } from "react-i18next";
 import SignUpForm from "./SignUpForm";
 import useHttp from "../../hooks/use-Http";
@@ -77,10 +76,10 @@ function SignUp() {
 
     if (status.isLoading) {
         return (
-            <Content>
+            <React.Fragment>
                 <Title>{t("title")}</Title>
                 <Loading />
-            </Content>
+            </React.Fragment>
         );
     }
 
