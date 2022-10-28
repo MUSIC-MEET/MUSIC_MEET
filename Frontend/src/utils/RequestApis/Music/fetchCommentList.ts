@@ -1,4 +1,5 @@
-import MusicCommentType from "pages/Music/MusicCommentType";
+
+import MusicCommentType from "pages/Music/View/MusicCommentType";
 import customAxios from "../../customAxios";
 
 const fetchMusicCommentList = 

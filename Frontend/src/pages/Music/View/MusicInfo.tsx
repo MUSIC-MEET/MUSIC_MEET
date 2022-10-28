@@ -69,15 +69,15 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
                 </figure>
                 <div className="text">
                     <h2 className="title">{data?.title}</h2>
-                    <span className="singer">{data?.singer}</span>
+                    <span className="singer">{data?.user}</span>
                     <span className="release sub">
-                        {`${t("musicInfo.releaseDate")}: ${data?.releaseDate}`}
+                        {`${t("musicInfo.releaseDate")}: ${data?.createdAt}`}
                     </span>
                     <span className="genre sub">
                         {`${t("musicInfo.genre")}: ${data?.genre}`}
                     </span>
                     <HeartVote
-                        count={data?.voteCount}
+                        count={data?.vote}
                         isVote={data?.isVote}
                         onClick={voteOnClickHandler}
                     />
