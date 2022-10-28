@@ -1,17 +1,20 @@
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useContext } from "react";
 import MusicProgressbar from "./MusicProgressbar";
 import RightController from "./RightController";
+import PlayMusicInfo from "./PlayMusicInfo";
+import ThemeContext from "store/ThemeContext";
 
 
 
 function PlayerController() {
+    const ctx = useContext(ThemeContext);
     return (
-        <section css={style}>
+        <section css={[style, css`background: ${ctx.themeStyle.musicPlayer.background};`]}>
             <MusicProgressbar />
             <div className="button-controller">
                 <div className="item">1</div>
-                <div className="item">2</div>
+                <PlayMusicInfo />
                 <RightController />
             </div>
 
@@ -22,7 +25,6 @@ function PlayerController() {
 const style = css`
     width: 100%;
     height: 5rem;
-    background: red;
     display: flex;
     flex-direction: column;
 
@@ -36,7 +38,6 @@ const style = css`
         padding: 0 1rem;
         margin-top: 0.5rem;
     }
-
 `;
 
 export default PlayerController;

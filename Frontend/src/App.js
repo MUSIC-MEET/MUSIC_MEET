@@ -93,6 +93,8 @@ const rootStyle = css`
     width: 100%;
     min-height: 100vh;
     padding: 0rem;
+    padding-bottom: 5rem;
+    transition: all 0.5s;
     @media screen and (max-width: 1023px) {
         flex-direction: column; 
     }
