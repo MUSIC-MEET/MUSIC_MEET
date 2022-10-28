@@ -36,7 +36,10 @@ const DarkThemeInit = {
         borderColor: "rgb(88,88,88)"
     },
     fontStyle1: { color: "WHITE" },
-    fontStyle2: { color: "#b2b0b0" }
+    fontStyle2: { color: "#b2b0b0" },
+    musicPlayer: {
+        background: "rgb(33,33,33)",
+    }
 };
 
 const LightThemeInit = {
@@ -73,7 +76,10 @@ const LightThemeInit = {
         borderColor: "rgb(88,88,88)"
     },
     fontStyle1: { color: "rgb(22,22,22)" },
-    fontStyle2: { color: "#b2b0b0" }
+    fontStyle2: { color: "#b2b0b0" },
+    musicPlayer: {
+        background: "rgb(82,82,82)",
+    }
 };
 
 function ThemeContextProvider(props) {

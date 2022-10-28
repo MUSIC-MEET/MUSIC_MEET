@@ -15,7 +15,18 @@ function MusicProgressbar(props: BaseProps) {
 }
 
 const style = css`
+    cursor: pointer;
     width: 100%;
     margin: 0;
+    -webkit-appearance: none;
+    height: 0.45rem;
+    background: red;
+    &::-ms-fill-lower {
+        background: red;
+    }
+
+    &::-ms-fill-upper{
+        background: white;
+    }
 `;
 export default MusicProgressbar;
