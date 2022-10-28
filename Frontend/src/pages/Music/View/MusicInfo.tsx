@@ -68,7 +68,7 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
                     <img src={data?.imgSrc} />
                 </figure>
                 <div className="text">
-                    <span className="title">{data?.title}</span>
+                    <h2 className="title">{data?.title}</h2>
                     <span className="singer">{data?.singer}</span>
                     <span className="release sub">
                         {`${t("musicInfo.releaseDate")}: ${data?.releaseDate}`}
@@ -113,7 +113,7 @@ const style = css`
     justify-content: center;
     align-items: flex-start;
     line-height: 1.4;
-    
+    overflow: hidden;
     figure {
         width: 10rem;
         height: 10rem;
@@ -135,7 +135,12 @@ const style = css`
         justify-content: flex-start;
         align-items: flex-start;
         margin-left: 1rem;
-
+        overflow: hidden;
+        h2, span {
+            overflow: hidden;
+            width: 100%;
+            text-overflow: ellipsis;
+        }
         .title {
             font-weight: 800;
             font-size:2.5rem;
