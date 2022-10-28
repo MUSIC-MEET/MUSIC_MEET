@@ -6,7 +6,6 @@ import ThemeContext from "store/ThemeContext";
 import styled from "@emotion/styled";
 import Submit from "components/common/Submit";
 import { useTranslation } from "react-i18next";
-import { Type } from "typescript";
 
 interface SearchBarProps {
     keyword: string;

@@ -6,10 +6,14 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import ThemeContext from "store/ThemeContext";
 import styled from "@emotion/styled";
-import { useNavigate, useParams } from "react-router-dom";
-function MoreButton() {
-    const params = useParams();
-    const genre: string = params.genre ?? "kpop";
+import { useNavigate } from "react-router-dom";
+
+interface MoreButtonProps {
+    writeUrl: string;
+    searchUrl: string;
+}
+
+function MoreButton(props: MoreButtonProps) {
     const navigator = useNavigate();
     const ctx = useContext(ThemeContext);
     const hiddenBoxRef = useRef<HTMLDivElement>(null);
@@ -34,12 +38,13 @@ function MoreButton() {
     }, []);
 
     const writeButtonClickHandler = useCallback(() => {
-        navigator(`/board/${genre}/write`);
-    }, [genre, navigator]);
+        navigator(`${props.writeUrl}`);
+    }, [navigator, props.writeUrl]);
 
     const searchButtonClickHandler = useCallback(() => {
-        navigator(`/board/${genre}/search/title/`);
-    }, [genre, navigator]);
+        navigator(`${props.searchUrl}`);
+    }, [navigator, props.searchUrl]);
+
     return (
         <Button theme={ctx.theme}>
             <div className="hidden-box" ref={hiddenBoxRef}>
@@ -51,6 +56,7 @@ function MoreButton() {
         </Button>
     );
 }
+
 const Button = styled.button`
     all:unset;
     display: flex;
