@@ -77,7 +77,7 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
                         {`${t("musicInfo.genre")}: ${data?.genre}`}
                     </span>
                     <HeartVote
-                        count={data?.vote}
+                        count={data?.count}
                         isVote={data?.isVote}
                         onClick={voteOnClickHandler}
                     />

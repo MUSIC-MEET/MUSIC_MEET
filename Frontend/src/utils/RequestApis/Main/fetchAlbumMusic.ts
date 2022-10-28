@@ -1,4 +1,5 @@
-import MusicType from "pages/Main/MusicType";
+
+import MusicType from "Types/MusicType";
 import customAxios from "utils/customAxios";
 
 const fetchAlbumMusic = 

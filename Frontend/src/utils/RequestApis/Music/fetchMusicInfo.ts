@@ -1,4 +1,4 @@
-import MusicType from "components/common/MusicType";
+import MusicType from "Types/MusicType";
 import customAxios from "../../customAxios";
 const fetchMusicInfo = 
     ({ 

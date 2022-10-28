@@ -9,20 +9,16 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import LoginState from "store/LoginState";
 
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import MusicType from "Types/MusicType";
 
 interface TextInfoProps {
-    id?: number | string;
-    title?: string;
-    user?: string;
-    createdAt?: string;
-    isVote?: boolean;
-    count?: string;
-    vote: () => void;
-    delete: () => void;
+    voteHandler: () => void;
+    deleteHandler: () => void;
 }
 
 /**
- * 커버 뷰 페이지 텍스트 정보들을 보여주는 컴포넌트
+ * Music 텍스트 정보들을 보여주는 컴포넌트
  * @param props.title - title
  * @param props.user - user
  * @param props.createdAt - createdAt
@@ -33,8 +29,9 @@ interface TextInfoProps {
  * @returns 
  */
 
-function TextInfo(props: TextInfoProps) {
+function TextInfo(props: TextInfoProps & MusicType) {
     const { t } = useTranslation<"coverViewPage">("coverViewPage");
+    const { t: t2 } = useTranslation<"musicPage">("musicPage");
     const [deleteModalShown, setDeleteModalShown] = useState<boolean>(false);
     const { nickname } = useRecoilValue<{ nickname: string }>(LoginState);
     const navigator = useNavigate();
@@ -56,20 +53,27 @@ function TextInfo(props: TextInfoProps) {
 
                 }
             </div>
+            {
+                props.genre &&
+                <span className="genre">{t2("musicInfo.genre")} : {props?.genre} </span>
+            }
 
             <span className="createdat">{t("createdAt")}: {props.createdAt}</span>
-            <HeartVote
-                count={props.count}
-                isVote={props.isVote}
-                onClick={props.vote}
-            />
+            <div className="counts">
+                <HeartVote
+                    count={props.count}
+                    isVote={props.isVote}
+                    onClick={props.voteHandler}
+                />
+                <span className="view"><VisibilityIcon />{props.view}</span>
+            </div>
             {deleteModalShown &&
                 <ConfirmModal
                     title={t("deleteModal.title")}
                     content={t("deleteModal.content")}
                     confirmButtonText={t("deleteModal.confirm")}
                     cancelButtonText={t("deleteModal.cancel")}
-                    onConfirm={props.delete}
+                    onConfirm={props.deleteHandler}
                     onCancel={() => setDeleteModalShown(() => false)}
                     onClose={() => setDeleteModalShown(() => false)}
                 />
@@ -89,7 +93,6 @@ const style = css`
     & > h2 {
         font-weight: 800;
         font-size: 2.5rem;
-        margin-bottom: 1.5rem;
     }
 
     & > h2, span {
@@ -113,9 +116,23 @@ const style = css`
 
     }
 
-    & > .createdat {
+    & > .createdat, .view, .vote, .genre {
         font-size: 0.8rem;
         color: #b2b0b0;
+    }
+
+    .view, .vote, .counts {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .counts { 
+        span {
+            margin-left: 0.5rem;
+        }
     }
 `;
 

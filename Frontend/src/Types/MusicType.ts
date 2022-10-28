@@ -3,13 +3,15 @@ interface MusicType {
     title?: string;
     createdAt?: string;
     view?: string;
-    vote?: string;
+    count?: string;
     imgSrc?: string;
     user?: string;
+    artist?: string;
     isVote?: boolean;
     lyrics?: string;
     mp3Src?: string;
     genre?: string;
+    description?: string;
 }
 
 export default MusicType;

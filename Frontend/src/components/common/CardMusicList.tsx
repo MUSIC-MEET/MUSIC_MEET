@@ -1,5 +1,5 @@
 import React from "react";
-import MusicType from "./MusicType";
+import MusicType from "../../Types/MusicType";
 import CardMusicItem from "./CardMusicItem";
 import { css } from "@emotion/react";
 

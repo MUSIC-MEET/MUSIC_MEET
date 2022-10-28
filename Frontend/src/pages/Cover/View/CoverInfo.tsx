@@ -47,8 +47,8 @@ function CoverInfo() {
                 <Img imgSrc={data?.imgSrc} />
                 <TextInfo
                     {...data}
-                    vote={voteHandler}
-                    delete={deleteHandler}
+                    voteHandler={voteHandler}
+                    deleteHandler={deleteHandler}
                 />
                 <Player
                     mp3Src={data?.mp3Src}
