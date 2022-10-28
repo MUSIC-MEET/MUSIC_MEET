@@ -7,6 +7,7 @@ import { useInfiniteQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import CurrentPage from "store/CurrentPage";
 import fetchCoverMusicList from "utils/RequestApis/Cover/fetchCoverMusicList";
+import MoreButton from "components/common/MoreButton";
 
 function List() {
 
@@ -36,6 +37,10 @@ function List() {
             <AnimationMoreButton
                 hasNext={hasNextPage}
                 onClick={() => fetchNextPage()}
+            />
+            <MoreButton
+                writeUrl={"/cover/upload"}
+                searchUrl={"/cover/search"}
             />
         </React.Fragment >
     );

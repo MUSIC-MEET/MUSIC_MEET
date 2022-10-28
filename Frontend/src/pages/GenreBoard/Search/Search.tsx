@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import GenreSelector from "../GenreSelector";
 import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import MoreButton from "../MoreButton";
+import MoreButton from "../../../components/common/MoreButton";
 import PostList from "../PostList";
 import getSearchList from "utils/RequestApis/GenreBoard/getSearchList";
 import { useMutation } from "react-query";
@@ -60,7 +60,10 @@ function Search() {
             <PostList
                 list={data}
             />
-            <MoreButton />
+            <MoreButton
+                writeUrl={`/board/${genre}/write`}
+                searchUrl={`/board/${genre}/search/title`}
+            />
         </React.Fragment>
     );
 }

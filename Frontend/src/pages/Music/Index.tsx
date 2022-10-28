@@ -1,33 +1,25 @@
 import React, { Suspense, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import Content from "components/UI/Content";
-import MusicInfo from "./MusicInfo";
+import { Route, Routes, useParams } from "react-router-dom";
 import Loading from "components/common/Loading";
-import Title from "components/common/Title";
-import Comments from "./Comments";
 import ErrorBoundary from "./ErrorBoundary";
-import { css } from "@emotion/react";
-import { useTranslation } from "react-i18next";
 
+import List from "./List/List";
+import View from "./View/View";
 /**
  * 음악 페이지 메인
  * @returns 
  */
 function Index() {
-    const params = useParams<{ musicNum: string; }>();
-    const musicNum = params.musicNum ?? "-1";
-    const { t } = useTranslation<"musicPage">("musicPage");
-    useEffect(() => {
-        //
-    }, [params.musicNum]);
 
     return (
         <React.Fragment>
-            <Title>{t("title")}</Title>
+
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
-                    <MusicInfo musicNum={musicNum} />
-                    <Comments musicNum={musicNum} />
+                    <Routes>
+                        <Route path=":musicNum" element={<View />} />
+                        <Route path="list" element={<List />} />
+                    </Routes>
                 </Suspense>
             </ErrorBoundary>
         </React.Fragment>

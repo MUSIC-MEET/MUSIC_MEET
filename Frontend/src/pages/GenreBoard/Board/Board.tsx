@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useState } from "react"
 
 import GenreSelector from "../GenreSelector";
 import { PostType } from "../PostType";
-import MoreButton from "../MoreButton";
+import MoreButton from "../../../components/common/MoreButton";
 import Title from "components/common/Title";
 import { useTranslation } from "react-i18next";
 import style from "../SectionStyle";
@@ -55,7 +55,10 @@ function Board() {
             {/* </React.Fragment> */}
 
 
-            <MoreButton />
+            <MoreButton
+                writeUrl={`/board/${genre}/write`}
+                searchUrl={`/board/${genre}/search/title`}
+            />
         </React.Fragment>
     );
 }

@@ -9,7 +9,7 @@ type CoverType = {
     imgSrc?: string;
     isVote?: boolean;
     createdAt?: string;
-    voteCount?: string;
+    count?: string;
 }
 
 export default CoverType;

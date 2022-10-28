@@ -16,7 +16,7 @@ interface TextInfoProps {
     user?: string;
     createdAt?: string;
     isVote?: boolean;
-    voteCount?: string;
+    count?: string;
     vote: () => void;
     delete: () => void;
 }
@@ -59,7 +59,7 @@ function TextInfo(props: TextInfoProps) {
 
             <span className="createdat">{t("createdAt")}: {props.createdAt}</span>
             <HeartVote
-                count={props.voteCount}
+                count={props.count}
                 isVote={props.isVote}
                 onClick={props.vote}
             />
@@ -85,11 +85,17 @@ const style = css`
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-    white-space: pre;
+    overflow: hidden;
     & > h2 {
         font-weight: 800;
         font-size: 2.5rem;
         margin-bottom: 1.5rem;
+    }
+
+    & > h2, span {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .row {

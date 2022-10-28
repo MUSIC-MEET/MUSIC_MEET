@@ -211,4 +211,5 @@ h1,
 h2,
 h3 {
     white-space: pre;
+    text-overflow: ellipsis;
 }
