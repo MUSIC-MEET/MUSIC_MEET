@@ -47,7 +47,6 @@ function CoverInfo() {
                 <Img imgSrc={data?.imgSrc} />
                 <TextInfo
                     {...data}
-                    voteCount={data?.voteCount}
                     vote={voteHandler}
                     delete={deleteHandler}
                 />
