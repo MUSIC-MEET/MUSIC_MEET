@@ -1,6 +1,7 @@
 package com.example.music_meet.service;
 
 import com.example.music_meet.bean.BeanConfig;
+import com.example.music_meet.dto.Music;
 import com.example.music_meet.dto.MusicCrawlingSong;
 import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
 import com.example.music_meet.dto.Response.Response_getMusicComment;
@@ -743,5 +744,81 @@ public class SoundTrackService
             }
         }
         return musics;
+    }
+
+    /**
+     * 음악 목록 호출
+     * @param page 호출할 페이지 번호
+     * @param type 최신, 인기순으로 정렬할 떄 식별하기 위해 사용되는 변수
+     * @param search 음원 검색에서 사용되는 keyword
+     * @return ArrayList<Music> 타입의 변수
+     */
+    public Object getMusicListToPage(int page, String type, String search) {
+
+        ArrayList<Music> musics = new ArrayList<>();
+        int totalPage = 0;
+        if (type.equals("latest")){
+            sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`"+
+                    " FROM music WHERE `state` = 0 AND (title LIKE ? OR singer LIKE ?) ORDER BY `releasedate` DESC LIMIT ?,10";
+        } else if (type.equals("popular")) {
+            sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`"+
+                    " FROM music WHERE `state` = 0 AND (title LIKE ? OR singer LIKE ?) ORDER BY `vote` DESC LIMIT ?,10";
+        } else {
+            sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`"+
+                    " FROM music WHERE `state` = 0 ORDER BY `releasedate` DESC LIMIT ?,10";
+        }
+
+        try {
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "%" + search + "%");
+            pstmt.setString(2, "%" + search + "%");
+            pstmt.setInt(3, (page - 1) * 10);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Music music = new Music();
+                music.setId(rs.getInt("musicnum"));
+                music.setTitle(rs.getString("origin_title"));
+                music.setUser(rs.getString("origin_singer"));
+                music.setVote(rs.getInt("vote"));
+                music.setCreatedAt(rs.getString("releasedate"));
+                music.setImgSrc(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.MUSIC_IMAGE_URL + rs.getString("imgsrc"));
+                musics.add(music);
+            }
+
+            sql = "SELECT COUNT(musicNum) AS totalPage FROM music WHERE state = 0";
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                totalPage = rs.getInt("totalPage");
+                if (totalPage % 10 == 0){
+                    totalPage = totalPage / 10;
+                }
+                else{
+                    totalPage = (totalPage/ 10) + 1;
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("endPage", totalPage);
+        map.put("list", musics);
+        return map;
     }
 }

@@ -232,5 +232,19 @@ public class SoundTrackController
         return new ResponseEntity<>(musics, HttpStatus.OK);
     }
 
-
+    //
+    // 음악 리스트 호출.md
+    //
+    @RequestMapping("/musics/list")
+    public ResponseEntity<Object> getMusicListToPage(@RequestParam("page") final int PAGE,
+                                                     @RequestParam(value = "type",required = false) String TYPE,
+                                                     @RequestParam(value = "search", required = false) String search) {
+        if (TYPE == null){
+            TYPE = "latest";
+        }
+        if (search == null){
+            search = "";
+        }
+        return new ResponseEntity<>(soundTrackService.getMusicListToPage(PAGE, TYPE, search), HttpStatus.OK);
+    }
 }
