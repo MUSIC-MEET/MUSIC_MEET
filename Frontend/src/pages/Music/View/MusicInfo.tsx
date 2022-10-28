@@ -109,6 +109,7 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
 const style = css`
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
     line-height: 1.4;

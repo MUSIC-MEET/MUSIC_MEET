@@ -1,12 +1,10 @@
 import React, { Suspense, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Content from "components/UI/Content";
-import MusicInfo from "./MusicInfo";
+import MusicInfo from "./View/MusicInfo";
 import Loading from "components/common/Loading";
 import Title from "components/common/Title";
-import Comments from "./Comments";
+import Comments from "./View/Comments";
 import ErrorBoundary from "./ErrorBoundary";
-import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
 
 /**

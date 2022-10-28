@@ -1,8 +1,8 @@
 import React from "react";
 import NewLoginAlertModal from "components/AlertModal/NewLoginAlertModal";
 import DuplicateVoteModal from "../../components/AlertModal/DuplicateVoteModal";
-import NotFoundMusic from "./NotFoundMusic";
-import DeleteMusicAlert from "./DeleteMusicAlert";
+import NotFoundMusic from "./View/NotFoundMusic";
+import DeleteMusicAlert from "./View/DeleteMusicAlert";
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
