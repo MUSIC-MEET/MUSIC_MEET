@@ -15,15 +15,16 @@ import java.security.PrivateKey;
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Music {
-    private Integer musicNum;
+    private Integer id;
     private String imgSrc;
     private String originTitle;
-    private String originSinger;
+    private String user;
     private String title;
     private String singer;
-    private String releasedate;
+    private String createdAt;
     private String lyrics;
     private String fileName;
+    private Integer view;
     private Integer vote;
     private Integer genre;
     private Integer state;
