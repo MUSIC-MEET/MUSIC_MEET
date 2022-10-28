@@ -6,8 +6,8 @@ export default {
         "menu0" : "메인",
         "menu1" : "차트 보기",
         "menu2" : "장르별 게시판",
-        "menu3" : "최신 앨범",
-        "menu4" : "커버 게시판",
+        "menu3" : "앨범 리스트",
+        "menu4" : "커버 리스트",
     },
     search: {
         "placeholder" : "음악 검색"

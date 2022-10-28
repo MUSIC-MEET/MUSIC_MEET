@@ -6,8 +6,8 @@ export default {
         "menu0" : "Main",
         "menu1" : "Show Chart",
         "menu2" : "Genre Board",
-        "menu3" : "Latest Album",
-        "menu4" : "Cover Board",
+        "menu3" : "Album List",
+        "menu4" : "Cover List",
     },
     search: {
         "placeholder" : "Search MUSIC"
