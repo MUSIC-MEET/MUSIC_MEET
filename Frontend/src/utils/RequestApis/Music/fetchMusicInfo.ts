@@ -1,5 +1,5 @@
+import MusicType from "components/common/MusicType";
 import customAxios from "../../customAxios";
-import MusicType from "pages/Music/MusicType";
 const fetchMusicInfo = 
     ({ 
         musicNum
