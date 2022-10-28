@@ -19,6 +19,71 @@ import User from "./pages/User/Index";
 import Music from "./pages/Music/Index.tsx";
 import NotFoundPage from "./pages/NotFound/Index";
 import Cover from "./pages/Cover/Index";
+import MusicPlayer from "./pages/MusicPlayer/MusicPlayer";
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            suspense: true,
+            useErrorBoundary: true,
+            retry: 0,
+            refetchOnWindowFocus: false,
+            
+        },
+    },
+});
+
+function App() {
+    const [menu, setMenu] = useState(true);
+    const menuVisibleHandler = useCallback(() => {
+        setMenu((prevState) => !prevState);
+    },[]);
+    const navigator = useNavigate();
+
+    return (
+        <QueryClientProvider client={queryClient}>
+            <ThemeContextProvider>
+                <Content css={[rootStyle,rootMusicPlayerStyle]}>
+                    { menu ? <Menu 
+                        className="menu"
+                        navigator={navigator}
+                        onMenuClose={menuVisibleHandler}
+                    />:
+                        <MenuIcon
+                            className="menu-icon"
+                            style={{ alignSelf : "flex-start" }}
+                            onClick={menuVisibleHandler}
+                        />
+                    }
+                    <div className="container">
+                        <Routes>
+                            <Route path="/" element={<Main />} />
+                            <Route 
+                                path="/signup/*"
+                                element={
+                                    <GuestRoute RouteComponent={SignUp}
+                                    />
+                                } 
+                            />
+                            <Route path="/auth/:type/:value" element={<EmailAuth />} />
+                            <Route path="/find/*" element={<UserFind />} />
+                            <Route path="/user/*" element={<User />} />
+                            <Route path="/livechart/*" element={<LiveChart />} />
+                            <Route path="/unauthorization" element={<h2>unauthorization</h2>} />
+                            <Route path="/board/*" element={<GenreBoard />} />
+                            <Route path="/music/*" element={<Music />} /> 
+                            <Route path="/cover/*" element={<Cover />} />
+                            <Route path="*" element={<NotFoundPage />} />
+                        </Routes>
+                    </div>
+                    <MusicPlayer 
+                        className="music-player"
+                    />
+                </Content>
+            </ThemeContextProvider>
+        </QueryClientProvider>
+    );
+}
 
 const rootStyle = css`
     display: flex;
@@ -60,67 +125,15 @@ const rootStyle = css`
     }
 `;
 
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            suspense: true,
-            useErrorBoundary: true,
-            retry: 0,
-            refetchOnWindowFocus: false,
-            
-        },
-    },
-});
+const rootMusicPlayerStyle = css`
+    .music-player {
+        position: fixed;
+        bottom: 0;
+    }
 
-function App() {
-    const [menu, setMenu] = useState(true);
-    const menuVisibleHandler = useCallback(() => {
-        setMenu((prevState) => !prevState);
-    },[]);
-    const navigator = useNavigate();
+`;
 
-    return (
-        <QueryClientProvider client={queryClient}>
-            <ThemeContextProvider>
-                <Content css={rootStyle}>
-                    { menu ? <Menu 
-                        className="menu"
-                        navigator={navigator}
-                        onMenuClose={menuVisibleHandler}
-                    />:
-                        <MenuIcon
-                            className="menu-icon"
-                            style={{ alignSelf : "flex-start" }}
-                            onClick={menuVisibleHandler}
-                        />
-                    }
-                    <div className="container">
-                        <Routes>
-                            <Route path="/" element={<Main />} />
-                            <Route 
-                                path="/signup/*"
-                                element={
-                                    <GuestRoute RouteComponent={SignUp}
-                                    />
-                                } 
-                            />
-                            <Route path="/auth/:type/:value" element={<EmailAuth />} />
-                            <Route path="/find/*" element={<UserFind />} />
-                            <Route path="/user/*" element={<User />} />
-                            <Route path="/livechart/*" element={<LiveChart />} />
-                            <Route path="/unauthorization" element={<h2>unauthorization</h2>} />
-                            <Route path="/board/*" element={<GenreBoard />} />
-                            <Route path="/music/*" element={<Music />} /> 
-                            <Route path="/cover/*" element={<Cover />} />
-                            <Route path="*" element={<NotFoundPage />} />
-                        </Routes>
-                    </div>
-                    
-                </Content>
-            </ThemeContextProvider>
-        </QueryClientProvider>
-    );
-}
+
 
 export default App;
 
