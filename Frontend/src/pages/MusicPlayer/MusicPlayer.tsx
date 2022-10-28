@@ -9,7 +9,7 @@ interface MusicPlayerProps {
 }
 
 function MusicPlayer(props: MusicPlayerProps) {
-    const [shownPlayerContent, setShownPlayerContent] = useState<boolean>(true);
+    const [shownPlayerContent, setShownPlayerContent] = useState<boolean>(false);
     const changeShwonStateHandler = useCallback(() => {
         setShownPlayerContent((prev) => !prev);
     }, []);
