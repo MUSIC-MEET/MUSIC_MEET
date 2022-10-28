@@ -110,7 +110,7 @@ function App() {
                             <Route path="/livechart/*" element={<LiveChart />} />
                             <Route path="/unauthorization" element={<h2>unauthorization</h2>} />
                             <Route path="/board/*" element={<GenreBoard />} />
-                            <Route path="/music/:musicNum" element={<Music />} /> 
+                            <Route path="/music/*" element={<Music />} /> 
                             <Route path="/cover/*" element={<Cover />} />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
