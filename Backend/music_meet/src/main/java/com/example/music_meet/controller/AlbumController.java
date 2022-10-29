@@ -3,28 +3,26 @@ package com.example.music_meet.controller;
 import com.example.music_meet.dto.Response.Response_getMusicComment;
 import com.example.music_meet.dto.Response.Response_getSoundTrackInfo;
 import com.example.music_meet.dto.Response.Response_searchSoundTrack_Window;
-import com.example.music_meet.service.SoundTrackService;
+import com.example.music_meet.service.AlbumService;
 import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
 
 @Controller
 @CrossOrigin("*")
-public class SoundTrackController
+public class AlbumController
 {
     @Autowired
-    private SoundTrackService soundTrackService;
+    private AlbumService albumService;
 
 
     //
@@ -36,7 +34,7 @@ public class SoundTrackController
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (Integer.parseInt((String) request.getAttribute("userNum")) == 2 && key.equals("music_meet"))
         {
-            if (soundTrackService.start())
+            if (albumService.start())
                 return new ResponseEntity<>(HttpStatus.OK);          // 성공
             else
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // 실패
@@ -70,7 +68,7 @@ public class SoundTrackController
             final int musicNum = Integer.parseInt(requestMap.get("musicNum"));
 
 
-            if (soundTrackService.createSoundTrackComment(usernum, musicNum, comment))
+            if (albumService.createSoundTrackComment(usernum, musicNum, comment))
                 return new ResponseEntity<>(HttpStatus.CREATED);
             else
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -97,7 +95,7 @@ public class SoundTrackController
             final String comment = requestMap.get("content");
             final int commentNum = Integer.parseInt(requestMap.get("commentNum"));
 
-            if (soundTrackService.modifySoundTrackComment(userNum, commentNum, comment))
+            if (albumService.modifySoundTrackComment(userNum, commentNum, comment))
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             else
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -120,7 +118,7 @@ public class SoundTrackController
         final int userNum = Integer.parseInt((String)request.getAttribute("userNum"));
         final int commentNum =  Integer.parseInt(requestMap.get("commentNum"));
 
-        if (soundTrackService.deleteSoundTrackComment(userNum, commentNum))
+        if (albumService.deleteSoundTrackComment(userNum, commentNum))
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -133,7 +131,7 @@ public class SoundTrackController
     @RequestMapping(path = "/music/search/{keyword}", method = RequestMethod.GET)
     public ResponseEntity<Object> searchSoundTrack_Window(@PathVariable("keyword")final String keyword)
     {
-        ArrayList<Response_searchSoundTrack_Window> musics = soundTrackService.searchSoundTrack_Window(keyword);
+        ArrayList<Response_searchSoundTrack_Window> musics = albumService.searchSoundTrack_Window(keyword);
 
         if (musics.size() == 0)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -155,7 +153,7 @@ public class SoundTrackController
         else
             userNum = Integer.parseInt((String)request.getAttribute("userNum"));
 
-        Response_getSoundTrackInfo response_getSoundTrackInfo =  soundTrackService.getSoundTrackInfo(userNum, musicNum);
+        Response_getSoundTrackInfo response_getSoundTrackInfo =  albumService.getSoundTrackInfo(userNum, musicNum);
 
         if (response_getSoundTrackInfo.getTitle() == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -180,9 +178,9 @@ public class SoundTrackController
         final int usernum = Integer.parseInt((String)request.getAttribute("userNum"));
         final int musicNum = Integer.parseInt(requestMap.get("musicNum"));
 
-        if (soundTrackService.isSelectVote(usernum, musicNum))
+        if (albumService.isSelectVote(usernum, musicNum))
         {
-            if (soundTrackService.deleteMusicCommentVote(usernum, musicNum))
+            if (albumService.deleteMusicCommentVote(usernum, musicNum))
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             else
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -190,7 +188,7 @@ public class SoundTrackController
         }
         else
         {
-            if (soundTrackService.addMusicCommentVote(usernum, musicNum))
+            if (albumService.addMusicCommentVote(usernum, musicNum))
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             else
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -205,7 +203,7 @@ public class SoundTrackController
     @RequestMapping(path = "/music/comment/{musicNum}", method = RequestMethod.GET)
     public ResponseEntity<Object> getMusicComment(@PathVariable("musicNum")final int musicNum)
     {
-        ArrayList<Response_getMusicComment> response_getMusicComments = soundTrackService.getMusicComment(musicNum);
+        ArrayList<Response_getMusicComment> response_getMusicComments = albumService.getMusicComment(musicNum);
 
         if (response_getMusicComments.size() == 0)
             return new ResponseEntity<>(response_getMusicComments, HttpStatus.OK);
@@ -219,7 +217,7 @@ public class SoundTrackController
     //
     @RequestMapping(value = "/music/popular/{num}", method = RequestMethod.GET)
     public ResponseEntity<Object> getMusicListVote(@PathVariable("num") final int num){
-        ArrayList<Map<String, String>> musics = soundTrackService.getMusicList(num, "popular");
+        ArrayList<Map<String, String>> musics = albumService.getMusicList(num, "popular");
         return new ResponseEntity<>(musics, HttpStatus.OK);
     }
 
@@ -228,7 +226,7 @@ public class SoundTrackController
     //
     @RequestMapping(value = "/music/latest/{num}", method = RequestMethod.GET)
     public ResponseEntity<Object> getMusicListLatest(@PathVariable("num") final int num){
-        ArrayList<Map<String, String>> musics = soundTrackService.getMusicList(num, "latest");
+        ArrayList<Map<String, String>> musics = albumService.getMusicList(num, "latest");
         return new ResponseEntity<>(musics, HttpStatus.OK);
     }
 
@@ -245,6 +243,6 @@ public class SoundTrackController
         if (search == null){
             search = "";
         }
-        return new ResponseEntity<>(soundTrackService.getMusicListToPage(PAGE, TYPE, search), HttpStatus.OK);
+        return new ResponseEntity<>(albumService.getMusicListToPage(PAGE, TYPE, search), HttpStatus.OK);
     }
 }
