@@ -1,7 +1,9 @@
 package com.example.music_meet.controller;
 
 import JPA.Upload;
+import com.example.music_meet.dto.UploadMusic;
 import com.example.music_meet.service.UploadService;
+import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,6 +30,7 @@ public class UploadController {
     //
     // 개별 업로드 글 조회.md
     //
+    @Synchronized
     @RequestMapping(value = "/cover/{uploadNum}", method = RequestMethod.GET)
     public ResponseEntity<Object> getUserUpload(@PathVariable("uploadNum") final int uploadNum) {
 
@@ -41,8 +44,8 @@ public class UploadController {
             usernum = Integer.parseInt((String) request.getAttribute("userNum"));
         }
 
-        Upload upload = uploadService.getUserUpload(uploadNum, usernum);
-        uploadService.addUppoadView(uploadNum);
+        UploadMusic upload = uploadService.getUserUpload(uploadNum, usernum);
+        uploadService.addUploadView(uploadNum);
         if (upload.getId() == -100) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -64,11 +67,11 @@ public class UploadController {
         }
         final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
 
-        Map<String, String> map = uploadService.getUserUploadSmall(userNum, uploadNum);
-        if (map.get("title") == null) {
+        UploadMusic upload = uploadService.getUserUploadSmall(userNum, uploadNum);
+        if (upload.getTitle() == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            return new ResponseEntity<>(upload, HttpStatus.OK);
         }
     }
 
@@ -127,15 +130,15 @@ public class UploadController {
         }
         final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
 
-        Map<String, String> map = uploadService.getFileName(userNum, uploadNum, fileName);
+        UploadMusic upload = uploadService.getFileName(userNum, uploadNum);
 
-        if (map.get("origin_file").equals(fileName)){
+        if (upload.getFile().equals(fileName)){
             uploadService.modifyUpload(userNum, uploadNum, title, description, mp3File,null);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         else {
             
-            if (uploadService.deleteMp3File(map.get("file")) &&
+            if (uploadService.deleteMp3File(upload.getFile()) &&
                     uploadService.modifyUpload(userNum, uploadNum, title, description, mp3File, fileName)){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -268,9 +271,7 @@ public class UploadController {
     //
     @RequestMapping(value = "/cover/popular/{num}", method = RequestMethod.GET)
     public ResponseEntity<Object> getUploadListVote(@PathVariable("num") final int num){
-        ArrayList<Map<String , String>> uploads;
-        uploads = uploadService.getUploadListForMain(num, "popular");
-        return new ResponseEntity<>(uploads, HttpStatus.OK);
+        return new ResponseEntity<>(uploadService.getUploadListForMain(num, "popular"), HttpStatus.OK);
     }
 
     //
@@ -278,9 +279,7 @@ public class UploadController {
     //
     @RequestMapping(value = "/cover/latest/{num}", method = RequestMethod.GET)
     public ResponseEntity<Object> getUploadList(@PathVariable("num") final int num){
-        ArrayList<Map<String , String>> uploads;
-        uploads = uploadService.getUploadListForMain(num, "latest");
-        return new ResponseEntity<>(uploads, HttpStatus.OK);
+        return new ResponseEntity<>(uploadService.getUploadListForMain(num, "latest"), HttpStatus.OK);
     }
 
 }

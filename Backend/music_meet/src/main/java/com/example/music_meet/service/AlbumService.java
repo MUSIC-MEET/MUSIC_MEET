@@ -1,9 +1,8 @@
 package com.example.music_meet.service;
 
 import com.example.music_meet.bean.BeanConfig;
-import com.example.music_meet.dto.Music;
+import com.example.music_meet.dto.AlbumMusic;
 import com.example.music_meet.dto.MusicCrawlingSong;
-import com.example.music_meet.dto.Response.Response_GetGenreBoardList;
 import com.example.music_meet.dto.Response.Response_getMusicComment;
 import com.example.music_meet.dto.Response.Response_getSoundTrackInfo;
 import com.example.music_meet.dto.Response.Response_searchSoundTrack_Window;
@@ -16,9 +15,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +24,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Service
-public class SoundTrackService
+public class AlbumService
 {
     private ArrayList<MusicCrawlingSong> musicCrawlingSongs = new ArrayList<>();
 
@@ -420,7 +417,7 @@ public class SoundTrackService
         Response_getSoundTrackInfo response_getSoundTrackInfo = new Response_getSoundTrackInfo();
         try
         {
-            sql = "SELECT a.imgSrc, a.origin_title, a.origin_singer, a.album, a.releaseDate, a.lyrics, a.vote, b.name, a.filename" +
+            sql = "SELECT a.musicnum, a.imgSrc, a.origin_title, a.origin_singer, a.album, a.releaseDate, a.lyrics, a.vote, b.name, a.filename" +
                     " FROM music a, genrestate b WHERE a.genre = b.genre AND a.musicnum = ? AND a.state = 0";
             //
             // DB구간
@@ -434,16 +431,17 @@ public class SoundTrackService
 
             while(rs.next())
             {
+                response_getSoundTrackInfo.setId(rs.getInt("musicnum"));
                 response_getSoundTrackInfo.setImgSrc(serverURL + ":" + serverPort + beanConfig.MUSIC_IMAGE_URL + rs.getString("imgSrc"));
                 response_getSoundTrackInfo.setMp3Src(serverURL + ":" + serverPort + beanConfig.MUSIC_MP3_URL + rs.getString("filename"));
                 response_getSoundTrackInfo.setTitle(rs.getString("origin_title"));
-                response_getSoundTrackInfo.setSinger(rs.getString("origin_singer"));
-                response_getSoundTrackInfo.setAlbum(rs.getString("album"));
+                response_getSoundTrackInfo.setArtist(rs.getString("origin_singer"));
                 response_getSoundTrackInfo.setReleaseDate(rs.getString("releaseDate"));
                 response_getSoundTrackInfo.setLyrics(rs.getString("lyrics"));
-                response_getSoundTrackInfo.setVoteCount(rs.getInt("vote"));
+                response_getSoundTrackInfo.setCount(rs.getInt("vote"));
                 response_getSoundTrackInfo.setIsVote(false);
                 response_getSoundTrackInfo.setGenre(rs.getString("name"));
+                response_getSoundTrackInfo.setView(0);
             }
 
             sql = "SELECT musicNum FROM MusicVote WHERE userNum = ? AND musicNum = ?";
@@ -755,7 +753,7 @@ public class SoundTrackService
      */
     public Object getMusicListToPage(int page, String type, String search) {
 
-        ArrayList<Music> musics = new ArrayList<>();
+        ArrayList<AlbumMusic> musics = new ArrayList<>();
         int totalPage = 0;
         if (type.equals("latest")){
             sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`"+
@@ -781,12 +779,13 @@ public class SoundTrackService
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                Music music = new Music();
+                AlbumMusic music = new AlbumMusic();
                 music.setId(rs.getInt("musicnum"));
                 music.setTitle(rs.getString("origin_title"));
-                music.setUser(rs.getString("origin_singer"));
-                music.setVote(rs.getInt("vote"));
-                music.setCreatedAt(rs.getString("releasedate"));
+                music.setArtist(rs.getString("origin_singer"));
+                music.setReleaseDate(rs.getString("releasedate"));
+                music.setView(0);
+                music.setCount(rs.getInt("vote"));
                 music.setImgSrc(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.MUSIC_IMAGE_URL + rs.getString("imgsrc"));
                 musics.add(music);
             }

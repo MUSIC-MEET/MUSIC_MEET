@@ -2,6 +2,8 @@ package com.example.music_meet.service;
 
 import JPA.Upload;
 import com.example.music_meet.bean.BeanConfig;
+import com.example.music_meet.dto.UploadComment;
+import com.example.music_meet.dto.UploadMusic;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,8 +53,8 @@ public class UploadService {
      * @return 정상적으로 찾아올시 true, 글이 없거나 비정상 작동시 false
      */
     @Synchronized
-    public Upload getUserUpload(final int uploadNum, final int userNum) {
-        Upload upload = new Upload();
+    public UploadMusic getUserUpload(final int uploadNum, final int userNum) {
+        UploadMusic upload = new UploadMusic();
 
         sql = "select a.`uploadnum`, a.`origin_title`, b.`nickname`, a.`comment`, a.`file`, a.`vote`, a.`view`," +
                 " b.`userimage`, DATE_FORMAT(a.`createdat`, '%Y-%m-%d') AS createdat, (SElECT COUNT(*) FROM uploadvote WHERE uploadnum = ? AND usernum = ?) AS isvote" +
@@ -110,7 +112,7 @@ public class UploadService {
      * @return
      */
     public Object getUploadList(final int page) {
-        ArrayList<Map<String,String>> uploads = new ArrayList<>();
+        ArrayList<UploadMusic> uploads = new ArrayList<>();
         Map<String, Object> responseMap = new HashMap<>();
         int totalPage = 0;
 
@@ -127,16 +129,16 @@ public class UploadService {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                Map<String, String> map = new HashMap<>();
-                map.put("id", String.valueOf(rs.getInt("uploadnum")));
-                map.put("title", rs.getString("origin_title"));
-                map.put("user", rs.getString("nickname"));
-                map.put("createdAt", rs.getString("createdat"));
-                map.put("view", String.valueOf(rs.getInt("view")));
-                map.put("vote", String.valueOf(rs.getInt("vote")));
-                map.put("imgSrc", beanConfig.getServerUrl() + ":" + beanConfig.getServerPort()
+                UploadMusic upload = new UploadMusic();
+                upload.setId(rs.getInt("uploadnum"));
+                upload.setTitle(rs.getString("origin_title"));
+                upload.setUser(rs.getString("nickname"));
+                upload.setCreatedAt( rs.getString("createdat"));
+                upload.setView(rs.getInt("view"));
+                upload.setCount(rs.getInt("vote"));
+                upload.setImgSrc(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort()
                         + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
-                uploads.add(map);
+                uploads.add(upload);
             }
 
             sql = "SELECT COUNT(uploadNum) AS totalPage FROM upload WHERE state = 0";
@@ -455,8 +457,8 @@ public class UploadService {
      * @return 해당 게시글의 활성화된 모든 댓글들
      */
     @Synchronized
-    public ArrayList<Map<String, String>> getUploadComment(final int uploadNum) {
-        ArrayList<Map<String, String>> comments = new ArrayList<>();
+    public ArrayList<UploadComment> getUploadComment(final int uploadNum) {
+        ArrayList<UploadComment> comments = new ArrayList<>();
 
         sql = "SELECT a.`uploadCommentNum`, a.`comment`, b.`nickname`, b.`userimage` FROM uploadComment a, user b " +
                 " WHERE a.`uploadnum` = ? AND a.`state` = 0 AND a.usernum = b.usernum ORDER BY a.`createdat` DESC";
@@ -472,11 +474,11 @@ public class UploadService {
             rs = pstmt.executeQuery();
 
             while (rs.next()){
-                Map<String, String> comment = new HashMap<>();
-                comment.put("user", rs.getString("nickname"));
-                comment.put("comment", rs.getString("comment"));
-                comment.put("id", String.valueOf(rs.getInt("uploadCommentNum")));
-                comment.put("imgSrc", beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
+                UploadComment comment = new UploadComment();
+                comment.setUser(rs.getString("nickname"));
+                comment.setComment(rs.getString("comment"));
+                comment.setId(rs.getInt("uploadCommentNum"));
+                comment.setImgSrc(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
                 comments.add(comment);
             }
 
@@ -592,13 +594,14 @@ public class UploadService {
      * @param fileName 파일의 이름
      * @return 정상 처리시 true, 비정상 처리시 false 반환
      */
+    @Synchronized
     public boolean modifyUpload(int userNum, int uploadNum, String title, String description, MultipartFile mp3File,String fileName) {
         boolean result;
         long nowDate = new Date().getTime();
         if (fileName == null) {
-            sql = "UPDATE upload SET title = ?, comment = ? , origin_title = ? WHERE uploadNum = ? AND usernum = ? AND state = 0";
+            sql = "UPDATE upload SET origin_title = ?, comment = ? , title = ? WHERE uploadNum = ? AND usernum = ? AND state = 0";
         }else {
-            sql = "UPDATE upload SET title = ?, comment = ?, origin_title = ? ,file = ?, origin_file = ? WHERE uploadNum = ? AND usernum = ? AND state = 0";
+            sql = "UPDATE upload SET origin_title = ?, comment = ?, title = ? ,file = ?, origin_file = ? WHERE uploadNum = ? AND usernum = ? AND state = 0";
         }
 
         try {
@@ -657,12 +660,11 @@ public class UploadService {
      * upload 테이블에서 인자로 넘겨받은 filename과 origin_file을 비교하는 함수
      * @param userNum 유저 고유 번호
      * @param uploadNum 업로드 글 고유 번호
-     * @param fileName 확인할 file 이름
      * @return 있으면 true, 없으면 false
      */
-    public Map<String, String> getFileName(int userNum, int uploadNum, String fileName) {
+    public UploadMusic getFileName(int userNum, int uploadNum) {
 
-        Map<String, String> result = new HashMap<>();
+        UploadMusic upload = new UploadMusic();
 
         sql = "SELECT origin_file, file FROM upload WHERE usernum = ? AND uploadnum = ? AND state = 0";
         try {
@@ -678,8 +680,8 @@ public class UploadService {
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                result.put("file", rs.getString("file"));
-                result.put("origin_file", rs.getString("origin_file"));
+                upload.setFile(rs.getString("file"));
+                upload.setOriginFile(rs.getString("origin_file"));
             }
 
         } catch (Exception e) {
@@ -693,7 +695,7 @@ public class UploadService {
                 throw new RuntimeException(e);
             }
         }
-        return result;
+        return upload;
     }
 
 
@@ -720,9 +722,9 @@ public class UploadService {
      * @param uploadNum 업로드 고유 번호
      * @return
      */
-    public Map<String, String> getUserUploadSmall(final int userNum, final int uploadNum) {
+    public UploadMusic getUserUploadSmall(final int userNum, final int uploadNum) {
 
-        Map<String, String> map = new HashMap<>();
+        UploadMusic upload = new UploadMusic();
         sql = "SELECT origin_title, comment, origin_file FROM upload WHERE usernum = ? AND uploadnum = ? AND state = 0";
         try {
             //
@@ -736,12 +738,12 @@ public class UploadService {
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                map.put("title", rs.getString("origin_title"));
-                map.put("description", rs.getString("comment"));
-                map.put("fileName", rs.getString("origin_file"));
+                upload.setTitle( rs.getString("origin_title"));
+                upload.setDescription(rs.getString("comment"));
+                upload.setFile( rs.getString("origin_file"));
             }
             else {
-                map.put("title", null);
+                upload.setTitle(null);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -754,7 +756,7 @@ public class UploadService {
                 throw new RuntimeException(e);
             }
         }
-        return map;
+        return upload;
     }
 
 
@@ -765,9 +767,9 @@ public class UploadService {
      * @return ArrayList<Map<String, String>> 타입의 변수
      */
     @Synchronized
-    public ArrayList<Map<String, String>> getUploadListForMain( int num, final String type) {
+    public ArrayList<UploadMusic> getUploadListForMain( int num, final String type) {
 
-        ArrayList<Map<String, String>> uploads = new ArrayList<>();
+        ArrayList<UploadMusic> uploads = new ArrayList<>();
 
         if (type.equals("popular")){
             sql = "SELECT a.uploadnum, b.userimage, a.origin_title, b.nickname FROM upload a, user b WHERE a.state = 0 AND a.usernum = b.usernum ORDER BY a.vote DESC" +
@@ -797,12 +799,12 @@ public class UploadService {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                Map<String, String> map = new HashMap<>();
-                map.put("id", String.valueOf(rs.getInt("uploadnum")));
-                map.put("imgSrc", beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.getUSER_IMAGE_API_URL() + rs.getString("userimage"));
-                map.put("title", rs.getString("origin_title"));
-                map.put("artist", rs.getString("nickname"));
-                uploads.add(map);
+                UploadMusic upload = new UploadMusic();
+                upload.setId(rs.getInt("uploadnum"));
+                upload.setImgSrc(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.getUSER_IMAGE_API_URL() + rs.getString("userimage"));
+                upload.setTitle(rs.getString("origin_title"));
+                upload.setUser(rs.getString("nickname"));
+                uploads.add(upload);
             }
 
         } catch (SQLException e) {
@@ -822,7 +824,7 @@ public class UploadService {
     }
 
     /**
-     *
+     * 회원 업로드 검색
      * @param type
      * @param keyword
      * @return
@@ -874,7 +876,8 @@ public class UploadService {
         return uploads;
     }
 
-    public void addUppoadView(int uploadNum) {
+    @Synchronized
+    public void addUploadView(int uploadNum) {
         try
         {
             sql = "UPDATE upload SET `view` = `view` + 1 WHERE uploadNum = ?";

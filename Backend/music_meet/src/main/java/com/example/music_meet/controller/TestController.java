@@ -1,6 +1,6 @@
 package com.example.music_meet.controller;
 
-import com.example.music_meet.service.SoundTrackService;
+import com.example.music_meet.service.AlbumService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @CrossOrigin("*")
 public class TestController {
 
-    private SoundTrackService musicCrawlingBot = new SoundTrackService();
+    private AlbumService musicCrawlingBot = new AlbumService();
 
 
     //
