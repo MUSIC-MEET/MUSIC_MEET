@@ -4,6 +4,7 @@ import BaseProps from "components/common/BaseProps";
 
 interface MusicProgressbarProps {
     value: number;
+    oncChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function MusicProgressbar(props: BaseProps & MusicProgressbarProps) {
@@ -16,6 +17,7 @@ function MusicProgressbar(props: BaseProps & MusicProgressbarProps) {
             step="1"
             defaultValue={0}
             value={props.value}
+            onChange={props.oncChange}
         />
     );
 }

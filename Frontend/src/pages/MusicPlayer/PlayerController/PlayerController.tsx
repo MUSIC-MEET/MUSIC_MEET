@@ -28,10 +28,18 @@ function PlayerController(props: PlayerControllerProps) {
         };
     }, [audio, props.playingMusic]);
 
+
+    const changeProgressHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.target.value);
+        setProgress(value);
+        audio.currentTime = value * audio.duration / 100;
+    }, [audio]);
+
     return (
         <section css={[style, css`background: ${ctx.themeStyle.musicPlayer.background};`]}>
             <MusicProgressbar
                 value={progress}
+                oncChange={changeProgressHandler}
             />
             <div className="button-controller">
                 <div>
