@@ -10,6 +10,7 @@ interface MusicPlayerProps {
 
 function MusicPlayer(props: MusicPlayerProps) {
     const [list, setList] = useState([
+        "http://localhost:8080/musics/play/소녀시대-FOREVER1.mp3",
         "http://localhost:8080/musics/play/한동근-새벽에걸려온너의전화는.mp3",
         "http://localhost:8080/uploads/play/1666766492963_윤하+사건의지평선류민희COVER.mp3"
     ]);
