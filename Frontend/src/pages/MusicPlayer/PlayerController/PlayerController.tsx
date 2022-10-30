@@ -1,10 +1,9 @@
 import { css } from "@emotion/react";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import MusicProgressbar from "./MusicProgressbar";
 import RightController from "./RightController";
 import PlayMusicInfo from "./PlayMusicInfo";
 import ThemeContext from "store/ThemeContext";
-import { cleanup } from "@testing-library/react";
 
 interface PlayerControllerProps {
     playingMusic: string;
@@ -13,21 +12,34 @@ interface PlayerControllerProps {
 }
 
 function PlayerController(props: PlayerControllerProps) {
+    const audio = useMemo(() => new Audio(props.playingMusic), [props.playingMusic]);
+    const [progress, setProgress] = useState<number>(0);
+
     useEffect(() => {
-        console.log(props.playingMusic);
-        const audio = new Audio(props.playingMusic);
         audio.play();
+        const timer = setInterval(() => {
+            setProgress(() => Math.floor(audio.currentTime) / Math.floor(audio.duration) * 100);
+        }, 1000);
         return () => {
-            audio.pause();
+            audio?.pause();
+            clearInterval(timer);
         };
-    }, [props.playingMusic]);
+    }, [audio, props.playingMusic]);
+
+
+
+
+
     const ctx = useContext(ThemeContext);
     return (
         <section css={[style, css`background: ${ctx.themeStyle.musicPlayer.background};`]}>
-            <MusicProgressbar />
+            <MusicProgressbar
+                value={progress}
+            />
             <div className="button-controller">
                 <div>
                     <button className="prev" onClick={() => props.prev()}>이전</button>
+                    <button className="prev" onClick={() => audio.play()}>이전</button>
                     <button className="play" onClick={() => props.next()}>다음</button>
                 </div>
                 <div className="item">1</div>

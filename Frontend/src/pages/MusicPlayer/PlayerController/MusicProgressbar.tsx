@@ -2,7 +2,11 @@ import { css } from "@emotion/react";
 import React from "react";
 import BaseProps from "components/common/BaseProps";
 
-function MusicProgressbar(props: BaseProps) {
+interface MusicProgressbarProps {
+    value: number;
+}
+
+function MusicProgressbar(props: BaseProps & MusicProgressbarProps) {
     return (
         <input
             className={`${props.className}`}
@@ -10,6 +14,8 @@ function MusicProgressbar(props: BaseProps) {
             type="range"
             max="100"
             step="1"
+            defaultValue={0}
+            value={props.value}
         />
     );
 }
