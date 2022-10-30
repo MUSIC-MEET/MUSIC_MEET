@@ -18,21 +18,26 @@ function PlayerController(props: PlayerControllerProps) {
 
     useEffect(() => {
         audio.play();
+        audio.addEventListener("ended", () => {
+            props.next();
+        });
+        audio.volume = 0.1;
         const timer = setInterval(() => {
             setProgress(() => Math.floor(audio.currentTime) / Math.floor(audio.duration) * 100);
         }, 1000);
         return () => {
             audio?.pause();
-            setProgress(0);
             clearInterval(timer);
+            setProgress(0);
         };
-    }, [audio, props.playingMusic]);
+    }, [audio, props, props.next, props.playingMusic]);
 
 
     const changeProgressHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value);
-        setProgress(value);
         audio.currentTime = value * audio.duration / 100;
+        setProgress(() => value);
+        console.log(value * audio.duration / 100);
     }, [audio]);
 
     return (

@@ -17,7 +17,7 @@ function AlbumMusicArea() {
                 subMenu={
                     <MusicListSub
                         onChange={typeChangeHandler}
-                        type={"album"}
+                        type={"music"}
                     />
                 }
             >
