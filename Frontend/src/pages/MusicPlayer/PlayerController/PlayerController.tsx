@@ -23,7 +23,7 @@ function PlayerController(props: PlayerControllerProps) {
         });
         audio.volume = 0.1;
         const timer = setInterval(() => {
-            setProgress(() => Math.floor(audio.currentTime) / Math.floor(audio.duration) * 100);
+            setProgress(() => Math.floor(audio.currentTime) / Math.floor(audio.duration) * 1000);
         }, 1000);
         return () => {
             audio?.pause();
@@ -35,9 +35,9 @@ function PlayerController(props: PlayerControllerProps) {
 
     const changeProgressHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value);
-        audio.currentTime = value * audio.duration / 100;
+        audio.currentTime = value * audio.duration / 1000;
         setProgress(() => value);
-        console.log(value * audio.duration / 100);
+        console.log(value * audio.duration / 1000);
     }, [audio]);
 
     return (

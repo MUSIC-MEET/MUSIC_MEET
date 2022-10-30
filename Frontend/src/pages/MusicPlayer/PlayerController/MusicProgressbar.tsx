@@ -13,7 +13,7 @@ function MusicProgressbar(props: BaseProps & MusicProgressbarProps) {
             className={`${props.className}`}
             css={style}
             type="range"
-            max="100"
+            max="1000"
             step="1"
             defaultValue={0}
             value={props.value}
