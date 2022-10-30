@@ -12,6 +12,7 @@ interface PlayerControllerProps {
 }
 
 function PlayerController(props: PlayerControllerProps) {
+    const ctx = useContext(ThemeContext);
     const audio = useMemo(() => new Audio(props.playingMusic), [props.playingMusic]);
     const [progress, setProgress] = useState<number>(0);
 
@@ -22,15 +23,11 @@ function PlayerController(props: PlayerControllerProps) {
         }, 1000);
         return () => {
             audio?.pause();
+            setProgress(0);
             clearInterval(timer);
         };
     }, [audio, props.playingMusic]);
 
-
-
-
-
-    const ctx = useContext(ThemeContext);
     return (
         <section css={[style, css`background: ${ctx.themeStyle.musicPlayer.background};`]}>
             <MusicProgressbar
