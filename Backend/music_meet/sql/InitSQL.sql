@@ -1432,6 +1432,7 @@ CREATE TABLE `Music` (
 	`FileName` VARCHAR(200) NULL,
 	`Length` INT(1) NULL,
 	`vote` INT(10) NULL default 0,
+	`view`	INT(10)	NOT	NULL	DEFAULT	0,
 	`genre` INT(2) NOT NULL,
 	`state` INT(1) NOT NULL default 0
 );

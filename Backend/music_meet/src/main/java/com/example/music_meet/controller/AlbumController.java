@@ -153,9 +153,12 @@ public class AlbumController
         else
             userNum = Integer.parseInt((String)request.getAttribute("userNum"));
 
+
+        boolean isAddView = albumService.addMusicView(musicNum);
         Response_getSoundTrackInfo response_getSoundTrackInfo =  albumService.getSoundTrackInfo(userNum, musicNum);
 
-        if (response_getSoundTrackInfo.getTitle() == null)
+
+        if (response_getSoundTrackInfo.getTitle() == null || isAddView == false)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else
             return new ResponseEntity<>(response_getSoundTrackInfo,HttpStatus.OK);

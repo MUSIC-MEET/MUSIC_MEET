@@ -417,7 +417,7 @@ public class AlbumService
         Response_getSoundTrackInfo response_getSoundTrackInfo = new Response_getSoundTrackInfo();
         try
         {
-            sql = "SELECT a.musicnum, a.imgSrc, a.origin_title, a.origin_singer, a.album, a.releaseDate, a.lyrics, a.vote, b.name, a.filename" +
+            sql = "SELECT a.musicnum, a.imgSrc, a.origin_title, a.origin_singer, a.album, a.releaseDate, a.lyrics, a.vote, b.name, a.filename, a.view" +
                     " FROM music a, genrestate b WHERE a.genre = b.genre AND a.musicnum = ? AND a.state = 0";
             //
             // DB구간
@@ -441,7 +441,7 @@ public class AlbumService
                 response_getSoundTrackInfo.setCount(rs.getInt("vote"));
                 response_getSoundTrackInfo.setIsVote(false);
                 response_getSoundTrackInfo.setGenre(rs.getString("name"));
-                response_getSoundTrackInfo.setView(0);
+                response_getSoundTrackInfo.setView(rs.getInt("view"));
             }
 
             sql = "SELECT musicNum FROM MusicVote WHERE userNum = ? AND musicNum = ?";
@@ -473,6 +473,45 @@ public class AlbumService
         return response_getSoundTrackInfo;
 
 
+    }
+
+
+    //
+    //
+    //
+    @Synchronized
+    public boolean addMusicView(final int musicNum) {
+
+        boolean result = false;
+        try {
+            sql = "UPDATE music SET `view` = `view`+1 WHERE `musicNum` = ? AND `state` = 0";
+            //
+            // DB구간
+            //
+            Class.forName(classForName);
+            conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, musicNum);
+            rsInt = pstmt.executeUpdate();
+
+            if (rsInt >= 1){
+                result = true;
+                System.out.println(rsInt);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rsInt = 0;
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
     }
 
 
@@ -756,7 +795,7 @@ public class AlbumService
         ArrayList<AlbumMusic> musics = new ArrayList<>();
         int totalPage = 0;
         if (type.equals("latest")){
-            sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`"+
+            sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`, `view`"+
                     " FROM music WHERE `state` = 0 AND (title LIKE ? OR singer LIKE ?) ORDER BY `releasedate` DESC LIMIT ?,10";
         } else if (type.equals("popular")) {
             sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`"+
@@ -784,7 +823,7 @@ public class AlbumService
                 music.setTitle(rs.getString("origin_title"));
                 music.setArtist(rs.getString("origin_singer"));
                 music.setReleaseDate(rs.getString("releasedate"));
-                music.setView(0);
+                music.setView(rs.getInt("view"));
                 music.setCount(rs.getInt("vote"));
                 music.setImgSrc(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.MUSIC_IMAGE_URL + rs.getString("imgsrc"));
                 musics.add(music);
