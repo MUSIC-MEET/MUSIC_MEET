@@ -12,9 +12,9 @@ interface ConfirmModalProps {
     content: string;
     confirmButtonText: string;
     cancelButtonText: string;
-    onCancel: () => void;
-    onClose: () => void;
-    onConfirm: () => void;
+    onCancel?: () => void;
+    onClose?: () => void;
+    onConfirm?: () => void;
 }
 
 
@@ -33,7 +33,7 @@ interface ConfirmModalProps {
 function ConfirmModal(props: ConfirmModalProps) {
     const { title, content, confirmButtonText, cancelButtonText, onCancel, onClose, onConfirm } = props;
     return (
-        <Modal css={css`min-height: 20rem;`} onClose={onClose}>
+        <Modal css={css`min-height: 25rem;`} onClose={onClose}>
             <Wrap css={moreStyle}>
                 <Title>{title}</Title>
                 <Text>{content}</Text>
@@ -58,7 +58,7 @@ const moreStyle = css`
     & > .button-wrap {
         position: absolute;
         bottom: 30px;
-
+        margin-top: 1rem;
         & > input {
             font-size: 1.3rem;
             width:  8rem;

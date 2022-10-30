@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import MusicType from "components/common/MusicType";
+import MusicType from "Types/MusicType";
 import { css } from "@emotion/react";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -27,17 +27,14 @@ function CardMusicItem(props: CardMusicItemProps & MusicType) {
             </figure>
             <div className="info">
                 <h3 className="title">{props.title}</h3>
-                <span className="user">{props?.user}</span>
+                <span className="user">{props?.user ?? props.artist}</span>
                 <div className="sub" style={{ color: color }}>
-                    <span className="date">{props.createdAt}</span>
+                    <span className="date">{props.createdAt ?? props.releaseDate}</span>
                     <div className="counts">
-                        <span className="vote"><FavoriteIcon />{props.vote}</span>
+                        <span className="vote"><FavoriteIcon />{props.count}</span>
                         <span className="view"><VisibilityIcon />{props.view}</span>
-
                     </div>
-
                 </div>
-
             </div>
         </li>
     );

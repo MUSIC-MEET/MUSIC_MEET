@@ -1,5 +1,4 @@
 import Title from "components/common/Title";
-import Content from "components/UI/Content";
 import React, { useCallback, useState } from "react";
 import { useMutation } from "react-query";
 import DeleteInputForm from "./DeleteInputForm";
@@ -44,7 +43,7 @@ function Delete() {
         setPassword(e.target.value);
     }, [setPassword]);
     return (
-        <Content>
+        <React.Fragment>
             {
                 isSuccess &&
                 <AlertModal
@@ -73,7 +72,7 @@ function Delete() {
                 value={password}
                 isFail={isFail}
             />
-        </Content>
+        </React.Fragment>
     );
 }
 

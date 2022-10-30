@@ -1,9 +1,10 @@
 
+import MusicType from "Types/MusicType";
 import customAxios from "../../customAxios";
-import CoverType from "pages/Cover/CoverType";
+
 
 const fetchCover =
-    (id: string): Promise<CoverType> => {
+    (id: string): Promise<MusicType> => {
         const token = localStorage.getItem("token");
         const axios = customAxios();
         return axios({

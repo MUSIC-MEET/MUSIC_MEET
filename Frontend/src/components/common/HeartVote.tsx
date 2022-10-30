@@ -22,7 +22,7 @@ function HeartVote(props: HeartVoteProps) {
     return (
         <div css={style} onClick={onClick}>
             {isVote ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            <p>{count}</p>
+            <p className="vote">{count}</p>
         </div>
     );
 }

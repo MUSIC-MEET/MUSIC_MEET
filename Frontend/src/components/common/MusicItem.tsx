@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
+import MusicType from "Types/MusicType";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import MusicType from "pages/Main/MusicType";
 
 interface MusicItemProps {
     className?: string;
@@ -15,11 +15,11 @@ function MusicItem(props: MusicType & MusicItemProps) {
             <figure>
                 <img src={props.imgSrc} alt="" />
                 <div className="singer-box">
-                    <p className="singer">{props.artist}</p>
+                    <p className="singer">{props.artist ?? props.user}</p>
                 </div>
                 <div className="detail-box">
                     <p className="title">{props.title}</p>
-                    <p className="singer">{props.artist}</p>
+                    <p className="singer">{props.artist ?? props.user}</p>
                 </div>
             </figure>
         </li >

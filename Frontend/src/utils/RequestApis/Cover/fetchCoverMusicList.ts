@@ -1,6 +1,6 @@
 
 import customAxios from "../../customAxios";
-import MusicType from "components/common/MusicType";
+import MusicType from "Types/MusicType";
 
 const fetchCoverMusicList =
     (page: number): Promise<{ data: MusicType[]; currentPage: number; endPage: number}> => {
