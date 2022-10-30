@@ -12,9 +12,9 @@ interface ConfirmModalProps {
     content: string;
     confirmButtonText: string;
     cancelButtonText: string;
-    onCancel: () => void;
-    onClose: () => void;
-    onConfirm: () => void;
+    onCancel?: () => void;
+    onClose?: () => void;
+    onConfirm?: () => void;
 }
 
 

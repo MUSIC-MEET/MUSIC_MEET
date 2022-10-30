@@ -13,23 +13,19 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import MusicType from "Types/MusicType";
 
 interface TextInfoProps {
-    voteHandler: () => void;
-    deleteHandler: () => void;
+    voteHandler?: () => void;
+    deleteHandler?: () => void;
 }
 
 /**
  * Music 텍스트 정보들을 보여주는 컴포넌트
- * @param props.title - title
- * @param props.user - user
- * @param props.createdAt - createdAt
- * @param props.isVote - isVote
- * @param props.voteCount - voteCount
- * @param props.vote - vote
- * @param props.delete - delete
+ * @param props.MusicType
+ * @param props.voteHandler - 좋아요 버튼 클릭시 실행되는 함수
+ * @param props.deleteHandler - 삭제 버튼 클릭시 실행되는 함수
  * @returns 
  */
 
-function TextInfo(props: TextInfoProps & MusicType) {
+function MusicTextInfo(props: TextInfoProps & MusicType) {
     const { t } = useTranslation<"coverViewPage">("coverViewPage");
     const { t: t2 } = useTranslation<"musicPage">("musicPage");
     const [deleteModalShown, setDeleteModalShown] = useState<boolean>(false);
@@ -39,7 +35,7 @@ function TextInfo(props: TextInfoProps & MusicType) {
         <div css={style}>
             <h2 className="title">{props.title}</h2>
             <div className="row">
-                <span className="user">{props.user}</span>
+                <span className="user">{props.user ?? props.artist}</span>
                 {
                     props.user === nickname &&
                     <React.Fragment>
@@ -58,7 +54,12 @@ function TextInfo(props: TextInfoProps & MusicType) {
                 <span className="genre">{t2("musicInfo.genre")} : {props?.genre} </span>
             }
 
-            <span className="createdat">{t("createdAt")}: {props.createdAt}</span>
+            {
+                props.releaseDate ?
+                    <span className="releaseDate">{t2("musicInfo.releaseDate")} : {props?.releaseDate} </span>
+                    :
+                    <span className="createdat">{t("createdAt")}: {props.createdAt}</span>
+            }
             <div className="counts">
                 <HeartVote
                     count={props.count}
@@ -73,7 +74,7 @@ function TextInfo(props: TextInfoProps & MusicType) {
                     content={t("deleteModal.content")}
                     confirmButtonText={t("deleteModal.confirm")}
                     cancelButtonText={t("deleteModal.cancel")}
-                    onConfirm={props.deleteHandler}
+                    onConfirm={props?.deleteHandler}
                     onCancel={() => setDeleteModalShown(() => false)}
                     onClose={() => setDeleteModalShown(() => false)}
                 />
@@ -136,4 +137,4 @@ const style = css`
     }
 `;
 
-export default TextInfo;
+export default MusicTextInfo;

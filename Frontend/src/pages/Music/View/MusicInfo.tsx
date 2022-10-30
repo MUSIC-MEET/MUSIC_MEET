@@ -7,8 +7,7 @@ import { useTranslation } from "react-i18next";
 import ThemeContext from "store/ThemeContext";
 import Button from "components/common/Button";
 import vote from "utils/RequestApis/Music/vote";
-import HeartVote from "components/common/HeartVote";
-import Player from "pages/Cover/View/Player";
+import MusicDefaultInfo from "components/common/MusicDefaultInfo";
 
 /**
  * 음악 페이지 음악 정보 컴포넌트
@@ -52,40 +51,12 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
         mutate({ musicNum });
     }, [musicNum, mutate]);
 
-    const autoResizeTextarea = () => {
-        const textarea = document.querySelector(".autoTextarea");
-
-        if (textarea) {
-            const height = textarea.scrollHeight; // 높이
-            textarea.classList.add(`style: ${height + 8}px`);
-        }
-    };
-
     return (
         <React.Fragment>
-            <SectionWrapper style={[style, css`.sub{ color: ${color}}`]}>
-                <figure>
-                    <img src={data?.imgSrc} />
-                </figure>
-                <div className="text">
-                    <h2 className="title">{data?.title}</h2>
-                    <span className="singer">{data?.user}</span>
-                    <span className="release sub">
-                        {`${t("musicInfo.releaseDate")}: ${data?.createdAt}`}
-                    </span>
-                    <span className="genre sub">
-                        {`${t("musicInfo.genre")}: ${data?.genre}`}
-                    </span>
-                    <HeartVote
-                        count={data?.count}
-                        isVote={data?.isVote}
-                        onClick={voteOnClickHandler}
-                    />
-                </div>
-                <Player
-                    mp3Src={data?.mp3Src}
-                />
-            </SectionWrapper >
+            <MusicDefaultInfo
+                {...data}
+                voteHandler={voteOnClickHandler}
+            />
             <SectionWrapper style={lyricesStyle}>
                 <h2 className="lyrics-title">{t("musicInfo.lyrics")}</h2>
                 {lyricsShwon ?
@@ -106,70 +77,6 @@ function MusicInfo({ musicNum }: { musicNum: string }) {
     );
 }
 
-const style = css`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    line-height: 1.4;
-    overflow: hidden;
-    figure {
-        width: 10rem;
-        height: 10rem;
-    }
-
-    figure > img {
-        width: 100%;
-        width: 100%;
-        object-fit: fill;
-    }
-
-    & > textarea {
-        border: none;
-    }
-
-    .text {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        margin-left: 1rem;
-        overflow: hidden;
-        h2, span {
-            overflow: hidden;
-            width: 100%;
-            text-overflow: ellipsis;
-        }
-        .title {
-            font-weight: 800;
-            font-size:2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .singer {
-            font-weight: 600;
-            font-size: 1.3rem;
-        }
-
-        .sub {
-            font-size: 0.8rem;
-        }
-    }
-
-    .player {
-        margin-left: auto;
-        margin-right: 3rem;
-        justify-content: flex-end;
-        margin-top: 1rem;
-        transform: scale(2);
-
-        svg {
-            margin-left: 0.4rem;
-            cursor: pointer;
-        }
-    }
-`;
 
 const lyricesStyle = css`
     overflow-y: scroll;

@@ -2,14 +2,12 @@ import React, { useCallback } from "react";
 import SectionWrapper from "components/common/SectionWrapper";
 import { useNavigate, useParams } from "react-router-dom";
 import { css } from "@emotion/react";
-import Img from "./Img";
-import TextInfo from "./TextInfo";
-import Player from "./Player";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import fetchCover from "utils/RequestApis/Cover/fetchCover";
 import Description from "./Description";
 import voteCover from "utils/RequestApis/Cover/voteCover";
 import deleteCover from "utils/RequestApis/Cover/deleteCover";
+import MusicDefaultInfo from "components/common/MusicDefaultInfo";
 
 function CoverInfo() {
     const navigator = useNavigate();
@@ -43,17 +41,11 @@ function CoverInfo() {
     }, [deleteMutate, id]);
     return (
         <React.Fragment>
-            <SectionWrapper css={infoStyle}>
-                <Img imgSrc={data?.imgSrc} />
-                <TextInfo
-                    {...data}
-                    voteHandler={voteHandler}
-                    deleteHandler={deleteHandler}
-                />
-                <Player
-                    mp3Src={data?.mp3Src}
-                />
-            </SectionWrapper>
+            <MusicDefaultInfo
+                {...data}
+                voteHandler={voteHandler}
+                deleteHandler={deleteHandler}
+            />
             <SectionWrapper>
                 <Description
                     description={data?.description}
