@@ -81,3 +81,5 @@ data class Music(
     @SerializedName("singer")
     var singer:String? = null
 )
+
+val Baseurl = ("http://10.107.2.45:8080")

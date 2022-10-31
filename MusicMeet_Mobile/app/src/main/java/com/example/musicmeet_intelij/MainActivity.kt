@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.musicmeet_intelij.databinding.ActivityMainBinding
 
+
 lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         }
         //회원가입 화면 이동
         binding.membersbtn.setOnClickListener {
-            val Member_Intent = Intent(this, Members_Activity::class.java)
+            val Member_Intent = Intent(this, members_Activity::class.java)
             startActivity(Member_Intent)
         }
 

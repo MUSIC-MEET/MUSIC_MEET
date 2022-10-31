@@ -21,4 +21,5 @@
     <color name="login_page_color">#ff5500</color>
     <color name="main_page_color">#ff5500</color>
     <color name="member_page_color">#ff5500</color>
+    <color name="red">#FF1100</color>
 </resources>

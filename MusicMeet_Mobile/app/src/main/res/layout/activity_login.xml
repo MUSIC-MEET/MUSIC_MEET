@@ -43,7 +43,7 @@
 
             android:layout_width="370dp"
             android:layout_height="wrap_content"
-            android:hint="아이디"
+            android:hint="아이디(이메일)"
             android:textColor="@color/login_page_color"
             android:textColorHint="@color/edit_text_color"
             android:background="@drawable/edit_under_line"

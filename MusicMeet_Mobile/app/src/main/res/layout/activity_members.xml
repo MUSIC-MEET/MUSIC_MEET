@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/Black"
-        tools:context=".Members_Activity">
+        tools:context=".members_Activity">
 
     <ImageView
             android:id="@+id/member_page_closebox"
@@ -50,14 +50,15 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:layout_constraintHorizontal_bias="0.051"
             app:layout_constraintVertical_bias="0.13"
-            app:layout_constraintBottom_toTopOf="@+id/member_ok"/>
+            app:layout_constraintBottom_toTopOf="@+id/member_ok"
+            android:id="@+id/textView5"/>
 
     <EditText
             android:layout_width="370sp"
             android:layout_height="wrap_content"
             android:hint="아이디을 입력해주세요"
             android:inputType="text"
-            android:textColor="@color/edit_text_color"
+            android:textColor="@color/text_color"
             android:textColorHint="@color/edit_text_color"
             android:background="@drawable/edit_under_line"
             android:textSize="16sp"
@@ -90,7 +91,7 @@
             android:layout_width="370sp"
             android:layout_height="wrap_content"
             android:hint="이메일 입력"
-            android:textColor="@color/edit_text_color"
+            android:textColor="@color/text_color"
             android:textColorHint="@color/edit_text_color"
             android:background="@drawable/edit_under_line"
             android:textSize="16sp"
@@ -127,7 +128,7 @@
             android:layout_height="wrap_content"
             android:hint="비밀번호 (8~20)"
             android:inputType="text"
-            android:textColor="@color/edit_text_color"
+            android:textColor="@color/text_color"
             android:textColorHint="@color/edit_text_color"
             android:background="@drawable/edit_under_line"
             android:textSize="16sp"
@@ -144,7 +145,7 @@
             android:layout_height="wrap_content"
             android:hint="비밀번호 재입력"
             android:inputType="text"
-            android:textColor="@color/edit_text_color"
+            android:textColor="@color/text_color"
             android:textColorHint="@color/edit_text_color"
             android:background="@drawable/edit_under_line"
             android:textSize="16sp"
@@ -189,7 +190,7 @@
             android:layout_width="370sp"
             android:layout_height="wrap_content"
             android:hint="닉네임을 입력해주세요"
-            android:textColor="@color/edit_text_color"
+            android:textColor="@color/text_color"
             android:textColorHint="@color/edit_text_color"
             android:background="@drawable/edit_under_line"
             android:textSize="16sp"
@@ -203,6 +204,24 @@
             app:layout_constraintVertical_bias="0.857"/>
 
     <android.widget.Button
+            android:id="@+id/member_Button_No"
+            android:layout_width="350sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="회원가입"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/edit_text_color"
+            android:background="@drawable/radiusno"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintVertical_bias="0.84"/>
+
+    <android.widget.Button
             android:id="@+id/member_ok"
             android:layout_width="350sp"
             android:layout_height="wrap_content"
@@ -210,14 +229,137 @@
             android:text="회원가입"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:background="@drawable/custom_ripple_effect"
+            android:background="@drawable/radius"
             android:textColor="@color/text_color"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintVertical_bias="0.84"/>
+
+    <TextView
+            android:id="@+id/sdsd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ssdsd"
+            android:textSize="50dp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"/>
+
+    <ImageView
+            android:layout_width="30dp"
+            android:layout_height="22dp"
+            android:id="@+id/idCheckOk"
+            android:visibility="invisible"
+            android:src="@drawable/ic_members_check_icon"
+            app:layout_constraintStart_toStartOf="@+id/idCheckNo"
+            app:layout_constraintEnd_toEndOf="@+id/members_id"
+            app:layout_constraintBottom_toBottomOf="@+id/members_id"
+            app:layout_constraintTop_toTopOf="@+id/members_id"
+            app:layout_constraintHorizontal_bias="0.944"
+            app:layout_constraintVertical_bias="0.0"/>
+
+    <ImageView
+            android:layout_width="28dp"
+            android:layout_height="22dp"
+            android:id="@+id/idCheckNo"
+            android:src="@drawable/ic_member_close"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="@+id/members_id"
+            app:layout_constraintBottom_toBottomOf="@+id/members_id"
+            app:layout_constraintTop_toTopOf="@+id/members_id"
+            app:layout_constraintHorizontal_bias="0.944"
+            app:layout_constraintVertical_bias="0.0"/>
+
+    <ImageView
+            android:layout_width="30dp"
+            android:layout_height="22dp"
+            android:id="@+id/emailCheckOk"
+            android:visibility="gone"
+            android:src="@drawable/ic_members_check_icon"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="@+id/members_email"
+            app:layout_constraintBottom_toBottomOf="@+id/members_email"
+            app:layout_constraintTop_toTopOf="@+id/members_email"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="1.0"/>
+
+    <ImageView
+            android:layout_width="28dp"
+            android:layout_height="22dp"
+            android:id="@+id/emailCheckNo"
+            android:src="@drawable/ic_member_close"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="@+id/members_email"
+            app:layout_constraintBottom_toBottomOf="@+id/members_email"
+            app:layout_constraintTop_toTopOf="@+id/members_email"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="1.0"/>
+
+    <ImageView
+            android:layout_width="30dp"
+            android:layout_height="22dp"
+            android:id="@+id/pwwCheckOk"
+            android:visibility="gone"
+            android:src="@drawable/ic_members_check_icon"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="@+id/members_pw_ok"
+            app:layout_constraintBottom_toBottomOf="@+id/pwwCheckNo"
+            app:layout_constraintHorizontal_bias="0.944"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toTopOf="@+id/members_pw_ok"/>
+
+    <ImageView
+            android:layout_width="28dp"
+            android:layout_height="23dp"
+            android:id="@+id/pwwCheckNo"
+            android:src="@drawable/ic_member_close"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="@+id/members_pw_ok"
+            app:layout_constraintBottom_toBottomOf="@+id/members_pw_ok"
+            app:layout_constraintHorizontal_bias="0.944"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toTopOf="@+id/members_pw_ok"/>
+
+    <ImageView
+            android:layout_width="30dp"
+            android:layout_height="22dp"
+            android:id="@+id/nicknameCheckOk"
+            android:visibility="gone"
+            android:src="@drawable/ic_members_check_icon"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="@+id/members_nick"
+            app:layout_constraintBottom_toBottomOf="@+id/members_nick"
+            app:layout_constraintTop_toTopOf="@+id/members_nick"
+            app:layout_constraintHorizontal_bias="0.944"
+            app:layout_constraintVertical_bias="0.0"/>
+
+    <ImageView
+            android:layout_width="28dp"
+            android:layout_height="22dp"
+            android:id="@+id/nicknameCheckNo"
+            android:src="@drawable/ic_member_close"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="@+id/members_nick"
+            app:layout_constraintBottom_toBottomOf="@+id/members_nick"
+            app:layout_constraintTop_toTopOf="@+id/members_nick"
+            app:layout_constraintHorizontal_bias="0.944"
+            app:layout_constraintVertical_bias="0.0"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline4"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.88"/>
 
     <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
