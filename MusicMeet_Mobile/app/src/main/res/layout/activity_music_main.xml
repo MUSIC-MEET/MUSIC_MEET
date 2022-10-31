@@ -8,12 +8,139 @@
         android:background="@color/Black"
         tools:context=".Music_Main_Activity">
 
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/mainScrollView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/mainMusicLinear"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="실시간 인기 음원"
+                        android:textSize="30dp"
+                        android:textColor="@color/white"
+                        android:id="@+id/Popular_music_Album"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="전체보기"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginLeft="140dp"/>
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="horizontal"
+                        android:id="@+id/Popular_music_recyclerVIew"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/activity_main_popular_music"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="실시간 최신 음원"
+                        android:textSize="30dp"
+                        android:textColor="@color/white"
+                        android:id="@+id/Latest_music_Album"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="전체보기"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginLeft="140dp"/>
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <!--  <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mainMusicLinear"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/popular_All_Music"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                android:text="전체보기"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="업로드 인기 음원"/>
+    </LinearLayout>-->
+
+    <!--
+        <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Popular_Music_FrameLayout">
+
+
+        </FrameLayout>
+    -->
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:id="@+id/Musicchart"
-            android:src="@drawable/music_chart"
+            android:id="@+id/serchMusic"
+            android:src="@drawable/magnifier"
+            android:backgroundTint="@color/icon_click_color"
             app:fabSize="mini"
             app:layout_constraintTop_toTopOf="@id/fabMain"
             app:layout_constraintBottom_toBottomOf="@id/fabMain"
@@ -23,9 +150,33 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/myInfo"
+            android:src="@drawable/main_page_info"
+            android:backgroundTint="@color/icon_click_color"
+            app:fabSize="mini"
+            app:layout_constraintTop_toTopOf="@id/fabMain"
+            app:layout_constraintBottom_toBottomOf="@id/fabMain"
+            app:layout_constraintStart_toStartOf="@id/fabMain"
+            app:layout_constraintEnd_toEndOf="@id/fabMain"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Musicchart"
+            android:src="@drawable/music_chart"
+            android:backgroundTint="@color/icon_click_color"
+            app:fabSize="mini"
+            app:layout_constraintTop_toTopOf="@id/fabMain"
+            app:layout_constraintBottom_toBottomOf="@id/fabMain"
+            app:layout_constraintStart_toStartOf="@id/fabMain"
+            app:layout_constraintEnd_toEndOf="@id/fabMain"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/bulleanboard"
             android:src="@drawable/main_page_chart"
+            android:backgroundTint="@color/icon_click_color"
             app:fabSize="mini"
             app:layout_constraintTop_toTopOf="@id/fabMain"
             app:layout_constraintBottom_toBottomOf="@id/fabMain"
@@ -45,78 +196,79 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager"
-            android:layout_width="416dp"
-            android:layout_height="666dp"
-            app:layout_constraintWidth_percent="1"
-            app:layout_constraintHeight_percent=".9"
+
+    <!-- <androidx.viewpager2.widget.ViewPager2
+             android:id="@+id/viewpager"
+             android:layout_width="416dp"
+             android:layout_height="666dp"
+             app:layout_constraintWidth_percent="1"
+             app:layout_constraintHeight_percent=".9"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintBottom_toTopOf="@+id/appbarlayout"
+             app:layout_constraintHorizontal_bias="0.0"
+             app:layout_constraintVertical_bias="0.23"/>-->
+
+
+    <!-- <com.google.android.material.appbar.AppBarLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/appbarlayout"
+             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent">
+
+         <com.google.android.material.tabs.TabLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="60dp"
+                 android:id="@+id/tabs"
+                 app:tabMode="fixed"
+                 android:background="@color/silver_color"
+                 app:tabTextColor="@color/Black"
+                 app:tabIndicatorColor="@color/icon_click_color"
+                 app:tabRippleColor="@color/icon_click_color"/>
+
+     </com.google.android.material.appbar.AppBarLayout>-->
+
+    <!--<com.google.android.material.tabs.TabLayout
+            android:id="@+id/TabLayout"
+            app:tabBackground="@color/black"
+            app:tabIndicatorColor="@color/icon_click_color"
+            app:tabRippleColor="@color/icon_click_color"
+            app:tabSelectedTextColor="@color/"
+            app:tabTextColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/appbarlayout"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.23"/>
+            app:layout_constraintTop_toBottomOf="@id/viewpager"
+            app:layout_constraintBottom_toBottomOf="parent">
 
+        <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tabtextColor="@color/"
+                android:icon="@drawable/main_page_home"/>
 
-    <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/appbarlayout"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+        <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-        <com.google.android.material.tabs.TabLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:id="@+id/tabs"
-                app:tabMode="fixed"
-                android:background="@color/silver_color"
-                app:tabTextColor="@color/Black"
-                app:tabIndicatorColor="@color/icon_click_color"
-                app:tabRippleColor="@color/icon_click_color"/>
+                android:icon="@drawable/main_page_chart"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/main_page_wishlist"/>
 
-        <!--<com.google.android.material.tabs.TabLayout
-                android:id="@+id/TabLayout"
-                app:tabBackground="@color/black"
-                app:tabIndicatorColor="@color/icon_click_color"
-                app:tabRippleColor="@color/icon_click_color"
-                app:tabSelectedTextColor="@color/"
-                app:tabTextColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="0sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewpager"
-                app:layout_constraintBottom_toBottomOf="parent">
+        <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/main_page_info"/>
 
-            <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:tabtextColor="@color/"
-                    android:icon="@drawable/main_page_home"/>
+    </com.google.android.material.tabs.TabLayout>
 
-            <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:icon="@drawable/main_page_chart"/>
-
-            <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:icon="@drawable/main_page_wishlist"/>
-
-            <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:icon="@drawable/main_page_info"/>
-
-        </com.google.android.material.tabs.TabLayout>
-
-  -->
+-->
 </androidx.constraintlayout.widget.ConstraintLayout>

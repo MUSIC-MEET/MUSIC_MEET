@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.musicmeet_intelij.databinding.ActivityFindMusicBinding
 import retrofit2.Call
@@ -34,7 +35,7 @@ class FindMusicActivity : AppCompatActivity() {
         var musicAdapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, musicArray)
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.170.13:8080")
+            .baseUrl(Baseurl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -51,13 +52,15 @@ class FindMusicActivity : AppCompatActivity() {
                         Log.d("자동검색", "성공?" + body.toString())
                         str.setAdapter(musicAdapter)
                         bindingFindActivity.s.setText("zz")
+                        if (body.isNullOrEmpty())
+                        {
+                            Toast.makeText(this@FindMusicActivity, "검색결과 ㄴ", Toast.LENGTH_SHORT).show()
+                        }
                         println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                         //body.toString() response 잘 받아왔는지 확인.
 
                     }
-                }
-                else
-                {
+                } else if(body == null){
                     Log.d("자동검색", "실패")
                 }
 

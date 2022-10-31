@@ -47,7 +47,7 @@ class Fragment_melonchart : Fragment() {
 
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.107.3.150:8080")
+            .baseUrl(Baseurl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
