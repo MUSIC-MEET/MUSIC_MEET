@@ -23,7 +23,7 @@ public class UploadMusic implements Music{
     private Integer count; // vote
     private Integer isVote;
     private Integer state;
-    private String file;
+    private String fileName;
     private String originFile;
 
 }
