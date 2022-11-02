@@ -24,12 +24,9 @@ function PlayerController(props: PlayerControllerProps) {
     const audio = useMemo(() => new Audio(props?.playingMusic), [props.playingMusic]);
     const [progress, setProgress] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [volume, setVolume] = useState<number>(0.3);
     useEffect(() => {
-        audio.volume = 1;
-    }, [audio]);
-
-    useEffect(() => {
-        audio.volume = 0.3;
+        audio.volume = volume;
         audio.play();
         audio?.addEventListener("ended", () => {
             props.next();
@@ -47,7 +44,7 @@ function PlayerController(props: PlayerControllerProps) {
             audio?.pause();
             setProgress(0);
         };
-    }, [PERCENT, audio, props]);
+    }, [PERCENT, audio, props, volume]);
 
 
     const changeProgressHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +75,7 @@ function PlayerController(props: PlayerControllerProps) {
 
     const onChangeVolume = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         audio.volume = Number(e.target.value);
+        setVolume(() => Number(e.target.value));
     }, [audio]);
 
     const isMute = useMemo(() => audio.volume === 0, [audio.volume]);
