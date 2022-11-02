@@ -132,13 +132,13 @@ public class UploadController {
 
         UploadMusic upload = uploadService.getFileName(userNum, uploadNum);
 
-        if (upload.getFile().equals(fileName)){
+        if (upload.getFileName().equals(fileName)){
             uploadService.modifyUpload(userNum, uploadNum, title, description, mp3File,null);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         else {
             
-            if (uploadService.deleteMp3File(upload.getFile()) &&
+            if (uploadService.deleteMp3File(upload.getFileName()) &&
                     uploadService.modifyUpload(userNum, uploadNum, title, description, mp3File, fileName)){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }

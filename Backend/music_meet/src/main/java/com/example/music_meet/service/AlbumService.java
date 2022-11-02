@@ -232,8 +232,6 @@ public class AlbumService
     }
 
 
-
-
     //
     // 음악 댓글 작성.md
     //
@@ -471,14 +469,14 @@ public class AlbumService
             }
         }
         return response_getSoundTrackInfo;
-
-
     }
 
 
-    //
-    //
-    //
+    /**
+     * 음악 정보 호출시 해당 음악의 view를 증가시키는 함수
+     * @param musicNum view 증가시킬 음악의 고유 번호
+     * @return 정상처리시 true, 비정상 처리시 false
+     */
     @Synchronized
     public boolean addMusicView(final int musicNum) {
 
@@ -515,11 +513,9 @@ public class AlbumService
     }
 
 
-
     //
     // musicVote 테이블에서 중복 확인
     //
-
     public boolean isSelectVote(int userNum, int musicNum)
     {
         boolean result = false;
@@ -611,7 +607,6 @@ public class AlbumService
         }
         return result && result2;
     }
-
 
 
     //
@@ -782,6 +777,7 @@ public class AlbumService
         }
         return musics;
     }
+
 
     /**
      * 음악 목록 호출

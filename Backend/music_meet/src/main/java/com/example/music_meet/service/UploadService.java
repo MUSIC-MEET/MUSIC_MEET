@@ -680,7 +680,7 @@ public class UploadService {
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                upload.setFile(rs.getString("file"));
+                upload.setFileName(rs.getString("file"));
                 upload.setOriginFile(rs.getString("origin_file"));
             }
 
@@ -740,7 +740,7 @@ public class UploadService {
             if (rs.next()) {
                 upload.setTitle( rs.getString("origin_title"));
                 upload.setDescription(rs.getString("comment"));
-                upload.setFile( rs.getString("origin_file"));
+                upload.setFileName( rs.getString("origin_file"));
             }
             else {
                 upload.setTitle(null);
