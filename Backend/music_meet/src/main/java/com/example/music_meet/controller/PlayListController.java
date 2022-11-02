@@ -22,14 +22,13 @@ public class PlayListController {
     private PlayListService playListService;
 
     //
-    // 재생목록 호출하는 API
+    // 재생목록 호출.md
     //
     @RequestMapping(value = "/playlist", method = RequestMethod.GET)
-    public ResponseEntity<Object> getPlayList(){
+    public ResponseEntity<Object> getPlayList() {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        if (request.getAttribute("userNum") == null)
-        {
+        if (request.getAttribute("userNum") == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
@@ -41,26 +40,32 @@ public class PlayListController {
     }
 
     //
-    // 재생목록에 노래 추가하는 API
+    // 재생목록에 노래 추가.md
     //
     @RequestMapping(value = "/playlist", method = RequestMethod.POST)
-    public ResponseEntity<Object> addPlayListMusic(@RequestParam("id")final int ID){
+    public ResponseEntity<Object> addPlayListMusic(@RequestParam("id") final int ID) {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        if (request.getAttribute("userNum") == null)
-        {
+        if (request.getAttribute("userNum") == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
 
-        if (playListService.addPlayListMusic(userNum, ID)){
+        if (playListService.addPlayListMusic(userNum, ID)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
 
+    //
+    // 재생목록에서 노래 삭제.md
+    //
+    @RequestMapping(value = "/playlist", method = RequestMethod.POST)
+    public ResponseEntity<Object> addPlayListMusic(@RequestParam("id") final int ID) {
 
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
