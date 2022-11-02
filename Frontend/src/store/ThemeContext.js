@@ -11,7 +11,7 @@ const ThemeContext = React.createContext({
         sectionWrapper: { backgroundColor: "", borderColor: "" },
         fontStyle1: { color: "" },
         fontStyle2: { color : "" },
-        musicPlayer: { background: "" }
+        musicPlayer: { background: "", gray: "" }
     },
     setDarkTheme: () => {
         //

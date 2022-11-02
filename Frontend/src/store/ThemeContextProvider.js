@@ -39,6 +39,7 @@ const DarkThemeInit = {
     fontStyle2: { color: "#b2b0b0" },
     musicPlayer: {
         background: "rgb(33,33,33)",
+        gray: "rgb(148, 148, 148)",
     }
 };
 
@@ -79,6 +80,7 @@ const LightThemeInit = {
     fontStyle2: { color: "#b2b0b0" },
     musicPlayer: {
         background: "rgb(82,82,82)",
+        gray: "rgb(88,88,88)",
     }
 };
 

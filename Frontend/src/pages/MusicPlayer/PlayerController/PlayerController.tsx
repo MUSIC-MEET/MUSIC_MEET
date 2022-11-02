@@ -1,72 +1,126 @@
-import { css } from "@emotion/react";
+
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import MusicProgressbar from "./MusicProgressbar";
 import RightController from "./RightController";
 import PlayMusicInfo from "./PlayMusicInfo";
 import ThemeContext from "store/ThemeContext";
 
+import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import PauseIcon from "@mui/icons-material/Pause";
+import styled from "@emotion/styled";
+
 interface PlayerControllerProps {
-    playingMusic: string;
+    audio?: HTMLAudioElement;
+    playingMusic?: string;
     prev: () => void;
     next: () => void;
 }
 
 function PlayerController(props: PlayerControllerProps) {
+    const PERCENT = useMemo(() => 1000, []);
     const ctx = useContext(ThemeContext);
-    const audio = useMemo(() => new Audio(props.playingMusic), [props.playingMusic]);
+    const audio = useMemo(() => new Audio(props?.playingMusic), [props.playingMusic]);
     const [progress, setProgress] = useState<number>(0);
+    const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    useEffect(() => {
+        audio.volume = 1;
+    }, [audio]);
 
     useEffect(() => {
         audio.play();
-        audio.addEventListener("ended", () => {
+
+        audio?.addEventListener("ended", () => {
             props.next();
         });
-        audio.volume = 0.1;
-        const timer = setInterval(() => {
-            setProgress(() => Math.floor(audio.currentTime) / Math.floor(audio.duration) * 1000);
-        }, 1000);
+
+        audio.addEventListener("timeupdate", (e: any) => {
+            console.log("aa");
+            const audio = e.target as HTMLAudioElement;
+            const percent = audio.currentTime / audio.duration * PERCENT;
+            setProgress(() => percent);
+        });
+
+        // audio.volume = 0.1;
         return () => {
             audio?.pause();
-            clearInterval(timer);
             setProgress(0);
         };
-    }, [audio, props, props.next, props.playingMusic]);
+    }, [PERCENT, audio, props]);
 
 
     const changeProgressHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value);
-        audio.currentTime = value * audio.duration / 1000;
+        audio.currentTime = value * audio.duration / PERCENT;
         setProgress(() => value);
-        console.log(value * audio.duration / 1000);
+    }, [PERCENT, audio]);
+
+    const onPlaying = useCallback(() => {
+        audio?.play();
+        setIsPlaying(() => true);
     }, [audio]);
 
+    const onPause = useCallback(() => {
+        audio?.pause();
+        setIsPlaying(() => false);
+    }, [audio]);
+
+    const onPrev = useCallback(() => {
+        props.prev();
+        setIsPlaying(() => true);
+    }, [props]);
+
+    const onNext = useCallback(() => {
+        props.next();
+        setIsPlaying(() => true);
+    }, [props]);
+
+    const transTime = useCallback((mlisecond: number) => {
+        const minute = Math.floor(mlisecond / 60);
+        const second = Math.floor(mlisecond % 60);
+        return `${minute < 10 ? "0" + minute : minute}:${second < 10 ? "0" + second : second}`;
+    }, []);
+
+    const getCurrentMusicTime = useCallback(() => {
+        // eslint-disable-next-line max-len
+        return `${transTime(audio.currentTime)} : ${audio.duration ? transTime(audio.duration) : transTime(audio.currentTime)}`;
+    }, [audio.currentTime, audio.duration, transTime]);
     return (
-        <section css={[style, css`background: ${ctx.themeStyle.musicPlayer.background};`]}>
+        <Section
+            background={ctx.themeStyle.musicPlayer.background}
+            gray={ctx.themeStyle.musicPlayer.gray}
+        >
             <MusicProgressbar
                 value={progress}
-                oncChange={changeProgressHandler}
+                percent={PERCENT}
+                onChange={changeProgressHandler}
             />
             <div className="button-controller">
-                <div>
-                    <button className="prev" onClick={() => props.prev()}>이전</button>
-                    <button className="prev" onClick={() => audio.play()}>이전</button>
-                    <button className="play" onClick={() => props.next()}>다음</button>
+                <div className="controls">
+                    <button className="prev" onClick={onPrev}><SkipPreviousIcon /></button>
+                    {isPlaying ?
+                        <button className="pause" onClick={onPause}><PauseIcon /></button> :
+                        <button className="play" onClick={onPlaying}><PlayArrowIcon /></button>
+                    }
+                    <button className="next" onClick={onNext}><SkipNextIcon /></button>
+                    <span className="gray elapsed-time">
+                        {`${getCurrentMusicTime()}`}
+                    </span>
                 </div>
-                <div className="item">1</div>
                 <PlayMusicInfo />
                 <RightController />
             </div>
-
-        </section >
+        </Section >
     );
 }
 
-const style = css`
+const Section = styled.section<{ background: string; gray: string; }>`
     width: 100%;
     height: 5rem;
     display: flex;
     flex-direction: column;
-
+    background-color: ${props => props.background};
     .button-controller {
         width: 100%;
         height: auto;
@@ -76,6 +130,26 @@ const style = css`
         align-items: center;
         padding: 0 1rem;
         margin-top: 0.5rem;
+
+        .controls {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            button {
+                all: unset;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .gray {
+        color: ${props => props.gray};
+    }
+
+    .elapsed-time {
+        font-size: 0.7rem;
+        margin-left: 0.5rem;
     }
 `;
 
