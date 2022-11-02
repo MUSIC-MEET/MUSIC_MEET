@@ -18,5 +18,5 @@ public class PlayList {
     private String mp3File; // localhost:8080/
     private String title; // origin_title
     private String singer; //
-    private String text; // 음원일시 lyrics 커버일시 comment를 보낼것
+    private String lyrics; // 음원일시 lyrics 커버일시 comment를 보낼것
 }

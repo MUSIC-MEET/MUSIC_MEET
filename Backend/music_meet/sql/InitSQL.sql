@@ -1593,7 +1593,7 @@ REFERENCES `User` (
 CREATE TABLE `PlayList` (
 	`playlistnum` INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
 	`usernum` INT(10) NOT NULL,
-	`MusicNum` INT(10) NOT NULL
+	`playlist` VARCHAR(3000) NOT NULL default ''
 );
 
 ALTER TABLE `PlayList` ADD CONSTRAINT `FK_User_TO_PlayList_1` FOREIGN KEY (
@@ -1603,9 +1603,3 @@ REFERENCES `User` (
 	`usernum`
 );
 
-ALTER TABLE `PlayList` ADD CONSTRAINT `FK_Music_TO_PlayList_1` FOREIGN KEY (
-	`MusicNum`
-)
-REFERENCES `Music` (
-	`MusicNum`
-);

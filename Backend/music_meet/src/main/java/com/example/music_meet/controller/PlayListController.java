@@ -40,7 +40,7 @@ public class PlayListController {
     }
 
     //
-    // 재생목록에 노래 추가.md
+    // 재생목록에 음악 추가.md
     //
     @RequestMapping(value = "/playlist", method = RequestMethod.POST)
     public ResponseEntity<Object> addPlayListMusic(@RequestParam("id") final int ID) {
@@ -49,7 +49,6 @@ public class PlayListController {
         if (request.getAttribute("userNum") == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-
         final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
 
         if (playListService.addPlayListMusic(userNum, ID)) {
@@ -61,11 +60,30 @@ public class PlayListController {
 
 
     //
-    // 재생목록에서 노래 삭제.md
+    // 재생목록에서 음악 삭제.md
     //
-    @RequestMapping(value = "/playlist", method = RequestMethod.POST)
-    public ResponseEntity<Object> addPlayListMusic(@RequestParam("id") final int ID) {
+    @RequestMapping(value = "/playlist", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deletePlayListMusic(@RequestParam("id") final int ID) {
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.getAttribute("userNum") == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
+
+        if (playListService.deletePlayListMusic(userNum, ID)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    //
+    // 재생목록에 추가할 음악 검색.md
+    //
+    @RequestMapping(value = "/playlist/search", method = RequestMethod.GET)
+    public ResponseEntity<Object> searchPlayListMusic(@RequestParam("keyword") final String KEYWORD) {
+        return new ResponseEntity<>(playListService.searchPlayListMusic(KEYWORD), HttpStatus.OK);
     }
 }
