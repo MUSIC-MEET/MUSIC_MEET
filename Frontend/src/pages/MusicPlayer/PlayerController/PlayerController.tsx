@@ -29,8 +29,8 @@ function PlayerController(props: PlayerControllerProps) {
     }, [audio]);
 
     useEffect(() => {
+        audio.volume = 0.3;
         audio.play();
-
         audio?.addEventListener("ended", () => {
             props.next();
         });
@@ -76,6 +76,11 @@ function PlayerController(props: PlayerControllerProps) {
         setIsPlaying(() => true);
     }, [props]);
 
+    const onChangeVolume = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        audio.volume = Number(e.target.value);
+    }, [audio]);
+
+    const isMute = useMemo(() => audio.volume === 0, [audio.volume]);
     const transTime = useCallback((mlisecond: number) => {
         const minute = Math.floor(mlisecond / 60);
         const second = Math.floor(mlisecond % 60);
@@ -109,7 +114,10 @@ function PlayerController(props: PlayerControllerProps) {
                     </span>
                 </div>
                 <PlayMusicInfo />
-                <RightController />
+                <RightController
+                    onChangeVolume={onChangeVolume}
+                    isMute={isMute}
+                />
             </div>
         </Section >
     );
