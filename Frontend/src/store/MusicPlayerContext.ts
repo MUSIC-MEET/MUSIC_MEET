@@ -5,7 +5,7 @@ const MusicPlayerContenxt = React.createContext({
     onChangeShownContentState: () => { 
         // 
     },
-
+    currentMusic: ""
 });
 
 export default MusicPlayerContenxt;

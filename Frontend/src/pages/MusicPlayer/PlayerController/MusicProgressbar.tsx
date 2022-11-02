@@ -1,26 +1,29 @@
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useState } from "react";
 import BaseProps from "components/common/BaseProps";
-
 interface MusicProgressbarProps {
     value: number;
-    oncChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    percent: number;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function MusicProgressbar(props: BaseProps & MusicProgressbarProps) {
+// eslint-disable-next-line react/display-name
+const MusicProgressbar = (props: BaseProps & MusicProgressbarProps) => {
     return (
         <input
             className={`${props.className}`}
             css={style}
             type="range"
-            max="100"
-            step="1"
+            step={1}
             defaultValue={0}
+            min={0}
+            max={props.percent}
             value={props.value}
-            onChange={props.oncChange}
+            onChange={props.onChange}
         />
+
     );
-}
+};
 
 const style = css`
     cursor: pointer;
@@ -37,4 +40,4 @@ const style = css`
         background: white;
     }
 `;
-export default MusicProgressbar;
+export default React.memo(MusicProgressbar);

@@ -10,7 +10,7 @@ import vote from "utils/RequestApis/Music/vote";
 import MusicDefaultInfo from "components/common/MusicDefaultInfo";
 
 /**
- * 음악 페이지 음악 정보 컴포넌트
+ * 음악 페이지 음악 정보 컴포넌트   
  * 음원 사진 아티스트 및 여러 정보 표시
  * @param {string} musicNum 음악 번호
  * @returns 
