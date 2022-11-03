@@ -26,32 +26,45 @@ public class PlayListService {
     private String sql;
 
 
+
+
     /**
      * 재생목록 호출
-     * @param USERNUM 호출한 유저
+     * @param userNum 호출한 유저
      * @return
      */
-    public Object getPlayList(final int USERNUM) {
+    public Object getPlayList(final int userNum) {
         ArrayList<PlayList> playLists = new ArrayList<>();
+        String[] list;
         try {
-            sql = "SELECT ";
+            sql = "SELECT playlist FROM playlist WHERE usernum = ?";
             Class.forName(beanConfig.classForName());
             conn = DriverManager.getConnection(beanConfig.mysqlurl(), beanConfig.mysqlid(), beanConfig.mysqlpassword());
             pstmt = conn.prepareStatement(sql);
-
-            while(rs.next()){
-
-
-
-
-
+            rs = pstmt.executeQuery();
+            rs.next();
+            list = rs.getString("playlist").split(",");
+            for (int i = 0; i <= list.length; i++) {
+                sql = "SELECT musicnum, imgsrc, filename, origin_title AS title, origin_singer AS altist, lyrics FROM music WHERE musicnum = ? AND state = 0";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, userNum);
+                rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    PlayList music = new PlayList();
+                    music.setId(rs.getInt("musicnum"));
+                    music.setImgSrc(beanConfig.MUSIC_IMAGE_URL + rs.getString("imgSrc"));
+                    music.setMp3File(beanConfig.MUSIC_MP3_URL + rs.getString("filename"));
+                    music.setTitle(rs.getString("title"));
+                    music.setArtist(rs.getString("altist"));
+                    music.setLyrics(rs.getString("lyrics"));
+                    playLists.add(music);
+                }
             }
-
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
+                rs.close();
                 pstmt.close();
                 conn.close();
             } catch (SQLException e) {
@@ -71,24 +84,42 @@ public class PlayListService {
      */
     public boolean addPlayListMusic(int userNum, int id) {
         boolean result = false;
+        String playlist = "";
         try {
-            sql = "INSERT INTO playlist(usernum, musicnum) VALUES(?,?)";
+            sql = "SELECT playlist FROM playlist WHERE usernum = ?";
             Class.forName(beanConfig.classForName());
             conn = DriverManager.getConnection(beanConfig.mysqlurl(), beanConfig.mysqlid(), beanConfig.mysqlpassword());
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setInt(1, userNum);
-            pstmt.setInt(2, id);
 
-            rsInt = pstmt.executeUpdate();
-            if (rsInt >= 1){
-                result = true;
+            rs = pstmt.executeQuery();
+            if (rs.next()){
+                playlist = rs.getString("playlist");
+                sql = "UPDATE playlist SET playlist = ? WHERE usernum = ?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, playlist + "," + id);
+                pstmt.setInt(2,userNum);
+                rsInt = pstmt.executeUpdate();
+                if (rsInt >= 1){
+                    result = true;
+                }
+            }else {
+                sql = "INSERT INTO playlist(usernum, playlist) VALUES (?,?)";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1,userNum);
+                pstmt.setString(2, String.valueOf(id));
+                rsInt = pstmt.executeUpdate();
+                if (rsInt >= 1){
+                    result = true;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 rsInt = 0;
+                rs.close();
                 pstmt.close();
                 conn.close();
             } catch (SQLException e) {
@@ -141,7 +172,7 @@ public class PlayListService {
     public ArrayList<PlayList> searchPlayListMusic(final String KEYWORD) {
         ArrayList<PlayList> playList = new ArrayList<>();
         try {
-            sql = "SELECT musicnum, imgsrc, filename, origin_title AS title, origin_singer AS singer, lyrics FROM music WHERE title LIKE ? AND state = 0";
+            sql = "SELECT musicnum, imgsrc, filename, origin_title AS title, origin_singer AS altist, lyrics FROM music WHERE title LIKE ? AND state = 0";
             Class.forName(beanConfig.classForName());
             conn = DriverManager.getConnection(beanConfig.mysqlurl(), beanConfig.mysqlid(), beanConfig.mysqlpassword());
             pstmt = conn.prepareStatement(sql);
@@ -153,9 +184,42 @@ public class PlayListService {
                 music.setImgSrc(rs.getString("imgsrc"));
                 music.setMp3File(beanConfig.MP3_FILE_API_URL + rs.getString("filename"));
                 music.setTitle(rs.getString("title"));
-                music.setSinger(rs.getString("singer"));
+                music.setArtist(rs.getString("altist"));
                 music.setLyrics(rs.getString("lyrics"));
                 playList.add(music);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return playList;
+    }
+
+
+    /**
+     * 재생목록 순서 변경
+     * @param id userNum
+     * @return 변경 성공시 true, 실패시 false
+     */
+    public boolean modifyPlayListMusic(final int id, final String playList) {
+        boolean result = false;
+        try {
+            sql = "UPDATE playlist SET `playlist` = ? WHERE usernum = ?";
+            Class.forName(beanConfig.classForName());
+            conn = DriverManager.getConnection(beanConfig.mysqlurl(), beanConfig.mysqlid(), beanConfig.mysqlpassword());
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, playList);
+            pstmt.setInt(2, id);
+            rsInt = pstmt.executeUpdate();
+            if (rsInt >= 1) {
+                result = true;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -168,6 +232,7 @@ public class PlayListService {
                 throw new RuntimeException(e);
             }
         }
-        return playList;
+        return result;
     }
+
 }
