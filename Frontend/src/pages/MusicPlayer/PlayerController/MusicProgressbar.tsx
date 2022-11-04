@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import React from "react";
 import BaseProps from "components/common/BaseProps";
 interface MusicProgressbarProps {
     value: number;
@@ -31,13 +31,21 @@ const style = css`
     margin: 0;
     -webkit-appearance: none;
     height: 0.45rem;
+    /* background: blue; */
     background: red;
-    &::-ms-fill-lower {
+    /* &::-ms-fill-lower, &::-moz-range-progress, &::-webkit-slider-runnable-track {
         background: red;
+        border: 3px solid black;
     }
-
+    input[type=range]::-ms-fill-upper {
+        background: #d3d3d3;
+    }
     &::-ms-fill-upper{
         background: white;
     }
+
+    &::-moz-range-progress {
+        background: red;
+    } */
 `;
 export default React.memo(MusicProgressbar);

@@ -38,9 +38,22 @@ const DarkThemeInit = {
     fontStyle1: { color: "WHITE" },
     fontStyle2: { color: "#b2b0b0" },
     musicPlayer: {
-        background: "rgb(33,33,33)",
-        gray: "rgb(148, 148, 148)",
+        player: {
+            background: "rgb(33,33,33)",
+            gray: "rgb(148, 148, 148)",
+        },
+        content: {
+            background: "rgb(0,0,0)",
+            menu: {
+                fontColor: "#b2b0b0",
+                borderColor: "rgb(88,88,88)",
+                selectedColor: "rgb(255, 255, 255)",
+                selectedBorderColor: "rgb(255, 210, 0)"
+            }
+        }
+        
     }
+
 };
 
 const LightThemeInit = {
@@ -79,8 +92,20 @@ const LightThemeInit = {
     fontStyle1: { color: "rgb(22,22,22)" },
     fontStyle2: { color: "#b2b0b0" },
     musicPlayer: {
-        background: "rgb(82,82,82)",
-        gray: "rgb(88,88,88)",
+        player: {
+            background: "rgb(82,82,82)",
+            gray: "rgb(88,88,88)",
+        },
+        content: {
+            background: "rgb(255,255,255)",
+            menu: {
+                fontColor: "#b2b0b0",
+                borderColor: "rgb(88,88,88)",
+                selectedColor: "rgb(0, 0, 0)",
+                selectedBorderColor: "rgb(93, 191, 185)"
+            }
+        }
+        
     }
 };
 

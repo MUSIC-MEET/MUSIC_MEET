@@ -102,6 +102,7 @@ const rootStyle = css`
     .menu {
         width: 12%;
         min-height: 100vh;
+        z-index: 1;
     }
 
     .menu-icon {
@@ -115,6 +116,7 @@ const rootStyle = css`
         align-items: center;
         width: 100vw;
         min-height: 100%;
+        z-index: 1;
     }
 
     .section-wrapper, .main-wrapper {
@@ -129,8 +131,8 @@ const rootStyle = css`
 
 const rootMusicPlayerStyle = css`
     .music-player {
-        position: fixed;
-        bottom: 0;
+        min-height: 100vh;
+        position: absolute;
     }
 
 `;

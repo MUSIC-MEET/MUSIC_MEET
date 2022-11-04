@@ -4,12 +4,13 @@ import MusicProgressbar from "./MusicProgressbar";
 import RightController from "./RightController";
 import PlayMusicInfo from "./PlayMusicInfo";
 import ThemeContext from "store/ThemeContext";
-
+import BaseProps from "components/common/BaseProps";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import styled from "@emotion/styled";
+
 
 interface PlayerControllerProps {
     audio?: HTMLAudioElement;
@@ -18,19 +19,16 @@ interface PlayerControllerProps {
     next: () => void;
 }
 
-function PlayerController(props: PlayerControllerProps) {
+function PlayerController(props: PlayerControllerProps & BaseProps) {
     const PERCENT = useMemo(() => 1000, []);
     const ctx = useContext(ThemeContext);
     const audio = useMemo(() => new Audio(props?.playingMusic), [props.playingMusic]);
     const [progress, setProgress] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [volume, setVolume] = useState<number>(0.3);
     useEffect(() => {
-        audio.volume = 1;
-    }, [audio]);
-
-    useEffect(() => {
+        audio.volume = volume;
         audio.play();
-
         audio?.addEventListener("ended", () => {
             props.next();
         });
@@ -47,7 +45,7 @@ function PlayerController(props: PlayerControllerProps) {
             audio?.pause();
             setProgress(0);
         };
-    }, [PERCENT, audio, props]);
+    }, [PERCENT, audio, props, volume]);
 
 
     const changeProgressHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +74,12 @@ function PlayerController(props: PlayerControllerProps) {
         setIsPlaying(() => true);
     }, [props]);
 
+    const onChangeVolume = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        audio.volume = Number(e.target.value);
+        setVolume(() => Number(e.target.value));
+    }, [audio]);
+
+    const isMute = useMemo(() => audio.volume === 0, [audio.volume]);
     const transTime = useCallback((mlisecond: number) => {
         const minute = Math.floor(mlisecond / 60);
         const second = Math.floor(mlisecond % 60);
@@ -88,8 +92,9 @@ function PlayerController(props: PlayerControllerProps) {
     }, [audio.currentTime, audio.duration, transTime]);
     return (
         <Section
-            background={ctx.themeStyle.musicPlayer.background}
-            gray={ctx.themeStyle.musicPlayer.gray}
+            className={`${props?.className}`}
+            background={ctx.themeStyle.musicPlayer.player.background}
+            gray={ctx.themeStyle.musicPlayer.player.gray}
         >
             <MusicProgressbar
                 value={progress}
@@ -109,7 +114,10 @@ function PlayerController(props: PlayerControllerProps) {
                     </span>
                 </div>
                 <PlayMusicInfo />
-                <RightController />
+                <RightController
+                    onChangeVolume={onChangeVolume}
+                    isMute={isMute}
+                />
             </div>
         </Section >
     );
