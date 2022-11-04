@@ -47,7 +47,8 @@ public class PlayListService {
             rs.next();
             list = rs.getString("playlist").replace("[", "").replace("]","").split(",");
             for (int i = 0; i < list.length; i++) {
-                sql = "SELECT musicnum, imgsrc, filename, origin_title AS title, origin_singer AS altist, lyrics FROM music WHERE musicnum = ? AND state = 0";
+                sql = "SELECT musicnum, imgsrc, filename, origin_title AS title, origin_singer AS altist, lyrics, `length` " +
+                        "FROM music WHERE musicnum = ? AND state = 0";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, Integer.parseInt(list[i]));
                 rs = pstmt.executeQuery();
@@ -59,6 +60,7 @@ public class PlayListService {
                     music.setTitle(rs.getString("title"));
                     music.setArtist(rs.getString("altist"));
                     music.setLyrics(rs.getString("lyrics"));
+                    music.setLength(rs.getInt("length"));
                     playLists.add(music);
                 }
             }
