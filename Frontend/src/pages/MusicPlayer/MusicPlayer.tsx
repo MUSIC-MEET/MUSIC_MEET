@@ -35,10 +35,10 @@ function MusicPlayer(props: MusicPlayerProps) {
         }}>
             <article className={`${props.className}`} css={root}>
                 <PlayerContent
-                    className={`${shownPlayerContent ? "shown" : "hidden"}`}
+                    className={`${shownPlayerContent ? "shown" : "hidden"} player-content`}
                 />
                 <PlayerController
-                    // audio={audio}
+                    className={"player-controller"}
                     playingMusic={list[currentIndex]}
                     prev={prevHandler}
                     next={nextHandler}
@@ -51,17 +51,34 @@ function MusicPlayer(props: MusicPlayerProps) {
 }
 
 const root = css`
+
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     flex-direction: column;
     width: 100%;
-    z-index: 2000;
+    height: 100%;
     .shown {
-        height: 100vh;
+        /* height: calc(100%);  */
+        height: 100%;
     }
 
     .hidden {
         height: 0;
+        overflow: hidden;
+    }
+
+    & > .player-content {
+        position: fixed;
+        padding-bottom: 5rem;
+        bottom: 0;
+        z-index: 2000;
+    }
+
+    & > .player-controller {
+        position: fixed;
+        bottom: 0;
+        max-height: 5rem;
+        z-index: 2000;
     }
 `;
 

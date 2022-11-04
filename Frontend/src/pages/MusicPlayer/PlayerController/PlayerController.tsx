@@ -4,12 +4,13 @@ import MusicProgressbar from "./MusicProgressbar";
 import RightController from "./RightController";
 import PlayMusicInfo from "./PlayMusicInfo";
 import ThemeContext from "store/ThemeContext";
-
+import BaseProps from "components/common/BaseProps";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import styled from "@emotion/styled";
+
 
 interface PlayerControllerProps {
     audio?: HTMLAudioElement;
@@ -18,7 +19,7 @@ interface PlayerControllerProps {
     next: () => void;
 }
 
-function PlayerController(props: PlayerControllerProps) {
+function PlayerController(props: PlayerControllerProps & BaseProps) {
     const PERCENT = useMemo(() => 1000, []);
     const ctx = useContext(ThemeContext);
     const audio = useMemo(() => new Audio(props?.playingMusic), [props.playingMusic]);
@@ -91,8 +92,9 @@ function PlayerController(props: PlayerControllerProps) {
     }, [audio.currentTime, audio.duration, transTime]);
     return (
         <Section
-            background={ctx.themeStyle.musicPlayer.background}
-            gray={ctx.themeStyle.musicPlayer.gray}
+            className={`${props?.className}`}
+            background={ctx.themeStyle.musicPlayer.player.background}
+            gray={ctx.themeStyle.musicPlayer.player.gray}
         >
             <MusicProgressbar
                 value={progress}
