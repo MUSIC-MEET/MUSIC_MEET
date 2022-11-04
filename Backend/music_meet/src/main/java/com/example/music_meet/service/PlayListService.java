@@ -35,19 +35,21 @@ public class PlayListService {
      */
     public Object getPlayList(final int userNum) {
         ArrayList<PlayList> playLists = new ArrayList<>();
+
         String[] list;
         try {
             sql = "SELECT playlist FROM playlist WHERE usernum = ?";
             Class.forName(beanConfig.classForName());
             conn = DriverManager.getConnection(beanConfig.mysqlurl(), beanConfig.mysqlid(), beanConfig.mysqlpassword());
             pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userNum);
             rs = pstmt.executeQuery();
             rs.next();
-            list = rs.getString("playlist").split(",");
-            for (int i = 0; i <= list.length; i++) {
+            list = rs.getString("playlist").replace("[", "").replace("]","").split(",");
+            for (int i = 0; i < list.length; i++) {
                 sql = "SELECT musicnum, imgsrc, filename, origin_title AS title, origin_singer AS altist, lyrics FROM music WHERE musicnum = ? AND state = 0";
                 pstmt = conn.prepareStatement(sql);
-                pstmt.setInt(1, userNum);
+                pstmt.setInt(1, Integer.parseInt(list[i]));
                 rs = pstmt.executeQuery();
                 if (rs.next()) {
                     PlayList music = new PlayList();
@@ -95,10 +97,10 @@ public class PlayListService {
 
             rs = pstmt.executeQuery();
             if (rs.next()){
-                playlist = rs.getString("playlist");
+                playlist = rs.getString("playlist").replace("[","").replace("]","");
                 sql = "UPDATE playlist SET playlist = ? WHERE usernum = ?";
                 pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, playlist + "," + id);
+                pstmt.setString(1, "["+playlist + "," + id + "]");
                 pstmt.setInt(2,userNum);
                 rsInt = pstmt.executeUpdate();
                 if (rsInt >= 1){
@@ -108,7 +110,7 @@ public class PlayListService {
                 sql = "INSERT INTO playlist(usernum, playlist) VALUES (?,?)";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1,userNum);
-                pstmt.setString(2, String.valueOf(id));
+                pstmt.setString(2, "[" + id + "]");
                 rsInt = pstmt.executeUpdate();
                 if (rsInt >= 1){
                     result = true;
