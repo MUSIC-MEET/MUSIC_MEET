@@ -19,4 +19,5 @@ public class PlayList {
     private String title; // origin_title
     private String artist; //
     private String lyrics; // 음원 lyrics
+    private Integer length;
 }
