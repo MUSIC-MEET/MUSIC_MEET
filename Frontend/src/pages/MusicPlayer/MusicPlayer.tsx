@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import MusicPlayerContenxt from "store/MusicPlayerContext";
 import PlayerContent from "./PlayerContent/PlayerContent";
 import PlayerController from "./PlayerController/PlayerController";

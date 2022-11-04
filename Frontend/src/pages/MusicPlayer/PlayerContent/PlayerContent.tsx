@@ -4,6 +4,7 @@ import BaseProps from "components/common/BaseProps";
 import styled from "@emotion/styled";
 import ThemeContext from "store/ThemeContext";
 import PlayMusicImg from "./PlayMusicImg";
+import ContentTabs from "./ContentTabs";
 
 interface PlayerContentProps {
     playList?: any
@@ -20,7 +21,9 @@ function PlayerContent(props: BaseProps & PlayerContentProps) {
             <PlayMusicImg
                 className="content-left content-item"
             />
-            <div className="right content-item">2</div>
+            <ContentTabs
+                className="content-right content-item"
+            />
         </Section>
     );
 }
@@ -33,6 +36,7 @@ const Section = styled.section<{ background: string }>`
     transition: all 0.5s ease-in;
     & > .content-item {
         width: 100%;
+        overflow: hidden;
     }
 `;
 
