@@ -33,9 +33,7 @@ public class PlayListController {
         final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
 
 
-        playListService.getPlayList(userNum);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(playListService.getPlayList(userNum), HttpStatus.OK);
     }
 
     //
