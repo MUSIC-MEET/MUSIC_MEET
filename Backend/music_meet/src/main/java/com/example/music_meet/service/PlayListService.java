@@ -55,8 +55,8 @@ public class PlayListService {
                 if (rs.next()) {
                     PlayList music = new PlayList();
                     music.setId(rs.getInt("musicnum"));
-                    music.setImgSrc(beanConfig.MUSIC_IMAGE_URL + rs.getString("imgSrc"));
-                    music.setMp3File(beanConfig.MUSIC_MP3_URL + rs.getString("filename"));
+                    music.setImgSrc(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.MUSIC_IMAGE_URL + rs.getString("imgSrc"));
+                    music.setMp3File(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.MUSIC_MP3_URL + rs.getString("filename"));
                     music.setTitle(rs.getString("title"));
                     music.setArtist(rs.getString("altist"));
                     music.setLyrics(rs.getString("lyrics"));
