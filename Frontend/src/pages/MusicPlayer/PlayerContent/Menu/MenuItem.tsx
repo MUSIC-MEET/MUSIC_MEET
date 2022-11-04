@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useContext } from "react";
+import ThemeContext from "store/ThemeContext";
 
 interface MenuItemProps {
     name: string;
@@ -7,23 +8,43 @@ interface MenuItemProps {
     selected: boolean;
     onClick: (id: number) => void;
 }
+
+interface ItemStyleProps {
+    isSelect: boolean;
+    fontColor: string;
+    borderColor: string;
+    selectedColor: string;
+    selectedBorderColor: string;
+}
+
 function MenuItem(props: MenuItemProps) {
+    const ctx = useContext(ThemeContext);
+    const { fontColor, selectedColor, borderColor, selectedBorderColor } = ctx.themeStyle.musicPlayer.content.menu;
     return (
         <Item
+            isSelect={props.selected}
+            fontColor={fontColor}
+            borderColor={borderColor}
+            selectedColor={selectedColor}
+            selectedBorderColor={selectedBorderColor}
+            onClick={() => props.onClick(props.id)}
         >
-            <p onClick={() => props.onClick(props.id)}>{props.name}</p>
+            <p>{props.name}</p>
         </Item>
     );
 }
 
-const Item = React.memo(styled.li`
+const Item = React.memo(styled.li<ItemStyleProps>`
     width: 100%;
     height: 100%;
     padding: 1rem;
     text-align: center;
-    border-bottom: 1px solid gray;
+    cursor: pointer;
+    transition: 0.5s;
+    border-bottom: ${props => props.isSelect ? `2px solid ${props.selectedColor}` : `1px solid ${props.borderColor}`};
     p { 
-        cursor: pointer;
+        
+        color: ${props => props.isSelect ? props.selectedColor : props.fontColor}
     }
 `);
 

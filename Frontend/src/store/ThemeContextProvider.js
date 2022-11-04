@@ -43,7 +43,13 @@ const DarkThemeInit = {
             gray: "rgb(148, 148, 148)",
         },
         content: {
-            background: "rgb(0,0,0)"
+            background: "rgb(0,0,0)",
+            menu: {
+                fontColor: "#b2b0b0",
+                borderColor: "rgb(88,88,88)",
+                selectedColor: "rgb(255, 255, 255)",
+                selectedBorderColor: "rgb(255, 210, 0)"
+            }
         }
         
     }
@@ -91,7 +97,13 @@ const LightThemeInit = {
             gray: "rgb(88,88,88)",
         },
         content: {
-            background: "rgb(255,255,255)"
+            background: "rgb(255,255,255)",
+            menu: {
+                fontColor: "#b2b0b0",
+                borderColor: "rgb(88,88,88)",
+                selectedColor: "rgb(0, 0, 0)",
+                selectedBorderColor: "rgb(93, 191, 185)"
+            }
         }
         
     }
