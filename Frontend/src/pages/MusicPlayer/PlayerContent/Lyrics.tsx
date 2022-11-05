@@ -16,9 +16,12 @@ function Lyrics(props: LyricsProps) {
 }
 
 const style = css`
-    padding: 0.5rem;
+    padding-bottom: 0.5rem;
+
     p {
         white-space: pre;
+        line-height: 1.5;
+        text-align: center;
     }
 `;
 

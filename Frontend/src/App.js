@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { Suspense, useCallback, useState } from "react";
 import Menu from "./components/Menu/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import ThemeContextProvider from "./store/ThemeContextProvider";
@@ -20,6 +20,7 @@ import Music from "./pages/Music/Index.tsx";
 import NotFoundPage from "./pages/NotFound/Index";
 import Cover from "./pages/Cover/Index";
 import MusicPlayer from "./pages/MusicPlayer/MusicPlayer";
+import Loading from "./components/common/Loading";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -76,9 +77,11 @@ function App() {
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </div>
-                    <MusicPlayer 
-                        className="music-player"
-                    />
+                    <Suspense fallback={<Loading />}> 
+                        <MusicPlayer 
+                            className="music-player"
+                        />
+                    </Suspense>
                 </Content>
             </ThemeContextProvider>
         </QueryClientProvider>

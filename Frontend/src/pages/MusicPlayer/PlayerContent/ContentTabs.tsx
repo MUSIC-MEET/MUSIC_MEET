@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import BaseProps from "components/common/BaseProps";
 import TabMenuListType from "./TabMenuListType";
 import { useTranslation } from "react-i18next";
@@ -7,14 +7,16 @@ import Lyrics from "./Lyrics";
 import Menus from "./Menu/Menus";
 import PlayList from "./PlayList";
 import MenuContent from "./MenuContent";
+import MusicPlayerContenxt from "store/MusicPlayerContext";
 
 function ContentTabs(props: BaseProps) {
     const { t } = useTranslation<"musicPlayer">("musicPlayer");
     const [selected, setSelected] = useState<number>(0);
+    const ctx = useContext(MusicPlayerContenxt);
     const menus: TabMenuListType[] = useMemo(() => [
         { id: 0, name: t("content.menus.playList"), content: <PlayList /> },
-        { id: 1, name: t("content.menus.lyrics"), content: <Lyrics lyrics="aasdasd" /> },
-    ], [t]);
+        { id: 1, name: t("content.menus.lyrics"), content: <Lyrics lyrics={ctx.currentLyrics ?? ""} /> },
+    ], [ctx.currentLyrics, t]);
     const menuClickHandler = useCallback((id: number) => {
         setSelected(() => id);
     }, []);

@@ -34,6 +34,7 @@ const Section = styled.section<{ background: string }>`
     flex-direction: row;
     background: ${props => props.background};
     transition: all 0.5s ease-in;
+
     & > .content-item {
         width: 100%;
         overflow: hidden;
