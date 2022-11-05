@@ -25,10 +25,8 @@ function ResultList({ result, onClose }: { result: SearchMusicType[]; onClose: (
 
     return (
         <section css={[style, css`color: ${fontColor}; background:${searchBackground};`]}>
-            {
-                ReactDOM.createPortal(<BackDrop onClose={onClose} />, portalElement)
-            }
-            <ul>
+
+            <ul style={{ zIndex: "10000" }}>
                 {result.map((music) => (
                     <Music
                         key={music.musicNum}
@@ -40,6 +38,9 @@ function ResultList({ result, onClose }: { result: SearchMusicType[]; onClose: (
                     />
                 ))}
             </ul>
+            {/* {
+                ReactDOM.createPortal(<BackDrop onClose={onClose} />, portalElement)
+            } */}
         </section>
     );
 }
@@ -62,7 +63,7 @@ const style = css`
     flex-direction: column;
     justify-content: flex-start;
     
-    z-index: 100;
+    z-index: 3000;
 
     & > li {
         margin-bottom: 1rem;
