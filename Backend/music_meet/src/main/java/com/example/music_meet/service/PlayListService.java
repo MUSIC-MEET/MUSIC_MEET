@@ -206,7 +206,7 @@ public class PlayListService {
             while(rs.next()) {
                 PlayList music = new PlayList();
                 music.setId(rs.getInt("musicnum"));
-                music.setImgSrc(rs.getString("imgsrc"));
+                music.setImgSrc(beanConfig.getServerUrl() + ":"+ beanConfig.getServerPort() + beanConfig.MUSIC_IMAGE_URL + rs.getString("imgsrc"));
                 music.setTitle(rs.getString("title"));
                 music.setArtist(rs.getString("altist"));
                 playList.add(music);
