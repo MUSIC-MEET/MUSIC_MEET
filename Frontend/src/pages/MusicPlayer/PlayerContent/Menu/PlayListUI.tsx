@@ -1,15 +1,16 @@
 import React from "react";
 import PlayListMusicType from "Types/PlayListMusicType";
 import PlayListItem from "./PlayListItem";
+import BaseProps from "components/common/BaseProps";
 
 interface PlayListUIProps {
     list?: PlayListMusicType[]
     currentMusicId?: number;
 }
 
-function PlayListUI(props: PlayListUIProps) {
+function PlayListUI(props: PlayListUIProps & BaseProps) {
     return (
-        <ul>
+        <ul className={`${props?.className}`}>
             {props.list?.map((item, index) => (
                 <PlayListItem
                     key={index}
