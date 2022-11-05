@@ -13,7 +13,6 @@ import styled from "@emotion/styled";
 
 
 interface PlayerControllerProps {
-    audio?: HTMLAudioElement;
     playingMusic?: string;
     prev: () => void;
     next: () => void;
@@ -22,7 +21,7 @@ interface PlayerControllerProps {
 function PlayerController(props: PlayerControllerProps & BaseProps) {
     const PERCENT = useMemo(() => 1000, []);
     const ctx = useContext(ThemeContext);
-    const audio = useMemo(() => new Audio(props?.playingMusic), [props.playingMusic]);
+    const audio = useMemo(() => new Audio(props?.playingMusic ?? ""), [props.playingMusic]);
     const [progress, setProgress] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [volume, setVolume] = useState<number>(0.3);
@@ -34,7 +33,6 @@ function PlayerController(props: PlayerControllerProps & BaseProps) {
         });
 
         audio.addEventListener("timeupdate", (e: any) => {
-            console.log("aa");
             const audio = e.target as HTMLAudioElement;
             const percent = audio.currentTime / audio.duration * PERCENT;
             setProgress(() => percent);

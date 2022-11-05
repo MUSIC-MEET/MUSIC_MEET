@@ -1,11 +1,20 @@
 import React from "react";
 
-const MusicPlayerContenxt = React.createContext({
+
+interface MusicPlayerContextProps {
+    isShownContent: boolean;
+    onChangeShownContentState: () => void;
+    currentImage?: string;
+    currentLyrics?: string;
+}
+
+const MusicPlayerContenxt = React.createContext<MusicPlayerContextProps>({
     isShownContent: false,
     onChangeShownContentState: () => { 
         // 
     },
-    currentMusic: ""
+    currentImage: "",
+    currentLyrics: "",
 });
 
 export default MusicPlayerContenxt;
