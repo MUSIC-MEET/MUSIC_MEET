@@ -39,6 +39,8 @@ function MusicPlayer(props: MusicPlayerProps) {
             onChangeShownContentState: changeShwonStateHandler,
             currentImage: data![currentIndex]?.imgSrc ?? "",
             currentLyrics: data![currentIndex]?.lyrics ?? "",
+            currentMusicName: data![currentIndex]?.title ?? "",
+            currentMusicArtist: data![currentIndex]?.artist ?? "",
         }}>
             <article className={`${props.className}`} css={root}>
                 <PlayerContent

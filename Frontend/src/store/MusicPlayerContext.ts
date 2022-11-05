@@ -6,6 +6,8 @@ interface MusicPlayerContextProps {
     onChangeShownContentState: () => void;
     currentImage?: string;
     currentLyrics?: string;
+    currentMusicName?: string;
+    currentMusicArtist?: string;
 }
 
 const MusicPlayerContenxt = React.createContext<MusicPlayerContextProps>({
@@ -15,6 +17,8 @@ const MusicPlayerContenxt = React.createContext<MusicPlayerContextProps>({
     },
     currentImage: "",
     currentLyrics: "",
+    currentMusicName: "",
+    currentMusicArtist: "",
 });
 
 export default MusicPlayerContenxt;
