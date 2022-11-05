@@ -18,10 +18,9 @@ const style = css`
     height: 70vh;
     overflow-y: scroll;
     line-height: 1.5;
-
+    margin-top: 1.2rem;
     & > .lyrics {
         font-size: 1.2rem;
-        margin-top: 1rem;
         text-align: center;
     }
 `;
