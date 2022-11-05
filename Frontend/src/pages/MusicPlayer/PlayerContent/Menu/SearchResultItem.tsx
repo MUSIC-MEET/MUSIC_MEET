@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import PlayListSearchItem from "Types/PlayListSearchItem";
 import BaseProps from "components/common/BaseProps";
 import { css } from "@emotion/react";
 
 import AddIcon from "@mui/icons-material/Add";
+import styled from "@emotion/styled";
+import ThemeContext from "store/ThemeContext";
 
 interface SearchResultItemProps {
     onAdd: (id: number) => void;
 }
 
 function SearchResultItem(props: BaseProps & PlayListSearchItem & SearchResultItemProps) {
+    const ctx = useContext(ThemeContext);
+    const [addIsHover, setAddIsHover] = useState<boolean>(false);
     return (
-        <li
-            css={style}
+        <Item
+            addIsHover={addIsHover}
+            hoverColor={ctx.themeStyle.fontStyle2.color}
             className={`${props?.className}`}
         >
             <div className="left">
@@ -25,13 +30,20 @@ function SearchResultItem(props: BaseProps & PlayListSearchItem & SearchResultIt
                 </div>
             </div>
             <div className="right">
-                <AddIcon onClick={() => props.onAdd(props.id ?? -1)} />
+                <AddIcon
+                    onMouseEnter={() => setAddIsHover(true)}
+                    onMouseLeave={() => setAddIsHover(false)}
+                    onClick={() => props.onAdd(props.id ?? -1)}
+                />
             </div>
-        </li>
+        </Item>
     );
 }
 
-const style = css`
+const Item = React.memo(styled.li<{
+    addIsHover: boolean;
+    hoverColor: string;
+}>`
     width: 100%;
     height: 100%;
     display: flex;
@@ -66,6 +78,8 @@ const style = css`
 
     & > .right > svg {
         cursor: pointer;
+        transform: scale(1.3);
+        color: ${(props) => (props.addIsHover ? "inherit" : props.hoverColor)};
     }
 
     .info > .title{
@@ -77,6 +91,6 @@ const style = css`
         font-weight: 400;
         font-size: 0.8rem;
     }
-`;
+`);
 
 export default SearchResultItem;
