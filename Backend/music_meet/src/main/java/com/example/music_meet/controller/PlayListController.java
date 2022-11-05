@@ -78,8 +78,8 @@ public class PlayListController {
     //
     // 재생목록에 추가할 음악 검색.md
     //
-    @RequestMapping(value = "/playlist/search", method = RequestMethod.GET)
-    public ResponseEntity<Object> searchPlayListMusic(@RequestParam("keyword") final String KEYWORD) {
+    @RequestMapping(value = "/playlist/search/{keyword}", method = RequestMethod.GET)
+    public ResponseEntity<Object> searchPlayListMusic(@PathVariable("keyword") final String KEYWORD) {
         return new ResponseEntity<>(playListService.searchPlayListMusic(KEYWORD), HttpStatus.OK);
     }
 

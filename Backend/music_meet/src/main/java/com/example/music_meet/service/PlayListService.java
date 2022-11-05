@@ -196,7 +196,7 @@ public class PlayListService {
     public ArrayList<PlayList> searchPlayListMusic(final String KEYWORD) {
         ArrayList<PlayList> playList = new ArrayList<>();
         try {
-            sql = "SELECT musicnum, imgsrc, filename, origin_title AS title, origin_singer AS altist, lyrics " +
+            sql = "SELECT musicnum, imgsrc, origin_title AS title, origin_singer AS altist " +
                     "FROM music WHERE title LIKE ? AND state = 0 LIMIT 0,10";
             Class.forName(beanConfig.classForName());
             conn = DriverManager.getConnection(beanConfig.mysqlurl(), beanConfig.mysqlid(), beanConfig.mysqlpassword());
@@ -207,10 +207,8 @@ public class PlayListService {
                 PlayList music = new PlayList();
                 music.setId(rs.getInt("musicnum"));
                 music.setImgSrc(rs.getString("imgsrc"));
-                music.setMp3File(beanConfig.MP3_FILE_API_URL + rs.getString("filename"));
                 music.setTitle(rs.getString("title"));
                 music.setArtist(rs.getString("altist"));
-                music.setLyrics(rs.getString("lyrics"));
                 playList.add(music);
             }
         } catch (Exception e) {
