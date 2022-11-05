@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import React from "react";
 
 interface MenuContentProps {
@@ -6,10 +7,21 @@ interface MenuContentProps {
 
 function MenuContent(props: MenuContentProps) {
     return (
-        <div className="">
+        <div css={style}>
             {props.component}
         </div>
     );
 }
 
+const style = css`
+    width: 100%;
+    height: 70vh;
+    overflow-y: scroll;
+    line-height: 1.5;
+    margin-top: 1.2rem;
+    & > .lyrics {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+`;
 export default MenuContent;

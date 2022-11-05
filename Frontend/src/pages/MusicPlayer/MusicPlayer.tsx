@@ -21,6 +21,7 @@ function MusicPlayer(props: MusicPlayerProps) {
     });
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [shownPlayerContent, setShownPlayerContent] = useState<boolean>(false);
+
     const changeShwonStateHandler = useCallback(() => {
         setShownPlayerContent((prev) => !prev);
     }, []);
@@ -32,13 +33,22 @@ function MusicPlayer(props: MusicPlayerProps) {
     const nextHandler = useCallback(() => {
         setCurrentIndex((prev) => prev < data!.length - 1 ? prev + 1 : data!.length - 1);
     }, [data]);
-    console.log(currentIndex);
+
+    const onChangeCurrentMusicIndex = useCallback((index: number) => {
+        console.log(index);
+        setCurrentIndex(() => index);
+    }, []);
     return (
         <MusicPlayerContenxt.Provider value={{
             isShownContent: shownPlayerContent,
             onChangeShownContentState: changeShwonStateHandler,
             currentImage: data![currentIndex]?.imgSrc ?? "",
             currentLyrics: data![currentIndex]?.lyrics ?? "",
+            currentMusicName: data![currentIndex]?.title ?? "",
+            currentMusicArtist: data![currentIndex]?.artist ?? "",
+            playList: data ?? [],
+            currentMusicIndex: currentIndex,
+            onChangeCurrentMusicIndex: onChangeCurrentMusicIndex
         }}>
             <article className={`${props.className}`} css={root}>
                 <PlayerContent
@@ -90,4 +100,4 @@ const root = css`
 
 
 
-export default MusicPlayer;
+export default React.memo(MusicPlayer);

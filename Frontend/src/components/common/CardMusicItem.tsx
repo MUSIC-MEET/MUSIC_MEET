@@ -83,7 +83,7 @@ const style = css`
         margin-top: 0.8rem;
     }
 
-    & > .info > .sub > span, .counts > span {
+    & > .info > .sub > span, .counts > span > {
         display: flex;
         justify-content: flex-start;
         align-items: center;

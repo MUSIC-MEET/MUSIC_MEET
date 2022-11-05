@@ -27,7 +27,8 @@ function PlayerController(props: PlayerControllerProps & BaseProps) {
     const [volume, setVolume] = useState<number>(0.3);
     useEffect(() => {
         audio.volume = volume;
-        audio.play();
+        if (isPlaying)
+            audio?.play();
         audio?.addEventListener("ended", () => {
             props.next();
         });
@@ -43,7 +44,7 @@ function PlayerController(props: PlayerControllerProps & BaseProps) {
             audio?.pause();
             setProgress(0);
         };
-    }, [PERCENT, audio, props, volume]);
+    }, [PERCENT, audio, isPlaying, props, volume]);
 
 
     const changeProgressHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

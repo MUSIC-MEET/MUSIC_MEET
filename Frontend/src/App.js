@@ -21,6 +21,8 @@ import NotFoundPage from "./pages/NotFound/Index";
 import Cover from "./pages/Cover/Index";
 import MusicPlayer from "./pages/MusicPlayer/MusicPlayer";
 import Loading from "./components/common/Loading";
+import { useRecoilValue } from "recoil";
+import  LoginState  from "store/LoginState";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -35,6 +37,7 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+    const { isLogIn } = useRecoilValue(LoginState);
     const [menu, setMenu] = useState(true);
     const menuVisibleHandler = useCallback(() => {
         setMenu((prevState) => !prevState);
@@ -77,11 +80,14 @@ function App() {
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </div>
-                    <Suspense fallback={<Loading />}> 
-                        <MusicPlayer 
-                            className="music-player"
-                        />
-                    </Suspense>
+                    {
+                        isLogIn &&
+                        <Suspense fallback={<Loading />}> 
+                            <MusicPlayer 
+                                className="music-player"
+                            />
+                        </Suspense>
+                    }
                 </Content>
             </ThemeContextProvider>
         </QueryClientProvider>
@@ -105,7 +111,7 @@ const rootStyle = css`
     .menu {
         width: 12%;
         min-height: 100vh;
-        z-index: 1;
+        z-index: 2;
     }
 
     .menu-icon {
