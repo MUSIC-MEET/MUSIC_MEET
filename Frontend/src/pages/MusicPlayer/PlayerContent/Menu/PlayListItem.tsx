@@ -3,9 +3,12 @@ import React, { useCallback, useContext, useState } from "react";
 import PlayListItemType from "Types/PlayListItemType";
 import ThemeContext from "store/ThemeContext";
 
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import MusicPlayerContenxt from "store/MusicPlayerContext";
+import deleteMusic from "utils/RequestApis/MusicPlayer/deleteMusic";
+import { useMutation, useQueryClient } from "react-query";
 
 /**
  * 플레이 리스트 아이템 컴포넌트
@@ -16,11 +19,21 @@ function PlayListItem(props: PlayListItemType & { isPlaying: boolean; index: num
     const ctx = useContext(ThemeContext);
     const ctx2 = useContext(MusicPlayerContenxt);
     const [isHover, setIsHover] = useState<boolean>(false);
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation(["deleteMusic"], deleteMusic, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(["fetchMusicPlayList"]);
+        }
+    });
     const transTime = useCallback((mlisecond: number) => {
         const minute = Math.floor(mlisecond / 60);
         const second = Math.floor(mlisecond % 60);
         return `${minute < 10 ? "0" + minute : minute}:${second < 10 ? "0" + second : second}`;
     }, []);
+
+    const onDelete = useCallback(() => {
+        mutate(props.index ?? -1);
+    }, [mutate, props.index]);
 
     return (
         <Item
@@ -43,7 +56,13 @@ function PlayListItem(props: PlayListItemType & { isPlaying: boolean; index: num
                 </div>
             </div>
             <div className="right">
-                <h3 className="sub">{`${transTime(props.length ?? 0)}`}</h3>
+
+                {
+                    isHover ?
+                        <div className="hover effect"><DeleteForeverIcon onClick={onDelete} /></div> :
+                        <h3 className="sub">{`${transTime(props.length ?? 0)}`}</h3>
+                }
+
             </div>
         </Item>
     );
@@ -56,8 +75,9 @@ interface ItemProps {
 }
 
 const Item = React.memo(styled.div<ItemProps>`
-    margin-bottom: 1rem;
-    padding: 0.3rem 0rem;
+    padding: 1rem 0rem;
+
+    border-bottom: 1px solid rgba(88, 88, 88);
     cursor: pointer;
     display: flex;
     justify-content: space-between;
