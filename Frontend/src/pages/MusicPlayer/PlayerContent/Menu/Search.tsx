@@ -35,6 +35,9 @@ function Search(props: BaseProps) {
 
     const { mutate } = useMutation(["PlayListMusicAdd"], addMusic, {
         useErrorBoundary: false,
+        onSuccess: () => {
+            queryClient.invalidateQueries(["fetchMusicPlayList"]);
+        }
     });
 
     const onCloseResultHandler = useCallback(() => {
@@ -58,8 +61,7 @@ function Search(props: BaseProps) {
 
     const addMusicHandler = useCallback((id: number) => {
         mutate(id);
-        queryClient.invalidateQueries(["fetchMusicPlayList"]);
-    }, [mutate, queryClient]);
+    }, [mutate]);
 
     const debounceOnChange = useMemo(() => _.debounce(() => {
         refetch();
