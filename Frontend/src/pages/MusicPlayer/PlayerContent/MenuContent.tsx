@@ -15,7 +15,7 @@ function MenuContent(props: MenuContentProps) {
 
 const style = css`
     width: 100%;
-    height: 70vh;
+    height: 80vh;
     overflow-y: scroll;
     line-height: 1.5;
     margin-top: 1.2rem;

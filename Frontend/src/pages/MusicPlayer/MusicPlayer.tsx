@@ -35,9 +35,11 @@ function MusicPlayer(props: MusicPlayerProps) {
     }, [data]);
 
     const onChangeCurrentMusicIndex = useCallback((index: number) => {
-        console.log(index);
         setCurrentIndex(() => index);
-    }, []);
+        if (currentIndex === index) {
+            setCurrentIndex((prev) => prev > 0 ? prev - 1 : 0);
+        }
+    }, [currentIndex]);
     return (
         <MusicPlayerContenxt.Provider value={{
             isShownContent: shownPlayerContent,
