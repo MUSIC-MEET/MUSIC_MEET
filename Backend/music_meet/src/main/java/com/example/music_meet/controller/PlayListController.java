@@ -39,8 +39,8 @@ public class PlayListController {
     //
     // 재생목록에 음악 추가.md
     //
-    @RequestMapping(value = "/playlist", method = RequestMethod.POST)
-    public ResponseEntity<Object> addPlayListMusic(@RequestBody PlayList playList) {
+    @RequestMapping(value = "/playlist/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Object> addPlayListMusic(@PathVariable("id")final int id) {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null) {
@@ -48,7 +48,7 @@ public class PlayListController {
         }
         final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
 
-        if (playListService.addPlayListMusic(userNum, playList.getId())) {
+        if (playListService.addPlayListMusic(userNum, id)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
