@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 플레이리스트 서비스
@@ -142,22 +143,46 @@ public class PlayListService {
      */
     public boolean deletePlayListMusic(int userNum, int id) {
         boolean result = false;
+        String[] songs = {""};
         try {
-            sql = "DELETE FROM playlist WHERE usernum = ? AND musicnum = ?";
+            sql = "SELECT playlist FROM playlist WHERE usernum = ?";
             Class.forName(beanConfig.classForName());
             conn = DriverManager.getConnection(beanConfig.mysqlurl(), beanConfig.mysqlid(), beanConfig.mysqlpassword());
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, userNum);
-            pstmt.setInt(2, id);
+            rs = pstmt.executeQuery();
+            if (rs.next()){
+                songs = rs.getString("playlist").replace("[","").replace("]","").split(",");
+            } else {
+                result = false;
+            }
+            int i;
+            for (i = 0; i < songs.length; i++){
+                if (songs[i].equals(String.valueOf(id))){
+                    break;
+                }
+            }
+            ArrayList<String> list = new ArrayList<>(List.of(songs));
+            list.remove(i);
+            i = 0;
+            sql = "UPDATE playlist SET playlist = ? WHERE usernum = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, list.toString().replace(" ",""));
+            pstmt.setInt(2, userNum);
             rsInt = pstmt.executeUpdate();
             if (rsInt >= 1){
                 result = true;
             }
+            else {
+                result = false;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 rsInt = 0;
+                rs.close();
                 pstmt.close();
                 conn.close();
             } catch (SQLException e) {
