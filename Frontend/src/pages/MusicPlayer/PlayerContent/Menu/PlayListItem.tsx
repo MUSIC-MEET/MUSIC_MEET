@@ -74,7 +74,7 @@ interface ItemProps {
     isHover: boolean;
 }
 
-const Item = React.memo(styled.div<ItemProps>`
+const Item = React.memo(styled.li<ItemProps>`
     padding: 1rem 0rem;
 
     border-bottom: 1px solid rgba(88, 88, 88);
