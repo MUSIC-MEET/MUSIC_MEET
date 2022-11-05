@@ -58,8 +58,8 @@ public class PlayListController {
     //
     // 재생목록에서 음악 삭제.md
     //
-    @RequestMapping(value = "/playlist", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deletePlayListMusic(@RequestParam("id") final int index) {
+    @RequestMapping(value = "/playlist/{index}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deletePlayListMusic(@PathVariable("index") final int index) {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null) {

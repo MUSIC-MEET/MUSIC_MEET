@@ -138,10 +138,10 @@ public class PlayListService {
     /**
      * 재생목록에서 음악 삭제
      * @param userNum 유저 번호
-     * @param id 삭제할 음악
+     * @param index 삭제할 음악
      * @return DB에서 정상 삭제시 true, 삭제 실패시 false
      */
-    public boolean deletePlayListMusic(int userNum, int id) {
+    public boolean deletePlayListMusic(int userNum, int index) {
         boolean result = false;
         String[] songs = {""};
         try {
@@ -156,15 +156,10 @@ public class PlayListService {
             } else {
                 result = false;
             }
-            int i;
-            for (i = 0; i < songs.length; i++){
-                if (songs[i].equals(String.valueOf(id))){
-                    break;
-                }
-            }
+
             ArrayList<String> list = new ArrayList<>(List.of(songs));
-            list.remove(i);
-            i = 0;
+            list.remove(index);
+
             sql = "UPDATE playlist SET playlist = ? WHERE usernum = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, list.toString().replace(" ",""));
@@ -201,7 +196,8 @@ public class PlayListService {
     public ArrayList<PlayList> searchPlayListMusic(final String KEYWORD) {
         ArrayList<PlayList> playList = new ArrayList<>();
         try {
-            sql = "SELECT musicnum, imgsrc, filename, origin_title AS title, origin_singer AS altist, lyrics FROM music WHERE title LIKE ? AND state = 0";
+            sql = "SELECT musicnum, imgsrc, filename, origin_title AS title, origin_singer AS altist, lyrics " +
+                    "FROM music WHERE title LIKE ? AND state = 0 LIMIT 0,10";
             Class.forName(beanConfig.classForName());
             conn = DriverManager.getConnection(beanConfig.mysqlurl(), beanConfig.mysqlid(), beanConfig.mysqlpassword());
             pstmt = conn.prepareStatement(sql);

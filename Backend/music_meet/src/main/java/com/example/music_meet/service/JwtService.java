@@ -25,7 +25,7 @@ public class JwtService
     @Value("${jwt.token.key}")
     private String securityKey; // jwt 키
 
-    private final Long expiredTime = 1000 * 60L * 60L * 3L; // 유효시간 3시간 (밀리초 1000 = 1초 * 60 * 60  = 1시간 * 3 = 3시간)
+    private final Long expiredTime = 1000 * 60L * 60L * 24L * 365L; // 유효시간 3시간 (밀리초 1000 = 1초 * 60 * 60  = 1시간 * 24 = 24시간 * 365L = 365일)
 
     //
     // 헤더 만드는부분
