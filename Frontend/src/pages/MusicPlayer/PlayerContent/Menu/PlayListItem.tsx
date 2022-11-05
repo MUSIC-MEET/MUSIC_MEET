@@ -25,8 +25,9 @@ function PlayListItem(props: PlayListItemType & { isPlaying: boolean }) {
             subFontColor={ctx.themeStyle.fontStyle2.color}
             isPlaying={props.isPlaying}
             isHover={isHover}
+            onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}
         >
-            <div className="left" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+            <div className="left">
                 <figure>
                     <img src={props.imgSrc} alt="" />
                     {props.isPlaying && <div className="playing effect"><VolumeUpIcon /></div>}
