@@ -196,7 +196,8 @@ public class PlayListService {
     public ArrayList<PlayList> searchPlayListMusic(final String KEYWORD) {
         ArrayList<PlayList> playList = new ArrayList<>();
         try {
-            sql = "SELECT musicnum, imgsrc, filename, origin_title AS title, origin_singer AS altist, lyrics FROM music WHERE title LIKE ? AND state = 0";
+            sql = "SELECT musicnum, imgsrc, filename, origin_title AS title, origin_singer AS altist, lyrics " +
+                    "FROM music WHERE title LIKE ? AND state = 0 LIMIT 0,10";
             Class.forName(beanConfig.classForName());
             conn = DriverManager.getConnection(beanConfig.mysqlurl(), beanConfig.mysqlid(), beanConfig.mysqlpassword());
             pstmt = conn.prepareStatement(sql);
