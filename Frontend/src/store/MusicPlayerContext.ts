@@ -1,5 +1,5 @@
 import React from "react";
-
+import  PlayListMusicType  from "Types/PlayListMusicType";
 
 interface MusicPlayerContextProps {
     isShownContent: boolean;
@@ -8,6 +8,8 @@ interface MusicPlayerContextProps {
     currentLyrics?: string;
     currentMusicName?: string;
     currentMusicArtist?: string;
+    playList?: PlayListMusicType[];
+    currentMusicIndex?: number;
 }
 
 const MusicPlayerContenxt = React.createContext<MusicPlayerContextProps>({
@@ -19,6 +21,8 @@ const MusicPlayerContenxt = React.createContext<MusicPlayerContextProps>({
     currentLyrics: "",
     currentMusicName: "",
     currentMusicArtist: "",
+    playList: [],
+    currentMusicIndex: 0
 });
 
 export default MusicPlayerContenxt;

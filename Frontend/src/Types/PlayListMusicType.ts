@@ -5,7 +5,7 @@ interface PlayListMusicType {
     title?: string;
     artist?: string;
     lyrics?: string;
-    length?: string;
+    length?: number;
 
 }
 

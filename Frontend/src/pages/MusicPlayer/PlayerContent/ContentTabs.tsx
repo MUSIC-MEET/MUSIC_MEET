@@ -3,9 +3,9 @@ import BaseProps from "components/common/BaseProps";
 import TabMenuListType from "./TabMenuListType";
 import { useTranslation } from "react-i18next";
 
-import Lyrics from "./Lyrics";
+import Lyrics from "./Menu/Lyrics";
 import Menus from "./Menu/Menus";
-import PlayList from "./PlayList";
+import PlayList from "./Menu/PlayList";
 import MenuContent from "./MenuContent";
 import MusicPlayerContenxt from "store/MusicPlayerContext";
 

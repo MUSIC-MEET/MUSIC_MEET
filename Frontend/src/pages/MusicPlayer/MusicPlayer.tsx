@@ -32,7 +32,7 @@ function MusicPlayer(props: MusicPlayerProps) {
     const nextHandler = useCallback(() => {
         setCurrentIndex((prev) => prev < data!.length - 1 ? prev + 1 : data!.length - 1);
     }, [data]);
-    console.log(currentIndex);
+
     return (
         <MusicPlayerContenxt.Provider value={{
             isShownContent: shownPlayerContent,
@@ -41,6 +41,8 @@ function MusicPlayer(props: MusicPlayerProps) {
             currentLyrics: data![currentIndex]?.lyrics ?? "",
             currentMusicName: data![currentIndex]?.title ?? "",
             currentMusicArtist: data![currentIndex]?.artist ?? "",
+            playList: data ?? [],
+            currentMusicIndex: currentIndex,
         }}>
             <article className={`${props.className}`} css={root}>
                 <PlayerContent
