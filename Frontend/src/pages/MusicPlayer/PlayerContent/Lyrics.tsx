@@ -7,21 +7,20 @@ interface LyricsProps {
 
 function Lyrics(props: LyricsProps) {
     return (
-        <div css={style}>
-            <p>
+        <React.Fragment>
+            <p css={style} className={`lyrics`}>
                 {props?.lyrics}
             </p>
-        </div>
+        </React.Fragment>
     );
 }
 
 const style = css`
-    padding-bottom: 0.5rem;
-
     p {
         white-space: pre;
-        line-height: 1.5;
         text-align: center;
+        margin: none;
+        display: inline-flex; 
     }
 `;
 
