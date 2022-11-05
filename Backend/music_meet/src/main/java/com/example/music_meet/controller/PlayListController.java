@@ -59,7 +59,7 @@ public class PlayListController {
     // 재생목록에서 음악 삭제.md
     //
     @RequestMapping(value = "/playlist", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deletePlayListMusic(@RequestParam("id") final int ID) {
+    public ResponseEntity<Object> deletePlayListMusic(@RequestParam("id") final int index) {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request.getAttribute("userNum") == null) {
@@ -67,7 +67,7 @@ public class PlayListController {
         }
         final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
 
-        if (playListService.deletePlayListMusic(userNum, ID)) {
+        if (playListService.deletePlayListMusic(userNum, index)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
