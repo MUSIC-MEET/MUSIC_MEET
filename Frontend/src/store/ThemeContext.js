@@ -23,6 +23,11 @@ const ThemeContext = React.createContext({
                     borderColor: "",
                     selectedColor: "",
                     selectedBorderColor: ""
+                },
+                search: {
+                    background: "",
+                    fontColor: "",
+                    subFontColor: ""
                 }
                 
             } 

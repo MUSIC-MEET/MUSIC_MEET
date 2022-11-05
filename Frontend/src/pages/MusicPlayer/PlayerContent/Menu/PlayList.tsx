@@ -9,7 +9,7 @@ function PlayList() {
     return (
         <article css={style}>
             <Search
-                className="playlist-item search"
+                className="playlist-item search-form"
             />
             <PlayListUI
                 className="playlist-item playlist"
@@ -21,9 +21,16 @@ function PlayList() {
 }
 
 const style = css`
-    & > playlist-item {
-        
+    position: relative;
+    & > .playlist-item {
+        width: 100%;
+        height: auto;
     }
+
+    & > .playlist {
+        padding-top: 4rem;
+    }
+
 `;
 
 export default PlayList;
