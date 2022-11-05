@@ -5,14 +5,16 @@ import ThemeContext from "store/ThemeContext";
 
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import MusicPlayerContenxt from "store/MusicPlayerContext";
 
 /**
  * 플레이 리스트 아이템 컴포넌트
  * @param props.isPlaying {boolean} 현재 재생중인지 여부
  * @returns 
  */
-function PlayListItem(props: PlayListItemType & { isPlaying: boolean }) {
+function PlayListItem(props: PlayListItemType & { isPlaying: boolean; index: number }) {
     const ctx = useContext(ThemeContext);
+    const ctx2 = useContext(MusicPlayerContenxt);
     const [isHover, setIsHover] = useState<boolean>(false);
     const transTime = useCallback((mlisecond: number) => {
         const minute = Math.floor(mlisecond / 60);
@@ -25,13 +27,15 @@ function PlayListItem(props: PlayListItemType & { isPlaying: boolean }) {
             subFontColor={ctx.themeStyle.fontStyle2.color}
             isPlaying={props.isPlaying}
             isHover={isHover}
-            onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}
+            onMouseEnter={() => setIsHover(true)}
+            onMouseLeave={() => setIsHover(false)}
+            onClick={() => ctx2.onChangeCurrentMusicIndex(props.index)}
         >
             <div className="left">
                 <figure>
                     <img src={props.imgSrc} alt="" />
                     {props.isPlaying && <div className="playing effect"><VolumeUpIcon /></div>}
-                    {isHover && <div className="hover effect"><PlayArrowIcon /></div>}
+                    {(isHover && !props.isPlaying) && <div className="hover effect"><PlayArrowIcon /></div>}
                 </figure>
                 <div className="text">
                     <h2 className="title">{props.title}</h2>

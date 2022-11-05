@@ -13,6 +13,7 @@ function PlayListUI(props: PlayListUIProps) {
             {props.list?.map((item, index) => (
                 <PlayListItem
                     key={index}
+                    index={index}
                     {...item}
                     isPlaying={props.currentMusicId === index}
                 />

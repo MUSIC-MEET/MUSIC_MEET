@@ -10,6 +10,7 @@ interface MusicPlayerContextProps {
     currentMusicArtist?: string;
     playList?: PlayListMusicType[];
     currentMusicIndex?: number;
+    onChangeCurrentMusicIndex: (index: number) => void;
 }
 
 const MusicPlayerContenxt = React.createContext<MusicPlayerContextProps>({
@@ -22,7 +23,10 @@ const MusicPlayerContenxt = React.createContext<MusicPlayerContextProps>({
     currentMusicName: "",
     currentMusicArtist: "",
     playList: [],
-    currentMusicIndex: 0
+    currentMusicIndex: 0,
+    onChangeCurrentMusicIndex: () => {
+        //
+    }
 });
 
 export default MusicPlayerContenxt;

@@ -21,6 +21,7 @@ function MusicPlayer(props: MusicPlayerProps) {
     });
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [shownPlayerContent, setShownPlayerContent] = useState<boolean>(false);
+
     const changeShwonStateHandler = useCallback(() => {
         setShownPlayerContent((prev) => !prev);
     }, []);
@@ -33,6 +34,10 @@ function MusicPlayer(props: MusicPlayerProps) {
         setCurrentIndex((prev) => prev < data!.length - 1 ? prev + 1 : data!.length - 1);
     }, [data]);
 
+    const onChangeCurrentMusicIndex = useCallback((index: number) => {
+        console.log(index);
+        setCurrentIndex(() => index);
+    }, []);
     return (
         <MusicPlayerContenxt.Provider value={{
             isShownContent: shownPlayerContent,
@@ -43,6 +48,7 @@ function MusicPlayer(props: MusicPlayerProps) {
             currentMusicArtist: data![currentIndex]?.artist ?? "",
             playList: data ?? [],
             currentMusicIndex: currentIndex,
+            onChangeCurrentMusicIndex: onChangeCurrentMusicIndex
         }}>
             <article className={`${props.className}`} css={root}>
                 <PlayerContent
