@@ -65,14 +65,19 @@ const container = css`
     display: flex;
     scrollbar-width:none;
     transition: all 0.5s;
-    min-width: 100%;
+    width: 100%;
     li {
+        display: flex;
+        justify-content: center;
         padding: 0 0.5rem;
         position: relative;
         min-width: 20%;
-        width: 20%;
-        height: 12rem;
+        height: 10rem;
         overflow-y: hidden;
+        figure {
+            width: 15rem;
+            height: 10rem;
+        }
     }
     scrollbar-width: 0;
 `;
