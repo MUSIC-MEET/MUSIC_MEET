@@ -11,6 +11,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Map;
 
 @Controller
@@ -80,7 +81,14 @@ public class PlayListController {
     //
     @RequestMapping(value = "/playlist/search/{keyword}", method = RequestMethod.GET)
     public ResponseEntity<Object> searchPlayListMusic(@PathVariable("keyword") final String KEYWORD) {
-        return new ResponseEntity<>(playListService.searchPlayListMusic(KEYWORD), HttpStatus.OK);
+        ArrayList<PlayList> list = playListService.searchPlayListMusic(KEYWORD);
+        if (list == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }
+
+
     }
 
     //
