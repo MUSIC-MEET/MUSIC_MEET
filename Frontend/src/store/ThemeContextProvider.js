@@ -49,6 +49,11 @@ const DarkThemeInit = {
                 borderColor: "rgb(88,88,88)",
                 selectedColor: "rgb(255, 255, 255)",
                 selectedBorderColor: "rgb(255, 210, 0)"
+            },
+            search: {
+                background: "rgb(30, 30, 30)",
+                fontColor: "rgb(95, 95, 95)",
+                subFontColor: "#b2b0b0"
             }
         }
         
@@ -103,6 +108,11 @@ const LightThemeInit = {
                 borderColor: "rgb(88,88,88)",
                 selectedColor: "rgb(0, 0, 0)",
                 selectedBorderColor: "rgb(93, 191, 185)"
+            },
+            search: {
+                background: "rgb(255, 255, 255)",
+                fontColor: "Black",
+                subFontColor: "#b2b0b0"
             }
         }
         
