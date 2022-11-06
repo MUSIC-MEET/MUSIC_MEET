@@ -27,10 +27,10 @@ interface InputFormPros {
  */
 function InputForm(props: InputFormPros) {
     const { t } = useTranslation<"coverUploadPage">("coverUploadPage");
-    const [title, setTitle] = useState<string>(props?.title ?? "");
-    const [description, setDescription] = useState<string>(props?.description ?? "");
+    const [title, setTitle] = useState<string>(props.title ?? "");
+    const [description, setDescription] = useState<string>(props.description ?? "");
     const [mp3File, setMp3File] = useState<Blob>(new Blob());
-    const [fileName, setFileName] = useState<string>(props?.fileName ?? "");
+    const [fileName, setFileName] = useState<string>(props.fileName ?? "");
     const [isEmpty, setIsEmpty] = useState<boolean>(false);
     const titleChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(() => e.target.value);

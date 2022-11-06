@@ -17,10 +17,11 @@ function Edit() {
     const { id } = useParams<{ id: string }>();
     const { t } = useTranslation<"coverEditPage">("coverEditPage");
     const navigator = useNavigate();
-    const { data } = useQuery(["fetchEditCover", id], () => fetchEditCover(id ?? "-1"), {
-
+    const { data } = useQuery(["fetchEditCover"], () => fetchEditCover(id ?? "-1"), {
+        suspense: true,
+        cacheTime: 0,
     });
-    const { mutate } = useMutation(["editCover", id], editCoverMusic, {
+    const { mutate } = useMutation(["editCover"], editCoverMusic, {
         useErrorBoundary: true,
         onSuccess: (response) => {
             if (response.status === 204) {
