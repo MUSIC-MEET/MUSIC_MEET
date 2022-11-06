@@ -49,7 +49,8 @@ const style = css`
     }
 
     figure {
-        min-width: 6.5rem;
+        width: 6.5rem;
+        height: 5rem;
         height: 100%;
         border: 1px solid black;
     }
@@ -58,6 +59,7 @@ const style = css`
         width: 100%;
         height: 100%;
         object-fit: fill;
+        border-radius: 0.5rem;
     }
 
     .text-box {

@@ -65,6 +65,7 @@ const style = css`
 
     & > .info {
         line-height: 1.2;
+        width: auto;
     }
     & > .info > .title {
         font-size: 1.5rem;
@@ -103,6 +104,12 @@ const style = css`
 
     .vote > svg {
         color: red;
+    }
+
+    .title {
+        max-width: 50rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 `;
 
