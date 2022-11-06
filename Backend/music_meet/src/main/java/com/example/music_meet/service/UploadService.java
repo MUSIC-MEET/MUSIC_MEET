@@ -595,12 +595,12 @@ public class UploadService {
      * @return 정상 처리시 true, 비정상 처리시 false 반환
      */
     @Synchronized
-    public boolean modifyUpload(int userNum, int uploadNum, String title, String description, MultipartFile mp3File,String fileName) {
+    public boolean modifyUpload(int userNum, int uploadNum, String title, String description, Long nowDate,String fileName) {
         boolean result;
-        long nowDate = new Date().getTime();
-        if (fileName == null) {
+
+        if (nowDate == null) { // 파일 수정 안함
             sql = "UPDATE upload SET origin_title = ?, comment = ? , title = ? WHERE uploadNum = ? AND usernum = ? AND state = 0";
-        }else {
+        }else {                 // 파일 수정
             sql = "UPDATE upload SET origin_title = ?, comment = ?, title = ? ,file = ?, origin_file = ? WHERE uploadNum = ? AND usernum = ? AND state = 0";
         }
 
@@ -619,12 +619,6 @@ public class UploadService {
                 pstmt.setInt(4,uploadNum);
                 pstmt.setInt(5, userNum);
             }else {
-                File newFile = new File(beanConfig.UPLOAD_MP3FILE_PATH +
-                        nowDate +
-                        "_" +
-                        mp3File.getOriginalFilename().replaceAll(" ", ""));
-                mp3File.transferTo(newFile);
-
 
                 pstmt.setString(1,title);
                 pstmt.setString(2, description);
@@ -646,6 +640,7 @@ public class UploadService {
             throw new RuntimeException(e);
         } finally {
             try {
+                rsInt = 0;
                 pstmt.close();
                 conn.close();
             } catch (SQLException e) {
@@ -697,6 +692,7 @@ public class UploadService {
         }
         return upload;
     }
+
 
 
     /**
@@ -823,6 +819,7 @@ public class UploadService {
         return uploads;
     }
 
+
     /**
      * 회원 업로드 검색
      * @param type
@@ -876,6 +873,11 @@ public class UploadService {
         return uploads;
     }
 
+
+    /**
+     * 업로드 글을 조회시 view를 증가시키는 함수
+     * @param uploadNum 증가시킬 업로드 글 번호
+     */
     @Synchronized
     public void addUploadView(int uploadNum) {
         try
@@ -906,6 +908,26 @@ public class UploadService {
     }
 
 
+    /**
+     * 파일 수정시 새로운 파일을 생성하는 함수
+     * @param mp3File 새로 생성할 파일 오브젝트
+     * @param nowDate 현재 시간
+     * @return 정상 생성시 true, 실패시 false
+     */
+    public boolean createMp3File(MultipartFile mp3File, Long nowDate) {
+        boolean result;
 
-
+        try{
+        File newFile = new File(beanConfig.UPLOAD_MP3FILE_PATH +
+                nowDate +
+                "_" +
+                mp3File.getOriginalFilename().replaceAll(" ", ""));
+        mp3File.transferTo(newFile);
+        result = true;
+        }catch (Exception e){
+            e.printStackTrace();
+            result = false;
+        }
+        return result;
+    }
 }

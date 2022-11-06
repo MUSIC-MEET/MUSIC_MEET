@@ -91,7 +91,7 @@ public class PlayListService {
         boolean result = false;
         String playlist = "";
         try {
-            sql = "SELECT playlist FROM playlist WHERE usernum = ?";
+            sql = "SELECT playlist FROM playlist WHERE usernum = ? LIMIT 0,1";
             Class.forName(beanConfig.classForName());
             conn = DriverManager.getConnection(beanConfig.mysqlurl(), beanConfig.mysqlid(), beanConfig.mysqlpassword());
             pstmt = conn.prepareStatement(sql);
@@ -103,7 +103,7 @@ public class PlayListService {
                 playlist = rs.getString("playlist").replace("[","").replace("]","");
                 sql = "UPDATE playlist SET playlist = ? WHERE usernum = ?";
                 pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, "["+playlist + "," + id + "]");
+                pstmt.setString(1, "["+ playlist + "," + id + "]");
                 pstmt.setInt(2,userNum);
                 rsInt = pstmt.executeUpdate();
                 if (rsInt >= 1){
@@ -197,11 +197,12 @@ public class PlayListService {
         ArrayList<PlayList> playList = new ArrayList<>();
         try {
             sql = "SELECT musicnum, imgsrc, origin_title AS title, origin_singer AS altist " +
-                    "FROM music WHERE title LIKE ? AND state = 0 LIMIT 0,10";
+                    "FROM music WHERE title LIKE ? OR origin_singer LIKE ? AND state = 0 LIMIT 0,10";
             Class.forName(beanConfig.classForName());
             conn = DriverManager.getConnection(beanConfig.mysqlurl(), beanConfig.mysqlid(), beanConfig.mysqlpassword());
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, "%" + KEYWORD + "%");
+            pstmt.setString(2, "%" + KEYWORD + "%");
             rs = pstmt.executeQuery();
             while(rs.next()) {
                 PlayList music = new PlayList();

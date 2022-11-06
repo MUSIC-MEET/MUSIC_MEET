@@ -1049,13 +1049,13 @@ public class UserService {
                 response_callUserComment.setMusicNum(rs.getInt("musicNum"));
                 response_callUserComment.setCreatedAt(rs.getString("createdAt"));
                 response_callUserComment.setContent(rs.getString("content"));
-                response_callUserComment.setImgSrc(serverURL + ":" + serverPort + "/music/image/" +  rs.getString("imgSrc"));
+                response_callUserComment.setImgSrc(serverURL + ":" + serverPort + beanConfig.MUSIC_IMAGE_URL +  rs.getString("imgSrc"));
                 response_callUserComment.setTitle(rs.getString("origin_title"));
                 response_callUserComment.setSinger(rs.getString("origin_singer"));
                 response_callUserComments.add(response_callUserComment);
             }
 
-            sql = "SELECT a.uploadnum, c.userimage, a.title, c.nickname, b.createdat, b.comment " +
+            sql = "SELECT a.uploadnum, c.userimage, a.origin_title, c.nickname, b.createdat, b.comment " +
                     "FROM upload a, uploadComment b, user c WHERE a.uploadNum = b.uploadNum AND a.userNum = c.userNum AND a.state = 0 AND b.userNum = ? " +
                     "ORDER BY createdAt DESC LIMIT 0,5";
 
@@ -1069,7 +1069,7 @@ public class UserService {
                 response_callUserComment.setCreatedAt(rs.getString("createdAt"));
                 response_callUserComment.setContent(rs.getString("comment"));
                 response_callUserComment.setImgSrc(serverURL + ":" + serverPort + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
-                response_callUserComment.setTitle(rs.getString("title"));
+                response_callUserComment.setTitle(rs.getString("origin_title"));
                 response_callUserComment.setSinger(rs.getString("nickname"));
                 response_callUserComments.add(response_callUserComment);
             }
