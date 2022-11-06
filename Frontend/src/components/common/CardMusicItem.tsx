@@ -65,6 +65,7 @@ const style = css`
 
     & > .info {
         line-height: 1.2;
+        width: auto;
     }
     & > .info > .title {
         font-size: 1.5rem;
@@ -83,7 +84,7 @@ const style = css`
         margin-top: 0.8rem;
     }
 
-    & > .info > .sub > span, .counts > span > {
+    & > .info > .sub > span, .counts > span  {
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -103,6 +104,12 @@ const style = css`
 
     .vote > svg {
         color: red;
+    }
+
+    .title {
+        max-width: 50rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 `;
 
