@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 @Controller
@@ -131,15 +132,17 @@ public class UploadController {
         final int userNum = Integer.parseInt((String) request.getAttribute("userNum"));
 
         UploadMusic upload = uploadService.getFileName(userNum, uploadNum);
-
-        if (upload.getFileName().equals(fileName)){
-            uploadService.modifyUpload(userNum, uploadNum, title, description, mp3File,null);
+        long nowDate = new Date().getTime();
+        if (upload.getOriginFile().equals(fileName)){ // 파일 수정 안됨
+            System.out.println("파일 수정 안됨");
+            uploadService.modifyUpload(userNum, uploadNum, title, description, null,null);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        else {
-            
+        else { // 파일 수정 됨
+            System.out.println("파일 수정 됨");
             if (uploadService.deleteMp3File(upload.getFileName()) &&
-                    uploadService.modifyUpload(userNum, uploadNum, title, description, mp3File, fileName)){
+                    uploadService.createMp3File(mp3File, nowDate) &&
+                    uploadService.modifyUpload(userNum, uploadNum, title, description, nowDate, fileName)){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             else {

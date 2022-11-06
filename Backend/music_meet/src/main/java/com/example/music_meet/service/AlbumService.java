@@ -673,8 +673,8 @@ public class AlbumService
         ArrayList<Response_getMusicComment> response_getMusicComments = new ArrayList<>();
         try
         {
-            sql = "SELECT b.musicCommentNum, b.content, b.createdAt, a.nickname, a.userimage FROM user a, musicComment b " +
-                    " WHERE b.musicNum = ? AND b.state = 0 AND a.userNum = b.userNum ORDER BY b.createdAt DESC";
+            sql = "SELECT b.musicCommentNum, b.content, DATE_FORMAT(b.createdat, '%Y-%m-%d %T') AS createdAt, a.nickname, a.userimage " +
+                    "FROM user a, musicComment b WHERE b.musicNum = ? AND b.state = 0 AND a.userNum = b.userNum ORDER BY b.createdAt DESC";
             //
             // DB구간
             //
@@ -692,7 +692,7 @@ public class AlbumService
                 response_getMusicComment.setCommentNum(rs.getInt("musicCommentNum"));
                 response_getMusicComment.setComment(rs.getString("content"));
                 response_getMusicComment.setUser(rs.getString("nickname"));
-                response_getMusicComment.setCreateAt(rs.getTimestamp("createdAt"));
+                response_getMusicComment.setCreatedAt(rs.getString("createdAt"));
                 response_getMusicComment.setImgSrc(serverURL + ":" + serverPort + "/user" + "/image/" + rs.getString("userImage"));
                 response_getMusicComments.add(response_getMusicComment);
                 i++;
