@@ -95,7 +95,7 @@ const style = css`
             margin-top: 3rem;
             & > input {
             font-size: 1.3rem;
-            width:  8rem;
+            width:  10rem;
             height: 3rem;
             text-align: center;
             margin-right: 0.5rem;
