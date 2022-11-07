@@ -69,7 +69,6 @@ function Menu(props) {
 }
 
 const navStyle = css`
-    border-right: 2px solid #555555;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

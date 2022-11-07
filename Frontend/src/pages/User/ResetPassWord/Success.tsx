@@ -19,7 +19,7 @@ function Success(props: SuccessProps) {
     return (
         <React.Fragment>
             <p>{props.success}</p>
-            <a onClick={props.callBack} css={css`margin-top: 1rem; cursor: pointer; text-decoration: underline`}>
+            <a onClick={props.callBack} css={css`margin-top: 1rem; cursor: pointer; text-decoration: underline;`}>
                 {props.ment}
             </a>
         </React.Fragment>
