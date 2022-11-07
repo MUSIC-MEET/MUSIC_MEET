@@ -25,3 +25,4 @@ export { default as mainPage } from "./MainPage";
 export { default as coverListPage } from "./CoverListPage";
 export { default as albumMusicListPage } from "./AlbumMusicListPage";
 export { default as musicPlayer } from "./MusicPlayer";
+export { default as latestPopular } from "./LatestPopular";
