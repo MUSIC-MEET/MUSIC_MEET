@@ -9,6 +9,7 @@ import TopIcons from "./TopIcons";
 import Logo from "../common/Logo";
 import { useMediaQuery } from "react-responsive";
 import MenuIcon from "@mui/icons-material/Menu";
+import _ from "lodash";
 
 function Menu(props) {
     const ctx = useContext(ThemeContext);
@@ -19,7 +20,6 @@ function Menu(props) {
     const isDesktop = useMediaQuery({
         query: "(min-width: 1024px)"
     });
-
 
     const onClickMobileMenuHandler = useCallback(() => {
         setMobileMenuShown((prev) => !prev);
@@ -32,7 +32,7 @@ function Menu(props) {
                 css={[navStyle, deskTopStyle, css` background: ${background}; color: ${fontColor};`]}
             >
                 <TopIcons className={"icons"} onMenuClose={onMenuClose}/>
-                <Logo className={"logo"}/>
+                <Logo className={"logo"} />
                 <Login className={"login"} navigator={navigator}/>
                 <Search className={"search"} />
                 <RoutesMenu className={"menu"}/>
@@ -79,6 +79,7 @@ const navStyle = css`
         width: 10rem; // 160px  
         height: 3rem; // 48px
         margin-right: 1rem;
+        cursor: pointer;
     }
 
 `;

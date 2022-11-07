@@ -3,13 +3,26 @@ import Llogo from "assets/Llogo.png";
 import Dlogo from "assets/Dlogo.png";
 import { css } from "@emotion/react";
 import ThemeContext from "store/ThemeContext";
-function Logo({ className }: { className?: string }) {
+import BaseProps from "./BaseProps";
+import { useNavigate } from "react-router-dom";
+
+/**
+ * 로고 컴퍼넌트
+ * @param props?.className
+ * @param props?.onClick
+ * @returns 
+ */
+function Logo(props: BaseProps) {
     const ctx = useContext(ThemeContext);
     const theme = ctx.theme;
     const logo = useMemo(() => theme === "dark" ? Dlogo : Llogo, [theme]);
+    const navigator = useNavigate();
     return (
-        <article css={style} className={`${className} logo`}>
-            <img src={logo} />
+        <article
+            css={style}
+            className={`${props.className} logo`}
+        >
+            <img src={logo} onClick={() => navigator("/")} />
         </article>
 
     );
