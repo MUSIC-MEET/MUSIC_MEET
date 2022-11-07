@@ -18,6 +18,7 @@ public class Response_callUserComment implements Comparator<String>{
     private String content;
     private String title;
     private String singer;
+    private int type; // 업로드 = 1, 음악 = 0
 
 
     @Override
