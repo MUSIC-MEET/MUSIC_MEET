@@ -7,15 +7,18 @@ interface LyricsProps {
 
 function Lyrics(props: LyricsProps) {
     return (
-        <React.Fragment>
-            <p css={style} className={`lyrics`}>
+        <div css={style}>
+            <p className={`lyrics`}>
                 {props?.lyrics}
             </p>
-        </React.Fragment>
+        </div>
     );
 }
 
 const style = css`
+    display: flex;
+    justify-content: center;
+    padding-bottom: 3rem;
     p {
         white-space: pre;
         text-align: center;

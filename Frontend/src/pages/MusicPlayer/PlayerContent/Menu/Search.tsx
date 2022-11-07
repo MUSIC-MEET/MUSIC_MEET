@@ -107,7 +107,8 @@ const Div = React.memo(styled.div<{
     subFontColor: string;
     background: string;
 }>`
-    position: absolute;
+    position: relative;
+    
     display: flex;
     justify-content: center;
     align-items: center;
