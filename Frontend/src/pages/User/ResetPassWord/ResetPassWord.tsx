@@ -14,6 +14,7 @@ import { useMutation, useQuery } from "react-query";
 import authKeyCheck from "../../../utils/RequestApis/ResetPassword/AuthKeycheck";
 import changePassword from "utils/RequestApis/ResetPassword/ChangePassword";
 import Loading from "components/common/Loading";
+import Success from "./Success";
 
 interface ResetPasswordValuesType {
     pw1: string;
@@ -99,8 +100,11 @@ function ResetPassWord() {
                 <Title>{t("title")}</Title>
                 {changeRequestIsSuccess &&
                     <React.Fragment>
-                        <p>{t("sucess")}</p>
-                        <a onClick={goLoginHandler} css={css`margin-top: 1rem; cursor: pointer;`}>{t("go")}</a>
+                        <Success
+                            success={t("success")}
+                            ment={t("go")}
+                            callBack={goLoginHandler}
+                        />
                     </React.Fragment>
                 }
                 {
