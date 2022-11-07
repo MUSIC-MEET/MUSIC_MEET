@@ -15,7 +15,6 @@ interface MusicListProps {
 }
 
 function MusicList(props: MusicListProps) {
-    console.log(props.type);
     const { data, fetchNextPage, hasNextPage, } =
         useInfiniteQuery(["fetchAlbumMusicList", props.type],
             ({ queryKey, pageParam = 1 }) => fetchAlbumMusicList({ page: pageParam, type: queryKey[1] }),
