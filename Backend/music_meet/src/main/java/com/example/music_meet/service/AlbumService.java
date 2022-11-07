@@ -794,11 +794,8 @@ public class AlbumService
             sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`, `view`"+
                     " FROM music WHERE `state` = 0 AND (title LIKE ? OR singer LIKE ?) ORDER BY `releasedate` DESC LIMIT ?,10";
         } else if (type.equals("popular")) {
-            sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`"+
+            sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`, `view`"+
                     " FROM music WHERE `state` = 0 AND (title LIKE ? OR singer LIKE ?) ORDER BY `vote` DESC LIMIT ?,10";
-        } else {
-            sql = "select `musicnum`, `origin_title`, `origin_singer`, `vote`, DATE_FORMAT(`releasedate`, '%Y-%m-%d') AS releasedate, `imgsrc`"+
-                    " FROM music WHERE `state` = 0 ORDER BY `releasedate` DESC LIMIT ?,10";
         }
 
         try {
