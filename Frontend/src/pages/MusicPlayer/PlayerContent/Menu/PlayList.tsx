@@ -31,6 +31,7 @@ const style = css`
 
     & > .playlist {
         padding-top: 4rem;
+        margin-bottom: 5rem;
         height: 100%;
     }
 
