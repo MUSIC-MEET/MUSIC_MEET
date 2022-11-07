@@ -13,7 +13,7 @@ const text: ResetPasswordType = {
         },
         submit: "Change Password",
     },
-    sucess: "Password Changed Successfully.",
+    success: "Password Changed Successfully.",
     error: "Password Changed Failed.",
     go: "Go to Login Page",
     keyError: "Invalid Access."

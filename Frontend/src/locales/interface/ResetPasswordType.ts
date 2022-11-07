@@ -12,7 +12,7 @@ interface ResetPasswordType {
         submit: string;
         
     }
-    sucess: string;
+    success: string;
     error: string;
     go: string;
     keyError: string;
