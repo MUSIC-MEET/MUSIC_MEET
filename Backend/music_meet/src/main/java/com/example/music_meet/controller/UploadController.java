@@ -82,8 +82,16 @@ public class UploadController {
     // 개별 업로드 글 목록 조회.md
     //
     @RequestMapping(value = "/cover/list", method = RequestMethod.GET)
-    public ResponseEntity<Object> getUserUploadList(@RequestParam("page") final int page){
-        return new ResponseEntity<>(uploadService.getUploadList(page), HttpStatus.OK);
+    public ResponseEntity<Object> getUserUploadList(@RequestParam("page") final int page,
+                                                    @RequestParam(value = "type",required = false) String TYPE,
+                                                    @RequestParam(value = "search", required = false) String search){
+        if (TYPE == null){
+            TYPE = "latest";
+        }
+        if (search == null){
+            search = "";
+        }
+        return new ResponseEntity<>(uploadService.getUploadList(page, TYPE, search), HttpStatus.OK);
     }
 
 
@@ -263,6 +271,7 @@ public class UploadController {
     @RequestMapping(value = "/cover/{type}/search/{keyword}", method = RequestMethod.GET)
     public ResponseEntity<Object> SearchUpload(@PathVariable("type")final String TYPE,
                                                @PathVariable("keyword")final String KEYWORD){
+
 
 
 
