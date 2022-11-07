@@ -103,7 +103,11 @@ public class PlayListService {
                 playlist = rs.getString("playlist").replace("[","").replace("]","");
                 sql = "UPDATE playlist SET playlist = ? WHERE usernum = ?";
                 pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, "["+ playlist + "," + id + "]");
+                if (!playlist.equals("")){
+                    pstmt.setString(1, "["+ playlist + "," + id + "]");
+                } else {
+                    pstmt.setString(1, "[" + id + "]");
+                }
                 pstmt.setInt(2,userNum);
                 rsInt = pstmt.executeUpdate();
                 if (rsInt >= 1){
