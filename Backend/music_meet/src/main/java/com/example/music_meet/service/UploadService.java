@@ -109,15 +109,21 @@ public class UploadService {
     /**
      * 회원 개별 업로드 글 목록을 페이지 단위로 보여주는 함수
      * @param page 보여줄 페이지 번호
-     * @return
+     * @param type latest(최신), popular(인기) 등 정렬할 타입
+     * @param search 검색할 단어
+     * @return Object 타입을 리턴
      */
-    public Object getUploadList(final int page) {
+    public Object getUploadList(final int page, String type, String search) {
         ArrayList<UploadMusic> uploads = new ArrayList<>();
         Map<String, Object> responseMap = new HashMap<>();
         int totalPage = 0;
-
-        sql = "select a.`uploadnum`, a.`origin_title`, b.`nickname`, a.`vote`, a.`view`, DATE_FORMAT(a.`createdat`, '%Y-%m-%d') AS createdat, b.`userimage`"+
-                " FROM upload a, user b WHERE a.`state` = 0 AND a.`usernum` = b.`usernum` ORDER BY a.`createdat` DESC LIMIT ?,10";
+        if (type.equals("latest")){
+            sql = "select a.`uploadnum`, a.`origin_title`, b.`nickname`, a.`vote`, a.`view`, DATE_FORMAT(a.`createdat`, '%Y-%m-%d') AS createdat, b.`userimage`"+
+                    " FROM upload a, user b WHERE a.`state` = 0  AND a.`usernum` = b.`usernum` AND (a.title LIKE ? OR b.nickname LIKE ?) ORDER BY a.`createdat` DESC LIMIT ?,10";
+        } else if (type.equals("popular")){
+            sql = "select a.`uploadnum`, a.`origin_title`, b.`nickname`, a.`vote`, a.`view`, DATE_FORMAT(a.`createdat`, '%Y-%m-%d') AS createdat, b.`userimage`"+
+                    " FROM upload a, user b WHERE a.`state` = 0 AND a.`usernum` = b.`usernum` AND (a.title LIKE ? OR b.nickname LIKE ?) ORDER BY a.`vote` DESC LIMIT ?,10";
+        }
         try {
             //
             // DB구간
@@ -125,7 +131,9 @@ public class UploadService {
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, (page - 1) * 10);
+            pstmt.setString(1, "%" + search + "%");
+            pstmt.setString(2, "%" + search + "%");
+            pstmt.setInt(3, (page - 1) * 10);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {

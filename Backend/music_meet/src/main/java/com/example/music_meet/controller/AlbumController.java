@@ -233,12 +233,16 @@ public class AlbumController
         return new ResponseEntity<>(musics, HttpStatus.OK);
     }
 
-    //
-    // 음악 리스트 호출.md
-    //
+    /**
+     * 음악 리스트 호출.md
+     * @param PAGE
+     * @param TYPE
+     * @param search
+     * @return
+     */
     @RequestMapping("/musics/list")
     public ResponseEntity<Object> getMusicListToPage(@RequestParam("page") final int PAGE,
-                                                     @RequestParam(value = "type",required = false) String TYPE,
+                                                     @RequestParam(value = "type",required = false) String TYPE, // latest, popular
                                                      @RequestParam(value = "search", required = false) String search) {
         if (TYPE == null){
             TYPE = "latest";
