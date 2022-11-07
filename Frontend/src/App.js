@@ -120,7 +120,7 @@ const rootStyle = css`
         justify-content: center;
         align-items: center;
         width: 100vw;
-        min-height: 100%;
+        min-height: 100vh;
         z-index: 1;
         border-left: 2px solid #555555;
         padding-bottom: 5rem;

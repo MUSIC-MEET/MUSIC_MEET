@@ -29,7 +29,6 @@ const Form = React.memo(styled.form`
     align-items: center;
     width: 100%;
     height: 100%;
-    position: relative;
     & > input {
         width: 100%;
         padding: 1rem;

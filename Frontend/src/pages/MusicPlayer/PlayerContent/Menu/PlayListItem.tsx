@@ -56,13 +56,11 @@ function PlayListItem(props: PlayListItemType & { isPlaying: boolean; index: num
                 </div>
             </div>
             <div className="right">
-
                 {
                     isHover ?
                         <div className="hover effect"><DeleteForeverIcon onClick={onDelete} /></div> :
                         <h3 className="sub">{`${transTime(props.length ?? 0)}`}</h3>
                 }
-
             </div>
         </Item>
     );
@@ -75,8 +73,8 @@ interface ItemProps {
 }
 
 const Item = React.memo(styled.li<ItemProps>`
-    padding: 1rem 0rem;
-
+    
+    margin-bottom: 1rem;
     border-bottom: 1px solid rgba(88, 88, 88);
     cursor: pointer;
     display: flex;
@@ -95,7 +93,7 @@ const Item = React.memo(styled.li<ItemProps>`
         display: flex;
         flex-direction: row;
         align-items: center;
-
+        padding-bottom: 1rem;
         .effect {
             position: absolute;
             width: 100%;

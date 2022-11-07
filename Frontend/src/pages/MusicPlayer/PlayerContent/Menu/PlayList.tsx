@@ -30,8 +30,8 @@ const style = css`
     }
 
     & > .playlist {
-        padding-top: 4rem;
-        height: 100%;
+        margin-top: 1rem;
+        padding-bottom: 1rem;
     }
 
 `;
