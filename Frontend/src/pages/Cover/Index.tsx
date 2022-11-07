@@ -10,6 +10,7 @@ import Upload from "./Upload/Upload";
 import View from "./View/View";
 import Edit from "./Edit/Edit";
 import List from "./List/List";
+import Search from "./Search/Search";
 /**
  * /Cover Route Component
  * @returns 
@@ -29,6 +30,7 @@ function Index() {
                         } />
                         <Route path="list" element={<List />} />
                         <Route path="*" element={<NotFound />} />
+                        <Route path="search" element={<Search />} />
                     </Routes>
                 </Suspense>
             </ErrorBoundary>

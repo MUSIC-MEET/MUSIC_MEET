@@ -102,11 +102,7 @@ const rootStyle = css`
     width: 100%;
     min-height: 100vh;
     padding: 0rem;
-    padding-bottom: 5rem;
     transition: all 0.5s;
-    @media screen and (max-width: 1023px) {
-        flex-direction: column; 
-    }
 
     .menu {
         width: 12%;
@@ -126,6 +122,8 @@ const rootStyle = css`
         width: 100vw;
         min-height: 100%;
         z-index: 1;
+        border-left: 2px solid #555555;
+        padding-bottom: 5rem;
     }
 
     .section-wrapper, .main-wrapper {
@@ -135,6 +133,11 @@ const rootStyle = css`
     .main-wrapper {
         margin-top: 1rem;
         margin-bottom: 2rem;
+    }
+
+    @media screen and (max-width: 1023px) {
+        flex-direction: column; 
+        .container { border-left: none; }
     }
 `;
 
