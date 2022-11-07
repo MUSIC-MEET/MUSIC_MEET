@@ -1052,6 +1052,7 @@ public class UserService {
                 response_callUserComment.setImgSrc(serverURL + ":" + serverPort + beanConfig.MUSIC_IMAGE_URL +  rs.getString("imgSrc"));
                 response_callUserComment.setTitle(rs.getString("origin_title"));
                 response_callUserComment.setSinger(rs.getString("origin_singer"));
+                response_callUserComment.setType(0);
                 response_callUserComments.add(response_callUserComment);
             }
 
@@ -1071,6 +1072,7 @@ public class UserService {
                 response_callUserComment.setImgSrc(serverURL + ":" + serverPort + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
                 response_callUserComment.setTitle(rs.getString("origin_title"));
                 response_callUserComment.setSinger(rs.getString("nickname"));
+                response_callUserComment.setType(1);
                 response_callUserComments.add(response_callUserComment);
             }
             Collections.sort(response_callUserComments, new Comparator<Response_callUserComment>() {
