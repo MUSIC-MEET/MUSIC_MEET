@@ -3,11 +3,12 @@ import customAxios from "../../customAxios";
 import MusicType from "Types/MusicType";
 
 const fetchCoverMusicList =
-    (page: number): Promise<{ data: MusicType[]; currentPage: number; endPage: number}> => {
+    ({ page, type }: {page: number, type: any;})
+    : Promise<{ data: MusicType[]; currentPage: number; endPage: number}> => {
         const axios = customAxios();
         return axios({
             method: "GET",
-            url: `/cover/list?page=${page}`,
+            url: `/cover/list?page=${page}&type=${type}`,
         }).then(res => {
             return {
                 data: res.data.list,

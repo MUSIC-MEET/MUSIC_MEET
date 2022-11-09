@@ -1,35 +1,33 @@
 import AnimationMoreButton from "components/common/AnimationMoreButton";
 import CardMusicList from "components/common/CardMusicList";
-import React, { useEffect } from "react";
+import React from "react";
 import { useInfiniteQuery } from "react-query";
-import fetchAlbumMusicList from "utils/RequestApis/Music/fetchAlbumMusicList";
+import fetchCoverMusicList from "utils/RequestApis/Cover/fetchCoverMusicList";
 
 interface MusicListProps {
     type: "latest" | "popular";
 }
 
-
 /**
- * 뮤직 리스트 컴포넌트
+ * 커버 리스트 컴포넌트
  * @params props.type {"latest" | "popular"} 최신순인지 인기순인지
  * @returns 
  */
 function MusicList(props: MusicListProps) {
     const { data, fetchNextPage, hasNextPage, } =
-        useInfiniteQuery(["fetchAlbumMusicList", props.type],
-            ({ queryKey, pageParam = 1 }) => fetchAlbumMusicList({ page: pageParam, type: queryKey[1] }),
+        useInfiniteQuery(["fetchCoverMusicList", props.type],
+            ({ queryKey, pageParam = 1 }) => fetchCoverMusicList({ page: pageParam, type: queryKey[1] }),
             {
                 cacheTime: 0,
                 getNextPageParam: (lastPage, allPages) => {
-                    if (lastPage.currentPage < lastPage.endPage)
-                        return lastPage.currentPage + 1;
+                    if (lastPage.currentPage < lastPage.endPage) return lastPage.currentPage + 1;
                 },
             });
     return (
         <React.Fragment>
             <CardMusicList
                 list={data?.pages.map((page) => page.data).flat()}
-                type={"music"}
+                type={"cover"}
             />
             <AnimationMoreButton
                 hasNext={hasNextPage}
