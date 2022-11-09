@@ -495,7 +495,6 @@ public class AlbumService
 
             if (rsInt >= 1){
                 result = true;
-                System.out.println(rsInt);
             }
 
         } catch (Exception e) {
