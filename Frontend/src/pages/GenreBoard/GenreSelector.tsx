@@ -5,8 +5,6 @@ import { useParams } from "react-router-dom";
 import Genre from "./Genre";
 import GenreButton from "./GenreButton";
 
-
-
 function GenreSelector({ board, write, search, searchType }
     : { board?: boolean, write?: boolean, search?: boolean; searchType?: "title" | "user" }) {
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
