@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Post from "./Post";
 import { PostType } from "./PostType";
@@ -57,6 +57,7 @@ const tableStyle = css`
     margin-top: 3rem;
     width: 80vw;
     padding: 0 1rem;
+    padding-bottom: 1rem;
     display: flex;
     flex-direction: column;
 

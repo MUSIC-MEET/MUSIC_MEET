@@ -20,7 +20,6 @@ function GenreButton({ name, text, isSelected, board, write, search, searchType 
     const ItemClickHandler = useCallback(() => {
         if (board) {
             navigator(`/board/${name}`);
-            location.reload();
         }
 
         else if (write)

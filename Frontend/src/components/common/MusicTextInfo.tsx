@@ -127,9 +127,11 @@ const style = css`
         flex-direction: row;
         justify-content: center;
         align-items: center;
-
     }
 
+    .view > svg{
+        margin-right: 0.3rem;
+    }
     .counts { 
         span {
             margin-left: 0.5rem;
