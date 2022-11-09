@@ -14,8 +14,12 @@ function EvaluationMusicItem(props: LatestEvaluationMusic) {
     const navigator = useNavigate();
 
     const onClickHanlder = useCallback(() => {
-        navigator(`/music/${props?.musicNum}`);
-    }, [navigator, props.musicNum]);
+        if (props.type === 0) {
+            navigator(`/music/${props.musicNum}`);
+        } else if (props.type === 1) {
+            navigator(`/cover/${props?.musicNum}`);
+        }
+    }, [navigator, props.musicNum, props.type]);
 
     return (
         <li css={style} onClick={onClickHanlder}>
