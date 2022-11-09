@@ -146,11 +146,18 @@ public class BoardController
     //
     // 장르게시판 글 목록 호출.md
     //
-    @RequestMapping( path = "/boards/{genre}/{page}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getGenreBoarList(@PathVariable("genre")String genre, @PathVariable("page")final int page)
+    @RequestMapping( path = "/boards", method = RequestMethod.GET)
+    public ResponseEntity<Object> getGenreBoarList(@RequestParam("genre") final String genre,
+                                                   @RequestParam("page") final int page,
+                                                   @RequestParam(value = "type", required = false) String type,
+                                                   @RequestParam(value = "keyword" ,required = false) String keyword )
     {
-        ArrayList<Response_GetGenreBoardList> genreboards;
-        genreboards = boardService.getGenreBoarList(new Request_GetGenreBoardList(genre, page));
+        if (type == null || keyword == null){
+            type = "title";
+            keyword = "";
+        }
+        Object genreboards;
+        genreboards = boardService.getGenreBoarList(genre, page, type,keyword);
         return new ResponseEntity<>(genreboards, HttpStatus.OK);
     }
 
@@ -159,7 +166,8 @@ public class BoardController
     // 장르 게시판 글 호출.md
     //
     @RequestMapping(path = "/board/{genre}/{num}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getBoardForGenreNum(@PathVariable("genre") final String genre, @PathVariable("num") final String num)
+    public ResponseEntity<Object> getBoardForGenreNum(@PathVariable("genre") final String genre,
+                                                      @PathVariable("num") final String num)
     {
         Response_GetGenreBoardForGenreNum response_getGenreBoardForGenreNum = new Response_GetGenreBoardForGenreNum();
 

@@ -211,27 +211,41 @@ public class BoardService
     }
 
 
-    //
-    // 장르 게시판 글 목록 호출
-    //
-    public ArrayList<Response_GetGenreBoardList> getGenreBoarList(Request_GetGenreBoardList request_getGenreBoardList)
+    /**
+     * 장르 게시판 글 목록 호출
+     * @param genre 불러올 게시판의 장르
+     * @param page 호출할 페이지
+     * @param type title, nickname 중에 호출할 카테고리
+     * @param keyword 검색할 키워드
+     * @return Map<String, Object> 타입의 변수
+     */
+    public Object getGenreBoarList(String genre, final int page, final String type, final String keyword)
     {
-        final String genreBoard = request_getGenreBoardList.getGenre() + "board";
-        final int page = request_getGenreBoardList.getPage();
+        final String genreBoard = genre + "board";
+        int endPage = 0;
+        Map<String, Object> response = new HashMap<>();
 
         ArrayList<Response_GetGenreBoardList> boards = new ArrayList<>();
+        if (type.equals("title")){
+            sql = "SELECT a.title, a.usernum, a.boardnum, a.`view`, a.upvote, a.downvote, b.nickname, DATE_FORMAT(a.`createdat`, '%Y-%m-%d %T') AS createdat FROM " + genreBoard +
+                    " a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND a.title LIKE ? ORDER BY a.boardnum DESC " +
+                    " LIMIT ?,10";
+        }else if (type.equals("nickname")){
+            sql = "SELECT a.title, a.usernum, a.boardnum, a.`view`, a.upvote, a.downvote, b.nickname, DATE_FORMAT(a.`createdat`, '%Y-%m-%d %T') AS createdat FROM " + genreBoard +
+                    " a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND b.nickname LIKE ? ORDER BY a.boardnum DESC " +
+                    " LIMIT ?,10";
+        }
+
         try
         {
-            sql = "SELECT a.title, a.usernum, a.boardnum, a.`view`, a.upvote, a.downvote, b.nickname, DATE_FORMAT(a.`createdat`, '%Y-%m-%d %T') AS createdat FROM " + genreBoard +
-                    " a, user b WHERE a.usernum = b.usernum AND a.state = 0 ORDER BY a.boardnum DESC " +
-                    " LIMIT ?,10";
             //
             // DB구간
             //
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, page * 10 - 10);
+            pstmt.setString(1, "%" + keyword + "%");
+            pstmt.setInt(2, page * 10 - 10);
             rs = pstmt.executeQuery();
 
             while(rs.next())
@@ -267,6 +281,27 @@ public class BoardService
                 response_getGenreBoardList.setVote(rs.getInt("upvote") - rs.getInt("downvote"));
                 boards.add(response_getGenreBoardList);
             }
+
+            if (type.equals("title")) {
+                sql = "SELECT count(boardnum) AS endpage FROM "+ genreBoard +" WHERE `state` = 0 AND title LIKE ?";
+            } else if (type.equals("nickname")){
+                sql = "SELECT count(a.boardnum) AS endpage FROM "+ genreBoard +" a, user b WHERE a.usernum = b.usernum " +
+                        "AND a.state = 0 AND b.nickname like ?";
+            }
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,"%" + keyword + "%");
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                endPage = rs.getInt("endpage");
+            }
+
+            if (endPage % 10 != 0){
+                endPage = (endPage / 10) + 1;
+            }else {
+                endPage = endPage / 10;
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -280,7 +315,9 @@ public class BoardService
                 throw new RuntimeException(e);
             }
         }
-        return boards;
+        response.put("endPage",endPage);
+        response.put("boards",boards);
+        return response;
     }
 
 
