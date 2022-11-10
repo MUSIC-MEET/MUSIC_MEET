@@ -8,9 +8,9 @@ import MoreButton from "components/common/MoreButton";
 function List() {
 
     const { t } = useTranslation<"coverListPage">("coverListPage");
-    const [type, setType] = useState<"latest" | "popular">("latest");
-    const typeChangeHandler = useCallback((type: "latest" | "popular") => {
-        setType(() => type);
+    const [sort, setSort] = useState<"latest" | "popular">("latest");
+    const sortChangeHandler = useCallback((sort: "latest" | "popular") => {
+        setSort(() => sort);
     }, []);
 
 
@@ -18,11 +18,11 @@ function List() {
         <React.Fragment >
             <Title>{t("title")}</Title>
             <LatestPopular
-                type={type}
-                onChange={typeChangeHandler}
+                sort={sort}
+                onChange={sortChangeHandler}
             />
             <MusicList
-                type={type}
+                sort={sort}
             />
             <MoreButton
                 writeUrl={"/cover/upload"}
