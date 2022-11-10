@@ -33,10 +33,11 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "GENERATE_SOURCEMAP=false react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "product": "npm install --legacy-peer-deps && npm run build && npx serve -s build"
+    "product": "npm install --legacy-peer-deps && npm run build && npx serve -s build",
+    "winProduct": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build && npx serve -s build"
   },
   "eslintConfig": {
     "extends": [
