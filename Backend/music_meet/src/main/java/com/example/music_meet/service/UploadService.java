@@ -468,7 +468,7 @@ public class UploadService {
     public ArrayList<UploadComment> getUploadComment(final int uploadNum) {
         ArrayList<UploadComment> comments = new ArrayList<>();
 
-        sql = "SELECT a.`uploadCommentNum`, a.`comment`, b.`nickname`, b.`userimage` FROM uploadComment a, user b " +
+        sql = "SELECT a.`uploadCommentNum`, a.`comment`, b.`nickname`, b.`userimage`, DATE_FORMAT(a.`createdat`, '%Y-%m-%d %T') AS createdat FROM uploadComment a, user b " +
                 " WHERE a.`uploadnum` = ? AND a.`state` = 0 AND a.usernum = b.usernum ORDER BY a.`createdat` DESC";
         try
         {
@@ -487,6 +487,7 @@ public class UploadService {
                 comment.setComment(rs.getString("comment"));
                 comment.setId(rs.getInt("uploadCommentNum"));
                 comment.setImgSrc(beanConfig.getServerUrl() + ":" + beanConfig.getServerPort() + beanConfig.USER_IMAGE_API_URL + rs.getString("userimage"));
+                comment.setCreatedAt(rs.getString("createdat"));
                 comments.add(comment);
             }
 
@@ -837,12 +838,12 @@ public class UploadService {
     public ArrayList<Map<String, String>> SearchUpload(String type, String keyword) {
         ArrayList<Map<String, String>> uploads = new ArrayList<>();
         if (type.equals("user")) {
-            sql = "SELECT a.uploadNum, a.title, b.nickname, DATE_FORMAT(a.`createdat`, '%Y-%m-%d') AS createdat, a.view, a.vote" +
-                    " FROM upload a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND b.nickname = %?%";
+            sql = "SELECT a.uploadNum, a.title, b.nickname, DATE_FORMAT(a.`createdat`, '%Y-%m-%d %T') AS createdat, a.view, a.vote" +
+                    " FROM upload a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND b.nickname LIKE ?";
         }
         else if (type.equals("title")){
-            sql = "SELECT a.uploadNum, a.title, b.nickname, DATE_FORMAT(a.`createdat`, '%Y-%m-%d') AS createdat, a.view, a.vote" +
-                    " FROM upload a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND a.title = %?%";
+            sql = "SELECT a.uploadNum, a.title, b.nickname, DATE_FORMAT(a.`createdat`, '%Y-%m-%d %T') AS createdat, a.view, a.vote" +
+                    " FROM upload a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND a.title LIKE ?";
         }
         try
         {
@@ -852,7 +853,7 @@ public class UploadService {
             Class.forName(classForName);
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, keyword);
+            pstmt.setString(1, "%" + keyword + "%");
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
