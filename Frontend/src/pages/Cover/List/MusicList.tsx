@@ -5,7 +5,7 @@ import { useInfiniteQuery } from "react-query";
 import fetchCoverMusicList from "utils/RequestApis/Cover/fetchCoverMusicList";
 
 interface MusicListProps {
-    type: "latest" | "popular";
+    sort: "latest" | "popular";
 }
 
 /**
@@ -15,8 +15,8 @@ interface MusicListProps {
  */
 function MusicList(props: MusicListProps) {
     const { data, fetchNextPage, hasNextPage, } =
-        useInfiniteQuery(["fetchCoverMusicList", props.type],
-            ({ queryKey, pageParam = 1 }) => fetchCoverMusicList({ page: pageParam, type: queryKey[1] }),
+        useInfiniteQuery(["fetchCoverMusicList", props.sort],
+            ({ queryKey, pageParam = 1 }) => fetchCoverMusicList({ page: pageParam, sort: queryKey[1] }),
             {
                 cacheTime: 0,
                 getNextPageParam: (lastPage, allPages) => {

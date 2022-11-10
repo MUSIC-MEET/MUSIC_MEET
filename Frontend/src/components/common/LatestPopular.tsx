@@ -6,8 +6,8 @@ import styled from "@emotion/styled";
 import ThemeContext from "store/ThemeContext";
 
 interface LatestPopularProps {
-    type: "latest" | "popular";
-    onChange: (type: "latest" | "popular") => void;
+    sort: "latest" | "popular";
+    onChange: (sort: "latest" | "popular") => void;
 }
 
 /**
@@ -26,13 +26,13 @@ function LatestPopular(props: LatestPopularProps & BaseProps) {
             subColor={ctx.themeStyle.fontStyle2.color}
         >
             <span
-                className={`latest ${props.type === "latest" ? "active" : ""}`}
+                className={`latest ${props.sort === "latest" ? "active" : ""}`}
                 onClick={() => props.onChange("latest")}
             >
                 {t("latest")}
             </span>
             <span
-                className={`popular ${props.type === "popular" ? "active" : ""}`}
+                className={`popular ${props.sort === "popular" ? "active" : ""}`}
                 onClick={() => props.onChange("popular")}
             >
                 {t("popular")}
