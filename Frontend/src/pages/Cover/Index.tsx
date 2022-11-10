@@ -21,6 +21,8 @@ function Index() {
             <ErrorBoundary>
                 <Suspense fallback={<Loading />}>
                     <Routes>
+                        <Route path="search/" element={<Search />} />
+                        <Route path="search/:type/:keyword" element={<Search />} />
                         <Route path=":id" element={<View />} />
                         <Route path="upload" element={
                             <PrivateRoute RouteComponent={Upload} />
@@ -30,7 +32,7 @@ function Index() {
                         } />
                         <Route path="list" element={<List />} />
                         <Route path="*" element={<NotFound />} />
-                        <Route path="search" element={<Search />} />
+
                     </Routes>
                 </Suspense>
             </ErrorBoundary>

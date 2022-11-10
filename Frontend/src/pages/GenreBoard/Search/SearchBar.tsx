@@ -3,9 +3,9 @@ import Form from "components/common/Form";
 import React, { useContext } from "react";
 import { css } from "@emotion/react";
 import ThemeContext from "store/ThemeContext";
-import styled from "@emotion/styled";
 import Submit from "components/common/Submit";
 import { useTranslation } from "react-i18next";
+import Select from "components/common/Select";
 
 interface SearchBarProps {
     keyword: string;
@@ -31,8 +31,6 @@ function SearchBar(props: SearchBarProps) {
 
         >
             <Select
-                fontColor={fontColor}
-                borderColor={borderColor}
                 onChange={typeChange}
             >
                 <option selected={type === "title"} value="title">{t("searchBar.options.title")}</option>
@@ -79,10 +77,5 @@ const formStyle = css`
     }
 `;
 
-const Select = styled.select<{ fontColor: string; borderColor: string }>`
-    padding: 0.5rem;
-    color: ${props => props.fontColor};
-    border-color: ${props => props.borderColor};
-`;
 
 export default React.memo(SearchBar);
