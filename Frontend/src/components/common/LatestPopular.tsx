@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import BaseProps from "components/common/BaseProps";
@@ -6,8 +5,8 @@ import styled from "@emotion/styled";
 import ThemeContext from "store/ThemeContext";
 
 interface LatestPopularProps {
-    sort: "latest" | "popular";
-    onChange: (sort: "latest" | "popular") => void;
+    type: "latest" | "popular";
+    onChange: (type: "latest" | "popular") => void;
 }
 
 /**
@@ -26,13 +25,13 @@ function LatestPopular(props: LatestPopularProps & BaseProps) {
             subColor={ctx.themeStyle.fontStyle2.color}
         >
             <span
-                className={`latest ${props.sort === "latest" ? "active" : ""}`}
+                className={`latest ${props.type === "latest" ? "active" : ""}`}
                 onClick={() => props.onChange("latest")}
             >
                 {t("latest")}
             </span>
             <span
-                className={`popular ${props.sort === "popular" ? "active" : ""}`}
+                className={`popular ${props.type === "popular" ? "active" : ""}`}
                 onClick={() => props.onChange("popular")}
             >
                 {t("popular")}
