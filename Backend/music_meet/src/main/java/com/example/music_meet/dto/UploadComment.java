@@ -16,4 +16,5 @@ public class UploadComment implements Comment {
     private String user;
     private String imgSrc;
     private String comment;
+    private String createdAt;
 }

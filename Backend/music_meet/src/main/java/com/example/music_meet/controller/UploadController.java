@@ -268,13 +268,9 @@ public class UploadController {
     //
     // 개별 업로드 글 검색.md
     //
-    @RequestMapping(value = "/cover/{type}/search/{keyword}", method = RequestMethod.GET)
-    public ResponseEntity<Object> SearchUpload(@PathVariable("type")final String TYPE,
-                                               @PathVariable("keyword")final String KEYWORD){
-
-
-
-
+    @RequestMapping(value = "/cover/search", method = RequestMethod.GET)
+    public ResponseEntity<Object> SearchUpload(@RequestParam("type")final String TYPE,
+                                               @RequestParam("keyword")final String KEYWORD){
         return new ResponseEntity<>(uploadService.SearchUpload(TYPE, KEYWORD), HttpStatus.OK);
     }
 
