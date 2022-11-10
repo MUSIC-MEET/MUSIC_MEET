@@ -113,17 +113,28 @@ public class UploadService {
      * @param search 검색할 단어
      * @return Object 타입을 리턴
      */
-    public Object getUploadList(final int page, String type, String search) {
+    public Object getUploadList(final int page, String sort, String type, String search) {
+
+
         ArrayList<UploadMusic> uploads = new ArrayList<>();
         Map<String, Object> responseMap = new HashMap<>();
         int totalPage = 0;
-        if (type.equals("latest")){
-            sql = "select a.`uploadnum`, a.`origin_title`, b.`nickname`, a.`vote`, a.`view`, DATE_FORMAT(a.`createdat`, '%Y-%m-%d') AS createdat, b.`userimage`"+
-                    " FROM upload a, user b WHERE a.`state` = 0  AND a.`usernum` = b.`usernum` AND (a.title LIKE ? OR b.nickname LIKE ?) ORDER BY a.`createdat` DESC LIMIT ?,10";
-        } else if (type.equals("popular")){
-            sql = "select a.`uploadnum`, a.`origin_title`, b.`nickname`, a.`vote`, a.`view`, DATE_FORMAT(a.`createdat`, '%Y-%m-%d') AS createdat, b.`userimage`"+
-                    " FROM upload a, user b WHERE a.`state` = 0 AND a.`usernum` = b.`usernum` AND (a.title LIKE ? OR b.nickname LIKE ?) ORDER BY a.`vote` DESC LIMIT ?,10";
+
+        if (type.equals("user")){
+            type = "b.`nickname`";
         }
+        else {
+            type = "a.`title`";
+        }
+
+        if (sort.equals("popular")){
+            sort = "a.`vote`";
+        }
+        else {
+            sort = "a.`createdat`";
+        }
+        sql = "select a.`uploadnum`, a.`origin_title`, b.`nickname`, a.`vote`, a.`view`, DATE_FORMAT(a.`createdat`, '%Y-%m-%d') AS createdat, b.`userimage`"+
+                " FROM upload a, user b WHERE a.`state` = 0 AND a.`usernum` = b.`usernum` AND " + type + " LIKE ? ORDER BY " + sort + " DESC LIMIT ?,10";
         try {
             //
             // DB구간
@@ -132,8 +143,7 @@ public class UploadService {
             conn = DriverManager.getConnection(mysqlurl, mysqlid, mysqlpassword);
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, "%" + search + "%");
-            pstmt.setString(2, "%" + search + "%");
-            pstmt.setInt(3, (page - 1) * 10);
+            pstmt.setInt(2, (page - 1) * 10);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -149,8 +159,10 @@ public class UploadService {
                 uploads.add(upload);
             }
 
-            sql = "SELECT COUNT(uploadNum) AS totalPage FROM upload WHERE state = 0";
+            sql = "SELECT COUNT(uploadNum) AS totalPage FROM upload a, user b WHERE a.usernum = b.usernum AND a.state = 0 " +
+                    "AND " + type + " LIKE ? ORDER BY " + sort + " DESC";
             pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "%" + search + "%");
             rs = pstmt.executeQuery();
 
             if (rs.next()){
@@ -835,7 +847,7 @@ public class UploadService {
      * @param keyword
      * @return
      */
-    public ArrayList<Map<String, String>> SearchUpload(String type, String keyword) {
+    public ArrayList<Map<String, String>> SearchUpload(int page,String type, String keyword) {
         ArrayList<Map<String, String>> uploads = new ArrayList<>();
         if (type.equals("user")) {
             sql = "SELECT a.uploadNum, a.title, b.nickname, DATE_FORMAT(a.`createdat`, '%Y-%m-%d %T') AS createdat, a.view, a.vote" +
