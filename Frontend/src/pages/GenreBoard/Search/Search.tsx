@@ -8,6 +8,7 @@ import PostList from "../PostList";
 import getSearchList from "utils/RequestApis/GenreBoard/getSearchList";
 import { useInfiniteQuery } from "react-query";
 import AnimationMoreButton from "components/common/AnimationMoreButton";
+import PostSearchForm from "components/common/PostSearchForm";
 
 function Search() {
     const { t } = useTranslation<"genreBoardSearchPage">("genreBoardSearchPage");
@@ -61,12 +62,12 @@ function Search() {
                 search={true}
                 searchType={_type}
             />
-            <SearchBar
-                keyword={keyword}
-                onChange={onChangeKeyWord}
-                onSubmit={onSubmit}
+            <PostSearchForm
                 type={type}
-                typeChange={onTypeChangeHandler}
+                keyword={keyword}
+                onChangeType={onTypeChangeHandler}
+                onChangeKeyword={onChangeKeyWord}
+                onSubmit={onSubmit}
             />
             <PostList
                 list={data?.pages.map((page) => page.data).flat()}

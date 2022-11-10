@@ -27,6 +27,7 @@ function PostSearchForm(props: PostSearchFormProps) {
                 input={{
                     type: "search",
                     placeholder: t("input.placeholder"),
+                    onChange: props.onChangeKeyword,
                 }}
             />
             <Submit
@@ -42,6 +43,7 @@ const style = css`
     justify-content: center;
     align-items: center;
     width: 100%;
+    margin-top: 2rem;
     height: auto;
     input[type="search"] {
         padding: 1rem;
