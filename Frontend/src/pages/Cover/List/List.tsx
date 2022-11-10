@@ -18,7 +18,7 @@ function List() {
         <React.Fragment >
             <Title>{t("title")}</Title>
             <LatestPopular
-                sort={sort}
+                type={sort}
                 onChange={sortChangeHandler}
             />
             <MusicList
