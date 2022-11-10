@@ -83,15 +83,29 @@ public class UploadController {
     //
     @RequestMapping(value = "/cover/list", method = RequestMethod.GET)
     public ResponseEntity<Object> getUserUploadList(@RequestParam("page") final int page,
-                                                    @RequestParam(value = "type",required = false) String TYPE,
-                                                    @RequestParam(value = "search", required = false) String search){
-        if (TYPE == null){
-            TYPE = "latest";
+                                                    @RequestParam(value = "sort", required = false) String sort,
+                                                    @RequestParam(value = "type",required = false) String type,
+                                                    @RequestParam(value = "keyword", required = false) String search){
+        if (sort == null){
+            sort = "latest";
+        } else if (sort.equals("popular")){
+            sort = "popular";
+        } else {
+            sort = "latest";
         }
+
+        if (type == null){
+            type = "title";
+        } else if (type.equals("user")) {
+            type = "user";
+        } else {
+            type = "title";
+        }
+
         if (search == null){
             search = "";
         }
-        return new ResponseEntity<>(uploadService.getUploadList(page, TYPE, search), HttpStatus.OK);
+        return new ResponseEntity<>(uploadService.getUploadList(page, sort, type, search), HttpStatus.OK);
     }
 
 
@@ -269,9 +283,10 @@ public class UploadController {
     // 개별 업로드 글 검색.md
     //
     @RequestMapping(value = "/cover/search", method = RequestMethod.GET)
-    public ResponseEntity<Object> SearchUpload(@RequestParam("type")final String TYPE,
+    public ResponseEntity<Object> SearchUpload(@RequestParam("page") final int page,
+                                               @RequestParam("type")final String TYPE,
                                                @RequestParam("keyword")final String KEYWORD){
-        return new ResponseEntity<>(uploadService.SearchUpload(TYPE, KEYWORD), HttpStatus.OK);
+        return new ResponseEntity<>(uploadService.SearchUpload(page, TYPE, KEYWORD), HttpStatus.OK);
     }
 
     //
