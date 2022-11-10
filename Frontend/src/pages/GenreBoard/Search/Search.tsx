@@ -7,7 +7,8 @@ import SearchBar from "./SearchBar";
 import MoreButton from "../../../components/common/MoreButton";
 import PostList from "../PostList";
 import getSearchList from "utils/RequestApis/GenreBoard/getSearchList";
-import { useMutation } from "react-query";
+import { useInfiniteQuery, useMutation } from "react-query";
+import AnimationMoreButton from "components/common/AnimationMoreButton";
 
 function Search() {
     const { t } = useTranslation<"genreBoardSearchPage">("genreBoardSearchPage");
@@ -17,10 +18,25 @@ function Search() {
     const [type, setType] = useState<string>(_type);
     const [keyword, setKeyword] = useState<string>(params.keyword ?? "");
     const navigator = useNavigate();
-    const { data, mutate } = useMutation(getSearchList, {
-        useErrorBoundary: false,
-        retry: 0
-    });
+    // const { data, mutate } = useMutation(getSearchList, {
+    //     useErrorBoundary: false,
+    //     retry: 0
+    // });
+
+    const { data, fetchNextPage, hasNextPage, refetch } =
+        useInfiniteQuery(["fetchGenreBoardSearchList", type, genre],
+            ({ queryKey, pageParam = 1 }) => getSearchList(
+                { type: queryKey[1], keyword: keyword, genre: queryKey[2], page: pageParam }
+            ),
+            {
+                enabled: false,
+                getNextPageParam: (lastPage, allPages) => {
+                    if (lastPage.currentPage < lastPage.endPage) {
+                        return lastPage.currentPage + 1;
+                    }
+                }
+            }
+        );
 
     const onChangeKeyWord = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setKeyword(() => e.target.value);
@@ -29,9 +45,9 @@ function Search() {
     const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (keyword === "") return;
-        mutate({ type, genre, keyword });
+        refetch();
         navigator(`/board/${genre}/search/${type}/${keyword}`);
-    }, [genre, keyword, mutate, navigator, type]);
+    }, [genre, keyword, navigator, refetch, type]);
 
     const onTypeChangeHandler = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
         e.preventDefault();
@@ -39,9 +55,9 @@ function Search() {
     }, []);
     useEffect(() => {
         if (keyword.length !== 0) {
-            mutate({ type, genre, keyword });
+            refetch();
         }
-    }, [mutate, genre, type]);
+    }, [refetch]);
 
     return (
         <React.Fragment>
@@ -58,11 +74,11 @@ function Search() {
                 typeChange={onTypeChangeHandler}
             />
             <PostList
-                list={data}
+                list={data?.pages.map((page) => page.data).flat()}
             />
-            <MoreButton
-                writeUrl={`/board/${genre}/write`}
-                searchUrl={`/board/${genre}/search/title`}
+            <AnimationMoreButton
+                hasNext={hasNextPage}
+                onClick={() => { fetchNextPage(); }}
             />
         </React.Fragment>
     );
