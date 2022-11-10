@@ -4,16 +4,17 @@ import customAxios from "../../customAxios";
 const getPosts = 
     ({ 
         genre, page
-    }: {genre: string; page: number;}): Promise<{ data: PostType[]; currentPage: number}> => {
+    }: {genre: string; page: number;}): Promise<{ data: PostType[]; currentPage: number; endPage: number}> => {
         const axios = customAxios();
-        console.log(genre, page,"request");
+
         return axios({
             method: "GET",
-            url: `/boards/${genre}/${page}`,
+            url: `/boards?genre=${genre}&page=${page}`,
         }).then(res => {
             return {
-                data: res.data,
-                currentPage: page
+                data: res.data.boards,
+                currentPage: page,
+                endPage:  res.data.endPage
             };
         });
     };

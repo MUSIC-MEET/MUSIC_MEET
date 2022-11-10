@@ -13,16 +13,16 @@ import AnimationMoreButton from "components/common/AnimationMoreButton";
 function Board() {
     const { t } = useTranslation<"genreBoardPage">("genreBoardPage");
     const { genre } = useParams<{ genre: string }>();
-    const { data, fetchNextPage } =
+    const { data, fetchNextPage, hasNextPage } =
         useInfiniteQuery(["getBoardList", genre],
             ({ queryKey, pageParam = 1 }) => getPosts({ genre: queryKey[1] ?? "kpop", page: pageParam }),
             {
                 getNextPageParam: (lastPage, allPages) => {
-                    return lastPage.currentPage + 1;
+                    if (lastPage.currentPage < lastPage.endPage) {
+                        return lastPage.currentPage + 1;
+                    }
                 },
-
             });
-
     return (
         <React.Fragment>
             <Title>{t("title")}</Title>
@@ -33,7 +33,7 @@ function Board() {
                 list={data?.pages.map((page) => page.data).flat()}
             />
             <AnimationMoreButton
-                hasNext={true}
+                hasNext={hasNextPage}
                 onClick={() => { fetchNextPage(); }}
             />
 

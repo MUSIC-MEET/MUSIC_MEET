@@ -39,4 +39,4 @@ const _style = css`
     }
 `;
 
-export default Post;
+export default React.memo(Post);
