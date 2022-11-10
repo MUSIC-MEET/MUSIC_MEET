@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import GenreSelector from "../GenreSelector";
 import { useNavigate, useParams } from "react-router-dom";
-import SearchBar from "./SearchBar";
 import PostList from "../PostList";
 import getSearchList from "utils/RequestApis/GenreBoard/getSearchList";
 import { useInfiniteQuery } from "react-query";
