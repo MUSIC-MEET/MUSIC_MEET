@@ -230,7 +230,7 @@ public class BoardService
             sql = "SELECT a.title, a.usernum, a.boardnum, a.`view`, a.upvote, a.downvote, b.nickname, DATE_FORMAT(a.`createdat`, '%Y-%m-%d %T') AS createdat FROM " + genreBoard +
                     " a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND a.title LIKE ? ORDER BY a.boardnum DESC " +
                     " LIMIT ?,10";
-        }else if (type.equals("nickname")){
+        }else if (type.equals("user")){
             sql = "SELECT a.title, a.usernum, a.boardnum, a.`view`, a.upvote, a.downvote, b.nickname, DATE_FORMAT(a.`createdat`, '%Y-%m-%d %T') AS createdat FROM " + genreBoard +
                     " a, user b WHERE a.usernum = b.usernum AND a.state = 0 AND b.nickname LIKE ? ORDER BY a.boardnum DESC " +
                     " LIMIT ?,10";
@@ -284,7 +284,7 @@ public class BoardService
 
             if (type.equals("title")) {
                 sql = "SELECT count(boardnum) AS endpage FROM "+ genreBoard +" WHERE `state` = 0 AND title LIKE ?";
-            } else if (type.equals("nickname")){
+            } else if (type.equals("user")){
                 sql = "SELECT count(a.boardnum) AS endpage FROM "+ genreBoard +" a, user b WHERE a.usernum = b.usernum " +
                         "AND a.state = 0 AND b.nickname like ?";
             }
