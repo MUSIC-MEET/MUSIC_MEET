@@ -26,3 +26,5 @@ export { default as coverListPage } from "./CoverListPage";
 export { default as albumMusicListPage } from "./AlbumMusicListPage";
 export { default as musicPlayer } from "./MusicPlayer";
 export { default as latestPopular } from "./LatestPopular";
+export { default as coverSearchPage } from "./CoverSearch";
+export { default as searchForm } from "./SearchForm";
