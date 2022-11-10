@@ -3,7 +3,6 @@ import React, { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SignUpValidator from "pages/SignUp/SignUpValidator";
-import { css } from "@emotion/react";
 import useForm from "hooks/use-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import LoginModalShown from "store/LoginModalShown";

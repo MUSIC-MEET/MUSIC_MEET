@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import React, { useState } from "react";
 import Text from "components/common/Text";
 import AcUnitIcon from "@mui/icons-material/AcUnit";

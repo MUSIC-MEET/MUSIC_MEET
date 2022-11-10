@@ -2,7 +2,6 @@ import { css } from "@emotion/react";
 import React, { useCallback, useState } from "react";
 import { useQuery } from "react-query";
 import MusicPlayerContenxt from "store/MusicPlayerContext";
-import PlayListMusicType from "Types/PlayListMusicType";
 import fetchPlayList from "utils/RequestApis/MusicPlayer/fetchPlayList";
 import PlayerContent from "./PlayerContent/PlayerContent";
 import PlayerController from "./PlayerController/PlayerController";

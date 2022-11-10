@@ -4,13 +4,20 @@ import customAxios from "../../customAxios";
 
 const getSearchList = 
     ({ 
-        genre, type, keyword
-    }: {genre: string; type: string; keyword: string;}): Promise<PostType[]> => {
+        genre, type, keyword, page
+    }: {genre: string; type: string; keyword: string; page: number;})
+    : Promise<{ data:PostType[], endPage: number, currentPage: number}> => {
         const axios = customAxios();
         return axios({
             method: "GET",
-            url: `/board/search/${genre}/${type}/${keyword}`,
-        }).then(res => res.data);
+            url: `/boards?genre=${genre}&type=${type}&keyword=${keyword}&page=${page}`,
+        }).then(res => {
+            return {
+                data: res.data.boards,
+                endPage: res.data.endPage,
+                currentPage: page
+            };
+        });
     };
 
 

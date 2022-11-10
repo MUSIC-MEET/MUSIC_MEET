@@ -14,7 +14,7 @@ function PlayMusicInfo() {
             </figure>
             <div className="music-info">
                 <h2>{currentMusicName}</h2>
-                <h3 css={css`color: ${ctx2.themeStyle.fontStyle2.color}`}>{currentMusicArtist}</h3>
+                <h3 css={css`color: ${ctx2.themeStyle.fontStyle2.color};`}>{currentMusicArtist}</h3>
             </div>
         </div>
     );

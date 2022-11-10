@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import Content from "components/UI/Content";
 import { useTranslation } from "react-i18next";
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
