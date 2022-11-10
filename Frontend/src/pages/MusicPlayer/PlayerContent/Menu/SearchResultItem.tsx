@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import PlayListSearchItem from "Types/PlayListSearchItem";
 import BaseProps from "components/common/BaseProps";
-import { css } from "@emotion/react";
 
 import AddIcon from "@mui/icons-material/Add";
 import styled from "@emotion/styled";

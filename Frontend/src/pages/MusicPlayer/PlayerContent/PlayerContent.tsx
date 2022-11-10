@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import React, { useContext } from "react";
 import BaseProps from "components/common/BaseProps";
 import styled from "@emotion/styled";
@@ -6,11 +5,11 @@ import ThemeContext from "store/ThemeContext";
 import PlayMusicImg from "./PlayMusicImg";
 import ContentTabs from "./ContentTabs";
 
-interface PlayerContentProps {
-    playList?: any
-}
+// interface PlayerContentProps {
 
-function PlayerContent(props: BaseProps & PlayerContentProps) {
+// }
+
+function PlayerContent(props: BaseProps) {
     const ctx = useContext(ThemeContext);
 
     return (

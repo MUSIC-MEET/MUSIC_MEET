@@ -1,6 +1,5 @@
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import { css } from "@emotion/react";
 import BaseProps from "components/common/BaseProps";
 import styled from "@emotion/styled";
 

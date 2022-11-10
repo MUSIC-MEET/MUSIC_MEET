@@ -4,10 +4,9 @@ import { useTranslation } from "react-i18next";
 import GenreSelector from "../GenreSelector";
 import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import MoreButton from "../../../components/common/MoreButton";
 import PostList from "../PostList";
 import getSearchList from "utils/RequestApis/GenreBoard/getSearchList";
-import { useInfiniteQuery, useMutation } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import AnimationMoreButton from "components/common/AnimationMoreButton";
 
 function Search() {
@@ -18,10 +17,6 @@ function Search() {
     const [type, setType] = useState<string>(_type);
     const [keyword, setKeyword] = useState<string>(params.keyword ?? "");
     const navigator = useNavigate();
-    // const { data, mutate } = useMutation(getSearchList, {
-    //     useErrorBoundary: false,
-    //     retry: 0
-    // });
 
     const { data, fetchNextPage, hasNextPage, refetch } =
         useInfiniteQuery(["fetchGenreBoardSearchList", type, genre],

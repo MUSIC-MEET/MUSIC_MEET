@@ -6,7 +6,6 @@ import ValidResult from "pages/SignUp/ValidResult";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-
 const WIDTH = "25rem";
 const HEIGHT = "2.5rem";
 

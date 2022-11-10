@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState, useContext } from "react";
 import BaseProps from "components/common/BaseProps";
 import SearchForm from "./SearchForm";
-
-import { css } from "@emotion/react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import search from "utils/RequestApis/MusicPlayer/search";
-import _, { add } from "lodash";
+import _ from "lodash";
 
 import PlayListSearchItem from "Types/PlayListSearchItem";
 import SearchResult from "./SearchResult";
