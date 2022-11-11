@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import PlayListItemType from "Types/PlayListItemType";
 import ThemeContext from "store/ThemeContext";
 
@@ -16,6 +16,9 @@ import { useMutation, useQueryClient } from "react-query";
  * @returns 
  */
 function PlayListItem(props: PlayListItemType & { isPlaying: boolean; index: number }) {
+    const ref = useRef<HTMLLIElement>(null);
+    const dragItem = useRef<any>();
+    const overItem = useRef<any>();
     const ctx = useContext(ThemeContext);
     const ctx2 = useContext(MusicPlayerContenxt);
     const [isHover, setIsHover] = useState<boolean>(false);
@@ -35,6 +38,40 @@ function PlayListItem(props: PlayListItemType & { isPlaying: boolean; index: num
         mutate(props.index ?? -1);
     }, [mutate, props.index]);
 
+    const onDragStart = useCallback((e: React.DragEvent<HTMLLIElement>, idx: number | undefined) => {
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plan", String(e.currentTarget.getAttribute("item-id")));
+        dragItem.current = idx;
+        console.log("시작");
+    }, []);
+
+    const onDragEnter = useCallback(async (e: React.DragEvent<HTMLLIElement>, idx: number | undefined) => {
+        // e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+        overItem.current = idx;
+        console.log(e.currentTarget);
+        // console.log(FINAL);
+    }, []);
+
+    const onDragOver = useCallback((e: React.DragEvent<HTMLLIElement>) => {
+        e.preventDefault();
+    }, []);
+
+    const onDrop = useCallback((e: React.DragEvent<HTMLLIElement>) => {
+        e.preventDefault();
+        const start = parseInt(e.dataTransfer.getData("text/plan"));
+        const end = parseInt(e.currentTarget?.getAttribute("item-id") ?? "-1");
+        // console.log(ref.current?.getAttribute("item-id"), overItem.current?.getAttribute("item-id"));
+        console.log(dragItem.current, overItem.current);
+        // console.log(start, overItem.current?.getAttribute("item-id"));
+        // console.log(e);
+        // console.log(props.id, target);
+    }, []);
+
+    useEffect(() => {
+        ref.current?.setAttribute("item-id", String(props.id));
+    }, [props.id]);
+
     return (
         <Item
             subFontColor={ctx.themeStyle.fontStyle2.color}
@@ -43,8 +80,15 @@ function PlayListItem(props: PlayListItemType & { isPlaying: boolean; index: num
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             onClick={() => ctx2.onChangeCurrentMusicIndex(props.index)}
+            draggable={true}
+            onDragStart={(e) => onDragStart(e, props.id)}
+            onDragEnd={onDrop}
+            onDragOver={onDragOver}
+            onDragEnter={(e) => onDragEnter(e, props.id)}
+            ref={ref}
+
         >
-            <div className="left">
+            <div className="left" >
                 <figure>
                     <img src={props.imgSrc} alt="" />
                     {props.isPlaying && <div className="playing effect"><VolumeUpIcon /></div>}
