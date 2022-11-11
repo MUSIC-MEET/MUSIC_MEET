@@ -7,6 +7,7 @@ import { useInfiniteQuery } from "react-query";
 import fetchSearchList from "utils/RequestApis/Cover/fetchSearchList";
 import CardMusicList from "components/common/CardMusicList";
 import AnimationMoreButton from "components/common/AnimationMoreButton";
+import MusicList from "./MusicList";
 
 function Search() {
     const { t } = useTranslation<"coverSearchPage">("coverSearchPage");
@@ -36,15 +37,16 @@ function Search() {
 
     const onSubmitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (keyword === "") return;
+        if (keyword.length === 0) return;
         navigator(`/cover/search/${type}/${keyword}`);
     }, [keyword, navigator, type]);
 
     useEffect(() => {
         if (keyword.length !== 0) {
+            console.log("보내");
             refetch();
         }
-    }, [refetch]);
+    }, [refetch, params]);
 
 
     return (
@@ -57,13 +59,10 @@ function Search() {
                 onChangeKeyword={keywordChangeHandler}
                 onSubmit={onSubmitHandler}
             />
-            <CardMusicList
-                type={"cover"}
-                list={data?.pages.map((page) => page.data).flat()}
-            />
-            <AnimationMoreButton
-                onClick={() => fetchNextPage()}
-                hasNext={hasNextPage}
+            <MusicList
+                list={data?.pages.map((page) => page.data).flat() ?? []}
+                fetchNextPage={fetchNextPage}
+                hasNextPage={hasNextPage}
             />
         </React.Fragment>
     );
