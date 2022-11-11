@@ -50,6 +50,7 @@ function CommentList(props: CommentListProps) {
                     id={comment.id}
                     user={comment.user}
                     comment={comment.comment}
+                    createdAt={comment.createdAt}
                     onDelete={onDeleteHandler}
                     onEdit={onEditHandler}
                 />
