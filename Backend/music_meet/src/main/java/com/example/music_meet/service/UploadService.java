@@ -118,7 +118,7 @@ public class UploadService {
 
         ArrayList<UploadMusic> uploads = new ArrayList<>();
         Map<String, Object> responseMap = new HashMap<>();
-        int totalPage = 0;
+        int totalPage = 1;
 
         if (type.equals("user")){
             type = "b.`nickname`";
@@ -167,7 +167,10 @@ public class UploadService {
 
             if (rs.next()){
                 totalPage = rs.getInt("totalPage");
-                if (totalPage % 10 == 0){
+                if (totalPage == 0){
+                    totalPage = 1;
+                }
+                else if (totalPage % 10 == 0){
                     totalPage = totalPage / 10;
                 }
                 else{
