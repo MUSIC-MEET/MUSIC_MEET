@@ -6,7 +6,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 interface PostSearchFormProps {
-    onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     onChangeType: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     onChangeKeyword: (e: React.ChangeEvent<HTMLInputElement>) => void;
     type: string;

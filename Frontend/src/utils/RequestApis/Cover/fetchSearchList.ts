@@ -8,7 +8,7 @@ const fetchSearchList =
         const axios = customAxios();
         return axios({
             method: "GET",
-            url: `/cover/search?type=${type}&keyword=${keyword}&page=${page}`,
+            url: `/cover/list?type=${type}&keyword=${keyword}&page=${page}`,
         }).then(res => {
             return {
                 data: res.data.list,
