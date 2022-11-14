@@ -91,14 +91,14 @@ const LightThemeInit = {
         fontColor: "#222222"
     },
     sectionWrapper: { 
-        backgroundColor: "rgb(255,255,255)",
+        backgroundColor: "#F2F2F2",
         borderColor: "rgb(88,88,88)"
     },
     fontStyle1: { color: "rgb(22,22,22)" },
     fontStyle2: { color: "#b2b0b0" },
     musicPlayer: {
         player: {
-            background: "rgb(82,82,82)",
+            background: "#F2F2F2",
             gray: "rgb(88,88,88)",
         },
         content: {
