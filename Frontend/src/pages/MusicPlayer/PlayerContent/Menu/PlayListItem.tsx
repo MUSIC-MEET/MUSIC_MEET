@@ -38,14 +38,14 @@ function PlayListItem(props: PlayListItemType & { isPlaying: boolean; index: num
         mutate(props.index ?? -1);
     }, [mutate, props.index]);
 
-    const onDragStart = useCallback((e: React.DragEvent<HTMLLIElement>, idx: number | undefined) => {
+    const onDragStart = useCallback((e: React.DragEvent<HTMLLIElement>, idx: any) => {
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData("text/plan", String(e.currentTarget.getAttribute("item-id")));
         dragItem.current = idx;
         console.log("시작");
     }, []);
 
-    const onDragEnter = useCallback(async (e: React.DragEvent<HTMLLIElement>, idx: number | undefined) => {
+    const onDragEnter = useCallback(async (e: React.DragEvent<HTMLLIElement>, idx: any) => {
         // e.preventDefault();
         e.dataTransfer.dropEffect = "move";
         overItem.current = idx;
