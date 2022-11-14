@@ -37,7 +37,7 @@
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "product": "npm install --legacy-peer-deps && npm run build && npx serve -s build",
-    "winProduct": "npm install --legacy-peer-deps && set \"GENERATE_SOURCEMAP=false\" && npm run build && npx serve -s build"
+    "winProduct": "npm install --legacy-peer-deps && set \"GENERATE_SOURCEMAP=false\" && react-app-rewired build && npx serve -s build"
   },
   "eslintConfig": {
     "extends": [
