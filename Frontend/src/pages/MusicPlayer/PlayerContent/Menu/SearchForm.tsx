@@ -11,14 +11,14 @@ interface SearchFormProps {
 
 function SearchForm(props: BaseProps & SearchFormProps) {
     return (
-        <Form className={`${props?.className}`}>
+        <Form className={`${props?.className}`} onSubmit={(e) => e.preventDefault()}>
             <input
                 type="search"
                 value={props.value}
                 onChange={props.onChange}
             />
             <SearchIcon />
-        </Form>
+        </Form >
     );
 }
 
