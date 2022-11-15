@@ -2,22 +2,36 @@ import { css } from "@emotion/react";
 import React, { useContext } from "react";
 import MusicPlayerContenxt from "store/MusicPlayerContext";
 import ThemeContext from "store/ThemeContext";
+import { useTranslation } from "react-i18next";
 
 function PlayMusicInfo() {
     const ctx = useContext(MusicPlayerContenxt);
     const ctx2 = useContext(ThemeContext);
     const { currentMusicName, currentMusicArtist, currentImage } = ctx;
-    return (
-        <div css={style}>
-            <figure>
-                <img src={currentImage} alt="PlayMusicImg" />
-            </figure>
-            <div className="music-info">
-                <h2>{currentMusicName}</h2>
-                <h3 css={css`color: ${ctx2.themeStyle.fontStyle2.color};`}>{currentMusicArtist}</h3>
+    const { t } = useTranslation<"musicPlayer">("musicPlayer");
+    if (currentImage === "") {
+        return (
+            <div css={style}>
+                {t("controller.emptyMusic")}
             </div>
-        </div>
-    );
+        );
+
+    }
+
+    else {
+        return (
+            <div css={style}>
+                <figure>
+                    <img src={currentImage} alt="PlayMusicImg" />
+                </figure>
+                <div className="music-info">
+                    <h2>{currentMusicName}</h2>
+                    <h3 css={css`color: ${ctx2.themeStyle.fontStyle2.color};`}>{currentMusicArtist}</h3>
+                </div>
+            </div>
+        );
+    }
+
 }
 
 const style = css`
