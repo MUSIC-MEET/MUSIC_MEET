@@ -9,7 +9,7 @@ const text: MusicPlayer = {
     },
 
     controller: {
-
+        emptyMusic: "Please add music."
     }
 };
 

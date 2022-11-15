@@ -6,7 +6,7 @@ interface MusicPlayer {
         }
     }
     controller: {
-        //
+        emptyMusic: string;
     }
 }
 
