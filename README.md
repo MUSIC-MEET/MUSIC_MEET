@@ -70,5 +70,26 @@ npm install --legacy-peer-deps && npm start
 
 ### 화면 
 
+![img1](./resource/gif1.gif)
+
+다크모드 및 다국어 지원
 
 
+![img1](./resource/gif2.gif)
+
+플레이 리스트 지원
+
+
+![img1](./resource/gif3.gif)
+
+타 사이트 실시간 차트 지원
+
+
+![img1](./resource/gif4.gif)
+
+유저 커버 지원 
+
+
+![img1](./resource/gif5.gif)
+
+각종 커뮤니티 기능 지원
