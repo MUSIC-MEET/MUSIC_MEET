@@ -2,6 +2,8 @@
 
 이 프로젝트는 졸업작품을 위해 제작한 팀 프로젝트입니다.
 
+이 프로젝트의 [ADMIN](https://github.com/MUSIC-MEET/admin) 페이지입니다.
+
 ## 소개
 
 Music Meet은 음악을 좋아하는 사람들을 대상으로 만든 사이트입니다.
@@ -18,7 +20,7 @@ Java11, Spring Boot, MySql, JSoup, REST-API, JWT
 
 ### Frontend
 
-React, TypeScript, react-query, msw, emtion, i18next, Axios, recoil, Toast/Editor
+React, TypeScript, react-query, msw, emotion, i18next, Axios, recoil, Toast/Editor
 
 ### Android
 
@@ -57,6 +59,7 @@ cd Backend/music_meet/
 ```
 
 실행
+
 ```bash
 java -jar Backend/music_meet/build/libs/music_meet-0.0.1-SNAPSHOT.jar
 ```
