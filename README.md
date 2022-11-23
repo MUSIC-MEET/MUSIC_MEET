@@ -18,7 +18,7 @@ Java11, Spring Boot, MySql, JSoup, REST-API, JWT
 
 ### Frontend
 
-React, TypeScript, react-query, emtion, i18next, Axios, recoil, Toast/Editor
+React, TypeScript, react-query, msw, emtion, i18next, Axios, recoil, Toast/Editor
 
 ### Android
 
