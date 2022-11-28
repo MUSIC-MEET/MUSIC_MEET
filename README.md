@@ -24,7 +24,7 @@ Music Meet은 음악을 좋아하는 사람들을 대상으로 만든 사이트�
 
 ### Backend
 
-Java11, Spring Boot, MySql, JSoup, REST-API, JWT
+Java11, Spring Boot, MySql, JSoup, REST-API, JWT, lombok
 
 ### Frontend
 
