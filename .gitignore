@@ -20,3 +20,4 @@ MusicMeet_Mobile/.idea
 .DS_Store
 Backend/.DS_Store
 Backend/music_meet/.DS_Store
+*.properties
