@@ -22,3 +22,4 @@ MusicMeet_Mobile/.idea
 Backend/.DS_Store
 Backend/music_meet/.DS_Store
 
+Backend/music_meet/src/main/resources/application.properties
