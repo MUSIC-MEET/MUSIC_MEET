@@ -7,6 +7,7 @@ Backend/music_meet/src/main/resources/
 Backend/music_meet/src/main/resources/application.properties
 Backend/music_meet/build/lib/profileimage/
 Backend/music_meet/build/lib/temp/
+*.properties
 
 # Front 
 # dependencies
@@ -20,4 +21,4 @@ MusicMeet_Mobile/.idea
 .DS_Store
 Backend/.DS_Store
 Backend/music_meet/.DS_Store
-*.properties
+
