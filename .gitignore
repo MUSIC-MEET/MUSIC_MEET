@@ -4,6 +4,7 @@ Backend/music_meet/.idea
 .vscode
 .DS_Store
 Backend/music_meet/src/main/resources/
+Backend/music_meet/src/main/resources/application.properties
 Backend/music_meet/build/lib/profileimage/
 Backend/music_meet/build/lib/temp/
 
