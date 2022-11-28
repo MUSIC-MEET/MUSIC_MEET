@@ -17,8 +17,8 @@ public class JwtConfig
     /**
      * 클레임(Claim)을 생성한다.
      *
-     * @param user 토큰을 생성하기 위한 계정 정보를 담은 객체
-     * @return Map<String, Object> 클레임(Claim)
+     * @param usernum 토큰을 생성하기 위한 String 타입의 사용자 번호
+     * @return Map<String, Object> 타입의 클레임(Claim)을 리턴
      */
     private Map<String, Object> createClaims(String usernum) {
 
