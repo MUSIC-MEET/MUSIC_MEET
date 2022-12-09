@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.bumptech.glide.Glide
 
 //자동완성 검색기능 어댑터
 class AutoCompleteAdapter(val MusicInfo:ArrayList<Music>, val context: Context )
@@ -22,7 +21,6 @@ class AutoCompleteAdapter(val MusicInfo:ArrayList<Music>, val context: Context )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
         holder.a_musicinfo(MusicInfo[position], context)
     }
 
@@ -41,12 +39,12 @@ class AutoCompleteAdapter(val MusicInfo:ArrayList<Music>, val context: Context )
             a_musicNum?.text = itemMusicInfo.musicNum
             a_singer?.text = itemMusicInfo.singer
 
-            if (a_imgSrcimage != null) {
+          /*  if (a_imgSrcimage != null) {
                 Glide.with(itemView)
                     .load(itemMusicInfo.imgSrc) // 불러올 이미지 url
                     .into(a_imgSrcimage)// 이미지를 넣을 뷰
-                /*.fallback(R.drawable.ic_closebox) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지*/
-            }
+                *//*.fallback(R.drawable.ic_closebox) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지*//*
+            }*/
         }
     }
 }

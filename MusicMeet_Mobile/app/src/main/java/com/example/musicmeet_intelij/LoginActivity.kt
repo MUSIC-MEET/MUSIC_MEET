@@ -49,7 +49,7 @@ class Login_Activity : AppCompatActivity() {
 
         val LoginService = retrofit.create(LoginService::class.java)
 
-            bindingLogin.LoginOk.setOnClickListener {
+        bindingLogin.LoginOk.setOnClickListener {
 
             var login_D = LoginData()
 
@@ -59,7 +59,7 @@ class Login_Activity : AppCompatActivity() {
             LoginService.login(login_D).enqueue(object : Callback<LoginResponse> {
                 override fun onResponse(call: retrofit2.Call<LoginResponse>, response: Response<LoginResponse>) {
                     MainMusicPage().apply { }
-                   /* Toast.makeText(this@Login_Activity, "로그인 하였습니다.\n잠시만 기다려주세요.", Toast.LENGTH_SHORT).show()*/
+                    /* Toast.makeText(this@Login_Activity, "로그인 하였습니다.\n잠시만 기다려주세요.", Toast.LENGTH_SHORT).show()*/
 
                     println(response.body()?.token)
                     println(response.body()?.nickname)
@@ -68,6 +68,7 @@ class Login_Activity : AppCompatActivity() {
 
                 override fun onFailure(call: retrofit2.Call<LoginResponse>, t: Throwable) {
                     Log.d("회원가입no", t.localizedMessage)
+                    print(t.stackTrace)
                     System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                     t.printStackTrace()
                     System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -100,8 +101,6 @@ class Login_Activity : AppCompatActivity() {
         @SerializedName("nickname") val nickname: String
     )
 }
-
-
 class LoginData {
     var id: String? = null
     var pw: String? = null

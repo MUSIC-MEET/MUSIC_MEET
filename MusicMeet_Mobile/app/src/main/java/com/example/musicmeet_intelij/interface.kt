@@ -59,14 +59,12 @@ class bugsimgurl(
     var rank: String? = null,
     var imgSrc: URL? =null
 )
+
 interface autoCompleteTextView
 {
 @GET("/music/search/{keyword}")
     fun serch(@Path("keyword") keyword : String):
         Call<ArrayList<SerchMusic>>
-
-
-
 }
 data class SerchMusic(
     val musicInfo:ArrayList<Music>
@@ -74,12 +72,10 @@ data class SerchMusic(
 data class Music(
     @SerializedName("musicNum")
     var musicNum : String? = null,
-    @SerializedName("imgSrc")
-    var imgSrc : String? = null,
     @SerializedName("title")
     var title: String? = null,
     @SerializedName("singer")
     var singer:String? = null
 )
 
-val Baseurl = ("http://10.107.2.45:8080")
+val Baseurl = ("http://192.168.219.122:8080")

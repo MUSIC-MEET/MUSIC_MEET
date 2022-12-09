@@ -1,11 +1,16 @@
 package com.example.musicmeet_intelij
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.example.musicmeet_intelij.databinding.ActivityMusicMainBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,12 +25,25 @@ class Music_Main_Activity : AppCompatActivity() {
 
     private var isFabOpen = false
 
+    lateinit var id:TextView
+    lateinit var artist:TextView
+    lateinit var title:TextView
+    lateinit var imgSrc:ImageView
+    private var backPressedTime : Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         bindingMusic_Main_Activity = ActivityMusicMainBinding.inflate(layoutInflater)
         val view = bindingMusic_Main_Activity.root
         setContentView(view)
+
+        fun setAdapter(songList: ArrayList<popularSong>, context: Context) {
+            var mAdapter = PopularMusicChartAdapter(songList, this@Music_Main_Activity)
+            var popularRecyclerView = findViewById<RecyclerView>(R.id.Popular_music_recyclerVIew)
+            popularRecyclerView.adapter = mAdapter
+            //업데이트 될 때마다 변경해줌
+            mAdapter.notifyDataSetChanged()
+        }
 
 
 
@@ -36,14 +54,16 @@ class Music_Main_Activity : AppCompatActivity() {
         bindingMusic_Main_Activity.Musicchart.setOnClickListener {
             MusicLiveChartActivityIntent()
         }
+        bindingMusic_Main_Activity.myInfo.setOnClickListener{
+            MyinfoIntent()
+        }
+
 
         bindingMusic_Main_Activity.bulleanboard.setOnClickListener {
             Toast.makeText(this, "게시판보드", Toast.LENGTH_SHORT).show()
         }
-        bindingMusic_Main_Activity.myInfo.setOnClickListener{
 
-        }
-        bindingMusic_Main_Activity.serchMusic.setOnClickListener{
+        bindingMusic_Main_Activity.serchMusic.setOnClickListener {
             val findMusicIntent = Intent(this, FindMusicActivity::class.java)
             startActivity(findMusicIntent)
         }
@@ -53,35 +73,41 @@ class Music_Main_Activity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val PopularMusicRetroFit2 = retrofit.create(Popular_Music_Album::class.java)
+        val Popular_Music = retrofit.create(popularMusicAlbum::class.java)
 
-        PopularMusicRetroFit2.popularMusicChart().enqueue(object : Callback<popularMusic>{
-            override fun onResponse(call: Call<popularMusic>, response: Response<popularMusic>) {
-                print(response)
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    body?.let {
-                        //body.toString() response 잘 받아왔는지 확인.
-                        println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-                        println(body)
-                        println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                        setAdapter(it.popularAlbum)
-                    }
-                }
-            }
+       Popular_Music.popularMusicAlbumChart().enqueue(object : Callback<ArrayList<popularSong>>{
+           override fun onResponse(call: Call<ArrayList<popularSong>>, response: Response<ArrayList<popularSong>>) {
+            val result = response.body()
+               print(result)
+               if(response.isSuccessful){
+                   result.let {
+                       print("이유?" + result)
 
-            override fun onFailure(call: Call<popularMusic>, t: Throwable) {
-                Log.d("인기음악업로드 안됨",t.localizedMessage)
-            }
-        })
+                   }
+               }
+
+           }
+
+           override fun onFailure(call: Call<ArrayList<popularSong>>, t: Throwable) {
+            Log.d("메인페이지 연결안됨",t.localizedMessage)
+               print(t.stackTraceToString())
+           }
+       })
+
     }
+    override fun onBackPressed() {
+        Log.d("TAG", "뒤로가기")
 
-    //어댑터 연결
-    fun setAdapter(PopularSongList:ArrayList<PMAlbum>){
-        val mAdapter =PopularMusicChartAdapter(PopularSongList, this)
-        bindingMusic_Main_Activity.PopularMusicRecyclerVIew.adapter = mAdapter
-        //업데이트 될 때마다 변경해줌
-        mAdapter.notifyDataSetChanged()
+        // 2초내 다시 클릭하면 앱 전체 종료
+        if (System.currentTimeMillis() - backPressedTime < 2000) {
+            ActivityCompat.finishAffinity(this);
+            return
+        }
+
+        // 처음 클릭 메시지
+        Toast.makeText(this, "'뒤로' 버튼을 한번 더 누르시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
+        backPressedTime = System.currentTimeMillis()
+
     }
 
 
@@ -93,19 +119,19 @@ class Music_Main_Activity : AppCompatActivity() {
        LayoutTab().apply { }*/
 
     //뷰페이저 넘어가는 효과 및 페이지 정리
-   /* private fun LayoutTab() {
+    /* private fun LayoutTab() {
 
-        var tabIcon = listOf(
-            R.drawable.main_page_home,
-            R.drawable.main_page_wishlist,
-            R.drawable.main_page_info
-        )
-        TabLayoutMediator(bindingMusic_Main_Activity.tabs, bindingMusic_Main_Activity.viewpager) { tab, position ->
-            tab.setText("")
-            tab.setIcon(tabIcon[position])
-        }.attach()
+         var tabIcon = listOf(
+             R.drawable.main_page_home,
+             R.drawable.main_page_wishlist,
+             R.drawable.main_page_info
+         )
+         TabLayoutMediator(bindingMusic_Main_Activity.tabs, bindingMusic_Main_Activity.viewpager) { tab, position ->
+             tab.setText("")
+             tab.setIcon(tabIcon[position])
+         }.attach()
 
-    }*/
+     }*/
 
     //플로팅 액션 버튼 클릭시 동작하는 애니메이션 효과 세팅
     private fun toggleFab() {
@@ -135,18 +161,18 @@ class Music_Main_Activity : AppCompatActivity() {
         startActivity(MusicLiveChartActivityIntent)
     }
 
+    private fun MyinfoIntent(){
+        val MyinfoIntent = Intent(this@Music_Main_Activity,MyinfoActivity::class.java)
+        startActivity(MyinfoIntent)
+    }
+
 }
 
-interface Popular_Music_Album
-{
+interface popularMusicAlbum{
     @GET("/music/popular/10")
-    fun popularMusicChart(): Call<popularMusic>
+    fun popularMusicAlbumChart(): Call<ArrayList<popularSong>>
 }
-data class popularMusic (
-    val updateTime : String,
-    var popularAlbum: ArrayList<PMAlbum>
-)
-class PMAlbum(
+data class popularSong(
     var title: String? = null,
     var artist: String? = null,
     var id: String? = null,
