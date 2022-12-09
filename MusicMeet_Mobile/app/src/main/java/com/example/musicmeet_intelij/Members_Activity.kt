@@ -91,8 +91,21 @@ class members_Activity : AppCompatActivity() {
                     }
                 })
 
+                bindingmembers.membersPw.addTextChangedListener(object :TextWatcher{
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        Checkpww()
+                    }
 
-                bindingmembers.sdsd.setText("시발")
+                    override fun afterTextChanged(s: Editable?) {
+                        // text가 변경된 후 호출
+                        // s에는 변경 후의 문자열이 담겨 있다.
+                    }
+
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                        // text가 변경되기 전 호출
+                        // s에는 변경 전 문자열이 담겨 있다.
+                    }
+                })
 
                 bindingmembers.memberOk.setOnClickListener {
                     Toast.makeText(this@members_Activity, "회원가입 완료되었습니다.\n로그인 페이지로 이동합니다.", Toast.LENGTH_SHORT).show()
@@ -199,22 +212,20 @@ fun checkId(): Boolean {
 }
 
 
-private fun Checkpww():Boolean {
+private fun Checkpww() {
     var checkpw = bindingmembers.membersPw.text.toString().trim()
     var checkpww = bindingmembers.membersPwOk.text.toString().trim()
 
-    if (checkpw.length.equals(checkpww.length)) {
+    if (checkpw.equals(checkpww)) {
 
         bindingmembers.pwwCheckOk.visibility = View.INVISIBLE
         bindingmembers.pwwCheckNo.visibility = View.GONE
-        return true
     }
     else
     {
         bindingmembers.pwwCheckOk.visibility = View.GONE
         bindingmembers.pwwCheckNo.visibility = View.VISIBLE
     }
-    return false
 }
 
 

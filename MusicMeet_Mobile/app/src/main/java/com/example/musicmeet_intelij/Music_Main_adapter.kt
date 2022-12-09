@@ -1,3 +1,4 @@
+/*
 package com.example.musicmeet_intelij
 
 import androidx.fragment.app.Fragment
@@ -17,7 +18,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
                 Fragment_home().apply {  }
             }
 
-            1 -> {
+            else -> {
                 Fragment_wish().apply {  }
             }
 
@@ -30,3 +31,4 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
 
     }
 }
+*/

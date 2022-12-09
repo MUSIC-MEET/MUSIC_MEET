@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.musicmeet_intelij.databinding.ActivityFindMusicBinding
@@ -19,15 +20,20 @@ class FindMusicActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        lateinit var musicNum : TextView
+        lateinit var singer : TextView
+        lateinit var title : TextView
+
         bindingFindActivity = ActivityFindMusicBinding.inflate(layoutInflater)
         val view = bindingFindActivity.root
         setContentView(view)
 
         val str = findViewById<AutoCompleteTextView>(R.id.findautoTextView)
+
         var musics = Music()
+
         var musicArray = arrayOf(
             musics.musicNum.toString(),
-            musics.imgSrc.toString(),
             musics.singer.toString(),
             musics.title.toString()
         )
@@ -41,7 +47,7 @@ class FindMusicActivity : AppCompatActivity() {
 
         val autoMusicSerch = retrofit.create(autoCompleteTextView::class.java)
 
-        autoMusicSerch.serch("아이유").enqueue(object : Callback<ArrayList<SerchMusic>> {
+        autoMusicSerch.serch("iu").enqueue(object : Callback<ArrayList<SerchMusic>> {
 
 
             override fun onResponse(call: Call<ArrayList<SerchMusic>>, response: Response<ArrayList<SerchMusic>>) {
@@ -51,7 +57,6 @@ class FindMusicActivity : AppCompatActivity() {
                     body?.let {
                         Log.d("자동검색", "성공?" + body.toString())
                         str.setAdapter(musicAdapter)
-                        bindingFindActivity.s.setText("zz")
                         if (body.isNullOrEmpty())
                         {
                             Toast.makeText(this@FindMusicActivity, "검색결과 ㄴ", Toast.LENGTH_SHORT).show()
@@ -60,7 +65,9 @@ class FindMusicActivity : AppCompatActivity() {
                         //body.toString() response 잘 받아왔는지 확인.
 
                     }
-                } else if(body == null){
+                }
+                else if(body == null)
+                {
                     Log.d("자동검색", "실패")
                 }
 

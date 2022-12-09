@@ -8,3 +8,10 @@ dependencyResolutionManagement {
 }
 rootProject.name = "MusicMeet_InteliJ"
 include ':app'
+
+buildCache{
+    local {
+        directory = new File(rootDir, 'build-casce')
+        removeUnusedEntriesAfterDays = 30
+    }
+}

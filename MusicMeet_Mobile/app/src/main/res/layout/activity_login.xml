@@ -40,7 +40,6 @@
             android:id="@+id/textView"/>
 
     <EditText
-
             android:layout_width="370dp"
             android:layout_height="wrap_content"
             android:hint="아이디(이메일)"
@@ -81,12 +80,15 @@
             android:layout_gravity="center"
             android:background="@drawable/custom_ripple_effect"
             android:text="로그인"
+            android:visibility="visible"
             android:textColor="@color/text_color"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.491" app:layout_constraintVertical_bias="0.32"/>
+
+
 
     <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
