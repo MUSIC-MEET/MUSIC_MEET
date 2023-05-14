@@ -39,31 +39,36 @@ function MusicPlayer(props: MusicPlayerProps) {
             setCurrentIndex((prev) => prev > 0 ? prev - 1 : 0);
         }
     }, [currentIndex]);
-    return (
-        <MusicPlayerContenxt.Provider value={{
-            isShownContent: shownPlayerContent,
-            onChangeShownContentState: changeShwonStateHandler,
-            currentImage: data![currentIndex]?.imgSrc ?? "",
-            currentLyrics: data![currentIndex]?.lyrics ?? "",
-            currentMusicName: data![currentIndex]?.title ?? "",
-            currentMusicArtist: data![currentIndex]?.artist ?? "",
-            playList: data ?? [],
-            currentMusicIndex: currentIndex,
-            onChangeCurrentMusicIndex: onChangeCurrentMusicIndex
-        }}>
-            <article className={`${props.className}`} css={root}>
-                <PlayerContent
-                    className={`${shownPlayerContent ? "shown" : "hidden"} player-content`}
-                />
-                <PlayerController
-                    className={"player-controller"}
-                    playingMusic={data![currentIndex]?.mp3File}
-                    prev={prevHandler}
-                    next={nextHandler}
-                />
-            </article>
-        </MusicPlayerContenxt.Provider >
-    );
+
+    if (!data) {
+        return <></>;
+    }
+    else
+        return (
+            <MusicPlayerContenxt.Provider value={{
+                isShownContent: shownPlayerContent,
+                onChangeShownContentState: changeShwonStateHandler,
+                currentImage: data![currentIndex]?.imgSrc ?? "",
+                currentLyrics: data![currentIndex]?.lyrics ?? "",
+                currentMusicName: data![currentIndex]?.title ?? "",
+                currentMusicArtist: data![currentIndex]?.artist ?? "",
+                playList: data ?? [],
+                currentMusicIndex: currentIndex,
+                onChangeCurrentMusicIndex: onChangeCurrentMusicIndex
+            }}>
+                <article className={`${props.className}`} css={root}>
+                    <PlayerContent
+                        className={`${shownPlayerContent ? "shown" : "hidden"} player-content`}
+                    />
+                    <PlayerController
+                        className={"player-controller"}
+                        playingMusic={data![currentIndex]?.mp3File}
+                        prev={prevHandler}
+                        next={nextHandler}
+                    />
+                </article>
+            </MusicPlayerContenxt.Provider >
+        );
 
 }
 
